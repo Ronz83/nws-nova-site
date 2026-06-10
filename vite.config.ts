@@ -11,4 +11,20 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // React core — cached separately, rarely changes
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          // Animation library — large, split out
+          'vendor-framer': ['framer-motion'],
+          // Icon library
+          'vendor-icons': ['lucide-react'],
+        },
+      },
+    },
+    // Raise warning threshold slightly since we're intentionally splitting
+    chunkSizeWarningLimit: 400,
+  },
 })
