@@ -1,20 +1,70 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import BookingModal from "../components/BookingModal";
+
+const BROKER_URL    = import.meta.env.VITE_GHL_BROKER_URL    as string | undefined;
+const BROKER_SECRET = import.meta.env.VITE_GHL_BROKER_SECRET as string | undefined;
 
 export default function Contact() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted]         = useState(false);
+  const [loading, setLoading]             = useState(false);
+  const [error, setError]                 = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", email: "", company: "", service: "", message: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, show success state. Wire to Formspree / EmailJS / GHL webhook when ready.
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+
+    const [firstName = "Contact", ...rest] = form.name.trim().split(" ");
+    const lastName = rest.join(" ") || "User";
+
+    const payload = {
+      appId:           "ronsuite",
+      businessName:    form.company || form.name,
+      email:           form.email,
+      firstName,
+      lastName,
+      location:        "Caribbean",
+      niche:           form.service || "general",
+      snapshotId:      "6Qy3nQP72zo5CgpH5HGO",
+      message:         form.message,
+      serviceInterest: form.service,
+    };
+
+    try {
+      if (BROKER_URL && BROKER_SECRET) {
+        const res = await fetch(`${BROKER_URL}/provision`, {
+          method:  "POST",
+          headers: {
+            "Content-Type":  "application/json",
+            "Authorization": `Bearer ${BROKER_SECRET}`,
+            "x-nws-app-id":  "ronsuite",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`Broker error ${res.status}: ${text}`);
+        }
+      } else {
+        // Broker not yet configured — log and still confirm so UX isn't broken
+        console.warn("[Contact] GHL broker not configured. Payload:", payload);
+      }
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error("[Contact] Submission error:", err.message);
+      setError("Something went wrong. Please email us directly at hello@noveltywebsolutions.com");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,8 +91,6 @@ export default function Contact() {
 
           {/* Left: Info */}
           <div className="lg:col-span-4 flex flex-col gap-6">
-
-            {/* Contact Cards */}
             {[
               { icon: <Mail size={18} />, label: "Email Us", value: "hello@noveltywebsolutions.com", sub: "We reply within 1 business day", color: "sky" },
               { icon: <MapPin size={18} />, label: "Location", value: "Barbados, West Indies", sub: "Serving Caribbean & Global clients", color: "emerald" },
@@ -58,7 +106,7 @@ export default function Contact() {
               </div>
             ))}
 
-            {/* Booking CTA Card */}
+            {/* Booking CTA */}
             <div className="bg-ocean-gradient rounded-2xl p-6 text-white relative overflow-hidden shadow-xl">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-2xl rounded-full pointer-events-none"></div>
               <div className="relative z-10">
@@ -70,7 +118,6 @@ export default function Contact() {
                 </button>
               </div>
             </div>
-
           </div>
 
           {/* Right: Form */}
@@ -93,11 +140,19 @@ export default function Contact() {
                   <p className="text-xs text-text-muted mt-1 font-medium">Tell us about your project and we'll follow up with a tailored recommendation.</p>
                 </div>
 
+                {/* Error banner */}
+                {error && (
+                  <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-xs text-red-700 font-medium">
+                    <AlertCircle size={15} className="shrink-0 mt-0.5 text-red-500" />
+                    {error}
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {[
-                    { name: "name",    label: "Your Name",    placeholder: "Ronald P.",         type: "text" },
-                    { name: "email",   label: "Email Address", placeholder: "you@company.com",   type: "email" },
-                    { name: "company", label: "Company",       placeholder: "Acme Corp",          type: "text" },
+                    { name: "name",    label: "Your Name",     placeholder: "Ronald P.",        type: "text" },
+                    { name: "email",   label: "Email Address", placeholder: "you@company.com",  type: "email" },
+                    { name: "company", label: "Company",       placeholder: "Acme Corp",         type: "text" },
                   ].map(f => (
                     <div key={f.name} className={f.name === "company" ? "sm:col-span-2" : ""}>
                       <label className="text-[10px] uppercase tracking-widest text-text-muted font-bold block mb-2">{f.label}</label>
@@ -147,10 +202,11 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="flex items-center justify-center gap-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer border-none w-full sm:w-auto self-start"
+                  disabled={loading}
+                  className="flex items-center justify-center gap-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 disabled:opacity-60 disabled:cursor-not-allowed text-white px-7 py-4 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer border-none w-full sm:w-auto self-start"
                 >
-                  <Send size={12} />
-                  Send Message
+                  {loading ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
+                  {loading ? "Sending..." : "Send Message"}
                 </button>
               </form>
             )}
