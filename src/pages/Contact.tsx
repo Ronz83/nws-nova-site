@@ -2,9 +2,6 @@ import { useState } from "react";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import BookingModal from "../components/BookingModal";
 
-const BROKER_URL    = import.meta.env.VITE_GHL_BROKER_URL    as string | undefined;
-const BROKER_SECRET = import.meta.env.VITE_GHL_BROKER_SECRET as string | undefined;
-
 export default function Contact() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [submitted, setSubmitted]         = useState(false);
@@ -21,46 +18,21 @@ export default function Contact() {
     setLoading(true);
     setError(null);
 
-    const [firstName = "Contact", ...rest] = form.name.trim().split(" ");
-    const lastName = rest.join(" ") || "User";
-
-    const payload = {
-      appId:           "ronsuite",
-      businessName:    form.company || form.name,
-      email:           form.email,
-      firstName,
-      lastName,
-      location:        "Caribbean",
-      niche:           form.service || "general",
-      snapshotId:      "6Qy3nQP72zo5CgpH5HGO",
-      message:         form.message,
-      serviceInterest: form.service,
-    };
-
     try {
-      if (BROKER_URL && BROKER_SECRET) {
-        const res = await fetch(`${BROKER_URL}/provision`, {
-          method:  "POST",
-          headers: {
-            "Content-Type":  "application/json",
-            "Authorization": `Bearer ${BROKER_SECRET}`,
-            "x-nws-app-id":  "ronsuite",
-          },
-          body: JSON.stringify(payload),
-        });
+      const res = await fetch("/api/crm/contact", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify(form),
+      });
 
-        if (!res.ok) {
-          const text = await res.text();
-          throw new Error(`Broker error ${res.status}: ${text}`);
-        }
-      } else {
-        // Broker not yet configured — log and still confirm so UX isn't broken
-        console.warn("[Contact] GHL broker not configured. Payload:", payload);
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error ?? `Server error ${res.status}`);
       }
 
       setSubmitted(true);
     } catch (err: any) {
-      console.error("[Contact] Submission error:", err.message);
+      console.error("[Contact]", err.message);
       setError("Something went wrong. Please email us directly at hello@noveltywebsolutions.com");
     } finally {
       setLoading(false);
