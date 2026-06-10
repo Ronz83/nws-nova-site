@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Instrument Serif", serif;
+  --font-sans: "Inter", sans-serif;
+
+  /* Semantic color tokens → CSS variables */
+  --color-bg-base: var(--bg-base);
+  --color-bg-tint: var(--bg-tint);
+  --color-text-base: var(--text-base);
+  --color-text-muted: var(--text-muted);
+  --color-border-base: var(--border-base);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-glow: var(--accent-glow);
+  --color-card-bg: var(--card-bg);
+  --color-card-hover: var(--card-hover);
+  --color-glass-bg: var(--glass-bg);
+
+  --animate-laser: laser 4s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   CARIBBEAN DAWN — Single Bright Theme
+   No dark mode. One beautiful, uplifting palette.
+───────────────────────────────────────── */
+:root {
+  /* Canvas */
+  --bg-base:  #ffffff;
+  --bg-tint:  #f0f9ff;   /* sky-50: alternating section tint */
+
+  /* Typography */
+  --text-base:  #0c1a2e;  /* near-black, ultra contrast */
+  --text-muted: #475569;  /* slate-600, warm & readable */
+
+  /* Structural */
+  --border-base: #e2e8f0; /* slate-200, clean & crisp */
+
+  /* Accent — Electric Ocean Blue */
+  --accent-primary: #0ea5e9;  /* sky-500 */
+  --accent-deep:    #0369a1;  /* sky-700 — buttons, bold states */
+
+  /* Accent — Amber Sunrise (replaces champagne gold) */
+  --accent-amber: #f59e0b;    /* amber-400 — warm energetic highlight */
+
+  /* Glow / soft background fills */
+  --accent-glow: rgba(14, 165, 233, 0.08);   /* ocean blue glow */
+  --accent-warm: rgba(245, 158, 11, 0.08);   /* amber warm glow */
+
+  /* Cards */
+  --card-bg:    #ffffff;
+  --card-hover: #f8fafc;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.92);
+}
+
+/* ─── Base Styles ─── */
+body {
+  background-color: var(--bg-base);
+  color: var(--text-base);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* ─── Custom Scrollbar ─── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-base); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+
+/* ─── Dot Grid Background ─── */
+.grid-overlay {
+  background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* ─── Range Slider — Ocean Blue ─── */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--border-base);
+  border-radius: 99px;
+  outline: none;
+  transition: background 0.3s;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-deep);
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(3, 105, 161, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 6px 18px rgba(3, 105, 161, 0.4);
+}
+
+/* ─── Animations ─── */
+@keyframes laser {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(200%);  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0;  }
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ─── Bento Mouse-Follow Glow ─── */
+.bento-glow-container {
+  position: relative;
+  overflow: hidden;
+}
+.bento-glow-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    500px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+    rgba(14, 165, 233, 0.06),
+    transparent 40%
+  );
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.bento-glow-container:hover::before {
+  opacity: 1;
+}
+
+/* ─── Premium CTA Mesh Gradient ─── */
+.mesh-gradient-premium {
+  background-image:
+    radial-gradient(at 0% 0%,   rgba(14, 165, 233, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.10) 0px, transparent 50%);
+}
+
+/* ─── Ocean Blue Gradient Background (Hero, CTA dark panels) ─── */
+.bg-ocean-gradient {
+  background: linear-gradient(135deg, #0c1a2e 0%, #0c2a4a 50%, #0369a1 100%);
+}
+
+/* ─── Sunrise Banner gradient ─── */
+.bg-sunrise-gradient {
+  background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 60%, #38bdf8 100%);
+}
