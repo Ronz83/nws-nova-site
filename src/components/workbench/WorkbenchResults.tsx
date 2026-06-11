@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Target, Zap, RefreshCw, Star, Clock, Download, Mic, RotateCcw, CheckCircle, AlertTriangle, XCircle, ArrowRight, Phone } from 'lucide-react';
 import { VoiceCallOverlay } from '../nova/VoiceCallOverlay';
@@ -23,7 +23,7 @@ const SEVERITY_CONFIG = {
   good:     { label: 'Good', bg: 'bg-emerald-500/15', border: 'border-emerald-400/30', text: 'text-emerald-400', dot: 'bg-emerald-400', icon: <CheckCircle size={13} className="text-emerald-400" /> },
 };
 
-const TABS = ['📊 Score', '🎯 Gap Analysis', '🤖 Your Nova', '🎁 Free Assets'];
+const TABS = ['ðŸ“Š Score', 'ðŸŽ¯ Gap Analysis', 'ðŸ¤– Your Nova', 'ðŸŽ Free Assets'];
 
 function AnimatedScore({ score }: { score: number }) {
   const [displayed, setDisplayed] = useState(0);
@@ -95,7 +95,7 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Business Intelligence Report — ${businessName}</title>
+<title>Business Intelligence Report â€” ${businessName}</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -135,9 +135,9 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
 <body>
 <div class="page">
   <div class="header">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.5);margin-bottom:6px">Novelty Web Solutions · Business Intelligence</div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.5);margin-bottom:6px">Novelty Web Solutions Â· Business Intelligence</div>
     <h1>Digital Operations Report</h1>
-    <p>${businessName} · Prepared for ${firstName} · ${new Date().toLocaleDateString('en-US', { year:'numeric',month:'long',day:'numeric' })}</p>
+    <p>${businessName} Â· Prepared for ${firstName} Â· ${new Date().toLocaleDateString('en-US', { year:'numeric',month:'long',day:'numeric' })}</p>
   </div>
 
   <div class="score-box">
@@ -156,7 +156,7 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
     </div>
   </div>
 
-  <div class="section-title">Gap Analysis — 5 Critical Areas</div>
+  <div class="section-title">Gap Analysis â€” 5 Critical Areas</div>
   ${assessment.categories.map((cat: any) => `
   <div class="category ${cat.severity}">
     <div class="cat-header">
@@ -192,11 +192,11 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
   <div class="cta">
     <h3>Ready to fix all of this automatically?</h3>
     <p>NWS installs in 5 business days. Book a free strategy call with Ronald to see exactly how much revenue we can recover for ${businessName}.</p>
-    <div style="margin-top:16px;font-weight:700;font-size:13px">noveltywebsolutions.com · Barbados, West Indies</div>
+    <div style="margin-top:16px;font-weight:700;font-size:13px">noveltywebsolutions.com Â· Barbados, West Indies</div>
   </div>
 
   <div class="footer">
-    © ${new Date().getFullYear()} Novelty Web Solutions · This report was generated using the NWS Business Intelligence Engine.
+    Â© ${new Date().getFullYear()} Novelty Web Solutions Â· This report was generated using the NWS Business Intelligence Engine.
     All estimates are based on industry benchmarks and the information provided.
   </div>
 </div>
@@ -237,7 +237,7 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
       <div className="p-5 min-h-[340px]">
         <AnimatePresence mode="wait">
 
-          {/* TAB 0 — Score */}
+          {/* TAB 0 â€” Score */}
           {activeTab === 0 && (
             <motion.div key="t0" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
               <AnimatedScore score={assessment.overallScore} />
@@ -262,7 +262,7 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
             </motion.div>
           )}
 
-          {/* TAB 1 — Gap Analysis */}
+          {/* TAB 1 â€” Gap Analysis */}
           {activeTab === 1 && (
             <motion.div key="t1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-3">
               {assessment.categories.map((cat: any, i: number) => {
@@ -277,7 +277,7 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
                       <div className="flex items-center gap-2">
                         {sev.icon}
                         <span className={`text-xs font-bold ${sev.text}`}>{cat.score}/100</span>
-                        <span className="text-slate-600">{isOpen ? '▲' : '▼'}</span>
+                        <span className="text-slate-600">{isOpen ? 'â–²' : 'â–¼'}</span>
                       </div>
                     </button>
                     <AnimatePresence>
@@ -305,8 +305,8 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
                               ))}
                             </ol>
                             <div className="flex gap-4 mt-3 text-[10px] text-slate-500">
-                              <span>⏱ {cat.manualTimeEstimate}</span>
-                              <span>💰 {cat.manualCostEstimate}</span>
+                              <span>â± {cat.manualTimeEstimate}</span>
+                              <span>ðŸ’° {cat.manualCostEstimate}</span>
                             </div>
                           </div>
                         </motion.div>
@@ -318,7 +318,7 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
             </motion.div>
           )}
 
-          {/* TAB 2 — Your Nova */}
+          {/* TAB 2 â€” Your Nova */}
           {activeTab === 2 && (
             <motion.div key="t2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-5">
               <div className="flex flex-col items-center text-center gap-4 py-4">
@@ -347,98 +347,194 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
                 </div>
               </div>
               <button
-                onClick={() => agent?.assistantId ? setShowVoice(true) : alert('Agent initializing — try again in 30 seconds')}
+                onClick={() => agent?.assistantId ? setShowVoice(true) : alert('Agent initializing â€” try again in 30 seconds')}
                 className="w-full flex items-center justify-center gap-3 text-sm font-black text-white py-4 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
                 style={{ background: 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)' }}>
                 <Phone size={16} />
                 Talk to Your Custom Nova Demo
               </button>
               <p className="text-[10px] text-slate-600 text-center">
-                This is a real AI call — Nova knows {businessName}'s services, tone, and goals.
+                This is a real AI call â€” Nova knows {businessName}'s services, tone, and goals.
               </p>
             </motion.div>
           )}
 
-          {/* TAB 3 — Free Assets */}
+          {/* TAB 3 â€” Free Assets */}
           {activeTab === 3 && (
             <motion.div key="t3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-4">
-              <div className="text-center mb-4">
-                <h3 className="text-white font-black text-base">Your Free Assets Are Unlocked 🎁</h3>
-                <p className="text-slate-400 text-xs mt-1">Everything below is yours — no catch, no credit card.</p>
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="text-white font-black text-base">Your Free Assets ðŸŽ</h3>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">3 unlocked</span>
               </div>
 
-              {[
-                {
-                  emoji: '📊',
-                  title: 'Full Business Intelligence Report',
-                  desc: `Complete gap analysis for ${businessName} with scores, problems, NWS solutions, manual DIY steps, and cost comparisons.`,
-                  cta: 'Download PDF Report',
-                  action: handleDownloadReport,
-                  badge: 'Most Valuable',
-                  badgeColor: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-                },
-                {
-                  emoji: '🎯',
-                  title: '72-Hour Quick Win Checklist',
-                  desc: `3 things ${firstName} can do this week to immediately improve ${businessName}'s digital operations — no tools required.`,
-                  cta: 'Download Checklist',
-                  action: () => {
-                    const wins = assessment.quickWins;
-                    const text = `72-HOUR QUICK WIN CHECKLIST — ${businessName}\nGenerated by NWS Business Intelligence Engine\n\n${wins.map((w: any, i: number) => `${i+1}. ${w.title}\n   Time: ${w.timeToImplement}\n   Impact: ${w.impact}`).join('\n\n')}\n\n---\nFor a complete solution: noveltywebsolutions.com`;
-                    const blob = new Blob([text], { type: 'text/plain' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url; a.download = `${businessName}-quick-wins.txt`; a.click();
-                    URL.revokeObjectURL(url);
-                  },
-                  badge: 'Start Today',
-                  badgeColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-                },
-                {
-                  emoji: '🤖',
-                  title: 'Custom AI Receptionist Script',
-                  desc: `Nova's full system prompt and conversation guide — customized for ${businessName} and the ${form.industry} industry.`,
-                  cta: 'Download AI Script',
-                  action: () => {
-                    const text = `CUSTOM AI RECEPTIONIST SCRIPT — ${businessName}\nIndustry: ${form.industry}\nGenerated by NWS Business Intelligence Engine\n\n${assessment.agentSystemPrompt}\n\nGREETING:\n"${assessment.agentGreeting}"\n\n---\nTo deploy this as a live 24/7 AI employee: noveltywebsolutions.com`;
-                    const blob = new Blob([text], { type: 'text/plain' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url; a.download = `${businessName}-ai-script.txt`; a.click();
-                    URL.revokeObjectURL(url);
-                  },
-                  badge: 'Exclusive',
-                  badgeColor: 'bg-sky-500/20 text-sky-400 border-sky-500/30',
-                },
-              ].map(asset => (
-                <div key={asset.title} className="border border-white/10 bg-white/5 rounded-2xl p-4">
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl shrink-0">{asset.emoji}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <span className="text-white font-bold text-sm">{asset.title}</span>
-                        <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold border ${asset.badgeColor}`}>{asset.badge}</span>
+              {/* â”€â”€ ASSET 1: Business Intelligence Report â”€â”€ */}
+              <div className="border border-amber-500/25 bg-amber-500/5 rounded-2xl overflow-hidden">
+                <div className="px-5 py-4 border-b border-amber-500/15 flex items-center gap-3">
+                  <span className="text-2xl">ðŸ“Š</span>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-white font-black text-sm">Full Business Intelligence Report</span>
+                      <span className="text-[9px] px-2 py-0.5 rounded-full font-bold border bg-amber-500/20 text-amber-400 border-amber-500/30">Most Valuable</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Personalised for {businessName} Â· {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+                  </div>
+                </div>
+                <div className="px-5 py-4 space-y-1">
+                  <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-3">What's inside</p>
+                  {[
+                    { num: 'â‘ ', label: 'Executive Summary & Overall Score',    val: `${assessment.overallScore}/100 Â· Grade ${assessment.grade}` },
+                    { num: 'â‘¡', label: '5-Category Gap Analysis',               val: `${assessment.categories.filter((c: any) => c.severity === 'critical').length} critical Â· ${assessment.categories.filter((c: any) => c.severity === 'warning').length} need work` },
+                    { num: 'â‘¢', label: 'Revenue Leakage Breakdown',             val: `Est. ${assessment.estimatedMonthlyLeakage}/mo` },
+                    { num: 'â‘£', label: 'DIY Steps vs. NWS Solutions',           val: 'Side-by-side for all 5 areas' },
+                    { num: 'â‘¤', label: 'Cost: Manual vs. Automated',            val: 'Time + tools + opportunity cost' },
+                    { num: 'â‘¥', label: '72-Hour Quick Win Action Plan',         val: '3 actions Â· starts today' },
+                    { num: 'â‘¦', label: 'Custom Strategy Call Offer',            val: 'Personalised NWS pricing' },
+                  ].map(row => (
+                    <div key={row.num} className="flex items-center gap-3 py-2 border-b border-white/5 last:border-0">
+                      <span className="text-[11px] text-slate-600 w-5 shrink-0 font-mono">{row.num}</span>
+                      <span className="text-[12px] text-slate-300 font-medium flex-1">{row.label}</span>
+                      <span className="text-[11px] text-slate-500 font-mono text-right shrink-0">{row.val}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="px-5 pb-4">
+                  <button onClick={handleDownloadReport}
+                    className="w-full flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.12em] font-black text-white py-3 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
+                    style={{ background: 'linear-gradient(135deg, #b45309, #d97706)' }}>
+                    <Download size={13} /> Download Full PDF Report
+                  </button>
+                </div>
+              </div>
+
+              {/* â”€â”€ ASSET 2: 72-Hour Quick Win Checklist â”€â”€ */}
+              <div className="border border-emerald-500/25 bg-emerald-500/5 rounded-2xl overflow-hidden">
+                <div className="px-5 py-4 border-b border-emerald-500/15 flex items-center gap-3">
+                  <span className="text-2xl">ðŸŽ¯</span>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-white font-black text-sm">72-Hour Quick Win Checklist</span>
+                      <span className="text-[9px] px-2 py-0.5 rounded-full font-bold border bg-emerald-500/20 text-emerald-400 border-emerald-500/30">Start Today</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 mt-0.5">3 actions {firstName} can implement this week â€” no budget needed</p>
+                  </div>
+                </div>
+                <div className="px-5 py-4 space-y-4">
+                  {assessment.quickWins.map((win: any, i: number) => (
+                    <div key={i} className="flex gap-3">
+                      <div className="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="text-[11px] font-black text-emerald-400">{i + 1}</span>
                       </div>
-                      <p className="text-[11px] text-slate-400 leading-relaxed mb-3">{asset.desc}</p>
-                      <button onClick={asset.action}
-                        className="flex items-center gap-1.5 text-[11px] font-bold text-sky-400 hover:text-sky-300 cursor-pointer bg-transparent border-none transition-colors p-0">
-                        <Download size={12} /> {asset.cta}
-                      </button>
+                      <div className="flex-1">
+                        <p className="text-[13px] text-white font-bold leading-snug">{win.title}</p>
+                        <p className="text-[12px] text-slate-400 mt-1 leading-relaxed">{win.impact}</p>
+                        <span className="inline-block mt-2 text-[10px] px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 font-bold">
+                          â± {win.timeToImplement}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="px-5 pb-4">
+                  <button onClick={() => {
+                      const wins = assessment.quickWins;
+                      const text = `72-HOUR QUICK WIN CHECKLIST\n${businessName} Â· Generated by NWS Business Intelligence Engine\n${new Date().toLocaleDateString()}\n${'â•'.repeat(52)}\n\n${wins.map((w: any, i: number) => `${i+1}. ${w.title}\n   Time to implement: ${w.timeToImplement}\n   Impact: ${w.impact}`).join('\n\n')}\n\n${'â”€'.repeat(52)}\nFor a complete automated solution: noveltywebsolutions.com`;
+                      const blob = new Blob([text], { type: 'text/plain' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url; a.download = `${businessName}-quick-wins.txt`; a.click();
+                      URL.revokeObjectURL(url);
+                    }}
+                    className="w-full flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.12em] font-black text-white py-3 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
+                    style={{ background: 'linear-gradient(135deg, #065f46, #059669)' }}>
+                    <Download size={13} /> Download Checklist
+                  </button>
+                </div>
+              </div>
+
+              {/* â”€â”€ ASSET 3: AI Receptionist Script â”€â”€ */}
+              <div className="border border-sky-500/25 bg-sky-500/5 rounded-2xl overflow-hidden">
+                <div className="px-5 py-4 border-b border-sky-500/15 flex items-center gap-3">
+                  <span className="text-2xl">ðŸ¤–</span>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-white font-black text-sm">Custom AI Receptionist Script</span>
+                      <span className="text-[9px] px-2 py-0.5 rounded-full font-bold border bg-sky-500/20 text-sky-400 border-sky-500/30">Exclusive</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Nova â€” built for {businessName} Â· {form.industry?.split('/')[0]?.trim()}</p>
+                  </div>
+                </div>
+                <div className="px-5 py-4 space-y-4">
+                  {/* Live greeting bubble */}
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Nova's Opening Greeting</p>
+                    <div className="bg-white/5 border border-sky-500/20 rounded-xl p-3 flex items-start gap-2.5">
+                      <div className="w-7 h-7 rounded-full bg-sky-500/30 border border-sky-400/40 flex items-center justify-center shrink-0">
+                        <span className="text-[9px] text-sky-400 font-black">AI</span>
+                      </div>
+                      <p className="text-[13px] text-sky-200 italic leading-relaxed">"{assessment.agentGreeting}"</p>
+                    </div>
+                  </div>
+                  {/* Agent spec table */}
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Agent Specifications</p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { label: 'Voice',    val: '11Labs Â· Sarah' },
+                        { label: 'Latency',  val: '<740ms' },
+                        { label: 'Uptime',   val: '24/7 Â· 365d' },
+                        { label: 'Industry', val: form.industry?.split('/')[0]?.trim() || 'General' },
+                        { label: 'Language', val: 'English' },
+                        { label: 'CRM Sync', val: 'GoHighLevel' },
+                      ].map(s => (
+                        <div key={s.label} className="bg-white/5 rounded-lg px-3 py-2.5">
+                          <p className="text-[9px] uppercase tracking-wider text-slate-600 font-bold">{s.label}</p>
+                          <p className="text-[12px] text-slate-300 font-bold mt-0.5">{s.val}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {/* System prompt preview */}
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">System Prompt Preview</p>
+                    <div className="bg-black/30 border border-white/8 rounded-xl p-3">
+                      <p className="text-[11px] text-slate-400 leading-relaxed font-mono" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' } as React.CSSProperties}>
+                        {assessment.agentSystemPrompt?.substring(0, 220)}â€¦
+                      </p>
                     </div>
                   </div>
                 </div>
-              ))}
+                <div className="px-5 pb-4">
+                  <button onClick={() => {
+                      const text = `CUSTOM AI RECEPTIONIST SCRIPT\n${businessName} Â· ${form.industry}\nNWS Business Intelligence Engine Â· ${new Date().toLocaleDateString()}\n\n${'â•'.repeat(52)}\nOPENING GREETING\n${'â”€'.repeat(52)}\n"${assessment.agentGreeting}"\n\n${'â•'.repeat(52)}\nFULL SYSTEM PROMPT\n${'â”€'.repeat(52)}\n${assessment.agentSystemPrompt}\n\n${'â•'.repeat(52)}\nAGENT SPECIFICATIONS\n${'â”€'.repeat(52)}\nVoice          : 11Labs Â· Sarah\nResponse Time  : <740ms average\nAvailability   : 24/7 Â· 365 days per year\nIndustry       : ${form.industry}\nCRM Integration: GoHighLevel\nLanguage       : English\n\n${'â”€'.repeat(52)}\nTo deploy Nova as a live AI employee:\nnoveltywebsolutions.com`;
+                      const blob = new Blob([text], { type: 'text/plain' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url; a.download = `${businessName}-nova-ai-script.txt`; a.click();
+                      URL.revokeObjectURL(url);
+                    }}
+                    className="w-full flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.12em] font-black text-white py-3 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
+                    style={{ background: 'linear-gradient(135deg, #0c4a6e, #0369a1)' }}>
+                    <Download size={13} /> Download Full AI Script
+                  </button>
+                </div>
+              </div>
 
-              <div className="border border-sky-500/30 bg-sky-500/10 rounded-2xl p-4 mt-2">
-                <p className="text-sky-400 text-xs font-bold mb-1">Ready to fix everything automatically?</p>
-                <p className="text-slate-400 text-[11px] leading-relaxed mb-3">
-                  Book a free 30-minute strategy call. Ronald will review your report live and show you exactly how quickly we can close every gap.
-                </p>
-                <a href="https://calendly.com/noveltywebsolutions/strategy" target="_blank" rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-xs font-bold text-white py-2.5 px-5 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
-                  style={{ background: 'linear-gradient(135deg, #0369a1, #0ea5e9)' }}>
-                  Book Free Strategy Call <ArrowRight size={11} />
-                </a>
+              {/* CTA strip */}
+              <div className="border border-sky-500/30 bg-sky-500/10 rounded-2xl p-5">
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl shrink-0">ðŸ“ž</span>
+                  <div className="flex-1">
+                    <p className="text-sky-400 text-sm font-black mb-1">Ready to implement all of this automatically?</p>
+                    <p className="text-slate-400 text-[12px] leading-relaxed mb-4">
+                      Book a free 30-minute call. Ronald reviews your report live, demos Nova running on {businessName}'s data, and gives you an exact timeline to go live.
+                    </p>
+                    <a href="https://calendly.com/noveltywebsolutions/strategy" target="_blank" rel="noreferrer"
+                      className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.12em] font-black text-white py-3 px-6 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
+                      style={{ background: 'linear-gradient(135deg, #0369a1, #0ea5e9)' }}>
+                      Book Free Strategy Call <ArrowRight size={12} />
+                    </a>
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}
@@ -446,7 +542,7 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
         </AnimatePresence>
       </div>
 
-      {/* Voice overlay — uses pre-provisioned agent from workbench analysis */}
+      {/* Voice overlay â€” uses pre-provisioned agent from workbench analysis */}
       {showVoice && (
         <VoiceCallOverlay
           demoId="nws-workbench"
