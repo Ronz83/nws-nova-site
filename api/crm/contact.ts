@@ -18,11 +18,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const key = process.env.GHL_PRIVATE_KEY;
+  const key        = process.env.GHL_PRIVATE_KEY;
+  const locationId = process.env.GHL_LOCATION_ID;
 
-  if (!key) {
-    console.error('[CRM] GHL_PRIVATE_KEY not set');
-    return res.status(500).json({ error: 'CRM not configured' });
+  if (!key || !locationId) {
+    console.error('[CRM] Missing GHL_PRIVATE_KEY or GHL_LOCATION_ID');
+    return res.status(500).json({ error: 'CRM not configured', missing: { key: !key, locationId: !locationId } });
   }
 
   const { name = '', email, company, service, message } = req.body ?? {};
@@ -38,6 +39,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   ].filter(Boolean) as string[];
 
   const payload: Record<string, any> = {
+    locationId,
     firstName,
     lastName,
     email:   String(email),
