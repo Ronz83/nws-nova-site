@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Target, Zap, RefreshCw, Star, Clock, Download, Mic, RotateCcw, CheckCircle, AlertTriangle, XCircle, ArrowRight, Phone } from 'lucide-react';
 import { VoiceCallOverlay } from '../nova/VoiceCallOverlay';
@@ -84,16 +84,12 @@ export default function WorkbenchResults({ data, form, onRestart }: Props) {
   const [activeTab, setActiveTab] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
   const [showVoice, setShowVoice] = useState(false);
-  const reportRef = useRef<HTMLDivElement>(null);
 
   const { assessment, agent, businessName, firstName } = data;
 
   const handleDownloadReport = () => {
     const reportWindow = window.open('', '_blank');
     if (!reportWindow) return;
-
-    const criticals = assessment.categories.filter((c: any) => c.severity === 'critical');
-    const warnings = assessment.categories.filter((c: any) => c.severity === 'warning');
 
     reportWindow.document.write(`<!DOCTYPE html>
 <html>
