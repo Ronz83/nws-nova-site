@@ -27,25 +27,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const redirectUri  = 'https://www.noveltywebsolutions.com/api/crm/callback';
 
   try {
-    // Exchange code for tokens
+    // STEP 1 — Exchange code for tokens
+    const tokenBody = new URLSearchParams({
+      grant_type:    'authorization_code',
+      code,
+      client_id:     clientId,
+      client_secret: clientSecret,
+      redirect_uri:  redirectUri,
+    });
+
     const tokenRes = await fetch('https://services.leadconnectorhq.com/oauth/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        grant_type:    'authorization_code',
-        code,
-        client_id:     clientId,
-        client_secret: clientSecret,
-        redirect_uri:  redirectUri,
-      }),
+      body: tokenBody,
     });
 
+    const tokenText = await tokenRes.text();
     if (!tokenRes.ok) {
-      const text = await tokenRes.text();
-      throw new Error(`Token exchange failed ${tokenRes.status}: ${text}`);
+      return res.status(500).send(`STEP 1 FAILED — Token exchange error ${tokenRes.status}: ${tokenText}`);
     }
 
-    const tokens = await tokenRes.json() as {
+    const tokens = JSON.parse(tokenText) as {
       access_token:  string;
       refresh_token: string;
       expires_in:    number;
@@ -53,23 +55,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       companyId?:    string;
     };
 
-    // Store tokens in NWS App Connect Supabase
+    // STEP 2 — Store tokens in Supabase
     const supabase = getBrokerClient();
-    const { error: dbErr } = await supabase.from('nws_crm_tokens').upsert({
+    const row = {
       company_id:    tokens.companyId   ?? 'nws',
       location_id:   tokens.locationId  ?? null,
       access_token:  tokens.access_token,
       refresh_token: tokens.refresh_token,
-      expires_at:    new Date(Date.now() + tokens.expires_in * 1000).toISOString(),
+      expires_at:    new Date(Date.now() + (tokens.expires_in ?? 86400) * 1000).toISOString(),
       updated_at:    new Date().toISOString(),
-    }, { onConflict: 'company_id' });
+    };
 
-    if (dbErr) throw new Error(`DB upsert failed: ${dbErr.message}`);
+    const { error: dbErr } = await supabase
+      .from('nws_crm_tokens')
+      .upsert(row, { onConflict: 'company_id' });
+
+    if (dbErr) {
+      return res.status(500).send(`STEP 2 FAILED — DB upsert error: ${dbErr.message} | code: ${dbErr.code} | details: ${dbErr.details}`);
+    }
 
     return res.status(200).send(`
       <html><body style="font-family:sans-serif;padding:40px;text-align:center">
         <h2 style="color:#0ea5e9">✅ NWS CRM Connected</h2>
-        <p>Authorization successful. You can close this window.</p>
+        <p>Authorization successful. Company: <strong>${tokens.companyId ?? 'nws'}</strong></p>
+        <p>Location: <strong>${tokens.locationId ?? 'none'}</strong></p>
+        <p>You can close this window.</p>
       </body></html>
     `);
   } catch (err: any) {
