@@ -10,6 +10,9 @@ interface Props {
   apiBase: string;
   logoUrl?: string;
   onClose: () => void;
+  // Pre-provisioned agent (from workbench) — skips the API call
+  assistantId?: string;
+  publicKey?: string;
 }
 
 type CallStatus = 'connecting' | 'active' | 'ended' | 'error';
@@ -26,6 +29,8 @@ export const VoiceCallOverlay: React.FC<Props> = ({
   apiBase,
   logoUrl,
   onClose,
+  assistantId: propAssistantId,
+  publicKey: propPublicKey,
 }) => {
   const [status, setStatus] = useState<CallStatus>('connecting');
   const [transcript, setTranscript] = useState<Transcript[]>([]);
@@ -45,40 +50,45 @@ export const VoiceCallOverlay: React.FC<Props> = ({
 
   useEffect(() => {
     let mediaStream: MediaStream | null = null;
-    
+
     const initCall = async () => {
       try {
-        // 1. Pre-flight Mic Check
         try {
           mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        } catch (micErr) {
-          console.error("Microphone permission denied:", micErr);
+        } catch {
           setStatus('error');
           setMicError(true);
-          // Don't set generic errorMsg, the UI will handle micError specially
           return;
         }
 
-        // 2. Ask backend to provision a Vapi agent and get the web call URL
-        const res = await fetch(`${apiBase}/api/demo-agent/start-call`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ demo_id: demoId }),
-        });
+        // Use pre-provisioned agent if available, otherwise call the API
+        let resolvedAssistantId: string;
+        let resolvedPublicKey: string;
 
-        const data = await res.json();
-        if (data.status !== 'success' || !data.assistant_id || !data.public_key) {
-          throw new Error(data.message || 'Failed to provision agent');
+        if (propAssistantId && propPublicKey) {
+          resolvedAssistantId = propAssistantId;
+          resolvedPublicKey = propPublicKey;
+        } else {
+          const res = await fetch(`${apiBase}/api/demo-agent/start-call`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ demo_id: demoId }),
+          });
+          const data = await res.json();
+          if (data.status !== 'success' || !data.assistant_id || !data.public_key) {
+            throw new Error(data.message || 'Failed to provision agent');
+          }
+          resolvedAssistantId = data.assistant_id;
+          resolvedPublicKey = data.public_key;
         }
 
-        // Resolve Vapi class constructor safely to handle Vite/Rollup module interop issues
         const VapiClass = (Vapi as any).default || Vapi;
-        const vapi = new VapiClass(data.public_key);
+        const vapi = new VapiClass(resolvedPublicKey);
         vapiRef.current = vapi;
 
         vapi.on('call-start', () => {
           setStatus('active');
-          vapi.setMuted(false); // Force unmute
+          vapi.setMuted(false);
           setIsMuted(false);
           timerRef.current = setInterval(() => setElapsedSeconds(p => p + 1), 1000);
         });
@@ -87,8 +97,6 @@ export const VoiceCallOverlay: React.FC<Props> = ({
           setStatus('ended');
           if (timerRef.current) clearInterval(timerRef.current);
         });
-
-        vapi.on('speech-start', () => {/* could animate mic */});
 
         vapi.on('message', (msg: any) => {
           if (msg.type === 'transcript' && msg.transcriptType === 'final') {
@@ -103,15 +111,13 @@ export const VoiceCallOverlay: React.FC<Props> = ({
         });
 
         vapi.on('error', (err: Error) => {
-          console.error('Vapi error:', err);
           setStatus('error');
           setErrorMsg(err.message || 'Unknown error');
           if (timerRef.current) clearInterval(timerRef.current);
         });
 
-        await vapi.start(data.assistant_id);
+        await vapi.start(resolvedAssistantId);
       } catch (e: unknown) {
-        console.error('Call init error:', e);
         setStatus('error');
         setErrorMsg(e instanceof Error ? e.message : 'Failed to start call');
       }
@@ -120,9 +126,7 @@ export const VoiceCallOverlay: React.FC<Props> = ({
     initCall();
 
     return () => {
-      if (mediaStream) {
-        mediaStream.getTracks().forEach(track => track.stop());
-      }
+      if (mediaStream) mediaStream.getTracks().forEach(t => t.stop());
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [demoId, apiBase]);
@@ -135,11 +139,7 @@ export const VoiceCallOverlay: React.FC<Props> = ({
 
   const toggleMute = () => {
     if (!vapiRef.current) return;
-    if (isMuted) {
-      vapiRef.current.setMuted(false);
-    } else {
-      vapiRef.current.setMuted(true);
-    }
+    vapiRef.current.setMuted(!isMuted);
     setIsMuted(p => !p);
   };
 
@@ -148,155 +148,137 @@ export const VoiceCallOverlay: React.FC<Props> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)' }}
     >
       <motion.div
-        initial={{ scale: 0.9, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.9, y: 20 }}
-        className="w-full max-w-sm bg-background/95 border border-border backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl flex flex-col text-foreground"
-        style={{ fontFamily: "'Inter', sans-serif" }}
+        initial={{ y: 60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 60, opacity: 0 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+        className="w-full sm:max-w-sm bg-white rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col"
+        style={{ fontFamily: "'Inter', sans-serif", maxHeight: '90vh' }}
       >
-        {/* Header */}
-        <div 
-          className="w-full pt-10 pb-8 px-6 flex flex-col items-center justify-center relative shrink-0"
-          style={{ background: primaryColor }}
-        >
-          <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
-          <div className="relative z-10 w-20 h-20 rounded-full bg-white/10 backdrop-blur-md shadow-2xl flex items-center justify-center mb-4 ring-4 ring-white/20">
-            {logoUrl ? (
-              <img src={logoUrl} alt="Logo" className="w-12 h-12 object-contain rounded-sm" />
-            ) : (
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <Mic className="w-6 h-6 text-white" />
-              </div>
-            )}
+        {/* Header — brand colour strip */}
+        <div className="w-full pt-8 pb-6 px-5 flex flex-col items-center shrink-0" style={{ background: primaryColor }}>
+          <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mb-3 ring-4 ring-white/20">
+            {logoUrl
+              ? <img src={logoUrl} alt="Logo" className="w-10 h-10 object-contain" />
+              : <Mic className="w-7 h-7 text-white" />
+            }
           </div>
-          <h3 className="text-white font-black text-2xl tracking-tight relative z-10 text-center">{businessName}</h3>
-          <span className="text-white/70 text-sm font-medium mt-1 relative z-10">AI Receptionist</span>
+          <h3 className="text-white font-black text-xl tracking-tight">{businessName}</h3>
+          <p className="text-white/70 text-xs font-medium mt-0.5">AI Receptionist</p>
           {status === 'active' && (
-            <div className="absolute bottom-4 right-4 flex items-center gap-1.5 bg-white/20 rounded-full px-3 py-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="mt-2 flex items-center gap-1.5 bg-white/20 rounded-full px-3 py-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
               <span className="text-xs font-bold text-white">{formatTime(elapsedSeconds)}</span>
             </div>
           )}
         </div>
 
-        {/* Center: Mic animation */}
-        <div className="flex flex-col items-center py-10 px-6 gap-4">
+        {/* Transcript / status area — always white */}
+        <div className="flex-1 overflow-y-auto bg-white px-4 py-4 flex flex-col gap-3 min-h-[200px] max-h-[340px]">
           <AnimatePresence mode="wait">
+
+            {/* CONNECTING */}
             {status === 'connecting' && (
-              <motion.div key="connecting" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center gap-4">
-                <div className="relative w-24 h-24">
-                  <div className="absolute inset-0 rounded-full animate-ping opacity-25" style={{ background: primaryColor }} />
-                  <div className="absolute inset-2 rounded-full animate-ping opacity-20 animation-delay-200" style={{ background: primaryColor }} />
-                  <div className="relative w-24 h-24 rounded-full flex items-center justify-center" style={{ background: `${primaryColor}22` }}>
-                    <Mic className="w-10 h-10" style={{ color: primaryColor }} />
+              <motion.div key="connecting" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center h-full gap-3 py-8">
+                <div className="relative w-16 h-16">
+                  <div className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ background: primaryColor }} />
+                  <div className="relative w-16 h-16 rounded-full flex items-center justify-center" style={{ background: `${primaryColor}15` }}>
+                    <Mic className="w-7 h-7" style={{ color: primaryColor }} />
                   </div>
                 </div>
-                <p className="text-muted-foreground font-medium text-sm">Connecting to Nova...</p>
+                <p className="text-slate-500 text-sm font-medium">Connecting to Nova…</p>
               </motion.div>
             )}
 
+            {/* ACTIVE — chat bubbles */}
             {status === 'active' && (
-              <motion.div key="active" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center gap-4 w-full">
-                <div className="relative w-24 h-24">
-                  <motion.div
-                    animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.15, 0.3] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                    className="absolute inset-0 rounded-full"
-                    style={{ background: primaryColor }}
-                  />
-                  <div className="relative w-24 h-24 rounded-full flex items-center justify-center" style={{ background: `${primaryColor}22` }}>
-                    {isMuted
-                      ? <MicOff className="w-10 h-10" style={{ color: primaryColor }} />
-                      : <Mic className="w-10 h-10" style={{ color: primaryColor }} />
-                    }
+              <motion.div key="active" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-2 w-full">
+                {transcript.length === 0 && (
+                  <div className="flex items-center justify-center gap-2 py-6 text-slate-400 text-xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Nova is listening…</span>
                   </div>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-emerald-400 font-bold text-sm">Connected</span>
-                </div>
-
-                {/* Transcript */}
-                {transcript.length > 0 && (
-                  <div className="w-full max-h-36 overflow-y-auto flex flex-col gap-2 mt-2 px-1">
-                    {transcript.map((t, i) => (
-                      <div key={i} className={`flex ${t.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div
-                          className={`px-3 py-2 rounded-2xl text-xs max-w-[85%] leading-relaxed ${
-                            t.role === 'user'
-                              ? 'text-white rounded-br-sm'
-                              : 'bg-muted border border-border text-foreground rounded-bl-sm'
-                          }`}
-                          style={t.role === 'user' ? { background: primaryColor } : {}}
-                        >
-                          {t.text}
-                        </div>
+                )}
+                {transcript.map((t, i) => (
+                  <div key={i} className={`flex ${t.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    {t.role === 'assistant' && (
+                      <div className="w-6 h-6 rounded-full flex-shrink-0 mr-2 flex items-center justify-center self-end mb-0.5" style={{ background: primaryColor }}>
+                        <Mic className="w-3 h-3 text-white" />
                       </div>
-                    ))}
-                    <div ref={transcriptEndRef} />
+                    )}
+                    <div
+                      className={`px-4 py-2.5 rounded-2xl text-sm max-w-[80%] leading-relaxed shadow-sm ${
+                        t.role === 'user'
+                          ? 'bg-slate-100 text-slate-800 rounded-br-sm'
+                          : 'text-white rounded-bl-sm'
+                      }`}
+                      style={t.role === 'assistant' ? { background: primaryColor } : {}}
+                    >
+                      {t.text}
+                    </div>
                   </div>
-                )}
+                ))}
+                <div ref={transcriptEndRef} />
               </motion.div>
             )}
 
+            {/* ENDED */}
             {status === 'ended' && (
-              <motion.div key="ended" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-3 text-center">
-                <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
-                  <span className="text-3xl">✓</span>
+              <motion.div key="ended" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-3 py-8 text-center">
+                <div className="w-14 h-14 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center">
+                  <span className="text-2xl">✓</span>
                 </div>
-                <p className="font-black text-foreground">Call Ended</p>
-                <p className="text-muted-foreground text-xs">Thank you for testing the demo</p>
+                <p className="font-black text-slate-800 text-base">Call Ended</p>
+                <p className="text-slate-500 text-xs max-w-[200px]">Thanks for testing Nova. We'll follow up shortly!</p>
               </motion.div>
             )}
 
+            {/* ERROR */}
             {status === 'error' && (
-              <motion.div key="error" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center gap-3">
-                <div className="w-16 h-16 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 flex items-center justify-center mb-2">
-                  <PhoneOff className="w-8 h-8" />
+              <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-3 py-8 text-center">
+                <div className="w-14 h-14 rounded-full bg-red-50 border-2 border-red-200 flex items-center justify-center">
+                  <PhoneOff className="w-6 h-6 text-red-400" />
                 </div>
-                <h4 className="text-foreground font-bold text-lg">Connection Failed</h4>
-                {micError ? (
-                  <div className="text-sm text-muted-foreground text-center max-w-[250px]">
-                    Microphone access was denied. Please allow microphone permissions in your browser to test the voice agent.
-                  </div>
-                ) : (
-                  <p className="text-muted-foreground text-sm text-center max-w-[200px]">{errorMsg || "Could not reach the AI agent."}</p>
-                )}
+                <p className="font-bold text-slate-800">Connection Failed</p>
+                {micError
+                  ? <p className="text-slate-500 text-xs max-w-[220px]">Microphone access was denied. Please allow mic permissions in your browser and try again.</p>
+                  : <p className="text-slate-500 text-xs max-w-[200px]">{errorMsg || 'Could not reach Nova.'}</p>
+                }
               </motion.div>
             )}
+
           </AnimatePresence>
         </div>
 
-        {/* Bottom controls */}
-        <div className="pb-8 px-6 flex items-center justify-center gap-4">
+        {/* Controls — bottom bar */}
+        <div className="bg-slate-50 border-t border-slate-100 px-5 py-4 flex items-center justify-center gap-4 shrink-0">
           {status === 'active' && (
             <button
               onClick={toggleMute}
-              className="w-12 h-12 rounded-full flex items-center justify-center bg-muted hover:bg-muted/80 text-foreground transition-colors cursor-pointer"
+              className={`w-11 h-11 rounded-full flex items-center justify-center transition-all cursor-pointer border-2 ${isMuted ? 'bg-slate-200 border-slate-300 text-slate-500' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'}`}
               title={isMuted ? 'Unmute' : 'Mute'}
             >
-              {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+              {isMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
             </button>
           )}
 
           {(status === 'active' || status === 'connecting') && (
             <button
               onClick={handleEndCall}
-              className="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg shadow-red-500/30 transition-all hover:scale-105 cursor-pointer"
-              title="End call"
+              className="w-14 h-14 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg shadow-red-200 transition-all cursor-pointer border-none"
             >
-              <PhoneOff className="w-7 h-7" />
+              <PhoneOff className="w-6 h-6" />
             </button>
           )}
 
           {(status === 'ended' || status === 'error') && (
             <button
               onClick={onClose}
-              className="px-6 py-2.5 rounded-xl font-bold text-white transition-all hover:opacity-90 cursor-pointer"
+              className="px-6 py-2.5 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 cursor-pointer border-none"
               style={{ background: primaryColor }}
             >
               Close
