@@ -7,7 +7,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 export default function handler(req: VercelRequest, res: VercelResponse) {
   const clientId  = process.env.NWS_CRM_CLIENT_ID;
   const appId     = clientId?.split('-').slice(0, -1).join('-') ?? clientId; // version_id = everything before last dash segment
-  const redirectUri = 'https://noveltywebsolutions.com/api/crm/callback';
+  const redirectUri = 'https://www.noveltywebsolutions.com/api/crm/callback';
 
   if (!clientId) {
     return res.status(500).json({ error: 'NWS_CRM_CLIENT_ID not configured' });

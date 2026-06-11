@@ -24,7 +24,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const clientId     = process.env.NWS_CRM_CLIENT_ID!;
   const clientSecret = process.env.NWS_CRM_CLIENT_SECRET!;
-  const redirectUri  = 'https://noveltywebsolutions.com/api/crm/callback';
+  const redirectUri  = 'https://www.noveltywebsolutions.com/api/crm/callback';
 
   try {
     // Exchange code for tokens
