@@ -4,7 +4,7 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-const GHL_API   = 'https://services.leadconnectorhq.com';
+const GHL_API = 'https://services.leadconnectorhq.com';
 const API_VER   = '2021-07-28';
 
 function setCors(res: VercelResponse) {
@@ -18,11 +18,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const key        = process.env.GHL_PRIVATE_KEY;
-  const locationId = process.env.GHL_LOCATION_ID;
+  const key = process.env.GHL_PRIVATE_KEY;
 
-  if (!key || !locationId) {
-    console.error('[CRM] GHL_PRIVATE_KEY or GHL_LOCATION_ID not set');
+  if (!key) {
+    console.error('[CRM] GHL_PRIVATE_KEY not set');
     return res.status(500).json({ error: 'CRM not configured' });
   }
 
@@ -39,11 +38,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   ].filter(Boolean) as string[];
 
   const payload: Record<string, any> = {
-    locationId,
     firstName,
     lastName,
-    email:       String(email),
-    source:      'NWS Website',
+    email:   String(email),
+    source:  'NWS Website',
     tags,
   };
 
