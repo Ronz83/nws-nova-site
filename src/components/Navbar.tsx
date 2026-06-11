@@ -34,7 +34,7 @@ export default function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b border-border-base bg-glass-bg backdrop-blur-lg">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
 
           {/* Brand Logo */}
           <Link to="/" className="flex items-center focus:outline-none" onClick={() => { setMobileOpen(false); setOpenDropdown(null); }}>
@@ -54,7 +54,7 @@ export default function Navbar() {
                   <>
                     <Link
                       to={item.href}
-                      className={`flex items-center gap-1 px-3 py-2 rounded-xl text-[11px] uppercase tracking-[0.15em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
+                      className={`flex items-center gap-1 px-3 py-2 rounded-xl text-xs uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
                     >
                       {item.label}
                       <ChevronDown size={11} className={`transition-transform ${openDropdown === item.label ? "rotate-180" : ""}`} />
@@ -85,7 +85,7 @@ export default function Navbar() {
                 ) : (
                   <Link
                     to={item.href}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] uppercase tracking-[0.15em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
                   >
                     {item.label}
                   </Link>
@@ -98,7 +98,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <button
               onClick={() => setIsBookingOpen(true)}
-              className="text-[11px] uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-5 py-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none"
+              className="text-xs uppercase tracking-[0.15em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-6 py-3.5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none hover:scale-[1.02]"
             >
               Book a Call
             </button>

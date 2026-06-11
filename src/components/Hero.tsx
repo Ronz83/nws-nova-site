@@ -72,11 +72,15 @@ export default function Hero({ onBookDemo }: HeroProps) {
   const handleReset = () => { setDomain(""); setStage("idle"); setLogs([]); setExtractedColors([]); setInputError(""); };
 
   return (
-    <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center py-20 px-6 overflow-hidden bg-white">
+    <section className="relative min-h-[calc(100vh-88px)] flex items-center justify-center py-20 px-6 overflow-hidden" style={{ background: "linear-gradient(160deg, #f0f9ff 0%, #ffffff 40%, #fffbeb 100%)" }}>
 
-      {/* Bright ambient glows */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-sky-100 blur-[120px] pointer-events-none opacity-70"></div>
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-amber-50 blur-[140px] pointer-events-none opacity-80"></div>
+      {/* Rich ambient glows */}
+      <div className="absolute top-0 left-0 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%)", transform: "translate(-30%, -30%)" }}></div>
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(245,158,11,0.14) 0%, transparent 70%)", transform: "translate(30%, 30%)" }}></div>
+      <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-30" style={{ background: "radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 65%)" }}></div>
+
+      {/* Dot grid */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.35]" style={{ backgroundImage: "radial-gradient(#94a3b8 1px, transparent 1px)", backgroundSize: "28px 28px" }}></div>
 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-10">
 
@@ -84,89 +88,107 @@ export default function Hero({ onBookDemo }: HeroProps) {
         <div className="lg:col-span-6 flex flex-col text-left">
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 self-start border border-sky-200 bg-sky-50 px-4 py-2 rounded-full text-[10px] tracking-[0.2em] uppercase font-bold text-sky-700 mb-6 shadow-sm">
-            <Sparkles size={11} className="text-sky-500 animate-pulse" />
+          <div className="inline-flex items-center gap-2 self-start border border-sky-200 bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-full text-[11px] tracking-[0.18em] uppercase font-bold text-sky-700 mb-8 shadow-sm">
+            <Sparkles size={12} className="text-sky-500 animate-pulse" />
             <span>Novelty Web Solutions · Operations Engine</span>
           </div>
 
           {/* Headline */}
-          <h1 className="font-display font-light text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[1.04] text-text-base">
-            Put your customer operations on{" "}
-            <span className="italic font-normal text-accent-primary">autopilot.</span>
+          <h1 className="font-display font-light text-6xl sm:text-7xl md:text-8xl tracking-tight leading-[1.02] text-text-base">
+            Put your customer<br />operations on{" "}
+            <span
+              className="italic font-normal"
+              style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #06b6d4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+            >
+              autopilot.
+            </span>
           </h1>
-          <p className="font-sans font-black uppercase text-[10px] sm:text-xs tracking-[0.25em] text-text-muted mt-5 flex items-center gap-2.5">
-            <span className="h-[1.5px] w-6 bg-sky-300 inline-block"></span>
+
+          <p className="font-sans font-black uppercase text-xs tracking-[0.25em] text-text-muted mt-6 flex items-center gap-2.5">
+            <span className="h-[2px] w-8 bg-gradient-to-r from-sky-400 to-cyan-300 inline-block rounded-full"></span>
             Powered by NWS Operations Engine
           </p>
 
           {/* Description */}
-          <p className="mt-6 text-sm sm:text-base text-text-muted leading-relaxed font-medium max-w-xl">
+          <p className="mt-7 text-base sm:text-lg text-text-muted leading-relaxed font-medium max-w-lg">
             We build stunning, high-converting websites and deploy custom AI employees that answer voice calls, qualify leads, and synchronize your CRM — around the clock.
           </p>
 
+          {/* Social proof pills */}
+          <div className="mt-6 flex flex-wrap gap-3">
+            {["24/7 AI Receptionist", "CRM Automation", "Caribbean-Based"].map(tag => (
+              <span key={tag} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-[11px] font-bold text-slate-600 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                {tag}
+              </span>
+            ))}
+          </div>
+
           {/* Actions */}
-          <div className="mt-8 flex flex-wrap gap-4 items-center">
+          <div className="mt-9 flex flex-wrap gap-4 items-center">
             <button
               onClick={onBookDemo}
-              className="text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none"
+              className="text-xs uppercase tracking-[0.18em] font-bold text-white px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02]"
+              style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)" }}
             >
               Book Strategy Call
             </button>
             <a
               href="#roi"
-              className="text-xs uppercase tracking-[0.18em] font-bold border-2 border-border-base hover:border-sky-300 hover:text-accent-deep px-7 py-4 rounded-xl text-text-muted transition-all duration-200 hover:bg-sky-50 cursor-pointer"
+              className="text-xs uppercase tracking-[0.18em] font-bold border-2 border-slate-200 hover:border-sky-300 hover:text-accent-deep px-8 py-4 rounded-xl text-text-muted transition-all duration-200 hover:bg-sky-50 cursor-pointer"
             >
               Calculate Yield
             </a>
           </div>
         </div>
 
-        {/* ── Right Column — Terminal Workbench ── */}
+        {/* ── Right Column — Dark Terminal Workbench ── */}
         <div className="lg:col-span-6 w-full">
-          <div className={`w-full rounded-[24px] border-2 bg-white shadow-xl relative overflow-hidden transition-all duration-500 ${stage !== "idle" ? "border-sky-300" : "border-border-base"}`}>
+          <div className={`w-full rounded-[20px] overflow-hidden shadow-2xl relative transition-all duration-500 ${stage !== "idle" ? "ring-2 ring-sky-400/40" : ""}`} style={{ background: "#0c1a2e" }}>
 
-            {/* Window bar */}
-            <div className="px-5 py-4 border-b border-border-base flex items-center justify-between bg-slate-50">
+            {/* Window bar — dark */}
+            <div className="px-5 py-4 border-b flex items-center justify-between" style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(0,0,0,0.25)" }}>
               <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-slate-200"></div>
-                <div className="w-3 h-3 rounded-full bg-slate-200"></div>
-                <div className="w-3 h-3 rounded-full bg-slate-200"></div>
+                <div className="w-3 h-3 rounded-full bg-red-500/70"></div>
+                <div className="w-3 h-3 rounded-full bg-amber-400/70"></div>
+                <div className="w-3 h-3 rounded-full bg-emerald-400/70"></div>
               </div>
-              <span className="text-[10px] font-mono tracking-widest text-text-muted font-bold uppercase flex items-center gap-1.5">
-                {stage === "idle"     && <><Terminal size={11} /> nws-compiler.sh</>}
-                {stage === "scraping" && <><RefreshCw size={11} className="text-sky-500 animate-spin" /> ingestion_active</>}
-                {stage === "mapping"  && <><Cpu size={11} className="text-amber-500 animate-pulse" /> CRM_integration</>}
-                {stage === "ready"    && <><CheckCircle size={11} className="text-emerald-500" /> workspace_online</>}
+              <span className="text-[10px] font-mono tracking-widest font-bold uppercase flex items-center gap-1.5 text-slate-400">
+                {stage === "idle"     && <><Terminal size={10} /> nws-compiler.sh</>}
+                {stage === "scraping" && <><RefreshCw size={10} className="text-sky-400 animate-spin" /> ingestion_active</>}
+                {stage === "mapping"  && <><Cpu size={10} className="text-amber-400 animate-pulse" /> CRM_integration</>}
+                {stage === "ready"    && <><CheckCircle size={10} className="text-emerald-400" /> workspace_online</>}
               </span>
-              <Globe size={13} className="text-slate-300" />
+              <Globe size={12} className="text-slate-600" />
             </div>
 
-            {/* Body */}
-            <div className="p-7 min-h-[370px] flex flex-col justify-between font-mono relative bg-slate-50/30">
+            {/* Body — dark */}
+            <div className="p-7 min-h-[370px] flex flex-col justify-between font-mono relative">
               <AnimatePresence mode="wait">
 
                 {/* IDLE */}
                 {stage === "idle" && (
                   <motion.div key="idle" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="flex-grow flex flex-col justify-center text-left">
-                    <h3 className="text-xs text-text-base mb-1.5 font-bold uppercase tracking-widest">Workspace Ingestion Workbench</h3>
-                    <p className="text-[11px] text-text-muted leading-relaxed mb-6 font-medium">
-                      Enter your brand domain to simulate the NWS autonomous ingestion pipeline — mapping your brand assets, styles, and CRM nodes.
+                    <h3 className="text-xs font-bold uppercase tracking-widest mb-2 text-amber-400">Workspace Ingestion Workbench</h3>
+                    <p className="text-[12px] leading-relaxed mb-6 font-medium text-slate-400">
+                      Enter your brand domain to simulate the NWS autonomous ingestion pipeline — mapping your{" "}
+                      <span className="text-sky-400 font-bold">brand assets, styles, and CRM nodes.</span>
                     </p>
                     <form onSubmit={runSimulation} className="w-full">
-                      <div className={`w-full bg-white border-2 rounded-xl p-3 flex flex-col sm:flex-row gap-3 items-center transition-all duration-300 shadow-sm ${inputError ? "border-red-400" : "border-border-base focus-within:border-sky-400 focus-within:ring-4 focus-within:ring-sky-100"}`}>
-                        <div className="text-slate-300 pl-1.5 hidden sm:block"><Globe size={16} /></div>
+                      <div className={`w-full rounded-xl p-3 flex flex-col sm:flex-row gap-3 items-center transition-all duration-300 border ${inputError ? "border-red-500/50 bg-red-900/10" : "border-white/10 bg-white/5 focus-within:border-sky-500/50 focus-within:bg-white/8"}`}>
+                        <div className="text-slate-500 pl-1.5 hidden sm:block"><Globe size={15} /></div>
                         <input
                           type="text" required value={domain} onChange={handleInputChange}
                           placeholder="e.g. stripe.com, apple.com"
-                          className="flex-grow w-full bg-transparent text-sm font-bold text-text-base border-none focus:outline-none placeholder:text-slate-300 font-mono py-1.5"
+                          className="flex-grow w-full bg-transparent text-sm font-bold border-none focus:outline-none font-mono py-1.5 text-slate-200 placeholder:text-slate-600"
                         />
-                        <button type="submit" className="w-full sm:w-auto flex items-center justify-center gap-2 text-xs uppercase tracking-[0.15em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-6 py-3 rounded-lg transition-all duration-200 cursor-pointer shadow border-none">
+                        <button type="submit" className="w-full sm:w-auto flex items-center justify-center gap-2 text-xs uppercase tracking-[0.15em] font-bold bg-sky-500 hover:bg-sky-400 text-white px-6 py-3 rounded-lg transition-all duration-200 cursor-pointer shadow border-none">
                           <Play size={10} fill="currentColor" />
                           <span>Run Ingest</span>
                         </button>
                       </div>
                       {inputError && (
-                        <div className="mt-2.5 text-[10px] text-red-500 font-bold flex items-center gap-1.5">
+                        <div className="mt-2.5 text-[11px] text-red-400 font-bold flex items-center gap-1.5">
                           <AlertCircle size={12} /><span>{inputError}</span>
                         </div>
                       )}
@@ -178,35 +200,35 @@ export default function Hero({ onBookDemo }: HeroProps) {
                 {(stage === "scraping" || stage === "mapping") && (
                   <motion.div key="running" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-grow flex flex-col justify-between h-full w-full text-left">
                     <div className={`absolute inset-x-0 h-[2px] top-0 animate-laser z-20 ${stage === "scraping" ? "bg-gradient-to-r from-transparent via-sky-400 to-transparent" : "bg-gradient-to-r from-transparent via-amber-400 to-transparent"}`}></div>
-                    <div className="space-y-2.5 overflow-y-auto max-h-[190px] pr-1.5 text-[11px] text-text-muted leading-relaxed font-medium">
+                    <div className="space-y-2.5 overflow-y-auto max-h-[190px] pr-1.5 text-[11px] leading-relaxed font-medium">
                       {logs.map((log, i) => (
-                        <div key={i} className="flex gap-2 items-start">
-                          <span className="text-sky-500 font-extrabold">&gt;</span>
+                        <div key={i} className="flex gap-2 items-start text-slate-400">
+                          <span className="text-emerald-400 font-extrabold shrink-0">&gt;</span>
                           <span>{log}</span>
                         </div>
                       ))}
                     </div>
-                    <div className="border-t border-border-base pt-5 mt-5 flex flex-wrap gap-5 justify-between items-center w-full">
+                    <div className="border-t pt-5 mt-5 flex flex-wrap gap-5 justify-between items-center w-full" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
                       {extractedColors.length > 0 && (
                         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-2">
-                          <span className="text-[9px] uppercase tracking-widest text-text-base flex items-center gap-1.5 font-bold">
-                            <Palette size={11} className="text-sky-500" /> Ingested Palette
+                          <span className="text-[9px] uppercase tracking-widest text-slate-400 flex items-center gap-1.5 font-bold">
+                            <Palette size={11} className="text-sky-400" /> Ingested Palette
                           </span>
                           <div className="flex gap-2">
                             {extractedColors.map((color, i) => (
-                              <div key={i} className="w-6 h-6 rounded-lg border border-border-base shadow-sm" style={{ backgroundColor: color }}></div>
+                              <div key={i} className="w-6 h-6 rounded-lg shadow-sm ring-1 ring-white/10" style={{ backgroundColor: color }}></div>
                             ))}
                           </div>
                         </motion.div>
                       )}
                       {stage === "mapping" && (
                         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-2 w-full">
-                          <span className="text-[9px] uppercase tracking-widest text-text-base flex items-center gap-1.5 font-bold">
-                            <Cpu size={11} className="text-amber-500" /> System Node Deployments
+                          <span className="text-[9px] uppercase tracking-widest text-slate-400 flex items-center gap-1.5 font-bold">
+                            <Cpu size={11} className="text-amber-400" /> System Node Deployments
                           </span>
                           <div className="grid grid-cols-3 gap-2 text-[10px] text-center font-bold">
                             {["ScraperNode", "VoiceAgent", "CRMHubSync"].map((node, i) => (
-                              <div key={node} className="border border-sky-100 p-2 bg-white rounded-lg text-sky-700 shadow-sm animate-pulse" style={{ animationDelay: `${i * 150}ms` }}>{node}</div>
+                              <div key={node} className="border border-sky-500/20 p-2 rounded-lg text-sky-400 bg-sky-500/10 animate-pulse" style={{ animationDelay: `${i * 150}ms` }}>{node}</div>
                             ))}
                           </div>
                         </motion.div>
@@ -218,20 +240,20 @@ export default function Hero({ onBookDemo }: HeroProps) {
                 {/* READY */}
                 {stage === "ready" && (
                   <motion.div key="ready" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="flex-grow flex flex-col justify-center items-center text-center p-3">
-                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1, rotate: 360 }} transition={{ type: "spring", stiffness: 200, damping: 20 }} className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-500 mb-4 shadow-sm">
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1, rotate: 360 }} transition={{ type: "spring", stiffness: 200, damping: 20 }} className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 mb-4 shadow-lg">
                       <CheckCircle size={28} />
                     </motion.div>
-                    <h3 className="text-base text-text-base mb-1 font-bold tracking-tight">NWS Custom Workspace Generated!</h3>
-                    <p className="text-[11px] text-text-muted max-w-sm leading-relaxed mb-6 font-medium">
-                      Successfully mapped pipeline nodes for <span className="font-mono text-text-base font-bold">{domain}</span>. System assets compiled.
+                    <h3 className="text-base text-white mb-1 font-bold tracking-tight">NWS Custom Workspace Generated!</h3>
+                    <p className="text-[12px] text-slate-400 max-w-sm leading-relaxed mb-6 font-medium">
+                      Successfully mapped pipeline nodes for <span className="font-mono text-sky-400 font-bold">{domain}</span>. System assets compiled.
                     </p>
-                    <div className="w-full border border-border-base rounded-xl bg-slate-50 p-3 mb-6 text-left text-[10px] font-mono text-text-muted space-y-1.5">
-                      <div className="flex justify-between"><span>WORKSPACE NAME:</span><span className="text-text-base font-bold">{domain.split(".")[0].toUpperCase()}-OS</span></div>
-                      <div className="flex justify-between"><span>ACCENT CODE:</span><span className="font-bold" style={{ color: extractedColors[0] }}>{extractedColors[0]}</span></div>
-                      <div className="flex justify-between"><span>VOICE LATENCY:</span><span className="text-emerald-600 font-bold">&lt;740ms (EXCELLENT)</span></div>
-                      <div className="flex justify-between"><span>INTEGRATIONS:</span><span className="text-text-base font-bold">CRM / VOIP / SMS</span></div>
+                    <div className="w-full border rounded-xl p-3 mb-6 text-left text-[10px] font-mono space-y-1.5" style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(0,0,0,0.3)" }}>
+                      <div className="flex justify-between text-slate-400"><span>WORKSPACE NAME:</span><span className="text-white font-bold">{domain.split(".")[0].toUpperCase()}-OS</span></div>
+                      <div className="flex justify-between text-slate-400"><span>ACCENT CODE:</span><span className="font-bold" style={{ color: extractedColors[0] }}>{extractedColors[0]}</span></div>
+                      <div className="flex justify-between text-slate-400"><span>VOICE LATENCY:</span><span className="text-emerald-400 font-bold">&lt;740ms (EXCELLENT)</span></div>
+                      <div className="flex justify-between text-slate-400"><span>INTEGRATIONS:</span><span className="text-white font-bold">CRM / VOIP / SMS</span></div>
                     </div>
-                    <button onClick={handleReset} className="text-xs uppercase tracking-[0.18em] font-bold border-2 border-border-base hover:border-sky-300 px-6 py-3 rounded-xl text-text-muted hover:text-accent-deep transition-all duration-200 cursor-pointer">
+                    <button onClick={handleReset} className="text-xs uppercase tracking-[0.18em] font-bold border border-white/10 hover:border-sky-400/50 px-6 py-3 rounded-xl text-slate-400 hover:text-sky-400 transition-all duration-200 cursor-pointer bg-transparent">
                       Reset Workspace
                     </button>
                   </motion.div>
