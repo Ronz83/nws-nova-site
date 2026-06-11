@@ -9,9 +9,8 @@ export default function LiveDemo() {
   const [showVoice, setShowVoice]   = useState(false);
   const [showBooking, setShowBooking] = useState(false);
 
-  // TODO: connect Vapi key and actual demo ID from backend configuration.
-  // Currently, if Vapi public key or API endpoint is not set up, we fall back to BookingModal for voice.
-  const hasVapiKeys = false; // Set to true when Vapi is wired in .env
+  // Vapi is wired via /api/demo-agent/start-call (Vercel serverless)
+  const hasVapiKeys = true;
 
   const handleOpenVoice = () => {
     if (hasVapiKeys) {
@@ -101,7 +100,7 @@ export default function LiveDemo() {
           demoId="nws-home-demo"
           businessName="Novelty Web Solutions"
           primaryColor="#0369a1"
-          apiBase={import.meta.env.VITE_API_URL || "https://antigravity-app-9ao8.onrender.com"}
+          apiBase=""
           onClose={() => setShowVoice(false)}
         />
       )}
