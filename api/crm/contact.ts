@@ -76,7 +76,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const data = await ghlRes.json() as any;
     if (!ghlRes.ok) {
       console.error('[CRM] GHL error:', ghlRes.status, JSON.stringify(data));
-      return res.status(502).json({ error: `GHL ${ghlRes.status}`, detail: data });
+      return res.status(502).json({ error: `GHL ${ghlRes.status}`, detail: data, resolvedLocationId: locationId });
     }
 
     console.log('[CRM] Contact created:', data?.contact?.id, 'in location:', locationId);
