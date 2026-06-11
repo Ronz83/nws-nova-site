@@ -5,12 +5,11 @@ interface LogoProps {
 export default function Logo({ variant = "dark" }: LogoProps) {
   return (
     <div className="flex items-center gap-3.5 select-none">
-      {/* NWS Logo — PNG only */}
+      {/* NWS Logo — PNG, shown as-is on all backgrounds */}
       <img
         src="/nws-logo.png"
         alt="Novelty Web Solutions"
         className="w-14 h-14 object-contain shrink-0"
-        style={variant === "light" ? { filter: "brightness(0) invert(1)" } : {}}
       />
 
       {/* Brand Text */}

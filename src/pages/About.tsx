@@ -1,56 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Compass, Sparkles, MapPin, Calendar, Heart, Shield, Cpu } from "lucide-react";
 import BookingModal from "../components/BookingModal";
 
-interface MissionEntry {
-  id: string;
-  version: string;
-  best_for: string;
-  message: string;
-}
-
-// Hardcoded fallbacks matched exactly to the database entries we verified
-const FALLBACK_MISSIONS: MissionEntry[] = [
-  {
-    id: "dc869930-9923-470f-b1ca-c7d7e2669b7d",
-    version: "Mission Statement",
-    best_for: "Website about section",
-    message: "At Novelty Web Solutions, our mission is to empower businesses with smart digital solutions that drive growth, automate operations, and create meaningful customer experiences. We combine cutting-edge AI technology, high-converting websites, marketing automation, and business intelligence tools to help companies attract more customers, streamline workflows, and scale with confidence."
-  },
-  {
-    id: "e51309bc-2e6a-4bf8-bf93-1fef5d3882aa",
-    version: "Premium Vision Version",
-    best_for: "Homepage hero",
-    message: "At Novelty Web Solutions, we believe every business should have access to enterprise-level technology without enterprise-level complexity. Our mission is to bridge the gap between innovation and execution by delivering intelligent websites, AI employees, automation systems, and growth-focused digital solutions that help businesses work faster, serve customers better, and unlock new opportunities across the Caribbean and beyond."
-  }
-];
-
 export default function About() {
-  const [missions, setMissions] = useState<MissionEntry[]>(FALLBACK_MISSIONS);
-  const [loading, setLoading]   = useState(true);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchMissionsFromDb = async () => {
-      const URL = "https://jtfyiotugsiolyzmjwvj.supabase.co";
-      const KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0Znlpb3R1Z3Npb2x5em1qd3ZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTIzNTIsImV4cCI6MjA5NTUyODM1Mn0.EtjoRRMC0lZiii0Fl4VKo9HSDwbu9OQMgkc328xbez4";
-
-      try {
-        const response = await fetch(`${URL}/rest/v1/nws_mission_entries?select=*`, {
-          headers: { "apikey": KEY, "Authorization": `Bearer ${KEY}` }
-        });
-        if (!response.ok) throw new Error("Database request failed");
-        const data = await response.json();
-        if (data && data.length > 0) setMissions(data);
-      } catch (err) {
-        console.warn("Using high-fidelity mission fallbacks:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMissionsFromDb();
-  }, []);
 
   return (
     <div className="min-h-screen bg-white text-text-base relative overflow-hidden">
@@ -81,47 +34,34 @@ export default function About() {
           </p>
         </div>
 
-        {/* Dynamic Mission Statement Section */}
+        {/* Mission Statement Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-24 items-start">
           <div className="lg:col-span-4 text-left">
-            <span className="text-[10px] uppercase tracking-widest text-sky-600 font-bold font-mono">Dynamic Values</span>
+            <span className="text-[10px] uppercase tracking-widest text-sky-600 font-bold font-mono">Our Purpose</span>
             <h2 className="text-2xl md:text-3xl font-black tracking-tight text-text-base mt-2 font-sans">
-              Our Active Mission
+              Our Mission
             </h2>
             <p className="text-xs text-text-muted mt-3 font-medium leading-relaxed">
-              Synchronized directly from our master brand directory, representing NWS guidelines for operational excellence.
+              The conviction that drives every website we build and every AI system we deploy.
             </p>
           </div>
 
-          <div className="lg:col-span-8 space-y-6">
-            {loading ? (
-              <div className="p-8 border-2 border-dashed border-border-base rounded-3xl flex justify-center items-center text-text-muted text-xs font-mono font-bold">
-                <div className="w-4 h-4 border-2 border-sky-400 border-t-transparent rounded-full animate-spin mr-3"></div>
-                LOADING MISSION SCHEMA...
+          <div className="lg:col-span-8">
+            <div className="border-2 border-slate-100 bg-white rounded-3xl p-8 text-left hover:shadow-lg hover:border-sky-100 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-sky-50 blur-3xl rounded-full pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-amber-50 blur-2xl rounded-full pointer-events-none"></div>
+              <p className="text-base sm:text-lg text-text-muted leading-relaxed font-medium relative z-10">
+                At Novelty Web Solutions, we believe every business — regardless of size — should have access to{" "}
+                <span className="text-text-base font-bold">enterprise-level technology without enterprise-level complexity.</span>
+                {" "}We bridge the gap between innovation and execution by delivering intelligent websites, AI employees,
+                automation systems, and growth-focused digital solutions that help businesses work faster, serve
+                customers better, and unlock new opportunities across the Caribbean and beyond.
+              </p>
+              <div className="mt-6 pt-6 border-t border-slate-100 flex items-center gap-2 relative z-10">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+                <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400">Novelty Web Solutions · Barbados, W.I.</span>
               </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-6">
-                {missions.map((mission) => (
-                  <div
-                    key={mission.id}
-                    className="border-2 border-slate-100 bg-white rounded-3xl p-7 text-left hover:shadow-lg hover:border-sky-100 transition-all duration-300 relative overflow-hidden"
-                  >
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-sky-50 blur-2xl rounded-full pointer-events-none"></div>
-                    <div className="flex justify-between items-start mb-4">
-                      <span className="text-[9px] uppercase tracking-widest text-text-base border border-border-base px-2.5 py-1 rounded-full font-mono font-bold bg-slate-50">
-                        {mission.version}
-                      </span>
-                      <span className="text-[8px] uppercase tracking-widest text-text-muted/60 font-mono font-medium">
-                        Usage: {mission.best_for}
-                      </span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
-                      {mission.message}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
+            </div>
           </div>
         </div>
 
