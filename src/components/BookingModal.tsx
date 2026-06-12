@@ -45,7 +45,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
             src="https://home.noveltywebsolutions.com/widget/booking/7XM9CtPbOpvqKfdXXFeq"
             style={{ width: "100%", height: "100%", border: "none" }}
             scrolling="yes"
-            id="nws-ghl-booking-iframe"
+            id="nws-CRM-booking-iframe"
             title="NWS Booking Calendar"
           />
         </div>

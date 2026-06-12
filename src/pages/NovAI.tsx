@@ -9,7 +9,7 @@ const capabilities = [
   { icon: <MessageSquare size={20} />, title: "Live Web Chat", desc: "Embedded on your site. Answers questions, collects contact info, and hands off to CRM." },
   { icon: <Brain size={20} />, title: "Custom Knowledge Base", desc: "Trained on your services, pricing, FAQs, and escalation rules. No generic responses." },
   { icon: <CheckCircle size={20} />, title: "Calendar Booking", desc: "Books appointments directly into your calendar. No back-and-forth emails." },
-  { icon: <Zap size={20} />, title: "CRM Auto-Sync", desc: "Every contact, call, and conversation synced to GHL, HubSpot, or Salesforce in real time." },
+  { icon: <Zap size={20} />, title: "CRM Auto-Sync", desc: "Every contact, call, and conversation synced to your CRM in real time." },
   { icon: <Globe size={20} />, title: "24/7 Availability", desc: "Never misses a call. Works across time zones, on holidays, and during peak volume." },
 ];
 

@@ -18,6 +18,7 @@ const Demo        = lazy(() => import("./pages/Demo"));
 const Privacy     = lazy(() => import("./pages/Privacy"));
 const Terms       = lazy(() => import("./pages/Terms"));
 const GDPR        = lazy(() => import("./pages/GDPR"));
+const ResultsPage = lazy(() => import("./pages/ResultsPage"));
 
 // Minimal page loader shown during lazy-load transitions
 function PageLoader() {
@@ -59,6 +60,7 @@ export default function App() {
               <Route path="/privacy"    element={<Privacy />} />
               <Route path="/terms"      element={<Terms />} />
               <Route path="/gdpr"       element={<GDPR />} />
+              <Route path="/results/:id" element={<ResultsPage />} />
               <Route path="*"          element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

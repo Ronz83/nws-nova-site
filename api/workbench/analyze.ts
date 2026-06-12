@@ -7,7 +7,13 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 const VAPI_API_KEY    = process.env.VAPI_API_KEY;
 const VAPI_PUBLIC_KEY = process.env.VAPI_PUBLIC_KEY;
 const GEMINI_API_KEY  = process.env.GEMINI_API_KEY;
-const GHL_WEBHOOK     = process.env.GHL_CONTACT_WEBHOOK || 'https://services.leadconnectorhq.com/hooks/PiPGhGQUHooNH7p8no1p/webhook-trigger/6d732939-314f-4339-a907-0da48a26c41f';
+const GHL_TOKEN       = process.env.GHL_PRIVATE_KEY;
+const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
+const GHL_PIPELINE_ID = process.env.GHL_PIPELINE_ID;
+const GHL_STAGE_ID    = process.env.GHL_STAGE_HOT_LEAD_ID;
+const GHL_BASE        = 'https://services.leadconnectorhq.com';
+const SUPABASE_URL    = process.env.SUPABASE_URL;
+const SUPABASE_KEY    = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 function setCors(res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -258,8 +264,24 @@ function generateSimulatedAssessment(payload: any): any {
       { title: 'Set up Google Business Profile (if not done)', timeToImplement: '45 minutes', impact: 'Gets you on Google Maps and local search results immediately' },
       { title: 'Create a Calendly link and add it to your email signature', timeToImplement: '30 minutes', impact: 'Eliminates back-and-forth scheduling, saves 3+ hours/week' },
     ],
-    agentGreeting: `Hi, thanks for calling ${payload.businessName}! I'm Nova, your AI assistant. How can I help you today?`,
-    agentSystemPrompt: `You are Nova, the AI voice receptionist for ${payload.businessName}, a ${payload.industry} business. Your job is to handle inbound inquiries professionally, qualify leads, answer common questions about services, and help callers book appointments or get in touch with the team. Be warm, helpful, and concise. Always end by offering to book a call or get their contact info. Do not discuss competitor pricing. If you don't know something specific, offer to have ${payload.firstName} follow up directly.`,
+    agentGreeting: `Hi there! Thanks so much for calling ${payload.businessName}. I'm your AI assistant — how can I help you today?`,
+    agentSystemPrompt: `You are a friendly AI receptionist for ${payload.businessName}, a ${payload.industry} business.
+
+Your speaking style:
+- Speak naturally and conversationally. Use contractions like "I'm", "we'll", "you're".
+- Keep responses short — 1 to 2 sentences max before pausing for the caller.
+- Vary your tone. Be warm on greetings, focused on questions, reassuring on concerns.
+- Never list items robotically. Say "we can help with a few things" rather than reciting a list.
+- Use natural filler affirmations: "Absolutely!", "Of course!", "Great question!"
+- Always pause after asking a question to let the caller respond.
+
+Your goals:
+1. Warmly greet and qualify the caller's need.
+2. Answer common questions about services and pricing if you know them.
+3. Offer to book an appointment or get their contact details for follow-up.
+4. If unsure about something specific, say: "Let me have ${payload.firstName} follow up with you on that directly."
+
+Never discuss competitor pricing. Always end the call by offering to book a time or take a message.`,
   };
 }
 
@@ -270,14 +292,21 @@ async function createVapiAgent(assessment: any, payload: any): Promise<{ assista
     name: `Nova — ${payload.businessName}`,
     model: {
       provider: 'openai',
-      model: 'gpt-4o-mini',
+      model: 'gpt-4o',
       systemPrompt: assessment.agentSystemPrompt,
       temperature: 0.7,
+      maxTokens: 150,
     },
-    voice: { provider: '11labs', voiceId: 'sarah' },
+    voice: {
+      provider: 'openai',
+      voiceId: 'nova',
+    },
     firstMessage: assessment.agentGreeting,
-    endCallMessage: `It was great speaking with you! Don't hesitate to reach out to ${payload.businessName} again. Have a wonderful day!`,
+    endCallMessage: `It was great speaking with you! Have a wonderful day!`,
     transcriber: { provider: 'deepgram', model: 'nova-2' },
+    silenceTimeoutSeconds: 25,
+    responseDelaySeconds: 0,
+    backgroundSound: 'off',
   };
 
   const res = await fetch('https://api.vapi.ai/assistant', {
@@ -291,23 +320,153 @@ async function createVapiAgent(assessment: any, payload: any): Promise<{ assista
   return { assistantId: data.id, publicKey: VAPI_PUBLIC_KEY! };
 }
 
-async function captureLeadInGHL(payload: any) {
+async function captureLeadInGHL(payload: any, assessment: any): Promise<string | null> {
+  if (!GHL_TOKEN || !GHL_LOCATION_ID) {
+    console.log('[GHL] Skipping — GHL_PRIVATE_KEY or GHL_LOCATION_ID not set');
+    return null;
+  }
+
+  const headers = {
+    Authorization: `Bearer ${GHL_TOKEN}`,
+    'Content-Type': 'application/json',
+    Version: '2021-07-28',
+  };
+
+  // Build tags from survey answers
+  const challenge = (payload.challenges?.[0] ?? '').replace(/_/g, '-');
+  const teamTag   = (payload.teamSize ?? '').replace(/_/g, '-');
+  const tags = [
+    'source:survey-funnel',
+    challenge && `challenge:${challenge}`,
+    teamTag   && `team-size:${teamTag}`,
+    'score:hot',
+  ].filter(Boolean) as string[];
+
+  // Build custom fields array (only include if field ID env var is set)
+  const customFields = [
+    process.env.GHL_CF_CHALLENGE && challenge
+      ? { id: process.env.GHL_CF_CHALLENGE, value: challenge } : null,
+    process.env.GHL_CF_TITLE && payload.title
+      ? { id: process.env.GHL_CF_TITLE,     value: payload.title } : null,
+    process.env.GHL_CF_TEAM_SIZE && payload.teamSize
+      ? { id: process.env.GHL_CF_TEAM_SIZE, value: payload.teamSize } : null,
+    process.env.GHL_CF_INDUSTRY && payload.industry
+      ? { id: process.env.GHL_CF_INDUSTRY,  value: payload.industry } : null,
+    process.env.GHL_CF_SCORE
+      ? { id: process.env.GHL_CF_SCORE, value: `${assessment.overallScore}/100 (Grade ${assessment.grade})` } : null,
+  ].filter(Boolean);
+
   try {
-    await fetch(GHL_WEBHOOK, {
+    // 1. Upsert contact (creates or updates by email)
+    const contactRes = await fetch(`${GHL_BASE}/contacts/upsert`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({
-        firstName: payload.firstName,
-        lastName: payload.lastName,
-        email: payload.email,
-        phone: payload.phone || '',
-        companyName: payload.businessName,
-        source: 'NWS Workbench Assessment',
-        tags: ['nws-workbench', `industry-${payload.industry?.toLowerCase()}`],
+        locationId: GHL_LOCATION_ID,
+        firstName:   payload.firstName,
+        lastName:    payload.lastName  || '',
+        email:       payload.email,
+        phone:       payload.phone     || '',
+        companyName: payload.businessName || payload.domain,
+        tags,
+        customFields,
       }),
     });
+
+    const contactData = await contactRes.json() as any;
+    const contactId   = contactData?.contact?.id;
+
+    if (!contactId) {
+      console.error('[GHL] No contactId returned:', JSON.stringify(contactData));
+      return null;
+    }
+    console.log(`[GHL] Contact upserted: ${contactId}`);
+
+    // 2. Create opportunity in AI Employee pipeline → New Lead stage
+    if (GHL_PIPELINE_ID && GHL_STAGE_ID) {
+      const oppRes = await fetch(`${GHL_BASE}/opportunities/`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          locationId:      GHL_LOCATION_ID,
+          name:            `${payload.firstName} ${payload.lastName || ''} — AI Employee Lead`.trim(),
+          pipelineId:      GHL_PIPELINE_ID,
+          pipelineStageId: GHL_STAGE_ID,
+          contactId,
+          status: 'open',
+        }),
+      });
+      const oppData = await oppRes.json() as any;
+      console.log(`[GHL] Opportunity created: ${oppData?.opportunity?.id ?? 'unknown'}`);
+    }
+
+    return contactId;
   } catch (e) {
     console.error('[GHL] Lead capture failed:', e);
+    return null;
+  }
+}
+
+// ── Save results to Supabase ─────────────────────────────────────────
+async function saveResultToSupabase(payload: any, assessment: any, agentData: any): Promise<string | null> {
+  if (!SUPABASE_URL || !SUPABASE_KEY) {
+    console.log('[Supabase] Skipping — SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set');
+    return null;
+  }
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/workbench_results`, {
+      method: 'POST',
+      headers: {
+        apikey:          SUPABASE_KEY,
+        Authorization:   `Bearer ${SUPABASE_KEY}`,
+        'Content-Type':  'application/json',
+        Prefer:          'return=representation',
+      },
+      body: JSON.stringify({
+        first_name:       payload.firstName,
+        last_name:        payload.lastName  || null,
+        email:            payload.email,
+        phone:            payload.phone     || null,
+        domain:           payload.domain,
+        business_name:    payload.businessName || payload.domain,
+        title:            payload.title     || null,
+        industry:         payload.industry  || null,
+        challenge:        (payload.challenges || [])[0] || null,
+        team_size:        payload.teamSize  || null,
+        assessment:       assessment,
+        agent_id:         agentData.assistantId || null,
+        agent_public_key: agentData.publicKey   || null,
+      }),
+    });
+    const rows = await res.json() as any[];
+    const id = rows?.[0]?.id;
+    if (id) console.log(`[Supabase] Result saved: ${id}`);
+    return id ?? null;
+  } catch (e) {
+    console.error('[Supabase] Save failed:', e);
+    return null;
+  }
+}
+
+// ── Write result URL back to GHL contact ──────────────────────────────
+async function updateGHLResultUrl(contactId: string, resultUrl: string) {
+  const cfId = process.env.GHL_CF_RESULT_URL;
+  if (!GHL_TOKEN || !cfId || !contactId) return;
+  try {
+    await fetch(`${GHL_BASE}/contacts/${contactId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization:  `Bearer ${GHL_TOKEN}`,
+        'Content-Type': 'application/json',
+        Version:        '2021-07-28',
+      },
+      body: JSON.stringify({
+        customFields: [{ id: cfId, value: resultUrl }],
+      }),
+    });
+    console.log(`[GHL] Result URL written to contact ${contactId}`);
+  } catch (e) {
+    console.error('[GHL] Result URL update failed:', e);
   }
 }
 
@@ -357,15 +516,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // 4. Capture lead in GHL
-    captureLeadInGHL(payload).catch(() => {});
+    // 4. Save results to Supabase — get shareable UUID
+    const resultId  = await saveResultToSupabase(payload, assessment, agentData);
+    const resultUrl = resultId
+      ? `${req.headers.origin || 'https://nws-nova-site.vercel.app'}/results/${resultId}`
+      : null;
+
+    // 5. Capture lead in GHL (v2 API — non-blocking)
+    captureLeadInGHL(payload, assessment)
+      .then(contactId => {
+        if (contactId && resultUrl) updateGHLResultUrl(contactId, resultUrl).catch(() => {});
+      })
+      .catch(() => {});
 
     return res.status(200).json({
       status: 'success',
       assessment,
       agent: agentData,
       businessName: payload.businessName,
-      firstName: payload.firstName,
+      firstName:    payload.firstName,
+      resultId,
+      resultUrl,
     });
 
   } catch (err: any) {

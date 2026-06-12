@@ -26,7 +26,7 @@ export default function HowItWorks() {
     },
     {
       id: 3, title: "CRM Sync & Launch", subtitle: "Step 03 / Operations Launch",
-      description: "We connect lead capture loops, link automated follow-up drips, and sync calendar mappings natively into HubSpot, Salesforce, or GHL before going live.",
+      description: "We connect lead capture loops, link automated follow-up drips, and sync calendar mappings natively into HubSpot, Salesforce, or CRM before going live.",
       icon: <Briefcase size={18} />,
     },
   ];

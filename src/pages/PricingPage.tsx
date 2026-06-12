@@ -32,7 +32,7 @@ const plans = [
       "AI Voice Receptionist (Nova) — unlimited calls",
       "Custom knowledge base training",
       "Calendar booking integration",
-      "GHL CRM sync",
+      "CRM sync",
       "Website hosting & maintenance",
       "Monthly performance reports",
       "Business hours escalation routing",

@@ -9,7 +9,7 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     q: "How quickly can I have an AI receptionist answering calls?",
-    a: "Typically 5–10 business days. We handle the voice tuning, knowledge base setup, CRM sync configuration, and a full test call suite before go-live. Existing businesses with a GHL workspace are often faster.",
+    a: "Typically 5–10 business days. We handle the voice tuning, knowledge base setup, CRM sync configuration, and a full test call suite before go-live. Existing businesses with a CRM workspace are often faster.",
   },
   {
     q: "What's included in the monthly retainer?",
@@ -21,7 +21,7 @@ const faqs: FAQItem[] = [
   },
   {
     q: "Do I need technical experience to manage the system?",
-    a: "No. Your GHL dashboard is a clean visual interface. You see live conversations, call logs, and contact cards. Our team handles all backend changes and model updates.",
+    a: "No. Your CRM dashboard is a clean visual interface. You see live conversations, call logs, and contact cards. Our team handles all backend changes and model updates.",
   },
   {
     q: "What happens if the AI can't answer a question?",

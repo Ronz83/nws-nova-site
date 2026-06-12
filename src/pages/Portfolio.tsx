@@ -10,7 +10,7 @@ const caseStudies = [
     location: "Barbados, W.I.",
     logo: "🏠",
     challenge: "Agents were missing inbound inquiry calls after hours, losing warm leads to competitors. No CRM to track follow-ups.",
-    solution: "Deployed Nova voice receptionist with GHL CRM. All inbound calls routed through Nova, which qualifies buyer intent, captures budget range, and books property tours automatically.",
+    solution: "Deployed Nova voice receptionist with CRM. All inbound calls routed through Nova, which qualifies buyer intent, captures budget range, and books property tours automatically.",
     results: [
       { metric: "Call Capture Rate", before: "61%", after: "100%", icon: <Phone size={14} /> },
       { metric: "Monthly Leads Qualified", before: "22", after: "89", icon: <TrendingUp size={14} /> },
@@ -46,7 +46,7 @@ const caseStudies = [
     location: "Barbados, W.I.",
     logo: "⚖️",
     challenge: "New client intake was handled entirely by email — slow, inconsistent, and missing key conflict-check information before consultation.",
-    solution: "Deployed Nova to handle all intake calls. Nova walks callers through a structured intake script, captures matter type, conflict check questions, and books consultations — all logged to GHL automatically.",
+    solution: "Deployed Nova to handle all intake calls. Nova walks callers through a structured intake script, captures matter type, conflict check questions, and books consultations — all logged to your CRM automatically.",
     results: [
       { metric: "Intake Time (per client)", before: "35 min", after: "8 min", icon: <Phone size={14} /> },
       { metric: "Consultations Booked/Week", before: "9", after: "24", icon: <TrendingUp size={14} /> },

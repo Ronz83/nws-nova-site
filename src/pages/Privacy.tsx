@@ -44,7 +44,7 @@ export default function Privacy() {
           <section>
             <h3 className="text-base sm:text-lg font-black text-text-base mb-3 font-sans">2. How We Use Your Data</h3>
             <p>
-              We use the collected data exclusively to compile customized AI employees, analyze client domain assets, sync contacts to target CRMs (HubSpot, Salesforce, or GHL), process consultation requests, and reply to client inquiries. We do not sell or rent customer data to third-party brokers.
+              We use the collected data exclusively to compile customized AI employees, analyze client domain assets, sync contacts to target CRMs (HubSpot or Salesforce), process consultation requests, and reply to client inquiries. We do not sell or rent customer data to third-party brokers.
             </p>
           </section>
 

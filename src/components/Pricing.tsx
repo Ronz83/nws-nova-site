@@ -17,7 +17,7 @@ export default function Pricing({ onBookDemo }: PricingProps) {
         "AI Voice Receptionist (unlimited calls)",
         "Custom-tuned knowledge base",
         "Live calendar booking integration",
-        "CRM contact sync (GHL)",
+        "CRM contact sync",
         "Monthly performance reporting",
         "Website hosting & maintenance",
         "Business hours escalation routing",

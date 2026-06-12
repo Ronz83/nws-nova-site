@@ -128,7 +128,7 @@ export default function Features() {
               </p>
             </div>
             <div className="flex justify-between items-center border-t border-slate-100 pt-3.5 w-full text-[9px] text-text-muted/60 font-mono font-bold">
-              <span>INTEGRATIONS: GHL / HUBSPOT</span>
+              <span>INTEGRATIONS: CRM / HUBSPOT</span>
               <span className="text-emerald-600 uppercase tracking-widest font-bold group-hover:underline">Connect Stack →</span>
             </div>
           </BentoCard>
