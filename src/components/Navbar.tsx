@@ -10,12 +10,12 @@ const navItems = [
     href: "/services",
     dropdown: [
       { label: "Website Design",    href: "/services#web-design",   icon: <Layers size={15} />,   desc: "Custom-coded, conversion-first sites" },
-      { label: "AI Voice (Nova)",   href: "/nova",                  icon: <Phone size={15} />,    desc: "24/7 voice receptionist" },
+      { label: "AI Voice (Samantha)",   href: "/samantha",                  icon: <Phone size={15} />,    desc: "24/7 voice receptionist" },
       { label: "CRM & Automations", href: "/services#crm",          icon: <Database size={15} />, desc: "Consolidate your customer ops" },
       { label: "Reputation Mgmt",   href: "/services#reputation",   icon: <Workflow size={15} />, desc: "Google & Facebook reviews AI" },
     ],
   },
-  { label: "Nova AI",   href: "/nova",      icon: <Mic size={14} /> },
+  { label: "Samantha AI",   href: "/samantha",      icon: <Mic size={14} /> },
   { label: "Portfolio", href: "/portfolio", icon: <Briefcase size={14} /> },
   { label: "Blog",      href: "/blog",      icon: <BookOpen size={14} /> },
   { label: "Pricing",   href: "/pricing",   icon: <DollarSign size={14} /> },
@@ -43,55 +43,72 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navItems.map(item => (
-              <div
-                key={item.label}
-                className="relative"
-                onMouseEnter={() => item.dropdown ? setOpenDropdown(item.label) : setOpenDropdown(null)}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                {item.dropdown ? (
-                  <>
+            {navItems.map(item => {
+              let timeoutRef: ReturnType<typeof setTimeout>;
+
+              const handleMouseEnter = () => {
+                clearTimeout(timeoutRef);
+                if (item.dropdown) setOpenDropdown(item.label);
+              };
+
+              const handleMouseLeave = () => {
+                timeoutRef = setTimeout(() => {
+                  setOpenDropdown(null);
+                }, 150); // 150ms debounce
+              };
+
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {item.dropdown ? (
+                    <>
+                      <Link
+                        to={item.href}
+                        className={`flex items-center gap-1 px-3 py-2 rounded-xl text-xs uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
+                      >
+                        {item.label}
+                        <ChevronDown size={11} className={`transition-transform ${openDropdown === item.label ? "rotate-180" : ""}`} />
+                      </Link>
+
+                      {/* Dropdown with hover bridge */}
+                      {openDropdown === item.label && (
+                        <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                          <div className="bg-white border-2 border-slate-100 rounded-2xl shadow-xl p-2">
+                            {item.dropdown.map(d => (
+                              <Link
+                                key={d.label}
+                                to={d.href}
+                                onClick={() => setOpenDropdown(null)}
+                                className="flex items-start gap-3 px-4 py-3 rounded-xl hover:bg-sky-50 hover:text-sky-700 transition-all group"
+                              >
+                                <div className="p-1.5 bg-slate-100 rounded-lg text-text-muted group-hover:bg-sky-100 group-hover:text-sky-600 transition-all shrink-0 mt-0.5">
+                                  {d.icon}
+                                </div>
+                                <div>
+                                  <div className="text-xs font-black text-text-base group-hover:text-sky-700 transition-colors">{d.label}</div>
+                                  <div className="text-[10px] text-text-muted font-medium mt-0.5">{d.desc}</div>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  ) : (
                     <Link
                       to={item.href}
-                      className={`flex items-center gap-1 px-3 py-2 rounded-xl text-xs uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
+                      className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
                     >
                       {item.label}
-                      <ChevronDown size={11} className={`transition-transform ${openDropdown === item.label ? "rotate-180" : ""}`} />
                     </Link>
-
-                    {/* Dropdown */}
-                    {openDropdown === item.label && (
-                      <div className="absolute top-full left-0 mt-2 w-64 bg-white border-2 border-slate-100 rounded-2xl shadow-xl p-2 z-50">
-                        {item.dropdown.map(d => (
-                          <Link
-                            key={d.label}
-                            to={d.href}
-                            onClick={() => setOpenDropdown(null)}
-                            className="flex items-start gap-3 px-4 py-3 rounded-xl hover:bg-sky-50 hover:text-sky-700 transition-all group"
-                          >
-                            <div className="p-1.5 bg-slate-100 rounded-lg text-text-muted group-hover:bg-sky-100 group-hover:text-sky-600 transition-all shrink-0 mt-0.5">
-                              {d.icon}
-                            </div>
-                            <div>
-                              <div className="text-xs font-black text-text-base group-hover:text-sky-700 transition-colors">{d.label}</div>
-                              <div className="text-[10px] text-text-muted font-medium mt-0.5">{d.desc}</div>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <Link
-                    to={item.href}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
-                  >
-                    {item.label}
-                  </Link>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
           {/* CTA */}

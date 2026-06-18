@@ -37,7 +37,7 @@ export default function Terms() {
           <section>
             <h3 className="text-base sm:text-lg font-black text-text-base mb-3 font-sans">1. Scope of Service</h3>
             <p>
-              Novelty Web Solutions (NWS) provides bespoke website design, CRM automation pipelines, and custom conversational AI employee (Nova) nodes. Setup build fees and monthly subscriptions are governed by individualized service agreements signed upon booking confirmation.
+              Novelty Web Solutions (NWS) provides bespoke website design, CRM automation pipelines, and custom conversational AI employee (Samantha) nodes. Setup build fees and monthly subscriptions are governed by individualized service agreements signed upon booking confirmation.
             </p>
           </section>
 

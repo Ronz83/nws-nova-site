@@ -1,27 +1,25 @@
 import { useState } from "react";
 import { MessageSquare, PhoneCall } from "lucide-react";
-import { ChatWidget } from "./nova/ChatWidget";
-import { VoiceCallOverlay } from "./nova/VoiceCallOverlay";
 import BookingModal from "./BookingModal";
+import { useSamantha } from "../context/SamanthaContext";
 
 export default function LiveDemo() {
-  const [showChat, setShowChat]     = useState(false);
-  const [showVoice, setShowVoice]   = useState(false);
   const [showBooking, setShowBooking] = useState(false);
+  const { openChat, openVoice } = useSamantha();
 
   // Vapi is wired via /api/demo-agent/start-call (Vercel serverless)
   const hasVapiKeys = true;
 
   const handleOpenVoice = () => {
     if (hasVapiKeys) {
-      setShowVoice(true);
+      openVoice();
     } else {
       setShowBooking(true);
     }
   };
 
   const handleOpenChat = () => {
-    setShowChat(true);
+    openChat();
   };
 
   return (
@@ -31,10 +29,10 @@ export default function LiveDemo() {
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">Interactive Sandbox</span>
         <h2 className="text-3xl md:text-5xl tracking-tight leading-none text-text-base mt-3 font-sans font-black">
-          See Nova in Action.
+          See Samantha in Action.
         </h2>
         <p className="mt-4 text-xs sm:text-sm text-text-muted leading-relaxed max-w-xl mx-auto font-medium">
-          Interact with Nova, our autonomous voice and chat receptionist, in real-time. Test its capabilities or schedule a custom integration session.
+          Interact with Samantha, our autonomous voice and chat receptionist, in real-time. Test its capabilities or schedule a custom integration session.
         </p>
 
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
@@ -66,7 +64,7 @@ export default function LiveDemo() {
               </div>
               <h3 className="text-lg font-black text-text-base mb-2">Test Live Voice</h3>
               <p className="text-xs text-text-muted leading-relaxed mb-6 font-medium">
-                Speak directly with Nova through your browser microphone. No phone numbers required.
+                Speak directly with Samantha through your browser microphone. No phone numbers required.
               </p>
             </div>
             <button
@@ -81,29 +79,6 @@ export default function LiveDemo() {
 
       {/* Booking Modal Fallback */}
       <BookingModal isOpen={showBooking} onClose={() => setShowBooking(false)} />
-
-      {/* Floating Chat Widget */}
-      {showChat && (
-        <ChatWidget
-          demoId="nws-home-demo"
-          businessName="Novelty Web Solutions"
-          primaryColor="#0369a1"
-          greetingScript="Hi! I am Nova, the AI assistant for Novelty Web Solutions. I can tell you about our custom websites, CRM setups, or voice receptionists. How can I help you today?"
-          apiBase={import.meta.env.VITE_API_URL || "https://antigravity-app-9ao8.onrender.com"}
-          onClose={() => setShowChat(false)}
-        />
-      )}
-
-      {/* Voice Call Overlay */}
-      {showVoice && (
-        <VoiceCallOverlay
-          demoId="nws-home-demo"
-          businessName="Novelty Web Solutions"
-          primaryColor="#0369a1"
-          apiBase=""
-          onClose={() => setShowVoice(false)}
-        />
-      )}
     </section>
   );
 }

@@ -37,7 +37,7 @@ export default function Privacy() {
           <section>
             <h3 className="text-base sm:text-lg font-black text-text-base mb-3 font-sans">1. Information We Collect</h3>
             <p>
-              At Novelty Web Solutions (NWS), we collect information that you directly provide to us when using our website, submitting booking queries, interacting with our Nova AI receptionist (both voice and chat formats), or requesting consultative setups. This includes names, phone numbers, email addresses, business details, and site domain URLs.
+              At Novelty Web Solutions (NWS), we collect information that you directly provide to us when using our website, submitting booking queries, interacting with our Samantha AI receptionist (both voice and chat formats), or requesting consultative setups. This includes names, phone numbers, email addresses, business details, and site domain URLs.
             </p>
           </section>
 
@@ -51,7 +51,7 @@ export default function Privacy() {
           <section>
             <h3 className="text-base sm:text-lg font-black text-text-base mb-3 font-sans">3. AI Conversation Logs & Recording</h3>
             <p>
-              When interacting with the Nova AI receptionist or chat widgets, conversation logs, microphone audio, and transcripts are recorded for quality assurance, semantic prompt tuning, and database mapping. We maintain these data assets on secure pipelines. By utilizing these tools, you consent to this monitoring and processing.
+              When interacting with the Samantha AI receptionist or chat widgets, conversation logs, microphone audio, and transcripts are recorded for quality assurance, semantic prompt tuning, and database mapping. We maintain these data assets on secure pipelines. By utilizing these tools, you consent to this monitoring and processing.
             </p>
           </section>
 

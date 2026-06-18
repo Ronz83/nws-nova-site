@@ -44,7 +44,7 @@ export default function GDPR() {
           <section>
             <h3 className="text-base sm:text-lg font-black text-text-base mb-3 font-sans">2. Data Processing Roles</h3>
             <p>
-              NWS acts as a **Data Controller** when handling our direct visitors' or clients' information. When deploying custom AI Employees (Nova) trained on client datasets that collect visitor contacts and transcribe calls, NWS acts as a **Data Processor** on behalf of the client.
+              NWS acts as a **Data Controller** when handling our direct visitors' or clients' information. When deploying custom AI Employees (Samantha) trained on client datasets that collect visitor contacts and transcribe calls, NWS acts as a **Data Processor** on behalf of the client.
             </p>
           </section>
 

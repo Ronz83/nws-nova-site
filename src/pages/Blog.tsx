@@ -55,10 +55,10 @@ const posts = [
   },
   {
     slug: "nova-ai-employee-training-protocol",
-    category: "Nova AI",
+    category: "Samantha AI",
     categoryColor: "indigo",
-    title: "Inside Nova's Training Protocol: How We Teach AI to Sound Like Your Business",
-    excerpt: "A behind-the-scenes look at how we ingest a client's domain, configure escalation rules, and test Nova across 20+ call scenarios before go-live.",
+    title: "Inside Samantha's Training Protocol: How We Teach AI to Sound Like Your Business",
+    excerpt: "A behind-the-scenes look at how we ingest a client's domain, configure escalation rules, and test Samantha across 20+ call scenarios before go-live.",
     date: "May 1, 2026",
     readTime: "9 min read",
     featured: false,
@@ -75,7 +75,7 @@ const colorMap: Record<string, string> = {
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const categories = ["All", "AI Operations", "Web Design", "CRM & Automations", "Local SEO", "Nova AI"];
+  const categories = ["All", "AI Operations", "Web Design", "CRM & Automations", "Local SEO", "Samantha AI"];
 
   const filtered = activeCategory === "All" ? posts : posts.filter(p => p.category === activeCategory);
   const featured = posts.find(p => p.featured);

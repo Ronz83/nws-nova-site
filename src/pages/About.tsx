@@ -85,12 +85,12 @@ export default function About() {
             <div className="p-3 bg-amber-50 border border-amber-100 rounded-2xl w-fit shadow-sm">
               <Cpu size={20} className="text-amber-600" />
             </div>
-            <h3 className="text-2xl font-black text-text-base tracking-tight">Why We Engineered Nova</h3>
+            <h3 className="text-2xl font-black text-text-base tracking-tight">Why We Engineered Samantha</h3>
             <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
               Most businesses spend thousands of dollars a month trying to duct-tape together calendars, CRMs, chat widgets, and virtual assistants. This is expensive and fragile.
             </p>
             <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
-              Nova is our answers-it-all AI employee. It qualifies inbound phone leads, answers instant FAQs, books strategy calls, and synchronizes the entire database in real-time — removing the technical complexity entirely.
+              Samantha is our answers-it-all AI employee. It qualifies inbound phone leads, answers instant FAQs, books strategy calls, and synchronizes the entire database in real-time — removing the technical complexity entirely.
             </p>
           </div>
 
@@ -153,7 +153,7 @@ export default function About() {
             Ready to experience next-gen <span className="italic font-normal text-amber-300">operations?</span>
           </h3>
           <p className="mt-4 text-xs md:text-sm text-sky-100 max-w-xl mx-auto leading-relaxed font-medium">
-            See Nova in action and consult with Ronald on a custom digital strategy for your business.
+            See Samantha in action and consult with Ronald on a custom digital strategy for your business.
           </p>
 
           <div className="mt-8 flex justify-center">
@@ -162,7 +162,7 @@ export default function About() {
               className="bg-white hover:bg-sky-50 text-sky-800 font-black uppercase tracking-[0.2em] text-xs px-8 py-4 rounded-xl flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer border-none font-sans"
             >
               <Calendar size={14} className="text-sky-600" />
-              <span>See Nova in Action</span>
+              <span>See Samantha in Action</span>
             </button>
           </div>
         </div>

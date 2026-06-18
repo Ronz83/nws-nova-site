@@ -31,23 +31,23 @@ export default function Hero({ onBookDemo }: HeroProps) {
 
           {/* Headline */}
           <h1 className="font-display font-light text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[1.04] text-text-base">
-            Put your customer<br />operations on{" "}
+            Stop losing revenue to{" "}
             <span
               className="italic font-normal"
               style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #06b6d4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
             >
-              autopilot.
+              missed calls.
             </span>
           </h1>
 
           <p className="font-sans font-black uppercase text-xs tracking-[0.25em] text-text-muted mt-6 flex items-center gap-2.5">
             <span className="h-[2px] w-8 bg-gradient-to-r from-sky-400 to-cyan-300 inline-block rounded-full"></span>
-            Powered by NWS Operations Engine
+            Stop the operational bleeding
           </p>
 
           {/* Description */}
           <p className="mt-6 text-base sm:text-lg text-text-muted leading-relaxed font-medium max-w-lg">
-            We build stunning, high-converting websites and deploy custom AI employees that answer voice calls, qualify leads, and synchronize your CRM — around the clock.
+            Every missed call is a lost deal. Every manual follow-up drains your time and sanity. We deploy custom AI employees and high-converting websites that plug the leaks in your operations and capture every lead, 24/7.
           </p>
 
           {/* Social proof pills */}

@@ -332,8 +332,8 @@ async function captureLeadInGHL(payload: any, assessment: any): Promise<string |
     Version: '2021-07-28',
   };
 
-  // Build tags from survey answers
-  const challenge = (payload.challenges?.[0] ?? '').replace(/_/g, '-');
+  // Build tags from survey answers (using payload.challenge instead of challenges array)
+  const challenge = (payload.challenge ?? '').replace(/_/g, '-');
   const teamTag   = (payload.teamSize ?? '').replace(/_/g, '-');
   const tags = [
     'source:survey-funnel',
@@ -342,7 +342,7 @@ async function captureLeadInGHL(payload: any, assessment: any): Promise<string |
     'score:hot',
   ].filter(Boolean) as string[];
 
-  // Build custom fields array (only include if field ID env var is set)
+  // Build custom fields array
   const customFields = [
     process.env.GHL_CF_CHALLENGE && challenge
       ? { id: process.env.GHL_CF_CHALLENGE, value: challenge } : null,
@@ -358,19 +358,22 @@ async function captureLeadInGHL(payload: any, assessment: any): Promise<string |
 
   try {
     // 1. Upsert contact (creates or updates by email)
+    const contactPayload = {
+      locationId: GHL_LOCATION_ID,
+      firstName:   payload.firstName,
+      lastName:    payload.lastName || undefined, // GHL v2 API prefers undefined over empty strings
+      email:       payload.email,
+      phone:       payload.phone || undefined,
+      companyName: payload.businessName || payload.domain,
+      tags,
+      customFields,
+    };
+    
+    console.log('[GHL] Sending contact upsert...');
     const contactRes = await fetch(`${GHL_BASE}/contacts/upsert`, {
       method: 'POST',
       headers,
-      body: JSON.stringify({
-        locationId: GHL_LOCATION_ID,
-        firstName:   payload.firstName,
-        lastName:    payload.lastName  || '',
-        email:       payload.email,
-        phone:       payload.phone     || '',
-        companyName: payload.businessName || payload.domain,
-        tags,
-        customFields,
-      }),
+      body: JSON.stringify(contactPayload),
     });
 
     const contactData = await contactRes.json() as any;
@@ -403,6 +406,8 @@ async function captureLeadInGHL(payload: any, assessment: any): Promise<string |
     return contactId;
   } catch (e) {
     console.error('[GHL] Lead capture failed:', e);
+    // Safety net: log full payload so it's not lost
+    console.log('[GHL FALLBACK PAYLOAD]', JSON.stringify(payload));
     return null;
   }
 }
@@ -431,7 +436,7 @@ async function saveResultToSupabase(payload: any, assessment: any, agentData: an
         business_name:    payload.businessName || payload.domain,
         title:            payload.title     || null,
         industry:         payload.industry  || null,
-        challenge:        (payload.challenges || [])[0] || null,
+        challenge:        payload.challenge || null,
         team_size:        payload.teamSize  || null,
         assessment:       assessment,
         agent_id:         agentData.assistantId || null,
@@ -522,12 +527,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ? `${req.headers.origin || 'https://nws-nova-site.vercel.app'}/results/${resultId}`
       : null;
 
-    // 5. Capture lead in GHL (v2 API — non-blocking)
-    captureLeadInGHL(payload, assessment)
-      .then(contactId => {
-        if (contactId && resultUrl) updateGHLResultUrl(contactId, resultUrl).catch(() => {});
-      })
-      .catch(() => {});
+    // 5. Capture lead in GHL (AWAIT THIS SO VERCEL DOES NOT KILL IT)
+    const contactId = await captureLeadInGHL(payload, assessment);
+    if (contactId && resultUrl) {
+      await updateGHLResultUrl(contactId, resultUrl);
+    }
 
     return res.status(200).json({
       status: 'success',

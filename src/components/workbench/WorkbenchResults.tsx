@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Target, Zap, RefreshCw, Star, Clock, Download, RotateCcw, ArrowRight, Phone, Link2, ChevronDown, ChevronUp, TrendingUp, Calendar, DollarSign, Sparkles, BarChart2, ListChecks, Bot } from 'lucide-react';
-import { VoiceCallOverlay } from '../nova/VoiceCallOverlay';
+import { VoiceCallOverlay } from '../samantha/VoiceCallOverlay';
 import agentAvatar from '../../assets/ai-agent-avatar.png';
 
 interface Props {
@@ -432,7 +432,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                 </div>
                 <div>
                   <h3 className="text-white font-black text-lg">Your Agent is trained on {businessName}</h3>
-                  <p className="text-slate-400 text-sm mt-1">Nova is the demo — your agent carries your brand name, voice, and services</p>
+                  <p className="text-slate-400 text-sm mt-1">Samantha is the demo — your agent carries your brand name, voice, and services</p>
                 </div>
                 <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-left">
                   <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Opening Greeting</p>
@@ -456,10 +456,10 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                 className="w-full flex items-center justify-center gap-3 text-sm font-black text-white py-4 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
                 style={{ background: 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)' }}>
                 <Phone size={16} />
-                Talk to Your Agent Demo — Nova
+                Talk to Your Agent Demo — Samantha
               </button>
               <p className="text-[10px] text-white/60 text-center">
-                This is a real AI call. Nova knows {businessName}'s services, tone, and goals.
+                This is a real AI call. Samantha knows {businessName}'s services, tone, and goals.
               </p>
             </motion.div>
           )}

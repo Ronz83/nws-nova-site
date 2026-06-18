@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Phone, MessageSquare, Brain, Zap, CheckCircle, ArrowRight, Mic, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 import BookingModal from "../components/BookingModal";
-import { VoiceCallOverlay } from "../components/nova/VoiceCallOverlay";
+import { VoiceCallOverlay } from "../components/samantha/VoiceCallOverlay";
 
 const capabilities = [
   { icon: <Phone size={20} />, title: "Inbound Call Handling", desc: "Answers every call instantly. Qualifies leads, captures intake info, routes based on intent." },
@@ -20,7 +20,7 @@ const stats = [
   { value: "5–10", label: "Days to Go Live" },
 ];
 
-export default function Nova() {
+export default function Samantha() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [showVoice, setShowVoice] = useState(false);
 
@@ -39,17 +39,17 @@ export default function Nova() {
               AI Employee — Voice & Chat
             </div>
             <h1 className="font-display font-light text-5xl md:text-6xl tracking-tight leading-[1.04] text-text-base">
-              Meet <span className="italic font-normal text-accent-primary">Nova.</span>
+              Meet <span className="italic font-normal text-accent-primary">Samantha.</span>
             </h1>
             <p className="mt-4 text-sm text-text-muted leading-relaxed font-medium max-w-md">
-              Nova is your always-on AI employee. It answers inbound calls, chats with website visitors, qualifies leads, and syncs everything to your CRM — without ever taking a lunch break.
+              Samantha is your always-on AI employee. It answers inbound calls, chats with website visitors, qualifies leads, and syncs everything to your CRM — without ever taking a lunch break.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
               <button onClick={() => setShowVoice(true)} className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
-                <Mic size={12} /> Try Nova Live
+                <Mic size={12} /> Try Samantha Live
               </button>
               <button onClick={() => setIsBookingOpen(true)} className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-bold border-2 border-border-base hover:border-sky-300 px-7 py-4 rounded-xl text-text-muted hover:text-accent-deep hover:bg-sky-50 transition-all cursor-pointer">
-                Deploy Nova <ArrowRight size={12} />
+                Deploy Samantha <ArrowRight size={12} />
               </button>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function Nova() {
                   />
                 ))}
               </div>
-              <span className="text-[10px] uppercase tracking-widest text-sky-600 font-bold">Nova · Active · Listening</span>
+              <span className="text-[10px] uppercase tracking-widest text-sky-600 font-bold">Samantha · Active · Listening</span>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function Nova() {
       <section id="capabilities" className="py-20 px-6 bg-bg-tint border-b border-border-base">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">What Nova Does</span>
+            <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">What Samantha Does</span>
             <h2 className="text-3xl md:text-4xl font-black text-text-base mt-3">Core Capabilities</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -116,13 +116,13 @@ export default function Nova() {
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <div>
             <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">Training Protocol</span>
-            <h2 className="text-3xl md:text-4xl font-black text-text-base mt-3 mb-6">Nova learns your business, not a script.</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-text-base mt-3 mb-6">Samantha learns your business, not a script.</h2>
             <div className="flex flex-col gap-5">
               {[
                 { step: "01", title: "Domain Ingestion", desc: "We scrape your existing site, PDFs, and service sheets to build an initial knowledge map." },
                 { step: "02", title: "Custom Rule Configuration", desc: "You define escalation triggers, pricing rules, objection scripts, and off-limit topics." },
                 { step: "03", title: "Live Call Testing", desc: "We run a full test call sprint across 20+ edge-case scenarios before go-live." },
-                { step: "04", title: "Ongoing Refinement", desc: "Call transcripts are reviewed monthly. Nova is retrained whenever your business changes." },
+                { step: "04", title: "Ongoing Refinement", desc: "Call transcripts are reviewed monthly. Samantha is retrained whenever your business changes." },
               ].map(s => (
                 <div key={s.step} className="flex gap-5 items-start">
                   <span className="text-3xl font-black font-mono text-slate-100 shrink-0 leading-none">{s.step}</span>
@@ -142,14 +142,14 @@ export default function Nova() {
               Hi, do you offer website redesigns for existing businesses?
             </div>
             <div className="self-start max-w-[90%] bg-sky-500 text-white px-4 py-3 rounded-2xl rounded-tl-none text-xs leading-relaxed font-medium shadow-md">
-              <span className="text-[9px] uppercase tracking-widest text-sky-200 block mb-1">Nova · NWS AI</span>
+              <span className="text-[9px] uppercase tracking-widest text-sky-200 block mb-1">Samantha · NWS AI</span>
               Absolutely! We specialize in full website rebuilds — typically from $1,500. We'd do a full brand audit, rebuild in React for speed, and integrate your booking calendar. Want me to schedule a 30-minute strategy call with Ronald this week?
             </div>
             <div className="self-end max-w-[85%] bg-slate-100 text-text-base px-4 py-3 rounded-2xl rounded-tr-none text-xs font-medium shadow-sm">
               Yes, Thursday afternoon works.
             </div>
             <div className="self-start max-w-[90%] bg-sky-500 text-white px-4 py-3 rounded-2xl rounded-tl-none text-xs leading-relaxed font-medium shadow-md">
-              <span className="text-[9px] uppercase tracking-widest text-sky-200 block mb-1">Nova · NWS AI</span>
+              <span className="text-[9px] uppercase tracking-widest text-sky-200 block mb-1">Samantha · NWS AI</span>
               Perfect — I've opened Thursday 2 PM EST in our calendar. I'll send a confirmation link to your email now. Is there anything specific you'd like Ronald to review beforehand?
             </div>
           </div>
@@ -159,7 +159,7 @@ export default function Nova() {
       {/* CTA */}
       <section className="py-16 px-6 bg-bg-tint">
         <div className="max-w-3xl mx-auto text-center">
-          <h3 className="text-2xl md:text-3xl font-black text-text-base">Ready to deploy Nova?</h3>
+          <h3 className="text-2xl md:text-3xl font-black text-text-base">Ready to deploy Samantha?</h3>
           <p className="text-sm text-text-muted mt-3 font-medium">Setup takes 5–10 business days. Book a call and we'll walk you through the full training protocol.</p>
           <button onClick={() => setIsBookingOpen(true)} className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-8 py-4 rounded-xl shadow-md cursor-pointer border-none transition-all">
             Book a Call <ArrowRight size={12} />

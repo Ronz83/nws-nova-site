@@ -23,7 +23,7 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               <span className="uppercase tracking-[0.2em] text-slate-500 font-bold text-[9px] mb-1">Services</span>
               <Link to="/services"          className="hover:text-white transition-colors">Website Design</Link>
-              <Link to="/nova"              className="hover:text-white transition-colors">AI Voice (Nova)</Link>
+              <Link to="/samantha"              className="hover:text-white transition-colors">AI Voice (Samantha)</Link>
               <Link to="/services#crm"      className="hover:text-white transition-colors">CRM & Automations</Link>
               <Link to="/services#reputation" className="hover:text-white transition-colors">Reputation Mgmt</Link>
             </div>
@@ -36,7 +36,7 @@ export default function Footer() {
             </div>
             <div className="flex flex-col gap-3">
               <span className="uppercase tracking-[0.2em] text-slate-500 font-bold text-[9px] mb-1">Product</span>
-              <Link to="/nova"       className="hover:text-white transition-colors">Meet Nova</Link>
+              <Link to="/samantha"       className="hover:text-white transition-colors">Meet Samantha</Link>
               <Link to="/pricing"    className="hover:text-white transition-colors">Pricing</Link>
               <a href="/#roi"        className="hover:text-white transition-colors">ROI Calculator</a>
               <a href="/#faq"        className="hover:text-white transition-colors">FAQ</a>

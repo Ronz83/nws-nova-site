@@ -142,8 +142,9 @@ export const VoiceCallOverlay: React.FC<Props> = ({
     return () => {
       if (mediaStream) mediaStream.getTracks().forEach(t => t.stop());
       if (timerRef.current) clearInterval(timerRef.current);
+      if (vapiRef.current) vapiRef.current.stop();
     };
-  }, [demoId, apiBase]);
+  }, [demoId, apiBase, propAssistantId, propPublicKey]);
 
   const handleEndCall = () => {
     vapiRef.current?.stop();

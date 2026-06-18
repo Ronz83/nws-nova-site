@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { SamanthaProvider } from "./context/SamanthaContext";
+import { GlobalSamantha } from "./components/samantha/GlobalSamantha";
 
 // Eagerly load the homepage — it's the first thing users see
 import Index from "./pages/Index";
@@ -9,7 +11,7 @@ import Index from "./pages/Index";
 // Lazy-load all other pages — loaded on demand, not on initial bundle
 const About       = lazy(() => import("./pages/About"));
 const Services    = lazy(() => import("./pages/Services"));
-const NovAI       = lazy(() => import("./pages/NovAI"));
+const SamanthaAI       = lazy(() => import("./pages/SamanthaAI"));
 const Portfolio   = lazy(() => import("./pages/Portfolio"));
 const Contact     = lazy(() => import("./pages/Contact"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
@@ -34,40 +36,44 @@ function PageLoader() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-bg-base text-text-base overflow-x-hidden relative">
+    <SamanthaProvider>
+      <BrowserRouter>
+        <div className="min-h-screen bg-bg-base text-text-base overflow-x-hidden relative">
 
-        {/* Dot Grid Background Overlay */}
-        <div className="absolute inset-0 grid-overlay opacity-[0.35] pointer-events-none"></div>
+          {/* Dot Grid Background Overlay */}
+          <div className="absolute inset-0 grid-overlay opacity-[0.35] pointer-events-none"></div>
 
-        {/* Navigation */}
-        <Navbar />
+          {/* Navigation */}
+          <Navbar />
 
-        {/* Main Routed Content */}
-        <main className="relative z-10">
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/"           element={<Index />} />
-              <Route path="/about"      element={<About />} />
-              <Route path="/services"   element={<Services />} />
-              <Route path="/nova"       element={<NovAI />} />
-              <Route path="/portfolio"  element={<Portfolio />} />
-              <Route path="/contact"    element={<Contact />} />
-              <Route path="/pricing"    element={<PricingPage />} />
-              <Route path="/blog"       element={<Blog />} />
-              <Route path="/blog/:slug" element={<Blog />} />
-              <Route path="/demo/:slug" element={<Demo />} />
-              <Route path="/privacy"    element={<Privacy />} />
-              <Route path="/terms"      element={<Terms />} />
-              <Route path="/gdpr"       element={<GDPR />} />
-              <Route path="/results/:id" element={<ResultsPage />} />
-              <Route path="*"          element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </main>
+          {/* Main Routed Content */}
+          <main className="relative z-10">
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/"           element={<Index />} />
+                <Route path="/about"      element={<About />} />
+                <Route path="/services"   element={<Services />} />
+                <Route path="/samantha"       element={<SamanthaAI />} />
+                <Route path="/portfolio"  element={<Portfolio />} />
+                <Route path="/contact"    element={<Contact />} />
+                <Route path="/pricing"    element={<PricingPage />} />
+                <Route path="/blog"       element={<Blog />} />
+                <Route path="/blog/:slug" element={<Blog />} />
+                <Route path="/demo/:slug" element={<Demo />} />
+                <Route path="/privacy"    element={<Privacy />} />
+                <Route path="/terms"      element={<Terms />} />
+                <Route path="/gdpr"       element={<GDPR />} />
+                <Route path="/results/:id" element={<ResultsPage />} />
+                <Route path="*"          element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+          </main>
 
-        <Footer />
-      </div>
-    </BrowserRouter>
+          <Footer />
+
+          <GlobalSamantha />
+        </div>
+      </BrowserRouter>
+    </SamanthaProvider>
   );
 }
