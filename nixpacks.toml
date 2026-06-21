@@ -1,6 +1,9 @@
 [phases.setup]
 nixPkgs = ["nodejs_23"]
 
+[variables]
+PORT = "3000"
+
 [phases.install]
 cmds = ["npm install"]
 
