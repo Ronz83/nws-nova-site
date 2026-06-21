@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://noveltywebsolutions.com/sitemap.xml
