@@ -12,8 +12,8 @@ const services = [
     title: "Bespoke Website Design",
     tagline: "Conversion-first websites built natively in code.",
     description: "We design and build mobile-first, fast-loading websites that position your brand as a premium operator. No page builders, no templates — every site is hand-coded in React or modern web stacks for maximum performance and SEO.",
-    price: "From $1,500",
-    priceNote: "One-time project fee",
+    price: "",
+    priceNote: "",
     features: [
       "Custom mobile-first UI design (Figma → Code)",
       "React / Next.js / Vite or WordPress / WooCommerce / Shopify",
@@ -152,8 +152,8 @@ export default function Services() {
                 <p className="text-sm text-sky-600 font-bold mt-1 italic">{active.tagline}</p>
               </div>
               <div className="text-right shrink-0">
-                <div className="text-xl font-black font-mono text-text-base">{active.price}</div>
-                <div className="text-[10px] text-text-muted font-medium">{active.priceNote}</div>
+                {active.price && <div className="text-xl font-black font-mono text-text-base">{active.price}</div>}
+                {active.priceNote && <div className="text-[10px] text-text-muted font-medium">{active.priceNote}</div>}
               </div>
             </div>
 
@@ -174,7 +174,7 @@ export default function Services() {
               onClick={() => setIsBookingOpen(true)}
               className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none"
             >
-              <span>Get Started with {active.title.split(" ").slice(-2).join(" ")}</span>
+              <span>Book a Consultation</span>
               <ArrowRight size={12} />
             </button>
           </div>

@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { MessageSquare, X } from 'lucide-react';
+import { useSamantha } from '../../context/SamanthaContext';
+import { VoiceCallOverlay } from './VoiceCallOverlay';
 
 export function GlobalSamantha() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const { isChatOpen, openChat, closeChat, isVoiceOpen, closeVoice } = useSamantha();
   const voiceContainerRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -64,7 +66,7 @@ export function GlobalSamantha() {
 
         {/* Custom Chat Toggle Button */}
         <button 
-          onClick={() => setIsChatOpen(!isChatOpen)}
+          onClick={() => isChatOpen ? closeChat() : openChat()}
           className="w-14 h-14 rounded-full bg-sky-600 text-white flex items-center justify-center shadow-xl hover:bg-sky-500 transition-all hover:scale-105 pointer-events-auto"
           aria-label="Toggle Chat"
         >
@@ -72,6 +74,16 @@ export function GlobalSamantha() {
         </button>
 
       </div>
+
+      {isVoiceOpen && (
+        <VoiceCallOverlay
+          demoId="global-samantha"
+          businessName="Novelty Web Solutions"
+          primaryColor="#0284c7"
+          apiBase="/api/demo-agent/start-call"
+          onClose={closeVoice}
+        />
+      )}
     </>
   );
 }

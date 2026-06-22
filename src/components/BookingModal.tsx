@@ -17,7 +17,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
       />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-4xl h-[90vh] bg-white border-2 border-border-base rounded-[32px] shadow-2xl flex flex-col overflow-hidden z-10 text-left font-sans">
+      <div className="relative w-[95vw] max-w-[1050px] h-[90vh] bg-white border-2 border-border-base rounded-[32px] shadow-2xl flex flex-col overflow-hidden z-10 text-left font-sans">
 
         {/* Header */}
         <div className="px-8 py-5 border-b border-border-base flex items-center justify-between bg-slate-50">
