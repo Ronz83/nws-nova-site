@@ -16,7 +16,6 @@ const navItems = [
     ],
   },
   { label: "Business OS", href: "/business-os", icon: <Workflow size={14} /> },
-  { label: "Samantha AI",   href: "/samantha",      icon: <Mic size={14} /> },
   { label: "Portfolio", href: "/portfolio", icon: <Briefcase size={14} /> },
   { label: "Blog",      href: "/blog",      icon: <BookOpen size={14} /> },
   { label: "Pricing",   href: "/pricing",   icon: <DollarSign size={14} /> },
