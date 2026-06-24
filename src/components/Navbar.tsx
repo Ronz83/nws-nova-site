@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, ChevronDown, Phone, Layers, Database, Workflow, Mic, BookOpen, Briefcase, Mail, DollarSign } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, Layers, Database, Workflow, BookOpen, Briefcase, Mail, DollarSign } from "lucide-react";
 import Logo from "./Logo";
 import BookingModal from "./BookingModal";
 import { Link, useLocation } from "react-router-dom";
