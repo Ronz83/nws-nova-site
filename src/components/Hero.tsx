@@ -2,11 +2,9 @@ import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import WorkbenchWizard from "./workbench/WorkbenchWizard";
 
-interface HeroProps {
-  onBookDemo: () => void;
-}
+interface HeroProps {}
 
-export default function Hero({ onBookDemo }: HeroProps) {
+export default function Hero(_props: HeroProps) {
   return (
     <section className="relative min-h-[calc(100vh-96px)] flex items-center justify-center py-16 px-6 overflow-hidden" style={{ background: "linear-gradient(160deg, #f0f9ff 0%, #ffffff 40%, #fffbeb 100%)" }}>
 
