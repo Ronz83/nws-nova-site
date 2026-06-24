@@ -88,7 +88,7 @@ export default function Blog() {
       <section className="py-20 px-6 bg-bg-tint border-b border-border-base relative overflow-hidden">
         <div className="absolute inset-0 grid-overlay opacity-[0.25] pointer-events-none"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">Insights & Guides</span>
+          <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Insights & Guides</span>
           <h1 className="font-display font-light text-5xl md:text-7xl tracking-tight leading-[1.04] text-text-base mt-3">
             The NWS <span className="italic text-accent-primary">Playbook.</span>
           </h1>
@@ -105,7 +105,7 @@ export default function Blog() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border-2 transition-all cursor-pointer ${activeCategory === cat ? "bg-sky-50 border-sky-300 text-sky-700" : "border-slate-200 text-text-muted hover:border-sky-200 bg-white"}`}
+              className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider border-2 transition-all cursor-pointer ${activeCategory === cat ? "bg-sky-50 border-sky-300 text-sky-700" : "border-slate-200 text-text-muted hover:border-sky-200 bg-white"}`}
             >
               {cat}
             </button>
@@ -119,19 +119,19 @@ export default function Blog() {
           <div className="max-w-6xl mx-auto">
             <div className="border-2 border-sky-100 bg-gradient-to-br from-sky-50 to-white rounded-[28px] p-8 md:p-10 shadow-sm hover:shadow-md transition-all cursor-pointer">
               <div className="flex flex-wrap items-center gap-3 mb-5">
-                <span className={`text-[9px] uppercase tracking-widest font-bold border px-3 py-1.5 rounded-full ${colorMap[featured.categoryColor]}`}>
+                <span className={`text-sm uppercase tracking-widest font-bold border px-3 py-1.5 rounded-full ${colorMap[featured.categoryColor]}`}>
                   <Tag size={9} className="inline mr-1" />{featured.category}
                 </span>
-                <span className="text-[9px] uppercase tracking-widest text-text-muted font-bold border border-amber-200 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-full">⭐ Featured</span>
+                <span className="text-sm uppercase tracking-widest text-text-muted font-bold border border-amber-200 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-full">⭐ Featured</span>
               </div>
               <h2 className="text-2xl md:text-3xl font-black text-text-base leading-tight mb-4 max-w-3xl">{featured.title}</h2>
               <p className="text-sm text-text-muted font-medium leading-relaxed mb-6 max-w-2xl">{featured.excerpt}</p>
               <div className="flex items-center justify-between flex-wrap gap-4">
-                <div className="flex items-center gap-4 text-[10px] text-text-muted font-bold uppercase tracking-widest">
+                <div className="flex items-center gap-4 text-sm text-text-muted font-bold uppercase tracking-widest">
                   <span className="flex items-center gap-1.5"><Clock size={11} /> {featured.readTime}</span>
                   <span>{featured.date}</span>
                 </div>
-                <Link to={`/blog/${featured.slug}`} className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-bold text-sky-600 hover:text-sky-800 transition-colors">
+                <Link to={`/blog/${featured.slug}`} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold text-sky-600 hover:text-sky-800 transition-colors">
                   Read Article <ArrowRight size={12} />
                 </Link>
               </div>
@@ -149,13 +149,13 @@ export default function Blog() {
               to={`/blog/${post.slug}`}
               className="group border-2 border-slate-100 bg-white rounded-[20px] p-6 flex flex-col gap-4 hover:border-sky-200 hover:shadow-md transition-all"
             >
-              <span className={`text-[9px] uppercase tracking-widest font-bold border px-3 py-1.5 rounded-full self-start ${colorMap[post.categoryColor]}`}>
+              <span className={`text-sm uppercase tracking-widest font-bold border px-3 py-1.5 rounded-full self-start ${colorMap[post.categoryColor]}`}>
                 {post.category}
               </span>
               <h3 className="text-base font-black text-text-base leading-snug group-hover:text-sky-700 transition-colors">{post.title}</h3>
-              <p className="text-xs text-text-muted font-medium leading-relaxed flex-grow">{post.excerpt}</p>
+              <p className="text-sm text-text-muted font-medium leading-relaxed flex-grow">{post.excerpt}</p>
               <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-                <div className="flex items-center gap-3 text-[10px] text-text-muted font-bold uppercase tracking-widest">
+                <div className="flex items-center gap-3 text-sm text-text-muted font-bold uppercase tracking-widest">
                   <span className="flex items-center gap-1"><Clock size={10} /> {post.readTime}</span>
                 </div>
                 <ArrowRight size={13} className="text-slate-300 group-hover:text-sky-500 transition-colors" />

@@ -117,7 +117,7 @@ export const ChatWidget: React.FC<Props> = ({
           <p className="font-bold text-sm leading-tight truncate">{businessName}</p>
           <div className="flex items-center gap-1.5 mt-0.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-white/80 text-[11px] font-medium">AI Receptionist · Online</span>
+            <span className="text-white/80 text-sm font-medium">AI Receptionist · Online</span>
           </div>
         </div>
         <button

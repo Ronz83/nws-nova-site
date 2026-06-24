@@ -7,6 +7,9 @@ import { fileURLToPath } from 'url';
 import analyzeHandler from './api/workbench/analyze.ts';
 import chatHandler from './api/workbench/chat.ts';
 import contactHandler from './api/crm/contact.ts';
+import installHandler from './api/connect/install.ts';
+import callbackHandler from './api/connect/callback.ts';
+import provisionHandler from './api/connect/provision.ts';
 import startCallHandler from './api/demo-agent/start-call.ts';
 import resultsHandler from './api/results/[id].ts';
 
@@ -35,6 +38,9 @@ const adaptVercel = (handler: any) => async (req: express.Request, res: express.
 app.post('/api/workbench/analyze', adaptVercel(analyzeHandler));
 app.post('/api/workbench/chat', adaptVercel(chatHandler));
 app.post('/api/crm/contact', adaptVercel(contactHandler));
+app.get('/api/connect/install', adaptVercel(installHandler));
+app.get('/api/connect/callback', adaptVercel(callbackHandler));
+app.post('/api/connect/provision', adaptVercel(provisionHandler));
 app.post('/api/demo-agent/start-call', adaptVercel(startCallHandler));
 
 // Map the dynamic results route
@@ -52,7 +58,7 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Node/Express Server listening on port ${PORT}`);
 });

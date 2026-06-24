@@ -1,0 +1,20 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const clientId = process.env.GHL_APP_CLIENT_ID;
+  if (!clientId) {
+    return res.status(500).json({ error: 'Missing GHL_APP_CLIENT_ID in .env.local' });
+  }
+  
+  // Agency-level scopes needed for provisioning new sub-accounts AND creating users
+  const scopes = ['locations.write', 'locations.readonly', 'snapshots.readonly', 'users.write', 'users.readonly'].join(' ');
+  // Force the frontend URL (5173) since Vite's proxy rewrites the host header to 3001
+  const baseUrl = process.env.NODE_ENV === 'production' 
+    ? `https://${req.headers.host}` 
+    : 'http://localhost:5173';
+  const redirectUri = `${baseUrl}/api/connect/callback`;
+  
+  const authUrl = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&client_id=${clientId}&scope=${encodeURIComponent(scopes)}`;
+  
+  res.redirect(authUrl);
+}

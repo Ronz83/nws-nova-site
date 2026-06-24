@@ -20,7 +20,7 @@ export default function About() {
 
         {/* Page Hero Header */}
         <div className="text-left max-w-3xl mb-20 font-sans">
-          <div className="inline-flex items-center gap-2 border border-sky-200 bg-sky-50 px-4 py-2 rounded-full text-[10px] tracking-[0.2em] uppercase font-bold text-sky-700 mb-6 select-none shadow-sm">
+          <div className="inline-flex items-center gap-2 border border-sky-200 bg-sky-50 px-4 py-2 rounded-full text-sm tracking-[0.2em] uppercase font-bold text-sky-700 mb-6 select-none shadow-sm">
             <Compass size={11} className="text-sky-500" />
             <span>Company Profile / Vision</span>
           </div>
@@ -37,11 +37,11 @@ export default function About() {
         {/* Mission Statement Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-24 items-start">
           <div className="lg:col-span-4 text-left">
-            <span className="text-[10px] uppercase tracking-widest text-sky-600 font-bold font-mono">Our Purpose</span>
+            <span className="text-sm uppercase tracking-widest text-sky-600 font-bold font-mono">Our Purpose</span>
             <h2 className="text-2xl md:text-3xl font-black tracking-tight text-text-base mt-2 font-sans">
               Our Mission
             </h2>
-            <p className="text-xs text-text-muted mt-3 font-medium leading-relaxed">
+            <p className="text-sm text-text-muted mt-3 font-medium leading-relaxed">
               The conviction that drives every website we build and every AI system we deploy.
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function About() {
               </p>
               <div className="mt-6 pt-6 border-t border-slate-100 flex items-center gap-2 relative z-10">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
-                <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400">Novelty Web Solutions · Barbados, W.I.</span>
+                <span className="text-sm uppercase tracking-[0.2em] font-bold text-sky-600">Novelty Web Solutions · Barbados, W.I.</span>
               </div>
             </div>
           </div>
@@ -73,10 +73,10 @@ export default function About() {
               <MapPin size={20} className="text-sky-600" />
             </div>
             <h3 className="text-2xl font-black text-text-base tracking-tight">Caribbean Regional Focus</h3>
-            <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
+            <p className="text-sm sm:text-sm text-text-muted leading-relaxed font-medium">
               Rooted in Barbados, West Indies, NWS was established to catalyze digital growth across the Caribbean region. While local enterprises have traditionally faced high barriers to adopting custom software, we deploy pre-configured systems that require no local development teams.
             </p>
-            <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
+            <p className="text-sm sm:text-sm text-text-muted leading-relaxed font-medium">
               Our voice nodes run on optimized low-latency pathways, giving Caribbean businesses the same high-end conversational reception capabilities enjoyed by Silicon Valley tech startups.
             </p>
           </div>
@@ -86,10 +86,10 @@ export default function About() {
               <Cpu size={20} className="text-amber-600" />
             </div>
             <h3 className="text-2xl font-black text-text-base tracking-tight">Why We Engineered Samantha</h3>
-            <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
+            <p className="text-sm sm:text-sm text-text-muted leading-relaxed font-medium">
               Most businesses spend thousands of dollars a month trying to duct-tape together calendars, CRMs, chat widgets, and virtual assistants. This is expensive and fragile.
             </p>
-            <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
+            <p className="text-sm sm:text-sm text-text-muted leading-relaxed font-medium">
               Samantha is our answers-it-all AI employee. It qualifies inbound phone leads, answers instant FAQs, books strategy calls, and synchronizes the entire database in real-time — removing the technical complexity entirely.
             </p>
           </div>
@@ -98,7 +98,7 @@ export default function About() {
 
         {/* Founder & Team Section */}
         <div className="border-t-2 border-border-base pt-24 mb-24 text-left font-sans">
-          <span className="text-[10px] uppercase tracking-widest text-sky-600 font-bold font-mono">The Architects</span>
+          <span className="text-sm uppercase tracking-widest text-sky-600 font-bold font-mono">The Architects</span>
           <h2 className="text-3xl md:text-4xl font-black tracking-tight text-text-base mt-2 mb-12">
             Led by Ronald P.
           </h2>
@@ -111,7 +111,7 @@ export default function About() {
               </div>
               <div>
                 <h4 className="text-lg font-black text-text-base mb-2">Bespoke Quality</h4>
-                <p className="text-xs text-text-muted leading-relaxed font-medium">
+                <p className="text-sm text-text-muted leading-relaxed font-medium">
                   We don't use generic Webflow or WordPress templates. Every frontend is natively coded for speed, accessibility, and pixel-perfect responsiveness.
                 </p>
               </div>
@@ -123,7 +123,7 @@ export default function About() {
               </div>
               <div>
                 <h4 className="text-lg font-black text-text-base mb-2">Clinical Security</h4>
-                <p className="text-xs text-text-muted leading-relaxed font-medium">
+                <p className="text-sm text-text-muted leading-relaxed font-medium">
                   Client databases, caller records, and chat transcripts are protected via high-security SSL pipelines and strict access controls.
                 </p>
               </div>
@@ -135,7 +135,7 @@ export default function About() {
               </div>
               <div>
                 <h4 className="text-lg font-black text-text-base mb-2">Dynamic Adaptability</h4>
-                <p className="text-xs text-text-muted leading-relaxed font-medium">
+                <p className="text-sm text-text-muted leading-relaxed font-medium">
                   Our custom agents adapt to new product launches, business information, or staff adjustments instantly via semantic vector retraining.
                 </p>
               </div>
@@ -152,14 +152,14 @@ export default function About() {
           <h3 className="text-3xl md:text-4xl font-sans font-light tracking-tight leading-none">
             Ready to experience next-gen <span className="italic font-normal text-amber-300">operations?</span>
           </h3>
-          <p className="mt-4 text-xs md:text-sm text-sky-100 max-w-xl mx-auto leading-relaxed font-medium">
+          <p className="mt-4 text-sm md:text-sm text-sky-100 max-w-xl mx-auto leading-relaxed font-medium">
             See Samantha in action and consult with Ronald on a custom digital strategy for your business.
           </p>
 
           <div className="mt-8 flex justify-center">
             <button
               onClick={() => setIsBookingOpen(true)}
-              className="bg-white hover:bg-sky-50 text-sky-800 font-black uppercase tracking-[0.2em] text-xs px-8 py-4 rounded-xl flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer border-none font-sans"
+              className="bg-white hover:bg-sky-50 text-sky-800 font-black uppercase tracking-[0.2em] text-sm px-8 py-4 rounded-xl flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer border-none font-sans"
             >
               <Calendar size={14} className="text-sky-600" />
               <span>See Samantha in Action</span>

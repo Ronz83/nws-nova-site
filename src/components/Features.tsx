@@ -39,12 +39,12 @@ export default function Features() {
         {/* Title */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 text-left">
           <div className="max-w-xl">
-            <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">Flagship Solutions</span>
+            <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Flagship Solutions</span>
             <h2 className="text-3xl md:text-5xl tracking-tight leading-none text-text-base mt-3 font-sans font-black">
               Bespoke digital services engineered for growth.
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-text-muted leading-relaxed max-w-sm font-medium">
+          <p className="text-sm sm:text-sm text-text-muted leading-relaxed max-w-sm font-medium">
             We build high-converting websites and deploy pre-trained AI systems that consolidate your customer operations in one place.
           </p>
         </div>
@@ -58,7 +58,7 @@ export default function Features() {
               <div className="p-3 rounded-xl border border-sky-100 bg-sky-50 shadow-sm">
                 <Phone size={18} className="text-sky-600" />
               </div>
-              <span className="text-[9px] uppercase tracking-widest text-sky-700 border border-sky-200 bg-sky-50 px-3 py-1 rounded-full font-mono font-bold">
+              <span className="text-sm uppercase tracking-widest text-sky-700 border border-sky-200 bg-sky-50 px-3 py-1 rounded-full font-mono font-bold">
                 Voice AI
               </span>
             </div>
@@ -68,7 +68,7 @@ export default function Features() {
                   24/7 Voice Receptionist
                   <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h3>
-                <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
+                <p className="text-sm sm:text-sm text-text-muted leading-relaxed font-medium">
                   Qualify inbound phone calls, collect intake details, answer pricing questions, and book calendar appointments conversationally. Never let another hot lead slide to voicemail.
                 </p>
               </div>
@@ -82,7 +82,7 @@ export default function Features() {
                 ))}
               </div>
             </div>
-            <div className="flex justify-between items-center border-t border-slate-100 pt-3.5 w-full text-[9px] text-text-muted/60 font-mono font-bold">
+            <div className="flex justify-between items-center border-t border-slate-100 pt-3.5 w-full text-sm text-text-muted/60 font-mono font-bold">
               <div className="flex gap-3">
                 <span>CONCURRENT CALLS: INFINITE</span><span>•</span><span>CHANNELS: TELEPHONE / WEB / SMS</span>
               </div>
@@ -100,16 +100,16 @@ export default function Features() {
                 Bespoke Website Design
                 <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
               </h3>
-              <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
+              <p className="text-sm sm:text-sm text-text-muted leading-relaxed font-medium">
                 Custom, mobile-optimized, conversion-focused websites that showcase your authority. Natively coded in React/Tailwind, WooCommerce, or Shopify.
               </p>
             </div>
             <div className="flex flex-col gap-2 w-full border-t border-slate-100 pt-3.5">
-              <div className="flex justify-between items-center text-[9px] font-mono text-text-muted/60 font-bold">
+              <div className="flex justify-between items-center text-sm font-mono text-text-muted/60 font-bold">
                 <span>PACKAGES FROM</span>
                 <span className="text-text-base font-bold">$1,500</span>
               </div>
-              <span className="text-amber-600 uppercase tracking-widest font-bold group-hover:underline text-[9px] text-right">View Process →</span>
+              <span className="text-amber-600 uppercase tracking-widest font-bold group-hover:underline text-sm text-right">View Process →</span>
             </div>
           </BentoCard>
 
@@ -123,11 +123,11 @@ export default function Features() {
                 CRM & Automations
                 <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
               </h3>
-              <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
+              <p className="text-sm sm:text-sm text-text-muted leading-relaxed font-medium">
                 Consolidate your customer interactions. Automatically sync contacts, trigger SMS/email drips, and monitor marketing channels from one live dashboard.
               </p>
             </div>
-            <div className="flex justify-between items-center border-t border-slate-100 pt-3.5 w-full text-[9px] text-text-muted/60 font-mono font-bold">
+            <div className="flex justify-between items-center border-t border-slate-100 pt-3.5 w-full text-sm text-text-muted/60 font-mono font-bold">
               <span>INTEGRATIONS: CRM / HUBSPOT</span>
               <span className="text-emerald-600 uppercase tracking-widest font-bold group-hover:underline">Connect Stack →</span>
             </div>
@@ -139,7 +139,7 @@ export default function Features() {
               <div className="p-3 rounded-xl border border-violet-100 bg-violet-50 shadow-sm">
                 <Workflow size={18} className="text-violet-600" />
               </div>
-              <span className="text-[9px] uppercase tracking-widest text-violet-700 border border-violet-200 bg-violet-50 px-3 py-1 rounded-full font-mono font-bold">
+              <span className="text-sm uppercase tracking-widest text-violet-700 border border-violet-200 bg-violet-50 px-3 py-1 rounded-full font-mono font-bold">
                 Reviews AI
               </span>
             </div>
@@ -149,17 +149,17 @@ export default function Features() {
                   Reputation Management
                   <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h3>
-                <p className="text-xs sm:text-sm text-text-muted leading-relaxed font-medium">
+                <p className="text-sm sm:text-sm text-text-muted leading-relaxed font-medium">
                   Outsmart local search algorithms. Automate Google and Facebook review requests, and let NWS AI automatically reply to optimize your local discoverability.
                 </p>
               </div>
               {/* Review Widget */}
-              <div className="hidden sm:flex flex-col gap-2 w-48 border border-violet-100 rounded-xl p-3 bg-violet-50/60 text-[9px] font-mono font-bold shadow-inner">
+              <div className="hidden sm:flex flex-col gap-2 w-48 border border-violet-100 rounded-xl p-3 bg-violet-50/60 text-sm font-mono font-bold shadow-inner">
                 <div className="flex justify-between items-center text-violet-600">
                   <span>Google Review</span>
                   <Sparkles size={10} className="animate-pulse" />
                 </div>
-                <div className="text-[10px] text-text-base font-bold leading-none mt-1">5 Stars — Ronald P.</div>
+                <div className="text-sm text-text-base font-bold leading-none mt-1">5 Stars — Ronald P.</div>
                 <p className="text-[8px] text-text-muted font-normal leading-normal mt-0.5">&quot;Excellent design and setup!&quot;</p>
                 <div className="border border-violet-200 p-2 rounded bg-white text-[8px] text-violet-600">
                   <span className="font-bold text-[7px] text-text-muted uppercase block mb-0.5">AI Auto-Reply</span>
@@ -167,7 +167,7 @@ export default function Features() {
                 </div>
               </div>
             </div>
-            <div className="flex justify-between items-center border-t border-slate-100 pt-3.5 w-full text-[9px] text-text-muted/60 font-mono font-bold">
+            <div className="flex justify-between items-center border-t border-slate-100 pt-3.5 w-full text-sm text-text-muted/60 font-mono font-bold">
               <div className="flex gap-3"><span>TARGETS: GOOGLE / FACEBOOK</span><span>•</span><span>REPLY MODE: PERSONALIZED</span></div>
               <span className="text-violet-600 uppercase tracking-widest font-bold group-hover:underline">Manage Reviews →</span>
             </div>

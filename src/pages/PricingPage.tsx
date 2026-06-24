@@ -84,7 +84,7 @@ export default function PricingPage() {
       <section className="py-20 px-6 bg-bg-tint border-b border-border-base relative overflow-hidden">
         <div className="absolute inset-0 grid-overlay opacity-[0.25] pointer-events-none"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">Plans & Services</span>
+          <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Plans & Services</span>
           <h1 className="font-display font-light text-5xl md:text-7xl tracking-tight leading-[1.04] text-text-base mt-3">
             Business Operations Infrastructure.
           </h1>
@@ -114,7 +114,7 @@ export default function PricingPage() {
                 </button>
                 <span className={`text-sm font-bold flex items-center gap-1.5 transition-colors ${isYearly ? "text-text-base" : "text-text-muted"}`}>
                   Yearly 
-                  <span className="text-[9px] uppercase tracking-widest bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">Save 17%</span>
+                  <span className="text-sm uppercase tracking-widest bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">Save 17%</span>
                 </span>
               </div>
             </div>
@@ -126,13 +126,13 @@ export default function PricingPage() {
                 return (
                   <div key={plan.name} className={`relative rounded-[24px] border-2 flex flex-col p-8 transition-all shadow-sm hover:shadow-lg ${plan.featured ? "border-sky-300 bg-gradient-to-b from-sky-50 to-white md:-mt-4 md:-mb-4" : "border-slate-100 bg-white hover:border-sky-100"}`}>
                     {plan.featured && (
-                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-sunrise-gradient text-white text-[9px] uppercase tracking-[0.2em] font-bold px-4 py-2 rounded-full shadow-md">
+                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-sunrise-gradient text-white text-sm uppercase tracking-[0.2em] font-bold px-4 py-2 rounded-full shadow-md">
                         <Sparkles size={9} />
                         {plan.badge}
                       </div>
                     )}
                     {!plan.featured && (
-                      <span className="text-[9px] uppercase tracking-widest text-sky-600 font-bold mb-2">{plan.badge}</span>
+                      <span className="text-sm uppercase tracking-widest text-sky-600 font-bold mb-2">{plan.badge}</span>
                     )}
 
                     <div className="flex justify-between items-start mb-5 mt-2">
@@ -142,20 +142,20 @@ export default function PricingPage() {
                           {currentPrice}
                           <span className="text-sm font-sans text-text-muted font-bold"> /mo</span>
                         </div>
-                        {isYearly && <div className="text-[10px] text-emerald-600 font-bold mt-1">Billed at ${plan.name === "Business Starter Plan" ? "2,990" : "5,990"}/yr</div>}
+                        {isYearly && <div className="text-sm text-emerald-600 font-bold mt-1">Billed at ${plan.name === "Business Starter Plan" ? "2,990" : "5,990"}/yr</div>}
                       </div>
                       {plan.featured
                         ? <div className="p-3 bg-sky-100 border border-sky-200 rounded-xl text-sky-600 shadow-sm"><Zap size={18} /></div>
-                        : <div className="p-3 bg-slate-100 border border-slate-200 rounded-xl text-slate-500"><Zap size={18} /></div>
+                        : <div className="p-3 bg-slate-100 border border-slate-200 rounded-xl text-sky-700"><Zap size={18} /></div>
                       }
                     </div>
 
-                    <p className="text-xs text-text-muted font-medium leading-relaxed border-b border-slate-100 pb-5 mb-5">{plan.label}</p>
+                    <p className="text-sm text-text-muted font-medium leading-relaxed border-b border-slate-100 pb-5 mb-5">{plan.label}</p>
 
                     <ul className="flex flex-col gap-3 mb-8 flex-grow">
                       {plan.features.map((f, i) => (
                         <li key={i} className="flex gap-2.5 items-start text-sm text-text-muted font-medium">
-                          <div className={`shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center ${plan.featured ? "bg-sky-100 text-sky-600" : "bg-slate-100 text-slate-500"}`}>
+                          <div className={`shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center ${plan.featured ? "bg-sky-100 text-sky-600" : "bg-slate-100 text-sky-700"}`}>
                             <Check size={10} strokeWidth={3} />
                           </div>
                           {f}
@@ -165,11 +165,11 @@ export default function PricingPage() {
 
                     <button
                       onClick={() => setIsBookingOpen(true)}
-                      className={`w-full flex items-center justify-center gap-2 text-xs uppercase tracking-[0.18em] font-bold px-6 py-4 rounded-xl transition-all cursor-pointer border-2 shadow-sm ${plan.featured ? "bg-accent-deep hover:bg-sky-800 text-white border-transparent shadow-md" : "border-slate-200 hover:border-sky-300 text-text-muted hover:text-sky-700 bg-transparent hover:bg-sky-50"}`}
+                      className={`w-full flex items-center justify-center gap-2 text-sm uppercase tracking-[0.18em] font-bold px-6 py-4 rounded-xl transition-all cursor-pointer border-2 shadow-sm ${plan.featured ? "bg-accent-deep hover:bg-sky-800 text-white border-transparent shadow-md" : "border-slate-200 hover:border-sky-300 text-text-muted hover:text-sky-700 bg-transparent hover:bg-sky-50"}`}
                     >
                       {plan.cta} <ArrowRight size={12} />
                     </button>
-                    <p className="text-[9px] text-text-muted/60 text-center font-mono mt-4">{plan.setup}</p>
+                    <p className="text-sm text-text-muted/60 text-center font-mono mt-4">{plan.setup}</p>
                   </div>
                 );
               })}
@@ -186,11 +186,11 @@ export default function PricingPage() {
                     {service.icon}
                   </div>
                   <h4 className="text-lg font-black text-text-base mb-2">{service.name}</h4>
-                  <p className="text-xs text-text-muted font-medium leading-relaxed mb-6">{service.desc}</p>
+                  <p className="text-sm text-text-muted font-medium leading-relaxed mb-6">{service.desc}</p>
                   
                   <ul className="flex flex-col gap-2 mb-8 flex-grow">
                     {service.features.map((feat, i) => (
-                      <li key={i} className="flex gap-2 items-start text-[11px] text-text-muted font-medium">
+                      <li key={i} className="flex gap-2 items-start text-sm text-text-muted font-medium">
                         <span className="text-sky-500 mt-0.5">•</span>
                         <span>{feat}</span>
                       </li>
@@ -199,7 +199,7 @@ export default function PricingPage() {
 
                   <button
                     onClick={() => setIsBookingOpen(true)}
-                    className="w-full text-[10px] uppercase tracking-[0.15em] font-bold px-4 py-3 rounded-xl border border-slate-200 hover:border-sky-300 text-text-muted hover:text-sky-700 bg-white transition-colors cursor-pointer"
+                    className="w-full text-sm uppercase tracking-[0.15em] font-bold px-4 py-3 rounded-xl border border-slate-200 hover:border-sky-300 text-text-muted hover:text-sky-700 bg-white transition-colors cursor-pointer"
                   >
                     Book Consultation
                   </button>

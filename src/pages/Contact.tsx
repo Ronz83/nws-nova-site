@@ -47,7 +47,7 @@ export default function Contact() {
         <div className="absolute inset-0 grid-overlay opacity-[0.25] pointer-events-none"></div>
         <div className="absolute top-0 right-0 w-80 h-80 bg-sky-100 blur-[120px] rounded-full pointer-events-none opacity-70"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">Get in Touch</span>
+          <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Get in Touch</span>
           <h1 className="font-display font-light text-5xl md:text-7xl tracking-tight leading-[1.04] text-text-base mt-3">
             Let's build something <span className="italic text-accent-primary">remarkable.</span>
           </h1>
@@ -72,9 +72,9 @@ export default function Contact() {
                 <div className={`p-2.5 bg-${c.color}-50 border border-${c.color}-100 text-${c.color}-600 rounded-xl w-fit mb-4 shadow-sm`}>
                   {c.icon}
                 </div>
-                <span className="text-[9px] uppercase tracking-widest text-text-muted font-bold block mb-1">{c.label}</span>
+                <span className="text-sm uppercase tracking-widest text-text-muted font-bold block mb-1">{c.label}</span>
                 <div className="text-sm font-black text-text-base">{c.value}</div>
-                <div className="text-[10px] text-text-muted font-medium mt-1">{c.sub}</div>
+                <div className="text-sm text-text-muted font-medium mt-1">{c.sub}</div>
               </div>
             ))}
 
@@ -84,8 +84,8 @@ export default function Contact() {
               <div className="relative z-10">
                 <Phone size={20} className="text-amber-300 mb-3" />
                 <h4 className="font-black text-base mb-2">Prefer a call?</h4>
-                <p className="text-xs text-sky-100 font-medium leading-relaxed mb-4">Book a free 30-minute strategy call directly with Ronald.</p>
-                <button onClick={() => setIsBookingOpen(true)} className="w-full bg-white hover:bg-sky-50 text-sky-800 font-bold uppercase tracking-wider text-xs px-4 py-3 rounded-xl cursor-pointer border-none transition-all shadow-md">
+                <p className="text-sm text-sky-100 font-medium leading-relaxed mb-4">Book a free 30-minute strategy call directly with Ronald.</p>
+                <button onClick={() => setIsBookingOpen(true)} className="w-full bg-white hover:bg-sky-50 text-sky-800 font-bold uppercase tracking-wider text-sm px-4 py-3 rounded-xl cursor-pointer border-none transition-all shadow-md">
                   Book a Call
                 </button>
               </div>
@@ -101,7 +101,7 @@ export default function Contact() {
                 </div>
                 <h3 className="text-xl font-black text-text-base">Message Sent!</h3>
                 <p className="text-sm text-text-muted font-medium max-w-sm">We'll review your inquiry and get back to you within one business day. If it's urgent, book a call directly.</p>
-                <button onClick={() => setIsBookingOpen(true)} className="mt-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep text-white px-6 py-3 rounded-xl cursor-pointer border-none shadow-md">
+                <button onClick={() => setIsBookingOpen(true)} className="mt-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep text-white px-6 py-3 rounded-xl cursor-pointer border-none shadow-md">
                   Book a Call Now
                 </button>
               </div>
@@ -109,12 +109,12 @@ export default function Contact() {
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div>
                   <h2 className="text-xl font-black text-text-base">Send a Message</h2>
-                  <p className="text-xs text-text-muted mt-1 font-medium">Tell us about your project and we'll follow up with a tailored recommendation.</p>
+                  <p className="text-sm text-text-muted mt-1 font-medium">Tell us about your project and we'll follow up with a tailored recommendation.</p>
                 </div>
 
                 {/* Error banner */}
                 {error && (
-                  <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-xs text-red-700 font-medium">
+                  <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700 font-medium">
                     <AlertCircle size={15} className="shrink-0 mt-0.5 text-red-500" />
                     {error}
                   </div>
@@ -127,7 +127,7 @@ export default function Contact() {
                     { name: "company", label: "Company",       placeholder: "Acme Corp",         type: "text" },
                   ].map(f => (
                     <div key={f.name} className={f.name === "company" ? "sm:col-span-2" : ""}>
-                      <label className="text-[10px] uppercase tracking-widest text-text-muted font-bold block mb-2">{f.label}</label>
+                      <label className="text-sm uppercase tracking-widest text-text-muted font-bold block mb-2">{f.label}</label>
                       <input
                         type={f.type}
                         name={f.name}
@@ -142,7 +142,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] uppercase tracking-widest text-text-muted font-bold block mb-2">Service Interest</label>
+                  <label className="text-sm uppercase tracking-widest text-text-muted font-bold block mb-2">Service Interest</label>
                   <select
                     name="service"
                     value={form.service}
@@ -160,7 +160,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] uppercase tracking-widest text-text-muted font-bold block mb-2">Message</label>
+                  <label className="text-sm uppercase tracking-widest text-text-muted font-bold block mb-2">Message</label>
                   <textarea
                     name="message"
                     required
@@ -175,7 +175,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center justify-center gap-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 disabled:opacity-60 disabled:cursor-not-allowed text-white px-7 py-4 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer border-none w-full sm:w-auto self-start"
+                  className="flex items-center justify-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 disabled:opacity-60 disabled:cursor-not-allowed text-white px-7 py-4 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer border-none w-full sm:w-auto self-start"
                 >
                   {loading ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
                   {loading ? "Sending..." : "Send Message"}

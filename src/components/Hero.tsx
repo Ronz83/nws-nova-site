@@ -24,7 +24,7 @@ export default function Hero({ onBookDemo }: HeroProps) {
         <div className="lg:col-span-5 flex flex-col text-left pt-4">
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 self-start border border-sky-200 bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-full text-[11px] tracking-[0.18em] uppercase font-bold text-sky-700 mb-8 shadow-sm">
+          <div className="inline-flex items-center gap-2 self-start border border-sky-200 bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-full text-sm tracking-[0.18em] uppercase font-bold text-sky-700 mb-8 shadow-sm">
             <Sparkles size={12} className="text-sky-500 animate-pulse" />
             <span>Novelty Web Solutions · Operations Engine</span>
           </div>
@@ -40,7 +40,7 @@ export default function Hero({ onBookDemo }: HeroProps) {
             </span>
           </h1>
 
-          <p className="font-sans font-black uppercase text-xs tracking-[0.25em] text-text-muted mt-6 flex items-center gap-2.5">
+          <p className="font-sans font-black uppercase text-sm tracking-[0.25em] text-text-muted mt-6 flex items-center gap-2.5">
             <span className="h-[2px] w-8 bg-gradient-to-r from-sky-400 to-cyan-300 inline-block rounded-full"></span>
             Stop the operational bleeding
           </p>
@@ -53,7 +53,7 @@ export default function Hero({ onBookDemo }: HeroProps) {
           {/* Social proof pills */}
           <div className="mt-5 flex flex-wrap gap-3">
             {["24/7 AI Receptionist", "CRM Automation", "Caribbean-Based"].map(tag => (
-              <span key={tag} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-[11px] font-bold text-slate-600 shadow-sm">
+              <span key={tag} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-sm font-bold text-slate-600 shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
                 {tag}
               </span>
@@ -62,18 +62,18 @@ export default function Hero({ onBookDemo }: HeroProps) {
 
           {/* Actions */}
           <div className="mt-8 flex flex-wrap gap-4 items-center">
-            <button
-              onClick={onBookDemo}
-              className="text-xs uppercase tracking-[0.18em] font-bold text-white px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02]"
+            <a
+              href="#pricing"
+              className="text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02] text-center"
               style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)" }}
             >
-              Book Strategy Call
-            </button>
+              Get Your Free Business Account
+            </a>
             <a
-              href="#roi"
-              className="text-xs uppercase tracking-[0.18em] font-bold border-2 border-slate-200 hover:border-sky-300 hover:text-accent-deep px-7 py-3.5 rounded-xl text-text-muted transition-all duration-200 hover:bg-sky-50 cursor-pointer"
+              href="#process"
+              className="text-sm uppercase tracking-[0.18em] font-bold border-2 border-slate-200 hover:border-sky-300 hover:text-accent-deep px-7 py-3.5 rounded-xl text-text-muted transition-all duration-200 hover:bg-sky-50 cursor-pointer text-center"
             >
-              Calculate Yield
+              See How It Works
             </a>
           </div>
         </div>

@@ -51,7 +51,7 @@ export default function ResultsPage() {
           </div>
           <div>
             <p className="text-white font-black text-lg">Loading your report…</p>
-            <p className="text-slate-500 text-sm mt-1">Just a moment</p>
+            <p className="text-sky-700 text-sm mt-1">Just a moment</p>
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@ export default function ResultsPage() {
           </div>
           <div>
             <h1 className="text-white font-black text-xl mb-2">This report has expired</h1>
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <p className="text-sky-600 text-sm leading-relaxed">
               Business intelligence reports are available for 30 days after generation.
               Run a new scan to get an updated report for your business.
             </p>
@@ -96,7 +96,7 @@ export default function ResultsPage() {
           </div>
           <div>
             <h1 className="text-white font-black text-xl mb-2">Report not found</h1>
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <p className="text-sky-600 text-sm leading-relaxed">
               This link may be invalid or the report may have been removed.
               Run a fresh scan to generate a new report.
             </p>
@@ -120,7 +120,7 @@ export default function ResultsPage() {
       {/* Expiry notice */}
       {expiresAt && (
         <div className="border-b border-amber-500/20 bg-amber-500/5 px-6 py-2.5 text-center">
-          <p className="text-amber-400 text-xs font-bold">
+          <p className="text-amber-400 text-sm font-bold">
             ⏱ This report is available until {new Date(expiresAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
           </p>
         </div>

@@ -32,17 +32,17 @@ export default function Demo() {
             <Cpu size={28} className="text-sky-600" />
           </div>
 
-          <span className="text-[10px] uppercase tracking-[0.25em] text-sky-600 font-mono font-bold">Custom Sandbox Compile</span>
+          <span className="text-sm uppercase tracking-[0.25em] text-sky-600 font-mono font-bold">Custom Sandbox Compile</span>
           
           <h2 className="text-2xl font-black text-text-base mt-2 mb-4">
             Personalized Demo Workspace.
           </h2>
 
-          <p className="text-xs text-text-muted leading-relaxed mb-6 font-semibold">
+          <p className="text-sm text-text-muted leading-relaxed mb-6 font-semibold">
             Custom workspace preview for <span className="font-mono text-text-base font-bold bg-slate-100 px-2 py-0.5 rounded">{slug}</span> is currently in generation. Our solutions team is training the custom LLM nodes on the target domain.
           </p>
 
-          <div className="border border-border-base rounded-xl bg-slate-50 p-4 mb-8 text-left text-[10px] font-mono text-text-muted space-y-1.5">
+          <div className="border border-border-base rounded-xl bg-slate-50 p-4 mb-8 text-left text-sm font-mono text-text-muted space-y-1.5">
             <div className="flex justify-between items-center text-[8px] uppercase tracking-widest text-sky-600 font-bold border-b border-border-base pb-1.5 mb-1.5">
               <span>Compiler Node Status</span>
               <span className="flex items-center gap-1">
@@ -66,7 +66,7 @@ export default function Demo() {
           <div className="flex flex-col gap-3">
             <Link
               to="/"
-              className="text-xs uppercase tracking-[0.15em] font-bold bg-accent-deep hover:bg-sky-800 text-white py-3.5 rounded-xl transition-all duration-300 w-full shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+              className="text-sm uppercase tracking-[0.15em] font-bold bg-accent-deep hover:bg-sky-800 text-white py-3.5 rounded-xl transition-all duration-300 w-full shadow-md hover:shadow-lg flex items-center justify-center gap-2"
             >
               <ArrowLeft size={12} />
               <span>Back to Overview</span>

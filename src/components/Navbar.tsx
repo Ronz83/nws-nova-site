@@ -15,6 +15,7 @@ const navItems = [
       { label: "Reputation Mgmt",   href: "/services#reputation",   icon: <Workflow size={15} />, desc: "Google & Facebook reviews AI" },
     ],
   },
+  { label: "Business OS", href: "/business-os", icon: <Workflow size={14} /> },
   { label: "Samantha AI",   href: "/samantha",      icon: <Mic size={14} /> },
   { label: "Portfolio", href: "/portfolio", icon: <Briefcase size={14} /> },
   { label: "Blog",      href: "/blog",      icon: <BookOpen size={14} /> },
@@ -68,7 +69,7 @@ export default function Navbar() {
                     <>
                       <Link
                         to={item.href}
-                        className={`flex items-center gap-1 px-3 py-2 rounded-xl text-xs uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
+                        className={`flex items-center gap-1 px-3 py-2 rounded-xl text-sm uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
                       >
                         {item.label}
                         <ChevronDown size={11} className={`transition-transform ${openDropdown === item.label ? "rotate-180" : ""}`} />
@@ -89,8 +90,8 @@ export default function Navbar() {
                                   {d.icon}
                                 </div>
                                 <div>
-                                  <div className="text-xs font-black text-text-base group-hover:text-sky-700 transition-colors">{d.label}</div>
-                                  <div className="text-[10px] text-text-muted font-medium mt-0.5">{d.desc}</div>
+                                  <div className="text-sm font-black text-text-base group-hover:text-sky-700 transition-colors">{d.label}</div>
+                                  <div className="text-sm text-text-muted font-medium mt-0.5">{d.desc}</div>
                                 </div>
                               </Link>
                             ))}
@@ -101,7 +102,7 @@ export default function Navbar() {
                   ) : (
                     <Link
                       to={item.href}
-                      className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
+                      className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
                     >
                       {item.label}
                     </Link>
@@ -115,7 +116,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <button
               onClick={() => setIsBookingOpen(true)}
-              className="text-xs uppercase tracking-[0.15em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-6 py-3.5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none hover:scale-[1.02]"
+              className="text-sm uppercase tracking-[0.15em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-6 py-3.5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none hover:scale-[1.02]"
             >
               Book a Call
             </button>
@@ -139,7 +140,7 @@ export default function Navbar() {
                   <Link
                     to={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-2 w-full px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-[0.15em] transition-all ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
+                    className={`flex items-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-[0.15em] transition-all ${isActive(item.href) ? "text-sky-700 bg-sky-50" : "text-text-muted hover:text-text-base hover:bg-slate-50"}`}
                   >
                     {item.icon && <span className="text-text-muted">{item.icon}</span>}
                     {item.label}
@@ -151,7 +152,7 @@ export default function Navbar() {
                           key={d.label}
                           to={d.href}
                           onClick={() => setMobileOpen(false)}
-                          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[10px] uppercase tracking-[0.15em] font-bold text-text-muted/70 hover:text-sky-600 hover:bg-sky-50 transition-all"
+                          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm uppercase tracking-[0.15em] font-bold text-text-muted/70 hover:text-sky-600 hover:bg-sky-50 transition-all"
                         >
                           {d.icon} {d.label}
                         </Link>
@@ -163,7 +164,7 @@ export default function Navbar() {
 
               <button
                 onClick={() => { setMobileOpen(false); setIsBookingOpen(true); }}
-                className="w-full mt-3 bg-accent-deep text-white font-bold uppercase tracking-[0.18em] text-xs rounded-xl py-4 cursor-pointer border-none shadow-md"
+                className="w-full mt-3 bg-accent-deep text-white font-bold uppercase tracking-[0.18em] text-sm rounded-xl py-4 cursor-pointer border-none shadow-md"
               >
                 Book a Strategy Call
               </button>

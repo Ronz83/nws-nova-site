@@ -27,7 +27,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-black text-text-base leading-tight">Book a Strategy Session</h3>
-              <p className="text-[10px] text-text-muted font-mono tracking-wider uppercase mt-0.5">30-Minute Complimentary Consultation</p>
+              <p className="text-sm text-text-muted font-mono tracking-wider uppercase mt-0.5">30-Minute Complimentary Consultation</p>
             </div>
           </div>
           <button

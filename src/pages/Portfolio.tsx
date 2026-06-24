@@ -80,7 +80,7 @@ export default function Portfolio() {
       <section className="py-20 px-6 bg-bg-tint border-b border-border-base relative overflow-hidden">
         <div className="absolute inset-0 grid-overlay opacity-[0.25] pointer-events-none"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">Use Case Templates</span>
+          <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Use Case Templates</span>
           <h1 className="font-display font-light text-5xl md:text-7xl tracking-tight leading-[1.04] text-text-base mt-3">
             Real solutions. <span className="italic text-accent-primary">Real impact.</span>
           </h1>
@@ -100,7 +100,7 @@ export default function Portfolio() {
               <button
                 key={cs.id}
                 onClick={() => setActive(i)}
-                className={`flex items-center gap-2.5 px-5 py-3 rounded-xl border-2 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${active === i ? "border-sky-300 bg-sky-50 text-sky-700 shadow-sm" : "border-slate-100 bg-white text-text-muted hover:border-sky-100"}`}
+                className={`flex items-center gap-2.5 px-5 py-3 rounded-xl border-2 text-sm font-bold uppercase tracking-wider transition-all cursor-pointer ${active === i ? "border-sky-300 bg-sky-50 text-sky-700 shadow-sm" : "border-slate-100 bg-white text-text-muted hover:border-sky-100"}`}
               >
                 <span className="text-base">{cs.logo}</span>
                 {cs.industry}
@@ -116,7 +116,7 @@ export default function Portfolio() {
               <div className="border-2 border-slate-100 bg-white rounded-[24px] p-8 shadow-sm">
                 <div className="flex items-start justify-between gap-4 mb-5">
                   <div>
-                    <span className={`text-[9px] uppercase tracking-widest font-bold border px-3 py-1 rounded-full ${accentMap[study.accent]}`}>{study.industry}</span>
+                    <span className={`text-sm uppercase tracking-widest font-bold border px-3 py-1 rounded-full ${accentMap[study.accent]}`}>{study.industry}</span>
                     <h2 className="text-xl font-black text-text-base mt-2">{study.useCase}</h2>
                   </div>
                   <span className="text-5xl">{study.logo}</span>
@@ -124,11 +124,11 @@ export default function Portfolio() {
 
                 <div className="space-y-4">
                   <div>
-                    <span className="text-[9px] uppercase tracking-widest text-text-muted font-bold block mb-1">The Challenge</span>
+                    <span className="text-sm uppercase tracking-widest text-text-muted font-bold block mb-1">The Challenge</span>
                     <p className="text-sm text-text-muted font-medium leading-relaxed">{study.challenge}</p>
                   </div>
                   <div>
-                    <span className="text-[9px] uppercase tracking-widest text-text-muted font-bold block mb-1">The NWS Solution</span>
+                    <span className="text-sm uppercase tracking-widest text-text-muted font-bold block mb-1">The NWS Solution</span>
                     <p className="text-sm text-text-muted font-medium leading-relaxed">{study.solution}</p>
                   </div>
                 </div>
@@ -137,22 +137,22 @@ export default function Portfolio() {
 
             {/* Right: Results */}
             <div className="lg:col-span-5 flex flex-col gap-5">
-              <div className="text-[10px] uppercase tracking-widest text-text-muted font-bold mb-1">Business Impact</div>
+              <div className="text-sm uppercase tracking-widest text-text-muted font-bold mb-1">Business Impact</div>
               {study.results.map((r, i) => (
                 <div key={i} className="border-2 border-slate-100 bg-white rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-sky-100 transition-all flex items-start gap-4">
                   <div className={`p-2 rounded-lg mt-0.5 ${accentMap[study.accent].split(' ')[1]} ${accentMap[study.accent].split(' ')[0]}`}>
                     {r.icon}
                   </div>
                   <div>
-                    <div className="text-xs font-black text-text-base mb-1">{r.title}</div>
-                    <div className="text-[10px] text-text-muted font-medium leading-relaxed">{r.desc}</div>
+                    <div className="text-sm font-black text-text-base mb-1">{r.title}</div>
+                    <div className="text-sm text-text-muted font-medium leading-relaxed">{r.desc}</div>
                   </div>
                 </div>
               ))}
 
               <button
                 onClick={() => setIsBookingOpen(true)}
-                className="w-full mt-2 flex items-center justify-center gap-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-6 py-4 rounded-xl shadow-md cursor-pointer border-none transition-all"
+                className="w-full mt-2 flex items-center justify-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-6 py-4 rounded-xl shadow-md cursor-pointer border-none transition-all"
               >
                 Implement This Solution <ArrowRight size={12} />
               </button>

@@ -241,20 +241,20 @@ export const VoiceCallOverlay: React.FC<Props> = ({
               </div>
               <div>
                 <h3 className="text-white font-black text-base leading-tight">{businessName}</h3>
-                <p className="text-xs font-medium" style={{ color: `${primaryColor}cc` }}>AI Receptionist</p>
+                <p className="text-sm font-medium" style={{ color: `${primaryColor}cc` }}>AI Receptionist</p>
               </div>
             </div>
 
             {/* Status pill + close */}
             <div className="flex items-center gap-2">
               {status === 'active' && (
-                <div className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-black text-white" style={{ background: `${primaryColor}30`, border: `1px solid ${primaryColor}50` }}>
+                <div className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-black text-white" style={{ background: `${primaryColor}30`, border: `1px solid ${primaryColor}50` }}>
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   {formatTime(elapsedSeconds)}
                 </div>
               )}
               {status === 'connecting' && (
-                <div className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold text-white/60" style={{ background: 'rgba(255,255,255,0.05)', border: `1px solid ${BORDER}` }}>
+                <div className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold text-white/60" style={{ background: 'rgba(255,255,255,0.05)', border: `1px solid ${BORDER}` }}>
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                   Connecting
                 </div>
@@ -304,7 +304,7 @@ export const VoiceCallOverlay: React.FC<Props> = ({
                       </div>
                     </div>
                     <p className="text-white/60 text-sm font-medium">Connecting your call...</p>
-                    <p className="text-white/30 text-xs">Establishing secure connection</p>
+                    <p className="text-white/30 text-sm">Establishing secure connection</p>
                   </motion.div>
                 )}
 
@@ -328,7 +328,7 @@ export const VoiceCallOverlay: React.FC<Props> = ({
                             />
                           ))}
                         </div>
-                        <p className="text-white/50 text-xs font-medium">
+                        <p className="text-white/50 text-sm font-medium">
                           {isAgentSpeaking ? 'Agent is speaking...' : 'Listening — speak now'}
                         </p>
                       </div>
@@ -364,10 +364,10 @@ export const VoiceCallOverlay: React.FC<Props> = ({
                     </div>
                     <div>
                       <p className="font-black text-white text-base">Call Ended</p>
-                      <p className="text-white/50 text-xs mt-1 max-w-[200px]">Thanks for testing the demo. Switch to Text Chat to continue the conversation.</p>
+                      <p className="text-white/50 text-sm mt-1 max-w-[200px]">Thanks for testing the demo. Switch to Text Chat to continue the conversation.</p>
                     </div>
                     <button onClick={() => setActiveTab('chat')}
-                      className="text-xs font-bold px-4 py-2 rounded-xl cursor-pointer border-none transition-all hover:opacity-80"
+                      className="text-sm font-bold px-4 py-2 rounded-xl cursor-pointer border-none transition-all hover:opacity-80"
                       style={{ background: `${primaryColor}25`, color: primaryColor, border: `1px solid ${primaryColor}40` }}>
                       Continue in Text Chat
                     </button>
@@ -381,14 +381,14 @@ export const VoiceCallOverlay: React.FC<Props> = ({
                     </div>
                     <div>
                       <p className="font-black text-white text-base">Connection Failed</p>
-                      <p className="text-white/50 text-xs mt-1 max-w-[220px]">
+                      <p className="text-white/50 text-sm mt-1 max-w-[220px]">
                         {micError
                           ? 'Microphone access denied. Please allow mic permissions and try again.'
                           : (errorMsg || 'Could not reach the agent. Try Text Chat instead.')}
                       </p>
                     </div>
                     <button onClick={() => setActiveTab('chat')}
-                      className="text-xs font-bold px-4 py-2 rounded-xl cursor-pointer border-none transition-all hover:opacity-80"
+                      className="text-sm font-bold px-4 py-2 rounded-xl cursor-pointer border-none transition-all hover:opacity-80"
                       style={{ background: `${primaryColor}25`, color: primaryColor, border: `1px solid ${primaryColor}40` }}>
                       Switch to Text Chat
                     </button>
@@ -442,7 +442,7 @@ export const VoiceCallOverlay: React.FC<Props> = ({
                 <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                   className={`flex items-end gap-2 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                   {msg.role === 'assistant' && (
-                    <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center mb-0.5 text-[9px] font-black text-white" style={{ background: primaryColor }}>
+                    <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center mb-0.5 text-sm font-black text-white" style={{ background: primaryColor }}>
                       AI
                     </div>
                   )}
@@ -460,7 +460,7 @@ export const VoiceCallOverlay: React.FC<Props> = ({
               ))}
               {isSending && (
                 <div className="flex items-end gap-2">
-                  <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-black text-white" style={{ background: primaryColor }}>AI</div>
+                  <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-black text-white" style={{ background: primaryColor }}>AI</div>
                   <div className="px-4 py-3 rounded-2xl rounded-bl-sm flex items-center gap-1.5" style={{ background: primaryColor }}>
                     {[0, 1, 2].map(i => (
                       <div key={i} className="w-1.5 h-1.5 rounded-full bg-white animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
@@ -493,7 +493,7 @@ export const VoiceCallOverlay: React.FC<Props> = ({
                   {isSending ? <Loader2 size={14} className="text-white animate-spin" /> : <Send size={14} className="text-white" />}
                 </button>
               </div>
-              <p className="text-[10px] text-white/25 text-center mt-2">Press Enter to send</p>
+              <p className="text-sm text-white/25 text-center mt-2">Press Enter to send</p>
             </div>
           </div>
         )}

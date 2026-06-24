@@ -42,7 +42,7 @@ export default function FAQ() {
 
         {/* Title */}
         <div className="text-center mb-14">
-          <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">Questions Answered</span>
+          <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Questions Answered</span>
           <h2 className="text-3xl md:text-5xl tracking-tight leading-none text-text-base mt-3 font-sans font-black">
             Frequently Asked Questions
           </h2>
@@ -60,7 +60,7 @@ export default function FAQ() {
                   <span className={`text-sm font-bold leading-snug text-left transition-colors ${isOpen ? "text-sky-700" : "text-text-base"}`}>
                     {faq.q}
                   </span>
-                  <div className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${isOpen ? "border-sky-300 bg-sky-50 text-sky-600 rotate-180" : "border-slate-200 text-slate-400"}`}>
+                  <div className={`shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${isOpen ? "border-sky-300 bg-sky-50 text-sky-600 rotate-180" : "border-slate-200 text-sky-600"}`}>
                     <ChevronDown size={14} strokeWidth={2.5} />
                   </div>
                 </div>

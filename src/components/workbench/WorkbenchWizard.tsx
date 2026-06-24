@@ -104,7 +104,7 @@ function IdlePreview() {
       <div className="grid grid-cols-2 gap-3">
         {/* Score ring */}
         <div className="bg-white/5 border border-white/8 rounded-2xl p-4 flex flex-col items-center gap-2">
-          <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Sample Score</p>
+          <p className="text-sm uppercase tracking-widest text-sky-700 font-bold">Sample Score</p>
           <div className="relative w-20 h-20">
             <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
               <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="7" />
@@ -120,24 +120,24 @@ function IdlePreview() {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-2xl font-black tabular-nums" style={{ color: gradeColor }}>{scoreDisplayed}</span>
-              <span className="text-[9px] text-slate-500 font-bold">/ 100</span>
+              <span className="text-sm text-sky-700 font-bold">/ 100</span>
             </div>
           </div>
           <span className="text-3xl font-black" style={{ color: gradeColor }}>{grade}</span>
           <div className="text-center">
-            <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Monthly Leak</p>
+            <p className="text-sm text-sky-700 font-bold uppercase tracking-wider">Monthly Leak</p>
             <p className="text-sm font-black text-red-400">{currentLeakage}</p>
           </div>
         </div>
 
         {/* Category bars */}
         <div className="bg-white/5 border border-white/8 rounded-2xl p-4 flex flex-col justify-center gap-2.5">
-          <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Gap Scan</p>
+          <p className="text-sm uppercase tracking-widest text-sky-700 font-bold mb-1">Gap Scan</p>
           {SAMPLE_CATEGORIES.map((cat, i) => (
             <div key={cat.name} className="flex items-center gap-2">
-              <span className="text-[10px] text-slate-500 w-20 shrink-0 font-medium">{cat.name}</span>
+              <span className="text-sm text-sky-700 w-20 shrink-0 font-medium">{cat.name}</span>
               <AnimatedBar key={`${sampleIdx}-${i}`} target={currentCats[i]} delay={i * 120} />
-              <span className="text-[10px] font-bold w-6 text-right shrink-0"
+              <span className="text-sm font-bold w-6 text-right shrink-0"
                 style={{ color: currentCats[i] >= 65 ? '#34d399' : currentCats[i] >= 40 ? '#fbbf24' : '#f87171' }}>
                 {currentCats[i]}
               </span>
@@ -149,24 +149,24 @@ function IdlePreview() {
       {/* Ticker */}
       <div className="bg-white/5 border border-white/8 rounded-2xl px-4 py-3">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold flex items-center gap-1.5">
+          <p className="text-sm uppercase tracking-widest text-sky-700 font-bold flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
             Recent Analyses
           </p>
-          <p className="text-[10px] text-slate-600 font-mono font-bold">{count} today</p>
+          <p className="text-sm text-slate-600 font-mono font-bold">{count} today</p>
         </div>
         <div className="space-y-2 overflow-hidden" style={{ height: '52px' }}>
           <AnimatePresence mode="wait">
             <motion.div key={tickerIdx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }} className="space-y-2">
               {[entry1, entry2].map((e, i) => (
-                <div key={i} className="flex items-center gap-2 text-[11px]">
+                <div key={i} className="flex items-center gap-2 text-sm">
                   <SeverityDot sev={e.sev} />
-                  <span className="text-slate-400 font-medium">{e.name}</span>
+                  <span className="text-sky-600 font-medium">{e.name}</span>
                   <span className="text-slate-600">·</span>
-                  <span className="text-slate-500">{e.type}</span>
+                  <span className="text-sky-700">{e.type}</span>
                   <span className="text-slate-600">·</span>
                   <span className="text-slate-600">{e.loc}</span>
-                  <span className="ml-auto font-bold text-[10px]"
+                  <span className="ml-auto font-bold text-sm"
                     style={{ color: e.score >= 65 ? '#34d399' : e.score >= 40 ? '#fbbf24' : '#f87171' }}>
                     {e.score}/100
                   </span>
@@ -185,7 +185,7 @@ function IdlePreview() {
           { emoji: '📋', label: 'Full Gap Analysis Report' },
           { emoji: '🎯', label: '72-Hour Quick Win Guide' },
         ].map(item => (
-          <div key={item.label} className="flex items-center gap-2 text-[12px] text-slate-400 font-medium bg-white/5 rounded-xl px-3 py-2.5">
+          <div key={item.label} className="flex items-center gap-2 text-[12px] text-sky-600 font-medium bg-white/5 rounded-xl px-3 py-2.5">
             <span className="text-base">{item.emoji}</span>
             <span>{item.label}</span>
           </div>
@@ -337,7 +337,7 @@ export default function WorkbenchWizard() {
             <div className="w-3.5 h-3.5 rounded-full bg-amber-400/70" />
             <div className="w-3.5 h-3.5 rounded-full bg-emerald-400/70" />
           </div>
-          <span className="text-[11px] font-mono tracking-widest font-bold uppercase text-slate-400">
+          <span className="text-sm font-mono tracking-widest font-bold uppercase text-sky-600">
             NWS Business Intelligence Engine
           </span>
           <div className="flex gap-1.5">
@@ -374,7 +374,7 @@ export default function WorkbenchWizard() {
                 <form onSubmit={handleDomainSubmit}>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <div className="flex-1 flex items-center gap-3 bg-white/8 border border-white/12 rounded-xl px-5 py-4 focus-within:border-sky-500/70 focus-within:bg-white/10 transition-all">
-                      <Globe size={17} className="text-slate-500 shrink-0" />
+                      <Globe size={17} className="text-sky-700 shrink-0" />
                       <input
                         type="text"
                         value={domain}
@@ -392,7 +392,7 @@ export default function WorkbenchWizard() {
                     </button>
                   </div>
                   {error && <p className="text-red-400 text-[12px] font-medium mt-2">{error}</p>}
-                  <p className="text-[11px] text-white/60 font-medium mt-2.5">
+                  <p className="text-sm text-white/60 font-medium mt-2.5">
                     No credit card. No spam. Report delivered instantly.
                   </p>
                 </form>
@@ -450,7 +450,7 @@ export default function WorkbenchWizard() {
                   })}
                 </div>
 
-                <p className="text-[11px] text-white/60 max-w-[240px]">
+                <p className="text-sm text-white/60 max-w-[240px]">
                   Building a custom AI agent for {domain}. Takes ~15-30 seconds.
                 </p>
               </motion.div>

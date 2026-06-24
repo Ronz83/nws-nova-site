@@ -56,13 +56,13 @@ function AnimatedScore({ score }: { score: number }) {
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className={`text-4xl font-black tabular-nums ${gradeColor}`}>{displayed}</span>
-          <span className="text-slate-500 text-xs font-bold">/ 100</span>
+          <span className="text-sky-700 text-sm font-bold">/ 100</span>
         </div>
       </div>
       <div>
         <div className="text-center">
           <span className={`text-6xl font-black ${gradeColor}`}>{grade}</span>
-          <p className="text-slate-400 text-xs mt-1 font-medium">Digital Operations Grade</p>
+          <p className="text-sky-600 text-sm mt-1 font-medium">Digital Operations Grade</p>
         </div>
       </div>
     </div>
@@ -221,17 +221,17 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
       <div className="px-5 py-4 border-b flex items-center justify-between" style={{ borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.25)' }}>
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[10px] font-mono tracking-widest font-bold uppercase text-emerald-400">Report Ready</span>
+          <span className="text-sm font-mono tracking-widest font-bold uppercase text-emerald-400">Report Ready</span>
         </div>
-        <span className="text-[10px] font-mono text-slate-500 hidden sm:block">{businessName}</span>
+        <span className="text-sm font-mono text-sky-700 hidden sm:block">{businessName}</span>
         <div className="flex items-center gap-3">
           {resultUrl && (
-            <button onClick={handleCopyLink} className="flex items-center gap-1 text-[10px] font-bold cursor-pointer bg-transparent border-none transition-colors"
+            <button onClick={handleCopyLink} className="flex items-center gap-1 text-sm font-bold cursor-pointer bg-transparent border-none transition-colors"
               style={{ color: copied ? '#34d399' : '#64748b' }}>
               <Link2 size={10} />{copied ? 'Copied!' : 'Copy link'}
             </button>
           )}
-          <button onClick={onRestart} className="flex items-center gap-1 text-[10px] text-slate-500 hover:text-slate-300 cursor-pointer bg-transparent border-none transition-colors">
+          <button onClick={onRestart} className="flex items-center gap-1 text-sm text-sky-700 hover:text-slate-300 cursor-pointer bg-transparent border-none transition-colors">
             <RotateCcw size={10} /> New Analysis
           </button>
         </div>
@@ -241,7 +241,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
       <div className="flex border-b overflow-x-auto" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
         {TABS.map((tab, i) => (
           <button key={tab} onClick={() => setActiveTab(i)}
-            className={`flex-1 min-w-fit px-4 py-3 text-[11px] font-bold transition-all cursor-pointer border-none whitespace-nowrap ${activeTab === i ? 'text-white border-b-2 border-sky-400' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`flex-1 min-w-fit px-4 py-3 text-sm font-bold transition-all cursor-pointer border-none whitespace-nowrap ${activeTab === i ? 'text-white border-b-2 border-sky-400' : 'text-sky-700 hover:text-slate-300'}`}
             style={{ background: 'transparent', borderBottomColor: activeTab === i ? '#38bdf8' : 'transparent' }}>
             {tab}
           </button>
@@ -260,18 +260,18 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                 <p className="text-sm font-bold text-white text-center">{assessment.headline}</p>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-red-400 font-black text-lg">{assessment.estimatedMonthlyLeakage}</span>
-                  <span className="text-slate-500 text-xs">estimated monthly revenue leakage</span>
+                  <span className="text-sky-700 text-sm">estimated monthly revenue leakage</span>
                 </div>
                 {assessment.categories.map((cat: any) => (
                   <div key={cat.name} className="flex items-center gap-3">
-                    <span className="text-slate-500 text-[10px] w-36 shrink-0 truncate">{cat.name}</span>
+                    <span className="text-sky-700 text-sm w-36 shrink-0 truncate">{cat.name}</span>
                     <ScoreBar score={cat.score} color={scoreColor(cat.score)} />
-                    <span className="text-[11px] font-bold w-8 text-right shrink-0" style={{ color: scoreColor(cat.score) }}>{cat.score}</span>
+                    <span className="text-sm font-bold w-8 text-right shrink-0" style={{ color: scoreColor(cat.score) }}>{cat.score}</span>
                   </div>
                 ))}
               </div>
               <button onClick={() => setActiveTab(1)}
-                className="w-full mt-5 flex items-center justify-center gap-2 text-xs uppercase tracking-widest font-bold bg-sky-500 hover:bg-sky-400 text-white py-3 rounded-xl cursor-pointer border-none transition-all">
+                className="w-full mt-5 flex items-center justify-center gap-2 text-sm uppercase tracking-widest font-bold bg-sky-500 hover:bg-sky-400 text-white py-3 rounded-xl cursor-pointer border-none transition-all">
                 See Full Gap Analysis <ArrowRight size={12} />
               </button>
             </motion.div>
@@ -297,8 +297,8 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                           <span style={{ color: p.color }}>{ICON_MAP[cat.icon] || <Target size={18} />}</span>
                           <span className="flex-1 text-sm font-bold text-slate-800">{cat.name}</span>
                           <div className="flex items-center gap-1.5">
-                            <span className="text-xs font-black" style={{ color: p.color }}>{cat.score}/100</span>
-                            {isOpen ? <ChevronUp size={14} className="text-slate-400" /> : <ChevronDown size={14} className="text-slate-400" />}
+                            <span className="text-sm font-black" style={{ color: p.color }}>{cat.score}/100</span>
+                            {isOpen ? <ChevronUp size={14} className="text-sky-600" /> : <ChevronDown size={14} className="text-sky-600" />}
                           </div>
                         </button>
                         <AnimatePresence>
@@ -306,26 +306,26 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                             <motion.div initial={{ height:0, opacity:0 }} animate={{ height:'auto', opacity:1 }} exit={{ height:0, opacity:0 }}
                               className="px-4 pb-4 space-y-3 border-t" style={{ borderColor: p.border }}>
                               <div className="pt-3">
-                                <p className="text-[10px] uppercase tracking-widest text-slate-700 font-bold mb-1">The Problem</p>
-                                <p className="text-xs text-slate-700 leading-relaxed">{cat.problem}</p>
+                                <p className="text-sm uppercase tracking-widest text-slate-700 font-bold mb-1">The Problem</p>
+                                <p className="text-sm text-slate-700 leading-relaxed">{cat.problem}</p>
                               </div>
                               <div>
-                                <p className="text-[10px] uppercase tracking-widest text-slate-700 font-bold mb-1">Impact</p>
-                                <p className="text-xs font-semibold leading-relaxed" style={{ color:'#92400e' }}>{cat.impact}</p>
+                                <p className="text-sm uppercase tracking-widest text-slate-700 font-bold mb-1">Impact</p>
+                                <p className="text-sm font-semibold leading-relaxed" style={{ color:'#92400e' }}>{cat.impact}</p>
                               </div>
                               <div>
-                                <p className="text-[10px] uppercase tracking-widest text-slate-700 font-bold mb-1">NWS Solution</p>
-                                <p className="text-xs font-semibold leading-relaxed text-sky-700">{cat.nwsSolution}</p>
-                                <span className="inline-block mt-1.5 text-[9px] px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 font-bold border border-sky-200">{cat.nwsProduct}</span>
+                                <p className="text-sm uppercase tracking-widest text-slate-700 font-bold mb-1">NWS Solution</p>
+                                <p className="text-sm font-semibold leading-relaxed text-sky-700">{cat.nwsSolution}</p>
+                                <span className="inline-block mt-1.5 text-sm px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 font-bold border border-sky-200">{cat.nwsProduct}</span>
                               </div>
                               <div>
-                                <p className="text-[10px] uppercase tracking-widest text-slate-700 font-bold mb-2">DIY Steps (Manual Alternative)</p>
+                                <p className="text-sm uppercase tracking-widest text-slate-700 font-bold mb-2">DIY Steps (Manual Alternative)</p>
                                 <ol className="space-y-1.5 list-decimal list-inside">
                                   {cat.manualSteps.map((step: string, j: number) => (
-                                    <li key={j} className="text-[11px] text-slate-600">{step}</li>
+                                    <li key={j} className="text-sm text-slate-600">{step}</li>
                                   ))}
                                 </ol>
-                                <div className="flex gap-4 mt-3 text-[10px] text-slate-500">
+                                <div className="flex gap-4 mt-3 text-sm text-sky-700">
                                   <span className="flex items-center gap-1"><Clock size={10} /> {cat.manualTimeEstimate}</span>
                                   <span className="flex items-center gap-1"><DollarSign size={10} /> {cat.manualCostEstimate}</span>
                                 </div>
@@ -364,24 +364,24 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                 <div className="rounded-2xl p-5 border" style={{ background:`${plan.color}18`, borderColor:`${plan.color}40` }}>
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <span className="text-[10px] uppercase tracking-widest font-bold" style={{ color:plan.color }}>Recommended for {businessName}</span>
+                      <span className="text-sm uppercase tracking-widest font-bold" style={{ color:plan.color }}>Recommended for {businessName}</span>
                       <h3 className="text-white font-black text-xl mt-1">{plan.name}</h3>
-                      <p className="text-slate-400 text-xs mt-1 leading-relaxed">{plan.tagline}</p>
+                      <p className="text-sky-600 text-sm mt-1 leading-relaxed">{plan.tagline}</p>
                     </div>
                     <div className="text-right shrink-0">
                       <div className="text-white font-black text-2xl">{plan.price}</div>
-                      <div className="text-slate-500 text-[10px]">/month</div>
+                      <div className="text-sky-700 text-sm">/month</div>
                     </div>
                   </div>
                   {criticalCount > 0 && (
-                    <div className="mt-3 text-[11px] font-bold" style={{ color:plan.color }}>
+                    <div className="mt-3 text-sm font-bold" style={{ color:plan.color }}>
                       {criticalCount} critical gap{criticalCount>1?'s':''} identified — each costing you revenue daily.
                     </div>
                   )}
                 </div>
                 {leakage > 0 && (
                   <div className="rounded-2xl p-4 border border-emerald-500/25 bg-emerald-500/5">
-                    <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-3">Projected ROI</p>
+                    <p className="text-sm uppercase tracking-widest text-sky-700 font-bold mb-3">Projected ROI</p>
                     <div className="grid grid-cols-2 gap-3">
                       {[
                         { label:'Month 1 net return', value:roi1>0?`+$${roi1.toLocaleString()}`:'Break-even', color:roi1>0?'#34d399':'#fbbf24' },
@@ -389,25 +389,25 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                       ].map(r => (
                         <div key={r.label} className="bg-white/5 rounded-xl p-3 text-center">
                           <div className="font-black text-lg" style={{ color:r.color }}>{r.value}</div>
-                          <div className="text-[10px] text-slate-500 mt-0.5">{r.label}</div>
+                          <div className="text-sm text-sky-700 mt-0.5">{r.label}</div>
                         </div>
                       ))}
                     </div>
-                    <p className="text-[10px] text-slate-600 mt-2 text-center">Based on recovering 40–70% of your estimated {assessment.estimatedMonthlyLeakage}/mo leakage</p>
+                    <p className="text-sm text-slate-600 mt-2 text-center">Based on recovering 40–70% of your estimated {assessment.estimatedMonthlyLeakage}/mo leakage</p>
                   </div>
                 )}
                 <div>
-                  <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-3">Implementation Roadmap</p>
+                  <p className="text-sm uppercase tracking-widest text-sky-700 font-bold mb-3">Implementation Roadmap</p>
                   <div className="space-y-2">
                     {phases.map((ph,i) => (
                       <div key={i} className="flex gap-3 bg-white/5 border border-white/8 rounded-xl p-3">
                         <div className="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 flex items-center justify-center shrink-0 text-sky-400">{ph.icon}</div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-[10px] text-sky-400 font-bold">{ph.week}</span>
-                            <span className="text-white text-xs font-bold">{ph.title}</span>
+                            <span className="text-sm text-sky-400 font-bold">{ph.week}</span>
+                            <span className="text-white text-sm font-bold">{ph.title}</span>
                           </div>
-                          <p className="text-[11px] text-slate-400 mt-0.5 leading-relaxed">{ph.desc}</p>
+                          <p className="text-sm text-sky-600 mt-0.5 leading-relaxed">{ph.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -432,10 +432,10 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                 </div>
                 <div>
                   <h3 className="text-white font-black text-lg">Your Agent is trained on {businessName}</h3>
-                  <p className="text-slate-400 text-sm mt-1">Samantha is the demo — your agent carries your brand name, voice, and services</p>
+                  <p className="text-sky-600 text-sm mt-1">Samantha is the demo — your agent carries your brand name, voice, and services</p>
                 </div>
                 <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-left">
-                  <p className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-2">Opening Greeting</p>
+                  <p className="text-sm uppercase tracking-widest text-sky-700 font-bold mb-2">Opening Greeting</p>
                   <p className="text-sm text-sky-300 italic leading-relaxed">"{assessment.agentGreeting}"</p>
                 </div>
                 <div className="grid grid-cols-3 gap-3 w-full text-center">
@@ -446,7 +446,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                   ].map(stat => (
                     <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl p-3">
                       <div className="text-white font-black text-sm">{stat.value}</div>
-                      <div className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">{stat.label}</div>
+                      <div className="text-sky-700 text-sm font-bold uppercase tracking-widest">{stat.label}</div>
                     </div>
                   ))}
                 </div>
@@ -458,7 +458,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                 <Phone size={16} />
                 Talk to Your Agent Demo — Samantha
               </button>
-              <p className="text-[10px] text-white/60 text-center">
+              <p className="text-sm text-white/60 text-center">
                 This is a real AI call. Samantha knows {businessName}'s services, tone, and goals.
               </p>
             </motion.div>
@@ -469,7 +469,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
             <motion.div key="t4" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-4">
               <div className="flex items-center justify-between mb-1">
                 <h3 className="text-white font-black text-base">Your Free Assets</h3>
-                <span className="text-[10px] text-sky-400 font-bold uppercase tracking-widest">3 Unlocked</span>
+                <span className="text-sm text-sky-400 font-bold uppercase tracking-widest">3 Unlocked</span>
               </div>
 
               {/* ASSET 1: Business Intelligence Report */}
@@ -481,13 +481,13 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                   <div className="flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-white font-black text-sm">Full Business Intelligence Report</span>
-                      <span className="text-[9px] px-2 py-0.5 rounded-full font-bold border bg-amber-500/20 text-amber-400 border-amber-500/30">Most Valuable</span>
+                      <span className="text-sm px-2 py-0.5 rounded-full font-bold border bg-amber-500/20 text-amber-400 border-amber-500/30">Most Valuable</span>
                     </div>
-                    <p className="text-[11px] text-white/60 mt-0.5">Personalised for {businessName} | {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+                    <p className="text-sm text-white/60 mt-0.5">Personalised for {businessName} | {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                   </div>
                 </div>
                 <div className="px-5 py-4 space-y-1">
-                  <p className="text-[10px] uppercase tracking-widest text-white/50 font-bold mb-3">What's inside</p>
+                  <p className="text-sm uppercase tracking-widest text-white/50 font-bold mb-3">What's inside</p>
                   {[
                     { num: '1.', label: 'Executive Summary & Overall Score', val: `${assessment.overallScore}/100 | Grade ${assessment.grade}` },
                     { num: '2.', label: '5-Category Gap Analysis', val: `${assessment.categories.filter((c: any) => c.severity === 'critical').length} critical | ${assessment.categories.filter((c: any) => c.severity === 'warning').length} need work` },
@@ -498,9 +498,9 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                     { num: '7.', label: 'Custom Strategy Call Offer', val: 'Personalised NWS pricing' },
                   ].map(row => (
                     <div key={row.num} className="flex items-center gap-3 py-2 border-b border-white/5 last:border-0">
-                      <span className="text-[11px] text-white/40 w-5 shrink-0 font-mono">{row.num}</span>
+                      <span className="text-sm text-white/40 w-5 shrink-0 font-mono">{row.num}</span>
                       <span className="text-[12px] text-white font-medium flex-1">{row.label}</span>
-                      <span className="text-[11px] text-white/70 font-mono text-right shrink-0">{row.val}</span>
+                      <span className="text-sm text-white/70 font-mono text-right shrink-0">{row.val}</span>
                     </div>
                   ))}
                 </div>
@@ -522,21 +522,21 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-white font-black text-sm">72-Hour Quick Win Checklist</span>
-                      <span className="text-[9px] px-2 py-0.5 rounded-full font-bold border bg-emerald-500/20 text-emerald-400 border-emerald-500/30">Start Today</span>
+                      <span className="text-sm px-2 py-0.5 rounded-full font-bold border bg-emerald-500/20 text-emerald-400 border-emerald-500/30">Start Today</span>
                     </div>
-                    <p className="text-[11px] text-white/60 mt-0.5">3 actions {firstName} can implement this week - no budget needed</p>
+                    <p className="text-sm text-white/60 mt-0.5">3 actions {firstName} can implement this week - no budget needed</p>
                   </div>
                 </div>
                 <div className="px-5 py-4 space-y-4">
                   {assessment.quickWins.map((win: any, i: number) => (
                     <div key={i} className="flex gap-3">
                       <div className="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-[11px] font-black text-emerald-400">{i + 1}</span>
+                        <span className="text-sm font-black text-emerald-400">{i + 1}</span>
                       </div>
                       <div className="flex-1">
                         <p className="text-[13px] text-white font-bold leading-snug">{win.title}</p>
                         <p className="text-[12px] text-white/75 mt-1 leading-relaxed">{win.impact}</p>
-                        <span className="inline-flex items-center gap-1 mt-2 text-[10px] px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 font-bold">
+                        <span className="inline-flex items-center gap-1 mt-2 text-sm px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 font-bold">
                           <Clock size={9} /> {win.timeToImplement}
                         </span>
                       </div>
@@ -571,23 +571,23 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-white font-black text-sm">Custom AI Receptionist Script</span>
-                      <span className="text-[9px] px-2 py-0.5 rounded-full font-bold border bg-sky-500/20 text-sky-400 border-sky-500/30">Exclusive</span>
+                      <span className="text-sm px-2 py-0.5 rounded-full font-bold border bg-sky-500/20 text-sky-400 border-sky-500/30">Exclusive</span>
                     </div>
-                    <p className="text-[11px] text-white/60 mt-0.5">Your agent - built for {businessName} | {form.industry?.split('/')[0]?.trim()}</p>
+                    <p className="text-sm text-white/60 mt-0.5">Your agent - built for {businessName} | {form.industry?.split('/')[0]?.trim()}</p>
                   </div>
                 </div>
                 <div className="px-5 py-4 space-y-4">
                   <div>
-                    <p className="text-[10px] uppercase tracking-widest text-white/50 font-bold mb-2">Opening Greeting</p>
+                    <p className="text-sm uppercase tracking-widest text-white/50 font-bold mb-2">Opening Greeting</p>
                     <div className="bg-white/5 border border-sky-500/20 rounded-xl p-3 flex items-start gap-2.5">
                       <div className="w-7 h-7 rounded-full bg-sky-500/30 border border-sky-400/40 flex items-center justify-center shrink-0">
-                        <span className="text-[9px] text-sky-400 font-black">AI</span>
+                        <span className="text-sm text-sky-400 font-black">AI</span>
                       </div>
                       <p className="text-[13px] text-sky-200 italic leading-relaxed">"{assessment.agentGreeting}"</p>
                     </div>
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase tracking-widest text-white/50 font-bold mb-2">Agent Specifications</p>
+                    <p className="text-sm uppercase tracking-widest text-white/50 font-bold mb-2">Agent Specifications</p>
                     <div className="grid grid-cols-3 gap-2">
                       {[
                         { label: 'Voice', val: '11Labs Sarah' },
@@ -598,16 +598,16 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                         { label: 'CRM Sync', val: 'CRM' },
                       ].map(s => (
                         <div key={s.label} className="bg-white/5 rounded-lg px-3 py-2.5">
-                          <p className="text-[9px] uppercase tracking-wider text-white/50 font-bold">{s.label}</p>
+                          <p className="text-sm uppercase tracking-wider text-white/50 font-bold">{s.label}</p>
                           <p className="text-[12px] text-white font-bold mt-0.5">{s.val}</p>
                         </div>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase tracking-widest text-white/50 font-bold mb-2">System Prompt Preview</p>
+                    <p className="text-sm uppercase tracking-widest text-white/50 font-bold mb-2">System Prompt Preview</p>
                     <div className="bg-black/30 border border-white/8 rounded-xl p-3">
-                      <p className="text-[11px] text-white/70 leading-relaxed font-mono" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' } as React.CSSProperties}>
+                      <p className="text-sm text-white/70 leading-relaxed font-mono" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' } as React.CSSProperties}>
                         {assessment.agentSystemPrompt?.substring(0, 220)}...
                       </p>
                     </div>

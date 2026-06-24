@@ -63,8 +63,8 @@ function ProgressBar({ step, total }: { step: number; total: number }) {
   return (
     <div className="px-6 pt-5 pb-4">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Step {step} of {total}</span>
-        <span className="text-xs font-bold text-slate-600">{Math.round((step / total) * 100)}%</span>
+        <span className="text-sm font-bold text-slate-600 uppercase tracking-wider">Step {step} of {total}</span>
+        <span className="text-sm font-bold text-slate-600">{Math.round((step / total) * 100)}%</span>
       </div>
       <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
         <motion.div
@@ -103,7 +103,7 @@ function TextField({ label, value, onChange, placeholder, type = 'text', require
 }) {
   return (
     <div>
-      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+      <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider mb-1.5">
         {label}{required && <span className="text-sky-500 ml-0.5">*</span>}
       </label>
       <input
@@ -166,11 +166,11 @@ export default function SurveyModal({ domain, onComplete }: Props) {
         {/* Header */}
         <div className="px-6 py-3.5 flex items-center gap-3" style={{ background: '#0c1a2e' }}>
           <div className="w-7 h-7 rounded-full bg-sky-500 flex items-center justify-center shrink-0">
-            <span className="text-white text-[11px] font-black">NWS</span>
+            <span className="text-white text-sm font-black">NWS</span>
           </div>
           <div>
             <p className="text-white text-[13px] font-black leading-none">Intelligence Engine</p>
-            <p className="text-slate-500 text-[10px] font-mono mt-0.5 truncate max-w-[240px]">{domain}</p>
+            <p className="text-sky-700 text-sm font-mono mt-0.5 truncate max-w-[240px]">{domain}</p>
           </div>
         </div>
 
@@ -242,7 +242,7 @@ export default function SurveyModal({ domain, onComplete }: Props) {
                         }`}
                       >
                         <span className="text-2xl">{ind.icon}</span>
-                        <span className={`text-[10px] font-bold leading-tight ${data.industry === ind.value ? 'text-sky-700' : 'text-slate-700'}`}>
+                        <span className={`text-sm font-bold leading-tight ${data.industry === ind.value ? 'text-sky-700' : 'text-slate-700'}`}>
                           {ind.value.split(' /')[0]}
                         </span>
                       </button>
@@ -263,7 +263,7 @@ export default function SurveyModal({ domain, onComplete }: Props) {
                       <ChoiceCard key={c.value} selected={data.challenge === c.value} onClick={() => set('challenge', c.value)}>
                         <div className="flex-1 min-w-0">
                           <p className="text-[13px] font-bold text-slate-800 leading-snug">{c.label}</p>
-                          <p className="text-[11px] text-slate-600 mt-0.5 leading-snug">{c.desc}</p>
+                          <p className="text-sm text-slate-600 mt-0.5 leading-snug">{c.desc}</p>
                         </div>
                       </ChoiceCard>
                     ))}
@@ -314,7 +314,7 @@ export default function SurveyModal({ domain, onComplete }: Props) {
                     <TextField label="Email address" value={data.email} onChange={v => set('email', v)} placeholder="jane@yourbusiness.com" type="email" required />
                     <TextField label="Phone (optional)" value={data.phone} onChange={v => set('phone', v)} placeholder="+1 246 555 0100" type="tel" />
                   </div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-600 leading-relaxed">
                     🔒 No spam. No credit card. We'll also send a text when your custom AI demo is live.
                   </p>
                 </form>

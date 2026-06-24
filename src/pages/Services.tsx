@@ -106,7 +106,7 @@ export default function Services() {
         <div className="absolute inset-0 grid-overlay opacity-[0.25] pointer-events-none"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-sky-100 blur-[120px] rounded-full pointer-events-none opacity-70"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <span className="text-xs uppercase tracking-[0.2em] text-sky-600 font-bold">What We Build</span>
+          <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">What We Build</span>
           <h1 className="font-display font-light text-5xl md:text-7xl tracking-tight leading-[1.04] text-text-base mt-3">
             Four services. <span className="italic text-accent-primary">One system.</span>
           </h1>
@@ -128,11 +128,11 @@ export default function Services() {
                 onClick={() => setActiveService(svc.id)}
                 className={`w-full text-left flex items-center gap-4 p-5 rounded-2xl border-2 transition-all duration-200 cursor-pointer ${activeService === svc.id ? "border-sky-200 bg-sky-50 shadow-md" : "border-slate-100 bg-white hover:border-sky-100"}`}
               >
-                <div className={`p-2.5 rounded-xl border ${activeService === svc.id ? svc.iconBg : "bg-slate-50 border-slate-100 text-slate-400"} shrink-0 transition-all`}>
+                <div className={`p-2.5 rounded-xl border ${activeService === svc.id ? svc.iconBg : "bg-slate-50 border-slate-100 text-sky-600"} shrink-0 transition-all`}>
                   {svc.icon}
                 </div>
                 <div>
-                  <span className="text-[9px] uppercase tracking-widest font-bold text-text-muted block">{svc.badge}</span>
+                  <span className="text-sm uppercase tracking-widest font-bold text-text-muted block">{svc.badge}</span>
                   <span className={`text-sm font-black transition-colors ${activeService === svc.id ? "text-sky-700" : "text-text-base"}`}>{svc.title}</span>
                 </div>
                 {activeService === svc.id && <ChevronDown size={14} className="ml-auto text-sky-500 -rotate-90" />}
@@ -144,7 +144,7 @@ export default function Services() {
           <div className="lg:col-span-8 border-2 border-slate-100 bg-white rounded-[28px] p-8 md:p-10 shadow-sm">
             <div className="flex justify-between items-start gap-6 mb-6">
               <div>
-                <div className={`inline-flex items-center gap-2 border px-3 py-1.5 rounded-full text-[9px] uppercase tracking-[0.2em] font-bold mb-3 ${active.iconBg}`}>
+                <div className={`inline-flex items-center gap-2 border px-3 py-1.5 rounded-full text-sm uppercase tracking-[0.2em] font-bold mb-3 ${active.iconBg}`}>
                   {active.icon}
                   {active.badge}
                 </div>
@@ -153,7 +153,7 @@ export default function Services() {
               </div>
               <div className="text-right shrink-0">
                 {active.price && <div className="text-xl font-black font-mono text-text-base">{active.price}</div>}
-                {active.priceNote && <div className="text-[10px] text-text-muted font-medium">{active.priceNote}</div>}
+                {active.priceNote && <div className="text-sm text-text-muted font-medium">{active.priceNote}</div>}
               </div>
             </div>
 
@@ -172,7 +172,7 @@ export default function Services() {
 
             <button
               onClick={() => setIsBookingOpen(true)}
-              className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none"
+              className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none"
             >
               <span>Book a Consultation</span>
               <ArrowRight size={12} />
@@ -186,7 +186,7 @@ export default function Services() {
         <div className="max-w-3xl mx-auto text-center">
           <h3 className="text-2xl md:text-3xl font-black text-text-base">Not sure which service fits?</h3>
           <p className="text-sm text-text-muted mt-3 font-medium">Book a free 30-minute strategy call. We'll map your current setup and recommend the right entry point.</p>
-          <button onClick={() => setIsBookingOpen(true)} className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-8 py-4 rounded-xl shadow-md cursor-pointer border-none transition-all">
+          <button onClick={() => setIsBookingOpen(true)} className="mt-6 inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-8 py-4 rounded-xl shadow-md cursor-pointer border-none transition-all">
             Book Free Consultation <ArrowRight size={12} />
           </button>
         </div>

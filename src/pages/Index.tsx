@@ -8,9 +8,12 @@ import Pricing from "../components/Pricing";
 import FAQ from "../components/FAQ";
 import CTA from "../components/CTA";
 import BookingModal from "../components/BookingModal";
+import SignupModal from "../components/SignupModal";
+import AppMarketplace from "../components/AppMarketplace";
 
 export default function Index() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
 
   const handleOpenBooking = () => {
     setIsBookingOpen(true);
@@ -31,14 +34,17 @@ export default function Index() {
       <ROICalculator onBookDemo={handleOpenBooking} />
       
       {/* New Consultative Pricing Plans */}
-      <Pricing onBookDemo={handleOpenBooking} />
+      <Pricing onBookDemo={handleOpenBooking} onSignUp={() => setIsSignupOpen(true)} />
       
+      <AppMarketplace onBookDemo={handleOpenBooking} />
+
       <FAQ />
       
       <CTA onBookDemo={handleOpenBooking} />
 
-      {/* Shared Booking Modal */}
+      {/* Modals */}
       <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+      <SignupModal isOpen={isSignupOpen} onClose={() => setIsSignupOpen(false)} />
     </div>
   );
 }

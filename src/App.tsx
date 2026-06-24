@@ -20,7 +20,8 @@ const Demo        = lazy(() => import("./pages/Demo"));
 const Privacy     = lazy(() => import("./pages/Privacy"));
 const Terms       = lazy(() => import("./pages/Terms"));
 const GDPR        = lazy(() => import("./pages/GDPR"));
-const ResultsPage = lazy(() => import("./pages/ResultsPage"));
+const ResultsPage  = lazy(() => import("./pages/ResultsPage"));
+const BusinessOS   = lazy(() => import("./pages/BusinessOS"));
 
 // Minimal page loader shown during lazy-load transitions
 function PageLoader() {
@@ -28,7 +29,7 @@ function PageLoader() {
     <div className="min-h-[60vh] flex items-center justify-center">
       <div className="flex flex-col items-center gap-3">
         <div className="w-8 h-8 border-2 border-sky-200 border-t-sky-500 rounded-full animate-spin"></div>
-        <span className="text-[10px] uppercase tracking-widest text-text-muted font-bold">Loading</span>
+        <span className="text-sm uppercase tracking-widest text-text-muted font-bold">Loading</span>
       </div>
     </div>
   );
@@ -63,7 +64,8 @@ export default function App() {
                 <Route path="/privacy"    element={<Privacy />} />
                 <Route path="/terms"      element={<Terms />} />
                 <Route path="/gdpr"       element={<GDPR />} />
-                <Route path="/results/:id" element={<ResultsPage />} />
+                <Route path="/results/:id"   element={<ResultsPage />} />
+                <Route path="/business-os"  element={<BusinessOS />} />
                 <Route path="*"          element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
