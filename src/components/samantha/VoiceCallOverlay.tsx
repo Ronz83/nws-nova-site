@@ -81,11 +81,17 @@ export const VoiceCallOverlay: React.FC<Props> = ({
           resolvedAssistantId = propAssistantId;
           resolvedPublicKey = propPublicKey;
         } else {
+          if (!apiBase) {
+            throw new Error("Voice AI backend is currently provisioning. Please use text chat.");
+          }
           const res = await fetch(`${apiBase}/api/demo-agent/start-call`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ demo_id: demoId }),
           });
+          if (!res.ok) {
+             throw new Error("Voice server is temporarily offline.");
+          }
           const data = await res.json();
           if (data.status !== 'success' || !data.assistant_id || !data.public_key) {
             throw new Error(data.message || 'Failed to provision agent');
