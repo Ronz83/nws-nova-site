@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { FeatureProvider } from "./contexts/FeatureContext";
-import { AdminToggleWidget } from "./components/AdminToggleWidget";
+
 import { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -111,8 +111,6 @@ export default function App() {
                 </div>
               } />
             </Routes>
-            
-            <AdminToggleWidget />
           </Router>
         </SamanthaProvider>
       </FeatureProvider>

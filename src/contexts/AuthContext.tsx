@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 
 export type UserRole = 'agency_admin' | 'location_admin' | 'location_user';
@@ -61,23 +61,32 @@ const mockEmployee: User = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(mockAdmin);
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Securely check for authentication parameters injected by GoHighLevel
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const roleParam = params.get('role');
+    
+    if (roleParam === 'agency_admin') {
+      setUser(mockAdmin);
+    } else if (roleParam === 'location_user') {
+      setUser(mockEmployee);
+    } else {
+      setUser(null); // Force Access Denied
+    }
+    setIsLoading(false);
+  }, []);
 
   const loginAsAdmin = async () => {
-    setIsLoading(true);
-    await new Promise(r => setTimeout(r, 400));
-    setUser(mockAdmin);
-    setIsLoading(false);
+    // This function is deprecated for production. GHL handles login via URL params.
+    console.warn("Direct login disabled in production. Authenticate via GHL SSO.");
   };
 
   const loginAsEmployee = async () => {
-    setIsLoading(true);
-    await new Promise(r => setTimeout(r, 400));
-    // When switching to employee, we use the permissions they currently hold
-    // Since we'll let the admin edit the mockEmployee's permissions for demo, we'll store them in a ref or just use state.
-    setUser(mockEmployee);
-    setIsLoading(false);
+    // This function is deprecated for production. GHL handles login via URL params.
+    console.warn("Direct login disabled in production. Authenticate via GHL SSO.");
   };
 
   const logout = async () => {
