@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Operations Hub - NWS Business OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline": "#75777d",
+                        "on-surface-variant": "#44474d",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary-fixed-variant": "#3a475d",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#0e1c30",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#001e2f",
+                        "on-tertiary-container": "#b87500",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "secondary-fixed-dim": "#89ceff",
+                        "primary": "#000000",
+                        "surface-container": "#e8eef6",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#ebf1f9",
+                        "on-surface": "#161c22",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#2a1700",
+                        "tertiary": "#000000",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#dde3eb",
+                        "surface-container-high": "#e3e9f1",
+                        "secondary-container": "#39b8fd",
+                        "primary-fixed-dim": "#bac7e2",
+                        "on-secondary-container": "#004666",
+                        "on-primary-container": "#77849d",
+                        "background": "#f6f9ff",
+                        "surface-bright": "#f6f9ff",
+                        "on-background": "#161c22",
+                        "secondary-fixed": "#c9e6ff",
+                        "surface": "#f6f9ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#525f76",
+                        "primary-fixed": "#d5e3ff",
+                        "surface-container-low": "#eef4fc",
+                        "outline-variant": "#c5c6cd",
+                        "inverse-surface": "#2b3137",
+                        "primary-container": "#0e1c30",
+                        "surface-container-highest": "#dde3eb",
+                        "inverse-primary": "#bac7e2",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-dim": "#d4dbe2",
+                        "error-container": "#ffdad6",
+                        "secondary": "#006591",
+                        "sky-500": "#0ea5e9",
+                        "sky-700": "#0369a1",
+                        "sky-50": "#f0f9ff",
+                        "slate-100": "#f1f5f9",
+                        "slate-500": "#64748b",
+                        "slate-600": "#475569"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "section-padding": "96px",
+                        "gutter": "24px",
+                        "nav-height": "96px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "container-max": "1280px"
+                    },
+                    fontFamily: {
+                        "label-bold-caps": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "h3": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "display-h1-mobile": ["Instrument Serif", "serif"],
+                        "display-h1": ["Instrument Serif", "serif"],
+                        "h2": ["Inter", "sans-serif"]
+                    },
+                    fontSize: {
+                        "label-bold-caps": ["12px", { lineHeight: "1", letterSpacing: "0.1em", fontWeight: "700" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "h3": ["24px", { lineHeight: "1.3", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "display-h1-mobile": ["48px", { lineHeight: "1.1", fontWeight: "400" }],
+                        "display-h1": ["80px", { lineHeight: "1.1", fontWeight: "400" }],
+                        "h2": ["40px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "800" }]
+                    },
+                    boxShadow: {
+                        'card-soft': '0px 10px 30px rgba(12, 26, 46, 0.04)'
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .dot-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen relative antialiased dot-pattern">
+<main class="w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto py-section-padding space-y-12 relative z-10">
+<!-- Header Section -->
+<header class="space-y-2">
+<h1 class="text-5xl font-black text-[#0c1a2e] tracking-tight">Operations Hub</h1>
+<p class="text-lg text-slate-600 font-normal">Manage your unified inbox and sales pipelines.</p>
+</header>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<!-- LEFT COLUMN: Unified Inbox -->
+<section class="lg:col-span-2 flex flex-col h-full bg-white rounded-2xl border-2 border-slate-100 shadow-card-soft overflow-hidden">
+<div class="p-8 border-b-2 border-slate-100 flex justify-between items-center bg-white">
+<h2 class="font-h3 text-h3 text-on-surface">Unified Inbox</h2>
+<span class="material-symbols-outlined text-outline">tune</span>
+</div>
+<div class="flex-1 overflow-y-auto divide-y-2 divide-slate-100">
+<!-- Selected Item -->
+<div class="p-6 bg-sky-50 border-l-4 border-sky-500 flex gap-4 cursor-pointer hover:bg-sky-100/50 transition-colors">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a woman in her 30s with warm lighting, perfect for a high-end business OS avatar. Soft depth of field, minimalist background, bright and clear corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUXVw0aIGSdOTWN7G_OWFJU_EbMWRXFVI1B6GFERz9AJiBdgpzYbt3woG_k5P8sNE_iVujBj5JQa5t27sBO3b3kihmwjwo2PPIvneyYAnvjzZtwsQmzpb0OWnBsoPns6lfikDNKUcEmAfXkHY0pCcwEwnpDFPxpmptIgwgjiS8kVOKHw_3t_pZMw3Mg4Jd3EN4T_DZg9t0VEggKvWcqzp55vHh-L6TOX7sHMEatMI2tJyreK-m10xuMwbPBYVZ2-S3wtAqrJKfr3qH"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-bold text-on-surface truncate">Sarah Jenkins</h3>
+<span class="text-xs text-outline-variant font-medium shrink-0">2m ago</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-primary-fixed-dim text-on-primary-container px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.1em]">SMS</span>
+</div>
+<p class="text-on-surface-variant truncate font-medium">"I'll be there in 10 minutes!"</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-6 border-l-4 border-transparent flex gap-4 cursor-pointer hover:bg-surface-container-lowest transition-colors">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-lg">
+                            MC
+                        </div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-bold text-on-surface truncate">Michael Chen</h3>
+<span class="text-xs text-outline-variant font-medium shrink-0">15m ago</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.1em]">Email</span>
+</div>
+<p class="text-on-surface-variant truncate">"Regarding the quote for the resort..."</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-6 border-l-4 border-transparent flex gap-4 cursor-pointer hover:bg-surface-container-lowest transition-colors">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-lg">
+                            ER
+                        </div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-bold text-on-surface truncate">Elena Rodriguez</h3>
+<span class="text-xs text-outline-variant font-medium shrink-0">1h ago</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.1em]">Webchat</span>
+</div>
+<p class="text-on-surface-variant truncate">"Do you have any availability for tomorrow?"</p>
+</div>
+</div>
+</div>
+<div class="p-6 bg-surface-container-lowest border-t-2 border-slate-100">
+<div class="flex items-end gap-4 relative">
+<div class="flex-1">
+<textarea class="w-full bg-white border-2 border-slate-100 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors resize-none overflow-hidden h-[52px]" placeholder="Type a message..." rows="1"></textarea>
+</div>
+<button class="bg-sky-700 hover:bg-sky-800 text-white font-label-bold-caps text-label-bold-caps px-6 h-[52px] rounded-xl transition-colors flex items-center justify-center shadow-sm shrink-0">
+                            SEND
+                        </button>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN: Active Pipeline -->
+<section class="lg:col-span-1 flex flex-col bg-white rounded-2xl border-2 border-slate-100 shadow-card-soft overflow-hidden">
+<div class="p-8 border-b-2 border-slate-100 bg-white">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-h3 text-h3 text-on-surface">Active Pipeline</h2>
+<span class="material-symbols-outlined text-outline">insights</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-slate-100">
+<p class="text-xs text-outline-variant font-bold uppercase tracking-wider mb-1">Active Deals</p>
+<p class="font-h3 text-h3 text-primary">14</p>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-slate-100">
+<p class="text-xs text-outline-variant font-bold uppercase tracking-wider mb-1">Pipeline Value</p>
+<p class="font-h3 text-h3 text-sky-700">$24.5k</p>
+</div>
+</div>
+</div>
+<div class="p-8 space-y-6">
+<!-- Deal 1 -->
+<div class="group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-on-surface group-hover:text-sky-700 transition-colors">Resort Renovation</h4>
+<p class="text-sm text-on-surface-variant">Hotel Grand</p>
+</div>
+<span class="font-bold text-on-surface">$12,500</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 border border-orange-200">Negotiation</span>
+</div>
+</div>
+<hr class="border-t-2 border-slate-100"/>
+<!-- Deal 2 -->
+<div class="group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-on-surface group-hover:text-sky-700 transition-colors">Fleet Management</h4>
+<p class="text-sm text-on-surface-variant">Logisticorp</p>
+</div>
+<span class="font-bold text-on-surface">$8,000</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 border border-sky-200">Lead</span>
+</div>
+</div>
+<hr class="border-t-2 border-slate-100"/>
+<!-- Deal 3 -->
+<div class="group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-bold text-on-surface group-hover:text-sky-700 transition-colors">Cloud Migration</h4>
+<p class="text-sm text-on-surface-variant">TechBase</p>
+</div>
+<span class="font-bold text-on-surface">$4,000</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">Won</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>
