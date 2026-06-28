@@ -1,7 +1,4 @@
-import fs from 'fs';
-import path from 'path';
-
-const TOKEN_FILE_PATH = path.resolve(process.cwd(), 'ghl_token.json');
+import { supabaseAdmin } from './supabase';
 
 export interface GHLTokenData {
   access_token: string;
@@ -11,19 +8,33 @@ export interface GHLTokenData {
   scope: string;
   userType: string;
   companyId: string;
-  locationId?: string; // Standardize for our use
+  locationId?: string;
 }
 
 export async function getValidGHLToken(): Promise<GHLTokenData> {
-  if (!fs.existsSync(TOKEN_FILE_PATH)) {
-    throw new Error('ghl_token.json not found. Please re-authenticate.');
+  // We assume a single master company ID for the agency for now. 
+  // If multi-tenant, you'd pass companyId into this function.
+  const { data, error } = await supabaseAdmin
+    .from('ghl_tokens')
+    .select('*')
+    .limit(1)
+    .single();
+
+  if (error || !data) {
+    throw new Error('GHL Token not found in database. Please re-authenticate.');
   }
 
-  const tokenData: GHLTokenData = JSON.parse(fs.readFileSync(TOKEN_FILE_PATH, 'utf8'));
+  const tokenData: GHLTokenData = {
+    access_token: data.access_token,
+    token_type: data.token_type || 'Bearer',
+    expires_in: data.expires_in,
+    refresh_token: data.refresh_token,
+    scope: data.scope,
+    userType: data.user_type,
+    companyId: data.company_id,
+    locationId: data.location_id
+  };
   
-  // Try to use the token to fetch something lightweight to check validity
-  // Or we can assume it's expired for the sake of robust refreshing if we get a 401.
-  // We'll aggressively refresh if it fails.
   try {
     const res = await fetch(`https://services.leadconnectorhq.com/locations/search?companyId=${tokenData.companyId}`, {
       headers: {
@@ -35,15 +46,17 @@ export async function getValidGHLToken(): Promise<GHLTokenData> {
 
     if (res.status === 401) {
       console.log('GHL Token expired, refreshing...');
-      return await refreshGHLToken(tokenData.refresh_token);
+      return await refreshGHLToken(tokenData.refresh_token, tokenData.companyId);
     }
     
-    // If it worked, we might want to attach a locationId to our token data for convenience
     if (res.ok && !tokenData.locationId) {
        const json = await res.json();
        if (json.locations && json.locations.length > 0) {
          tokenData.locationId = json.locations[0].id;
-         fs.writeFileSync(TOKEN_FILE_PATH, JSON.stringify(tokenData, null, 2));
+         await supabaseAdmin
+           .from('ghl_tokens')
+           .update({ location_id: tokenData.locationId, updated_at: new Date().toISOString() })
+           .eq('company_id', tokenData.companyId);
        }
     }
     return tokenData;
@@ -53,15 +66,13 @@ export async function getValidGHLToken(): Promise<GHLTokenData> {
   }
 }
 
-export async function refreshGHLToken(refreshToken: string): Promise<GHLTokenData> {
+export async function refreshGHLToken(refreshToken: string, companyId: string): Promise<GHLTokenData> {
   const clientId = process.env.GHL_APP_CLIENT_ID;
   const clientSecret = process.env.GHL_APP_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
     throw new Error('GHL_APP_CLIENT_ID or GHL_APP_CLIENT_SECRET not configured in environment.');
   }
-
-  const encodedCredentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
   
   const response = await fetch('https://services.leadconnectorhq.com/oauth/token', {
     method: 'POST',
@@ -85,12 +96,20 @@ export async function refreshGHLToken(refreshToken: string): Promise<GHLTokenDat
 
   const newTokenData = await response.json();
   
-  // Merge companyId back in as the refresh payload doesn't always return it
-  const existingData = JSON.parse(fs.readFileSync(TOKEN_FILE_PATH, 'utf8'));
-  const mergedData = { ...existingData, ...newTokenData };
+  await supabaseAdmin
+    .from('ghl_tokens')
+    .update({
+      access_token: newTokenData.access_token,
+      refresh_token: newTokenData.refresh_token,
+      expires_in: newTokenData.expires_in,
+      updated_at: new Date().toISOString()
+    })
+    .eq('company_id', companyId);
+    
+  console.log('GHL Token successfully refreshed and saved to Supabase.');
   
-  fs.writeFileSync(TOKEN_FILE_PATH, JSON.stringify(mergedData, null, 2));
-  console.log('GHL Token successfully refreshed and saved.');
-  
-  return mergedData;
+  return {
+    ...newTokenData,
+    companyId
+  };
 }

@@ -5,6 +5,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+  const vapiSecret = req.headers['x-vapi-secret'];
+  if (vapiSecret !== process.env.VAPI_WEBHOOK_SECRET) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
   try {
     const payload = req.body;
     const message = payload?.message;
