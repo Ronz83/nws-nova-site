@@ -1,4 +1,20 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { supabaseAdmin } from '../lib/supabase';
+
+async function getAssignedUser(eventType: string) {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('ai_routing_rules')
+      .select('*')
+      .eq('event_type', eventType)
+      .maybeSingle();
+    
+    if (error || !data) return null;
+    return data;
+  } catch (e) {
+    return null;
+  }
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -43,8 +59,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (functionCall.name === 'book_appointment_slot') {
         const { full_name, phone_number, selected_slot } = functionCall.parameters;
-        console.log(`[Automotive Art] Booking slot for ${full_name} (${phone_number}) at ${selected_slot}`);
-        // TODO: Post booking to GHL
+        const assignee = await getAssignedUser('book_appointment_slot');
+        const assigneeMsg = assignee ? ` -> Assigning to ${assignee.ghl_user_name}` : '';
+        
+        console.log(`[Automotive Art] Booking slot for ${full_name} (${phone_number}) at ${selected_slot}${assigneeMsg}`);
+        // TODO: Post booking to GHL and notify assigned user
         return res.status(200).json({
           results: [{
             toolCallId: functionCall.id,
@@ -55,8 +74,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (functionCall.name === 'emergency_dispatch_trigger') {
         const { emergency_type, caller_phone, location } = functionCall.parameters;
-        console.log(`[Automotive Art] 🚨 EMERGENCY DISPATCH TRIGGERED: ${emergency_type} at ${location} for ${caller_phone}`);
-        // TODO: Push immediate SMS/Webhook to emergency responders
+        const assignee = await getAssignedUser('emergency_dispatch_trigger');
+        const assigneeMsg = assignee ? ` -> Alerting ${assignee.ghl_user_name} (${assignee.ghl_user_email})` : ' -> ALERTING ALL ADMINS';
+        
+        console.log(`[Automotive Art] 🚨 EMERGENCY DISPATCH: ${emergency_type} at ${location} for ${caller_phone}${assigneeMsg}`);
+        // TODO: Push immediate SMS/Webhook to assigned emergency responders
         return res.status(200).json({
           results: [{
             toolCallId: functionCall.id,
@@ -67,7 +89,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (functionCall.name === 'ai_employee_flow') {
         const { trigger_reason, summary } = functionCall.parameters;
-        console.log(`[Automotive Art] AI Employee Flow Triggered (${trigger_reason}): ${summary}`);
+        const assignee = await getAssignedUser('ai_employee_flow');
+        const assigneeMsg = assignee ? ` -> Routing to ${assignee.ghl_user_name}` : '';
+        
+        console.log(`[Automotive Art] AI Employee Flow Triggered (${trigger_reason}): ${summary}${assigneeMsg}`);
         return res.status(200).json({
           results: [{
             toolCallId: functionCall.id,

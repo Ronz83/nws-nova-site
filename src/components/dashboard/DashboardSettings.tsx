@@ -1,12 +1,78 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from '../../lib/supabase';
 import { motion } from 'framer-motion';
 import { CheckCircle2, XCircle, AlertCircle, ExternalLink, Download } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
+import { AIRoutingConfig } from './AIRoutingConfig';
 
 export function DashboardSettings() {
   const [activeTab, setActiveTab] = useState<'integrations' | 'billing' | 'team'>('team');
-  const { user, updateUserPermissions } = useAuth();
+  const { user } = useAuth();
+
+  const [teamMembers, setTeamMembers] = useState<any[]>([]);
+  const [memberPermissions, setMemberPermissions] = useState<Record<string, any>>({});
+  const [loadingTeam, setLoadingTeam] = useState(false);
+
+  useEffect(() => {
+    if (activeTab === 'team' && user?.role === 'agency_admin') {
+      const fetchTeam = async () => {
+        setLoadingTeam(true);
+        try {
+          const res = await fetch('/api/ghl/users');
+          if (!res.ok) throw new Error('Failed to fetch users');
+          const data = await res.json();
+          const usersList = data.users || [];
+          setTeamMembers(usersList);
+
+          if (usersList.length > 0) {
+            const userIds = usersList.map((u: any) => u.id);
+            const { data: perms } = await supabase
+              .from('user_permissions')
+              .select('*')
+              .in('ghl_user_id', userIds);
+            
+            const permMap: Record<string, any> = {};
+            if (perms) {
+              perms.forEach((p) => {
+                permMap[p.ghl_user_id] = p;
+              });
+            }
+            setMemberPermissions(permMap);
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoadingTeam(false);
+        }
+      };
+      fetchTeam();
+    }
+  }, [activeTab, user?.role]);
+
+  const toggleMemberPermission = async (memberId: string, hub: string, currentValue: boolean) => {
+    const newValue = !currentValue;
+    const dbCol = hub === 'aiStudio' ? 'ai_studio' : hub;
+
+    setMemberPermissions(prev => ({
+      ...prev,
+      [memberId]: {
+        ...(prev[memberId] || { operations: false, growth: false, automations: false, ai_studio: false, settings: false }),
+        [dbCol]: newValue
+      }
+    }));
+
+    const member = teamMembers.find(m => m.id === memberId);
+
+    await supabase.from('user_permissions').upsert({
+      ghl_user_id: memberId,
+      name: member?.name || '',
+      email: member?.email || '',
+      role: member?.roles?.type || 'location_user',
+      [dbCol]: newValue,
+      updated_at: new Date().toISOString()
+    });
+  };
 
   return (
     <>
@@ -73,65 +139,82 @@ export function DashboardSettings() {
             >
               <div className="flex justify-between items-center mb-2">
                 <h3 className="font-bold text-slate-900 text-lg">Team Management</h3>
-                <button className="text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-lg transition-colors shadow-sm">
-                  Invite Member
-                </button>
+                <a href="https://app.gohighlevel.com/settings/staff" target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-lg transition-colors shadow-sm inline-flex items-center gap-2">
+                  <span>Invite Member</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
               </div>
               <p className="text-sm text-slate-600 mb-6 max-w-2xl">
                 Manage your team members and configure their access permissions across the NWS Business OS.
               </p>
 
-              <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden">
-                <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-white">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600 border border-slate-300">
-                      JD
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-slate-900">John Doe</h4>
-                      <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mt-1">Location User (Demo)</p>
-                    </div>
-                  </div>
-                  <span className="bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Active</span>
+              {loadingTeam ? (
+                <div className="text-center py-8 text-slate-500 font-medium bg-slate-50 rounded-xl border border-slate-200">
+                  Loading team members from GoHighLevel...
                 </div>
-                
-                {user?.role === 'agency_admin' ? (
-                  <div className="p-6">
-                    <h5 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Access Permissions</h5>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {['operations', 'growth', 'automations', 'aiStudio', 'settings'].map((hub) => {
-                        const labels: Record<string, string> = {
-                          operations: 'Operations Hub',
-                          growth: 'Growth Hub',
-                          automations: 'Automations Hub',
-                          aiStudio: 'AI Studio',
-                          settings: 'Settings'
-                        };
-                        const isEnabled = user.permissions[hub as keyof typeof user.permissions];
-                        return (
-                          <div key={hub} className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl">
-                            <span className="font-bold text-slate-700 text-sm">{labels[hub]}</span>
-                            <button 
-                              onClick={() => {
-                                // For demo purposes, we allow the admin to edit the current permissions object in context
-                                // which will reflect on the mockEmployee when switching roles.
-                                const newPerms = { ...user.permissions, [hub]: !isEnabled };
-                                updateUserPermissions(newPerms);
-                              }}
-                              className={`w-12 h-6 rounded-full p-1 transition-colors ${isEnabled ? 'bg-sky-500' : 'bg-slate-300'}`}
-                            >
-                              <div className={`w-4 h-4 bg-white rounded-full transition-transform ${isEnabled ? 'translate-x-6' : 'translate-x-0'}`} />
-                            </button>
-                          </div>
-                        );
-                      })}
+              ) : teamMembers.length === 0 ? (
+                <div className="text-center py-8 text-slate-500 font-medium bg-slate-50 rounded-xl border border-slate-200">
+                  No team members found. Invite them in GoHighLevel first!
+                </div>
+              ) : (
+                teamMembers.map((member) => (
+                  <div key={member.id} className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden mb-6">
+                    <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-white">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600 border border-slate-300">
+                          {member.name ? member.name.substring(0, 2).toUpperCase() : 'U'}
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-slate-900">{member.name || 'Unnamed User'}</h4>
+                          <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mt-1">
+                            {member.roles?.type || member.type || 'User'} - {member.email}
+                          </p>
+                        </div>
+                      </div>
+                      <span className="bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Active</span>
                     </div>
+                    
+                    {user?.role === 'agency_admin' ? (
+                      <div className="p-6">
+                        <h5 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Access Permissions</h5>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {['operations', 'growth', 'automations', 'aiStudio', 'settings'].map((hub) => {
+                            const labels: Record<string, string> = {
+                              operations: 'Operations Hub',
+                              growth: 'Growth Hub',
+                              automations: 'Automations Hub',
+                              aiStudio: 'AI Studio',
+                              settings: 'Settings'
+                            };
+                            const dbCol = hub === 'aiStudio' ? 'ai_studio' : hub;
+                            const isEnabled = !!memberPermissions[member.id]?.[dbCol];
+                            
+                            return (
+                              <div key={hub} className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl">
+                                <span className="font-bold text-slate-700 text-sm">{labels[hub]}</span>
+                                <button 
+                                  onClick={() => toggleMemberPermission(member.id, hub, isEnabled)}
+                                  className={`w-12 h-6 rounded-full p-1 transition-colors ${isEnabled ? 'bg-sky-500' : 'bg-slate-300'}`}
+                                >
+                                  <div className={`w-4 h-4 bg-white rounded-full transition-transform ${isEnabled ? 'translate-x-6' : 'translate-x-0'}`} />
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="p-6 text-center text-slate-500 text-sm font-medium">
+                        Only Agency Admins can edit permissions.
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div className="p-6 text-center text-slate-500 text-sm font-medium">
-                    Only Agency Admins can edit permissions.
-                  </div>
-                )}
+                ))
+              )}
+
+              {/* AI Routing Configuration */}
+              <div className="mt-8">
+                <AIRoutingConfig />
               </div>
             </motion.div>
           )}

@@ -17,7 +17,20 @@ export function DashboardLayout() {
           </div>
           <h2 className="text-2xl font-black text-slate-900 mb-2">Access Denied</h2>
           <p className="text-slate-500 mb-6">You must be logged in to access the Business OS Dashboard.</p>
-          <p className="text-sm text-slate-400 font-medium">Please use the login widget in the bottom right corner.</p>
+          <div className="flex flex-col gap-3">
+            <a 
+              href="/dashboard?role=agency_admin"
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-sm text-sm"
+            >
+              Demo: Login as Agency Admin
+            </a>
+            <a 
+              href="/dashboard?role=location_user"
+              className="w-full bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-3 px-4 rounded-xl transition-colors shadow-sm text-sm"
+            >
+              Demo: Login as Location User
+            </a>
+          </div>
         </div>
       </div>
     );

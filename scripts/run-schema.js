@@ -14,12 +14,12 @@ async function runSchema() {
     console.log('Connected to Supabase PostgreSQL database.');
     
     // Read the SQL file
-    const sqlPath = 'C:\\Users\\Ronald\\.gemini\\antigravity\\brain\\8ae4966a-5758-496e-b06f-1f0c2a729984\\schema_and_seed.sql';
+    const sqlPath = 'C:\\Users\\Ronald\\projects\\nws-nova-site\\supabase\\migrations\\03_user_permissions.sql';
     const sql = fs.readFileSync(sqlPath, 'utf8');
     
     // Execute it
     await client.query(sql);
-    console.log('Schema and seed data executed successfully!');
+    console.log('Migration 03_user_permissions executed successfully!');
     
   } catch (err) {
     console.error('Error executing schema:', err);
