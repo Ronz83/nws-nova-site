@@ -26,8 +26,8 @@ export function DashboardSidebar() {
       <div className="flex flex-col h-full p-6 space-y-8 overflow-y-auto">
         {/* Header */}
         {user?.businessLogo ? (
-          <div className="bg-white rounded-xl p-3 flex items-center justify-center shadow-inner">
-            <img src={user.businessLogo} alt="Business Logo" className="w-full max-h-12 object-contain" />
+          <div className="flex items-center justify-center px-2 py-4 mb-2">
+            <img src={user.businessLogo} alt="Business Logo" className="w-full max-w-[220px] h-auto object-contain drop-shadow-lg" />
           </div>
         ) : (
           <div className="flex items-center gap-4 px-2">
