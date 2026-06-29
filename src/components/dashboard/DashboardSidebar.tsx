@@ -23,10 +23,10 @@ export function DashboardSidebar() {
     <>
       <aside aria-label="Sidebar" className="h-screen w-72 fixed left-0 top-0 bg-slate-900 border-r-2 border-slate-800 z-50 flex-col justify-between hidden md:flex">
       {/* Top Section */}
-      <div className="flex flex-col h-full px-6 pb-6 pt-4 space-y-8 overflow-y-auto">
+      <div className="flex flex-col h-full px-6 pb-6 pt-2 space-y-8 overflow-y-auto">
         {/* Header */}
         {user?.businessLogo ? (
-          <div className="flex items-center justify-center px-2 pb-4 pt-1 mb-2">
+          <div className="flex items-center justify-center px-2 pb-4 pt-0 -mt-2">
             <img src={user.businessLogo} alt="Business Logo" className="w-full max-w-[220px] h-auto object-contain drop-shadow-lg" />
           </div>
         ) : (
