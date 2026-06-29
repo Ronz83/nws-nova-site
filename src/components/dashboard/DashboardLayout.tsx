@@ -8,6 +8,12 @@ export function DashboardLayout() {
   const { user } = useAuth();
   const location = useLocation();
 
+  // Redirect legacy domain access to the new dedicated domain
+  if (window.location.hostname.includes('noveltywebsolutions.com')) {
+    window.location.href = `https://businessesos.com${location.pathname}${location.search}`;
+    return null;
+  }
+
   if (!user) {
     return (
       <div className="h-screen w-full flex items-center justify-center bg-[#f0f9ff] bg-dot-grid relative">
