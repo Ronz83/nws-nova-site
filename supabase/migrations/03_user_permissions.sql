@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS public.user_permissions (
     automations boolean DEFAULT false,
     ai_studio boolean DEFAULT false,
     settings boolean DEFAULT false,
+    require_upgrade boolean DEFAULT true,
     created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );

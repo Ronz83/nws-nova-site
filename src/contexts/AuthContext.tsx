@@ -10,6 +10,7 @@ export interface Permissions {
   automations: boolean;
   aiStudio: boolean;
   settings: boolean;
+  requireUpgrade: boolean;
 }
 
 export interface User {
@@ -19,6 +20,8 @@ export interface User {
   role: UserRole;
   clientId?: string;
   permissions: Permissions;
+  businessName: string;
+  businessLogo: string;
 }
 
 interface AuthContextType {
@@ -36,18 +39,18 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 function getDefaultPermissions(locationId: string | null, role: string | null): Permissions {
   // If they are an agency admin, they get everything
   if (role === 'agency_admin') {
-    return { operations: true, growth: true, automations: true, aiStudio: true, settings: true };
+    return { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false };
   }
   
   // Example for specific manual clients like Automotive Art
   // Replace this ID with the actual locationId for Automotive Art once known.
   const AUTOMOTIVE_ART_LOCATION_ID = 'automotive_art_demo_id';
   if (locationId === AUTOMOTIVE_ART_LOCATION_ID) {
-    return { operations: true, growth: true, automations: true, aiStudio: true, settings: true };
+    return { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false };
   }
 
   // Default for all other new users
-  return { operations: false, growth: false, automations: false, aiStudio: false, settings: false };
+  return { operations: false, growth: false, automations: false, aiStudio: false, settings: false, requireUpgrade: true };
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -69,12 +72,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
            if (roleParam === 'agency_admin') {
              setUser({
                id: 'admin_123', name: 'NWS Super Admin', email: 'admin@noveltywebsolutions.com', role: 'agency_admin',
-               permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true }
+               permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
+               businessName: 'Business OS', businessLogo: '/business_os_logo.png'
              });
            } else if (roleParam === 'location_user') {
              setUser({
                id: 'emp_456', name: 'John Doe', email: 'john@clientbusiness.com', role: 'location_user', clientId: 'client_acct_abc',
-               permissions: { operations: true, growth: false, automations: false, aiStudio: false, settings: false }
+               permissions: { operations: true, growth: false, automations: false, aiStudio: false, settings: false, requireUpgrade: true },
+               businessName: 'Business OS', businessLogo: '/business_os_logo.png'
              });
            } else {
              setUser(null);
@@ -103,7 +108,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             growth: permissions.growth,
             automations: permissions.automations,
             ai_studio: permissions.aiStudio,
-            settings: permissions.settings
+            settings: permissions.settings,
+            require_upgrade: permissions.requireUpgrade
           });
         } else if (data) {
           permissions = {
@@ -111,11 +117,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             growth: data.growth,
             automations: data.automations,
             aiStudio: data.ai_studio,
-            settings: data.settings
+            settings: data.settings,
+            requireUpgrade: data.require_upgrade !== undefined ? data.require_upgrade : true
           };
         } else {
           // Fallback if there was another DB error
           permissions = getDefaultPermissions(locationId, roleParam);
+        }
+
+        let businessName = "Business OS";
+        let businessLogo = "/business_os_logo.png";
+
+        if (locationId) {
+          try {
+            const res = await fetch(`/api/ghl/location?locationId=${locationId}`);
+            if (res.ok) {
+              const locData = await res.json();
+              businessName = locData.name || businessName;
+              businessLogo = locData.logoUrl || businessLogo;
+            }
+          } catch (e) {
+            console.warn("Failed to fetch location data", e);
+          }
         }
 
         setUser({
@@ -124,7 +147,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           email: params.get('email') || '',
           role: roleParam,
           clientId: locationId || undefined,
-          permissions
+          permissions,
+          businessName,
+          businessLogo
         });
 
       } catch (err) {
@@ -163,6 +188,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           automations: newPermissions.automations,
           ai_studio: newPermissions.aiStudio,
           settings: newPermissions.settings,
+          require_upgrade: newPermissions.requireUpgrade,
           updated_at: new Date().toISOString()
         }).eq('ghl_user_id', user.id);
       }

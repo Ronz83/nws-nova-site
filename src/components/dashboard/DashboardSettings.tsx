@@ -52,12 +52,12 @@ export function DashboardSettings() {
 
   const toggleMemberPermission = async (memberId: string, hub: string, currentValue: boolean) => {
     const newValue = !currentValue;
-    const dbCol = hub === 'aiStudio' ? 'ai_studio' : hub;
+    const dbCol = hub === 'aiStudio' ? 'ai_studio' : hub === 'requireUpgrade' ? 'require_upgrade' : hub;
 
     setMemberPermissions(prev => ({
       ...prev,
       [memberId]: {
-        ...(prev[memberId] || { operations: false, growth: false, automations: false, ai_studio: false, settings: false }),
+        ...(prev[memberId] || { operations: false, growth: false, automations: false, ai_studio: false, settings: false, require_upgrade: true }),
         [dbCol]: newValue
       }
     }));
@@ -178,16 +178,21 @@ export function DashboardSettings() {
                       <div className="p-6">
                         <h5 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Access Permissions</h5>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {['operations', 'growth', 'automations', 'aiStudio', 'settings'].map((hub) => {
+                          {['operations', 'growth', 'automations', 'aiStudio', 'settings', 'requireUpgrade'].map((hub) => {
                             const labels: Record<string, string> = {
                               operations: 'Operations Hub',
                               growth: 'Growth Hub',
                               automations: 'Automations Hub',
                               aiStudio: 'AI Studio',
-                              settings: 'Settings'
+                              settings: 'Settings',
+                              requireUpgrade: 'Require Upgrade CTA'
                             };
-                            const dbCol = hub === 'aiStudio' ? 'ai_studio' : hub;
-                            const isEnabled = !!memberPermissions[member.id]?.[dbCol];
+                            const dbCol = hub === 'aiStudio' ? 'ai_studio' : hub === 'requireUpgrade' ? 'require_upgrade' : hub;
+                            
+                            let isEnabled = !!memberPermissions[member.id]?.[dbCol];
+                            if (hub === 'requireUpgrade' && memberPermissions[member.id]?.[dbCol] === undefined) {
+                              isEnabled = true; // default
+                            }
                             
                             return (
                               <div key={hub} className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl">

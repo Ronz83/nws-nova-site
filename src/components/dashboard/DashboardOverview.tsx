@@ -1,5 +1,41 @@
+import { useState, useEffect } from 'react';
 import { Calendar, ChevronDown, Download, Users, UserPlus, ArrowUp, CalendarCheck, CreditCard, DollarSign, Bot, BrainCircuit, CheckCircle2, User, Sparkles, ArrowRight, PlusSquare, Mail } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
+
 export function DashboardOverview() {
+  const { user } = useAuth();
+  const [metrics, setMetrics] = useState<{ leads: number; appointments: number; revenue: number } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchMetrics() {
+      if (!user?.clientId) {
+        setMetrics({ leads: 0, appointments: 0, revenue: 0 });
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await fetch(`/api/ghl/metrics?locationId=${user.clientId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setMetrics({
+            leads: data.leads || 0,
+            appointments: data.appointments || 0,
+            revenue: data.revenue || 0
+          });
+        } else {
+          setMetrics({ leads: 0, appointments: 0, revenue: 0 });
+        }
+      } catch (e) {
+        console.error("Failed to fetch metrics", e);
+        setMetrics({ leads: 0, appointments: 0, revenue: 0 });
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchMetrics();
+  }, [user?.clientId]);
+
   return (
     <>
       {/* Page Header */}
@@ -35,7 +71,11 @@ export function DashboardOverview() {
             <h3 className="font-medium text-slate-600">New Leads</h3>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-black text-slate-900">1,284</span>
+            {loading ? (
+              <div className="h-10 w-24 bg-slate-200 animate-pulse rounded-md"></div>
+            ) : (
+              <span className="text-4xl font-black text-slate-900">{metrics?.leads.toLocaleString() || '0'}</span>
+            )}
           </div>
           <div className="mt-4 flex items-center gap-2 text-sm font-medium">
             <span className="flex items-center text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
@@ -58,7 +98,11 @@ export function DashboardOverview() {
             <h3 className="font-medium text-slate-600">Appointments</h3>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-black text-slate-900">342</span>
+            {loading ? (
+              <div className="h-10 w-24 bg-slate-200 animate-pulse rounded-md"></div>
+            ) : (
+              <span className="text-4xl font-black text-slate-900">{metrics?.appointments.toLocaleString() || '0'}</span>
+            )}
           </div>
           <div className="mt-4 flex items-center gap-2 text-sm font-medium">
             <span className="flex items-center text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
@@ -82,7 +126,11 @@ export function DashboardOverview() {
           </div>
           <div className="flex items-baseline gap-1">
             <span className="text-2xl text-slate-700 mb-1">$</span>
-            <span className="text-4xl font-black text-slate-900">45,290</span>
+            {loading ? (
+              <div className="h-10 w-32 bg-slate-200 animate-pulse rounded-md"></div>
+            ) : (
+              <span className="text-4xl font-black text-slate-900">{metrics?.revenue.toLocaleString() || '0'}</span>
+            )}
           </div>
           <div className="mt-4 flex items-center gap-2 text-sm font-medium">
             <span className="flex items-center text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">

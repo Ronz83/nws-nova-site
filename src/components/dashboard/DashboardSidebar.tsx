@@ -26,11 +26,15 @@ export function DashboardSidebar() {
       <div className="flex flex-col h-full p-6 space-y-8 overflow-y-auto">
         {/* Header */}
         <div className="flex items-center gap-4 px-2">
-          <div className="w-10 h-10 rounded-lg bg-sky-900 flex items-center justify-center shrink-0">
-            <Building2 className="text-sky-100 font-bold w-5 h-5" />
-          </div>
+          {user?.businessLogo ? (
+            <img src={user.businessLogo} alt="Business Logo" className="w-10 h-10 object-contain rounded-lg shrink-0 bg-white" />
+          ) : (
+            <div className="w-10 h-10 rounded-lg bg-sky-900 flex items-center justify-center shrink-0">
+              <Building2 className="text-sky-100 font-bold w-5 h-5" />
+            </div>
+          )}
           <div>
-            <h1 className="text-xl font-black text-white tracking-tight">NWS Business OS</h1>
+            <h1 className="text-xl font-black text-white tracking-tight">{user?.businessName || "NWS Business OS"}</h1>
             <p className="text-[10px] font-bold text-sky-400 mt-1 uppercase tracking-widest">Enterprise Suite</p>
           </div>
         </div>
@@ -58,12 +62,14 @@ export function DashboardSidebar() {
         </nav>
 
         {/* CTA Push Down */}
-        <div className="mt-auto pt-6">
-          <button className="w-full flex items-center justify-center gap-2 bg-sky-700 text-white text-[12px] font-bold py-3 px-6 rounded-xl hover:bg-sky-600 transition-colors uppercase tracking-widest">
-            <ArrowUpCircle className="text-[16px]" />
-            Upgrade Plan
-          </button>
-        </div>
+        {user?.permissions.requireUpgrade && (
+          <div className="mt-auto pt-6">
+            <button className="w-full flex items-center justify-center gap-2 bg-sky-700 text-white text-[12px] font-bold py-3 px-6 rounded-xl hover:bg-sky-600 transition-colors uppercase tracking-widest">
+              <ArrowUpCircle className="text-[16px]" />
+              Upgrade Plan
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Footer Links / User Profile */}
