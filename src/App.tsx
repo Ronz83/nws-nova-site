@@ -16,6 +16,11 @@ import { DashboardOperations } from "./components/dashboard/DashboardOperations"
 import { DashboardGrowth } from "./components/dashboard/DashboardGrowth";
 import { DashboardSettings } from "./components/dashboard/DashboardSettings";
 import { DashboardAutomations } from "./components/dashboard/DashboardAutomations";
+import { DashboardTraining } from "./components/dashboard/DashboardTraining";
+import { DashboardSnapshots } from "./components/dashboard/DashboardSnapshots";
+import { DashboardWebsite } from "./components/dashboard/DashboardWebsite";
+import { DashboardWebsiteRequests } from "./components/dashboard/DashboardWebsiteRequests";
+import { DashboardNicheBlueprints } from "./components/dashboard/DashboardNicheBlueprints";
 
 // Eagerly load the homepage — it's the first thing users see
 import Index from "./pages/Index";
@@ -100,7 +105,12 @@ export default function App() {
                 <Route path="operations" element={<DashboardOperations />} />
                 <Route path="growth" element={<DashboardGrowth />} />
                 <Route path="automations" element={<DashboardAutomations />} />
+                <Route path="training" element={<DashboardTraining />} />
                 <Route path="settings" element={<DashboardSettings />} />
+                <Route path="snapshots" element={<DashboardSnapshots />} />
+                <Route path="website" element={<DashboardWebsite />} />
+                <Route path="website-requests" element={<DashboardWebsiteRequests />} />
+                <Route path="niche-blueprints" element={<DashboardNicheBlueprints />} />
               </Route>
 
               <Route path="/kb-test" element={

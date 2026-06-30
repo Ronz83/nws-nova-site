@@ -1,13 +1,39 @@
 import { useEffect, useRef } from 'react';
 import { MessageSquare, X } from 'lucide-react';
-import { useSamantha } from '../../context/SamanthaContext';
+import { useSamantha, NWS_VOICE_WIDGET_ID, NWS_CHAT_WIDGET_ID } from '../../context/SamanthaContext';
 import { VoiceCallOverlay } from './VoiceCallOverlay';
+import { useAuth } from '../../contexts/AuthContext';
 
 export function GlobalSamantha() {
-  const { isChatOpen, openChat, closeChat, isVoiceOpen, closeVoice } = useSamantha();
+  const { isChatOpen, openChat, closeChat, isVoiceOpen, closeVoice, chatWidgetId, voiceWidgetId, setChatWidgetId, setVoiceWidgetId } = useSamantha();
+  const { user } = useAuth();
   const voiceContainerRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
+  // When a client logs in with a real locationId, fetch their specific widget IDs from GHL
+  useEffect(() => {
+    if (!user?.clientId) {
+      // No client — reset to NWS defaults (public site widgets)
+      setChatWidgetId(NWS_CHAT_WIDGET_ID);
+      setVoiceWidgetId(NWS_VOICE_WIDGET_ID);
+      return;
+    }
+
+    // Agency admins don't need a chat widget in the dashboard
+    if (user.role === 'agency_admin') return;
+
+    fetch(`/api/ghl/chat-widget?locationId=${user.clientId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          if (data.chatWidgetId && data.chatEnabled) setChatWidgetId(data.chatWidgetId);
+          if (data.voiceWidgetId && data.voiceEnabled) setVoiceWidgetId(data.voiceWidgetId);
+        }
+      })
+      .catch(err => console.warn('Failed to load client chat widget IDs:', err));
+  }, [user?.clientId, user?.role]);
+
+  // Re-inject the GHL chat-widget custom element whenever the widget ID changes
   useEffect(() => {
     // 1. Ensure loader script exists only once
     if (!document.querySelector('script[src="https://beta.leadconnectorhq.com/loader.js"]')) {
@@ -18,29 +44,34 @@ export function GlobalSamantha() {
     }
 
     // 2. Inject Voice Widget inside our fixed container
-    if (voiceContainerRef.current && !voiceContainerRef.current.querySelector('chat-widget')) {
+    if (voiceContainerRef.current) {
+      const existing = voiceContainerRef.current.querySelector('chat-widget');
+      if (existing) existing.remove();
       const voiceWidget = document.createElement('chat-widget');
-      voiceWidget.setAttribute('data-widget-id', '6914a81b33e99255993705fa');
+      voiceWidget.setAttribute('data-widget-id', voiceWidgetId);
       voiceContainerRef.current.appendChild(voiceWidget);
     }
 
     // 3. Inject Chat Widget inside our fixed container
-    if (chatContainerRef.current && !chatContainerRef.current.querySelector('chat-widget')) {
+    if (chatContainerRef.current) {
+      const existing = chatContainerRef.current.querySelector('chat-widget');
+      if (existing) existing.remove();
       const chatWidget = document.createElement('chat-widget');
-      chatWidget.setAttribute('data-widget-id', '6a2f1df4e20523fdce316b75');
-      // Force inline style so it fills our container
+      chatWidget.setAttribute('data-widget-id', chatWidgetId);
       chatWidget.setAttribute('style', 'width: 100%; height: 100%; border: none;');
       chatContainerRef.current.appendChild(chatWidget);
     }
 
     return () => {
-      // Cleanup custom elements on unmount
       const voice = voiceContainerRef.current?.querySelector('chat-widget');
       if (voice) voice.remove();
       const chat = chatContainerRef.current?.querySelector('chat-widget');
       if (chat) chat.remove();
     };
-  }, []);
+  }, [chatWidgetId, voiceWidgetId]);
+
+  // In the dashboard for agency_admin, don't render Samantha widgets at all
+  if (user?.role === 'agency_admin') return null;
 
   return (
     <>
@@ -60,7 +91,7 @@ export function GlobalSamantha() {
           }`}
           style={{ width: '360px', height: '600px', maxHeight: '80vh' }}
         >
-          {/* We use a container to crop/style the GHL widget iframe */}
+          {/* Container to crop/style the GHL widget iframe */}
           <div ref={chatContainerRef} className="w-full h-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200"></div>
         </div>
 

@@ -432,7 +432,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                 </div>
                 <div>
                   <h3 className="text-white font-black text-lg">Your Agent is trained on {businessName}</h3>
-                  <p className="text-sky-600 text-sm mt-1">Samantha is the demo — your agent carries your brand name, voice, and services</p>
+                  <p className="text-sky-600 text-sm mt-1">Our demo agent handles this test call — your real agent carries your brand name, voice, and services</p>
                 </div>
                 <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-left">
                   <p className="text-sm uppercase tracking-widest text-sky-700 font-bold mb-2">Opening Greeting</p>
@@ -456,10 +456,10 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                 className="w-full flex items-center justify-center gap-3 text-sm font-black text-white py-4 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
                 style={{ background: 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)' }}>
                 <Phone size={16} />
-                Talk to Your Agent Demo — Samantha
+                Talk to Your Custom Agent Demo
               </button>
               <p className="text-sm text-white/60 text-center">
-                This is a real AI call. Samantha knows {businessName}'s services, tone, and goals.
+                This is a real AI call. The demo agent knows {businessName}'s services, tone, and goals.
               </p>
             </motion.div>
           )}

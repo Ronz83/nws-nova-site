@@ -83,8 +83,8 @@ export function DashboardSettings() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[24px] border-2 border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden mb-16">
-        <div className="flex overflow-x-auto border-b border-slate-200 relative">
+      <div className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 shadow-sm overflow-hidden mb-16 hover:shadow-md transition-all">
+        <div className="flex overflow-x-auto border-b border-slate-100 relative">
           <button
             onClick={() => setActiveTab('integrations')}
             className={`flex-1 py-3 px-4 md:py-4 md:px-6 whitespace-nowrap text-center font-bold text-[13px] md:text-[14px] uppercase tracking-widest relative transition-colors ${
@@ -138,8 +138,8 @@ export function DashboardSettings() {
               className="space-y-6"
             >
               <div className="flex justify-between items-center mb-2">
-                <h3 className="font-bold text-slate-900 text-lg">Team Management</h3>
-                <a href="https://app.gohighlevel.com/settings/staff" target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-lg transition-colors shadow-sm inline-flex items-center gap-2">
+                <h3 className="font-bold text-slate-900 text-lg tracking-tight">Team Management</h3>
+                <a href="https://app.gohighlevel.com/settings/staff" target="_blank" rel="noopener noreferrer" className="text-[12px] font-bold uppercase tracking-[0.18em] text-white bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] px-5 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg hover:scale-[1.02] inline-flex items-center gap-2">
                   <span>Invite Member</span>
                   <ExternalLink className="w-4 h-4" />
                 </a>
@@ -277,12 +277,12 @@ export function DashboardSettings() {
                 </div>
                 <div className="flex items-center justify-between mt-4">
                   <span className="text-xs font-bold text-rose-600 uppercase tracking-wider">Action Required</span>
-                  <button className="text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 px-4 py-1.5 rounded-md transition-colors shadow-sm">Reconnect</button>
+                  <button className="text-[10px] uppercase tracking-widest font-bold text-white bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] px-4 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-[1.02]">Reconnect</button>
                 </div>
               </div>
 
               {/* Vapi AI */}
-              <div className="bg-slate-50 rounded-xl border border-slate-300 p-5 md:p-6 flex flex-col justify-between">
+              <div className="bg-slate-50 rounded-xl border border-slate-200 p-5 md:p-6 flex flex-col justify-between hover:border-sky-200 transition-colors">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="font-bold text-slate-900 text-lg">Vapi AI</h3>
@@ -294,7 +294,7 @@ export function DashboardSettings() {
                 </div>
                 <div className="flex items-center justify-between mt-4">
                   <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Disconnected</span>
-                  <button className="text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 px-4 py-1.5 rounded-md transition-colors shadow-sm">Connect</button>
+                  <button className="text-[10px] uppercase tracking-widest font-bold text-white bg-slate-800 hover:bg-slate-900 px-4 py-2 rounded-lg transition-all shadow-sm hover:shadow-md hover:scale-[1.02]">Connect</button>
                 </div>
               </div>
             </motion.div>

@@ -10,7 +10,7 @@ const navItems = [
     href: "/services",
     dropdown: [
       { label: "Website Design",    href: "/services#web-design",   icon: <Layers size={15} />,   desc: "Custom-coded, conversion-first sites" },
-      { label: "AI Voice (Samantha)",   href: "/samantha",                  icon: <Phone size={15} />,    desc: "24/7 voice receptionist" },
+      { label: "AI Voice Receptionist",   href: "/samantha",                  icon: <Phone size={15} />,    desc: "24/7 voice receptionist" },
       { label: "CRM & Automations", href: "/services#crm",          icon: <Database size={15} />, desc: "Consolidate your customer ops" },
       { label: "Reputation Mgmt",   href: "/services#reputation",   icon: <Workflow size={15} />, desc: "Google & Facebook reviews AI" },
     ],

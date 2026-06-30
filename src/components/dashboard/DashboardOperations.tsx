@@ -97,9 +97,9 @@ export function DashboardOperations() {
   ] as const;
 
   const renderInbox = () => (
-    <div className="max-w-4xl mx-auto flex flex-col h-[600px] bg-white rounded-[24px] border-2 border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden">
-      <div className="p-4 md:p-6 border-b-2 border-slate-200 flex justify-between items-center bg-white shrink-0">
-        <h2 className="text-xl font-black text-slate-900 flex items-center gap-3">
+    <div className="max-w-4xl mx-auto flex flex-col h-[600px] bg-white/95 backdrop-blur-md rounded-[24px] border-2 border-slate-100 shadow-sm relative overflow-hidden transition-all hover:shadow-lg">
+      <div className="p-4 md:p-6 border-b-2 border-slate-100 flex justify-between items-center bg-slate-50/50 shrink-0">
+        <h2 className="text-xl font-black text-slate-900 flex items-center gap-3 tracking-tight">
           Unified Inbox
           {(convsLoading) && <Loader2 className="w-5 h-5 text-sky-500 animate-spin" />}
         </h2>
@@ -159,16 +159,16 @@ export function DashboardOperations() {
         )}
       </div>
       
-      <div className="p-4 md:p-6 bg-white border-t-2 border-slate-200 shrink-0">
+      <div className="p-4 md:p-6 bg-slate-50/30 border-t-2 border-slate-100 shrink-0">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-3 sm:gap-4 relative">
           <div className="flex-1">
             <textarea 
-              className="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors resize-none overflow-hidden h-[52px]" 
+              className="w-full bg-white border-2 border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20 transition-all resize-none overflow-hidden h-[52px]" 
               placeholder="Type a message..." 
               rows={1}
             ></textarea>
           </div>
-          <button className="bg-sky-700 hover:bg-sky-800 text-white font-bold text-[12px] uppercase tracking-widest px-6 h-[52px] rounded-xl transition-colors flex items-center justify-center shadow-md shrink-0">
+          <button className="bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white font-bold text-[12px] uppercase tracking-[0.18em] px-8 h-[52px] rounded-xl transition-all shadow-md hover:shadow-lg hover:scale-[1.02] flex items-center justify-center shrink-0">
             SEND
           </button>
         </div>
@@ -177,20 +177,20 @@ export function DashboardOperations() {
   );
 
   const renderPipeline = () => (
-    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 custom-scrollbar min-h-[600px] -mx-4 px-4 md:mx-0 md:px-0">
+    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-6 custom-scrollbar min-h-[600px] -mx-4 px-4 md:mx-0 md:px-0">
       {MOCK_PIPELINE_STAGES.map(stage => (
-        <div key={stage.id} className="min-w-[280px] md:min-w-[320px] w-[280px] md:w-[320px] bg-slate-50/50 rounded-[24px] p-4 md:p-5 border-2 border-slate-200/80 flex flex-col">
+        <div key={stage.id} className="min-w-[280px] md:min-w-[320px] w-[280px] md:w-[320px] bg-gradient-to-b from-sky-50/50 to-transparent rounded-[24px] p-4 md:p-5 border-2 border-slate-100 flex flex-col">
           <div className="flex justify-between items-center mb-4 md:mb-5 shrink-0">
-            <h3 className="font-black text-slate-900">{stage.name}</h3>
-            <span className="bg-white text-slate-700 text-xs font-bold px-2.5 py-1 rounded-md border border-slate-300 shadow-md">
+            <h3 className="font-black text-slate-900 tracking-tight">{stage.name}</h3>
+            <span className="bg-white text-sky-700 text-xs font-bold px-2.5 py-1 rounded-full border border-sky-200 shadow-sm">
               {MOCK_PIPELINE_DEALS.filter(d => d.stage === stage.id).length}
             </span>
           </div>
           <div className="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-1">
             {MOCK_PIPELINE_DEALS.filter(d => d.stage === stage.id).map(deal => (
-              <div key={deal.id} className="bg-white p-4 md:p-5 rounded-2xl shadow-md border-2 border-slate-200 hover:border-sky-300 transition-colors cursor-grab group">
+              <div key={deal.id} className="bg-white p-4 md:p-5 rounded-2xl shadow-sm border-2 border-slate-100 hover:border-sky-300 transition-all duration-300 cursor-grab group hover:-translate-y-1 hover:shadow-md">
                 <h4 className="font-bold text-slate-900 mb-1 group-hover:text-sky-700 transition-colors">{deal.title}</h4>
-                <p className="text-sm text-slate-700 mb-4 font-medium">{deal.contact}</p>
+                <p className="text-sm text-slate-600 mb-4 font-medium">{deal.contact}</p>
                 <div className="flex justify-between items-center mt-auto">
                   <span className="font-black text-sky-700 text-lg">${deal.value.toLocaleString()}</span>
                   <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[11px] font-bold text-slate-700 border border-slate-300">
@@ -206,18 +206,18 @@ export function DashboardOperations() {
   );
 
   const renderContacts = () => (
-    <div className="bg-white rounded-[24px] border-2 border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden">
-      <div className="p-4 md:p-6 border-b-2 border-slate-200 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-slate-50/50">
+    <div className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 shadow-sm overflow-hidden">
+      <div className="p-4 md:p-6 border-b-2 border-slate-100 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-slate-50/30">
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-          <button className="px-4 py-2.5 bg-white border-2 border-slate-300 rounded-xl text-sm font-bold text-slate-700 shadow-md flex items-center justify-center gap-2 hover:border-slate-300 transition-colors w-full sm:w-auto">
-            <Filter className="w-4 h-4" /> Filter
+          <button className="px-4 py-2.5 bg-white border-2 border-slate-200 hover:border-sky-300 rounded-xl text-sm font-bold text-slate-700 shadow-sm flex items-center justify-center gap-2 transition-colors w-full sm:w-auto">
+            <Filter className="w-4 h-4 text-sky-600" /> Filter
           </button>
           <div className="relative w-full sm:w-auto">
             <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-sky-600" />
-            <input type="text" placeholder="Search contacts..." className="pl-10 pr-4 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-medium focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 w-full sm:w-72 transition-colors" />
+            <input type="text" placeholder="Search contacts..." className="pl-10 pr-4 py-2.5 border-2 border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20 w-full sm:w-72 transition-all" />
           </div>
         </div>
-        <button className="px-5 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-bold shadow-md flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors w-full sm:w-auto">
+        <button className="px-6 py-2.5 bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl text-[12px] uppercase tracking-[0.18em] font-bold shadow-md flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:scale-[1.02] w-full sm:w-auto">
           <Plus className="w-4 h-4" /> New Contact
         </button>
       </div>
@@ -273,19 +273,20 @@ export function DashboardOperations() {
   );
 
   const renderCalendar = () => (
-    <div className="bg-white rounded-[24px] border-2 border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col md:flex-row max-w-5xl mx-auto min-h-[600px]">
-      <div className="w-full md:w-72 border-b-2 md:border-b-0 md:border-r-2 border-slate-200 p-6 md:p-8 bg-slate-50/50 flex flex-row md:flex-col gap-4 overflow-x-auto">
-        <div className="text-xl md:text-2xl font-black text-slate-900 md:mb-8 shrink-0 flex items-center md:items-start">June 2026</div>
+    <div className="bg-white rounded-[24px] border-2 border-slate-100 shadow-sm overflow-hidden flex flex-col md:flex-row max-w-5xl mx-auto min-h-[600px]">
+      <div className="w-full md:w-72 border-b-2 md:border-b-0 md:border-r-2 border-slate-100 p-6 md:p-8 bg-slate-50/50 flex flex-row md:flex-col gap-4 overflow-x-auto">
+        <div className="text-xl md:text-2xl font-black text-slate-900 md:mb-8 shrink-0 flex items-center md:items-start tracking-tight">June 2026</div>
         <div className="flex flex-row md:flex-col gap-2 shrink-0">
-          <div className="font-bold text-sky-700 bg-sky-50 border border-sky-100 px-4 py-2 md:py-3 rounded-xl cursor-pointer text-sm md:text-base whitespace-nowrap">Today</div>
-          <div className="font-bold text-slate-600 hover:bg-slate-100 px-4 py-2 md:py-3 rounded-xl cursor-pointer transition-colors text-sm md:text-base whitespace-nowrap">Tomorrow</div>
-          <div className="font-bold text-slate-600 hover:bg-slate-100 px-4 py-2 md:py-3 rounded-xl cursor-pointer transition-colors text-sm md:text-base whitespace-nowrap">Next Week</div>
+          <div className="font-bold text-sky-700 bg-sky-50 border border-sky-200 px-4 py-2 md:py-3 rounded-xl cursor-pointer text-sm md:text-base whitespace-nowrap shadow-sm">Today</div>
+          <div className="font-bold text-slate-600 hover:bg-white hover:shadow-sm hover:border hover:border-slate-200 px-4 py-2 md:py-3 rounded-xl cursor-pointer transition-all border border-transparent text-sm md:text-base whitespace-nowrap">Tomorrow</div>
+          <div className="font-bold text-slate-600 hover:bg-white hover:shadow-sm hover:border hover:border-slate-200 px-4 py-2 md:py-3 rounded-xl cursor-pointer transition-all border border-transparent text-sm md:text-base whitespace-nowrap">Next Week</div>
         </div>
       </div>
-      <div className="flex-1 p-6 md:p-8 lg:p-12">
-        <div className="flex justify-between items-center mb-6 md:mb-8">
-          <h3 className="text-xl md:text-2xl font-black text-slate-900">Today's Agenda</h3>
-          <button className="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm font-bold shadow-md flex items-center gap-2 hover:bg-slate-800 transition-colors">
+      <div className="flex-1 p-6 md:p-8 lg:p-12 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.03]" style={{ background: "radial-gradient(circle, rgba(14,165,233,1) 0%, transparent 70%)", transform: "translate(30%, -30%)" }} />
+        <div className="relative z-10 flex justify-between items-center mb-6 md:mb-8">
+          <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Today's Agenda</h3>
+          <button className="px-5 py-2.5 bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl text-[12px] uppercase tracking-[0.18em] font-bold shadow-md flex items-center gap-2 hover:scale-[1.02] hover:shadow-lg transition-all">
             <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Event</span>
           </button>
         </div>
@@ -358,19 +359,19 @@ export function DashboardOperations() {
         </div>
 
         {/* Tabs */}
-        <div className="flex space-x-2 bg-slate-100/80 p-1.5 rounded-xl w-full md:w-fit overflow-x-auto border border-slate-300/50 custom-scrollbar">
+        <div className="flex space-x-2 bg-white/80 backdrop-blur-md p-1.5 rounded-2xl w-full md:w-fit overflow-x-auto border border-slate-200 shadow-sm custom-scrollbar relative z-10">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as TabType)}
-              className={`relative flex items-center gap-2.5 px-4 py-2.5 md:px-6 md:py-3 rounded-lg text-sm font-bold transition-colors whitespace-nowrap ${
-                activeTab === tab.id ? 'text-slate-900' : 'text-slate-700 hover:text-slate-800 hover:bg-slate-200/50'
+              className={`relative flex items-center gap-2.5 px-5 py-2.5 md:px-7 md:py-3 rounded-xl text-sm font-bold transition-colors whitespace-nowrap ${
+                activeTab === tab.id ? 'text-sky-700' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50/80'
               }`}
             >
               {activeTab === tab.id && (
                 <motion.div
                   layoutId="activeTabIndicator"
-                  className="absolute inset-0 bg-white rounded-lg shadow-md border border-slate-300/60"
+                  className="absolute inset-0 bg-sky-50 rounded-xl shadow-[0_2px_10px_rgba(14,165,233,0.1)] border border-sky-100"
                   initial={false}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />

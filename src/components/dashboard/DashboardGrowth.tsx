@@ -49,10 +49,10 @@ export function DashboardGrowth() {
   ];
 
   const renderCampaigns = () => (
-    <div className="bg-white rounded-[24px] border-2 border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden">
-      <div className="p-4 md:p-6 border-b-2 border-slate-200 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-slate-50/50">
-        <h2 className="text-xl font-black text-slate-900">Active Campaigns</h2>
-        <button className="w-full sm:w-auto px-5 py-2.5 bg-sky-600 text-white rounded-xl text-sm font-bold shadow-md hover:bg-sky-700 transition-colors">
+    <div className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 shadow-sm overflow-hidden">
+      <div className="p-4 md:p-6 border-b-2 border-slate-100 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-slate-50/30">
+        <h2 className="text-xl font-black text-slate-900 tracking-tight">Active Campaigns</h2>
+        <button className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl text-[12px] uppercase tracking-[0.18em] font-bold shadow-md flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:scale-[1.02]">
           Create Campaign
         </button>
       </div>
@@ -123,10 +123,10 @@ export function DashboardGrowth() {
   );
 
   const renderSocial = () => (
-    <div className="bg-white rounded-[24px] border-2 border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden max-w-4xl mx-auto min-h-[600px]">
-      <div className="p-4 md:p-6 border-b-2 border-slate-200 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-slate-50/50">
-        <h2 className="text-xl font-black text-slate-900">Content Calendar</h2>
-        <button className="w-full sm:w-auto px-5 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-bold shadow-md hover:bg-slate-800 transition-colors">
+    <div className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 shadow-sm overflow-hidden max-w-4xl mx-auto min-h-[600px]">
+      <div className="p-4 md:p-6 border-b-2 border-slate-100 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-slate-50/30">
+        <h2 className="text-xl font-black text-slate-900 tracking-tight">Content Calendar</h2>
+        <button className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl text-[12px] uppercase tracking-[0.18em] font-bold shadow-md flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:scale-[1.02]">
           Schedule Post
         </button>
       </div>
@@ -186,7 +186,7 @@ export function DashboardGrowth() {
           { label: 'Clicks', value: '1,842', trend: '+8%', positive: true },
           { label: 'Conversions', value: '42', trend: '+15%', positive: true },
         ].map((stat, i) => (
-          <div key={i} className="bg-white rounded-[24px] border-2 border-slate-200 p-5 md:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)] group hover:border-sky-300 transition-colors hover:-translate-y-1 transform duration-300">
+          <div key={i} className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 p-5 md:p-6 shadow-sm group hover:border-sky-200 transition-all hover:-translate-y-1 transform duration-300 hover:shadow-lg">
             <div className="text-sm font-bold text-slate-500 mb-2 uppercase tracking-widest">{stat.label}</div>
             <div className="text-3xl font-black text-slate-900 mb-2">{stat.value}</div>
             <div className={`text-sm font-bold flex items-center gap-1 ${stat.positive ? 'text-emerald-500' : 'text-rose-500'}`}>
@@ -197,8 +197,8 @@ export function DashboardGrowth() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <div className="bg-white rounded-[24px] border-2 border-slate-200 p-6 md:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.08)] min-h-[400px] flex flex-col">
-          <h3 className="text-xl font-black text-slate-900 mb-6">Audience Growth</h3>
+        <div className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 p-6 md:p-8 shadow-sm min-h-[400px] flex flex-col hover:shadow-md transition-all">
+          <h3 className="text-xl font-black text-slate-900 mb-6 tracking-tight">Audience Growth</h3>
           <div className="flex-1 flex items-end gap-2 md:gap-4 mt-auto">
             {[40, 55, 45, 70, 65, 85, 95].map((height, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1 md:gap-2 group">
@@ -216,8 +216,8 @@ export function DashboardGrowth() {
           </div>
         </div>
 
-        <div className="bg-white rounded-[24px] border-2 border-slate-200 p-6 md:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.08)] min-h-[400px]">
-          <h3 className="text-xl font-black text-slate-900 mb-6">Channel Performance</h3>
+        <div className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 p-6 md:p-8 shadow-sm min-h-[400px] hover:shadow-md transition-all">
+          <h3 className="text-xl font-black text-slate-900 mb-6 tracking-tight">Channel Performance</h3>
           <div className="space-y-6">
             {[
               { channel: 'Facebook Ads', value: 45, color: 'bg-[#1877f2]' },
@@ -242,14 +242,14 @@ export function DashboardGrowth() {
   );
 
   const renderReputation = () => (
-    <div className="bg-white rounded-[24px] border-2 border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden max-w-4xl mx-auto min-h-[600px]">
-      <div className="p-4 md:p-6 border-b-2 border-slate-200 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-slate-50/50">
-        <h2 className="text-xl font-black text-slate-900">Reviews & Reputation</h2>
+    <div className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 shadow-sm overflow-hidden max-w-4xl mx-auto min-h-[600px]">
+      <div className="p-4 md:p-6 border-b-2 border-slate-100 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-slate-50/30">
+        <h2 className="text-xl font-black text-slate-900 tracking-tight">Reviews & Reputation</h2>
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center w-full sm:w-auto">
           <div className="text-sm font-bold text-slate-700 flex items-center gap-2">
              <Star className="w-5 h-5 text-amber-400 fill-amber-400" /> 4.8 Avg Rating
           </div>
-          <button className="w-full sm:w-auto px-5 py-2.5 bg-sky-600 text-white rounded-xl text-sm font-bold shadow-md hover:bg-sky-700 transition-colors">
+          <button className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl text-[12px] uppercase tracking-[0.18em] font-bold shadow-md flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:scale-[1.02]">
             Ask for Review
           </button>
         </div>
@@ -306,19 +306,19 @@ export function DashboardGrowth() {
         </div>
 
         {/* Tabs */}
-        <div className="flex space-x-2 bg-slate-100/80 p-1.5 rounded-xl w-full md:w-fit overflow-x-auto border border-slate-300/50 custom-scrollbar">
+        <div className="flex space-x-2 bg-white/80 backdrop-blur-md p-1.5 rounded-2xl w-full md:w-fit overflow-x-auto border border-slate-200 shadow-sm custom-scrollbar relative z-10">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as TabType)}
-              className={`relative flex items-center gap-2.5 px-4 py-2.5 md:px-6 md:py-3 rounded-lg text-sm font-bold transition-colors whitespace-nowrap ${
-                activeTab === tab.id ? 'text-slate-900' : 'text-slate-700 hover:text-slate-800 hover:bg-slate-200/50'
+              className={`relative flex items-center gap-2.5 px-5 py-2.5 md:px-7 md:py-3 rounded-xl text-sm font-bold transition-colors whitespace-nowrap ${
+                activeTab === tab.id ? 'text-sky-700' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50/80'
               }`}
             >
               {activeTab === tab.id && (
                 <motion.div
                   layoutId="activeGrowthTab"
-                  className="absolute inset-0 bg-white rounded-lg shadow-md border border-slate-300/60"
+                  className="absolute inset-0 bg-sky-50 rounded-xl shadow-[0_2px_10px_rgba(14,165,233,0.1)] border border-sky-100"
                   initial={false}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />

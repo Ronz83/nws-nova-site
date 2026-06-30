@@ -66,7 +66,7 @@ export default function Contact() {
             {[
               { icon: <Mail size={18} />, label: "Email Us", value: "hello@noveltywebsolutions.com", sub: "We reply within 1 business day", color: "sky" },
               { icon: <MapPin size={18} />, label: "Location", value: "Barbados, West Indies", sub: "Serving Caribbean & Global clients", color: "emerald" },
-              { icon: <Clock size={18} />, label: "Business Hours", value: "Mon–Fri · 9AM–6PM AST", sub: "Samantha handles after-hours inquiries", color: "amber" },
+              { icon: <Clock size={18} />, label: "Business Hours", value: "Mon–Fri · 9AM–6PM AST", sub: "Our AI agent handles after-hours inquiries", color: "amber" },
             ].map(c => (
               <div key={c.label} className={`border-2 border-slate-100 bg-white rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-${c.color}-100 transition-all`}>
                 <div className={`p-2.5 bg-${c.color}-50 border border-${c.color}-100 text-${c.color}-600 rounded-xl w-fit mb-4 shadow-sm`}>
@@ -151,7 +151,7 @@ export default function Contact() {
                   >
                     <option value="">Select a service...</option>
                     <option>Website Design</option>
-                    <option>AI Voice Receptionist (Samantha)</option>
+                    <option>AI Voice Receptionist</option>
                     <option>CRM & Automations</option>
                     <option>Reputation Management</option>
                     <option>Full Operations Package</option>

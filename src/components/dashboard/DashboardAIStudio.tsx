@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Mic, FileEdit, List, Play, MessageSquare, BookOpen, Inbox, MessageCircle, Network, UploadCloud, FileText, Trash2, Code, File, RefreshCw, BrainCircuit } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Mic, FileEdit, List, Play, MessageSquare, BookOpen, Inbox, MessageCircle, Network, UploadCloud, FileText, Trash2, Code, File, RefreshCw, BrainCircuit, Save, Loader2 } from 'lucide-react';
 import { useFeatures } from '../../contexts/FeatureContext';
 import { VoiceAIConfigModal } from './VoiceAIConfigModal';
 import { ReviewAIModal } from './ReviewAIModal';
@@ -8,7 +8,40 @@ export function DashboardAIStudio() {
   const { flags } = useFeatures();
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
+
+  const [knowledgeText, setKnowledgeText] = useState("We are currently running a 20% off promotion for all new customers. Our business hours are Monday through Friday, 9AM to 5PM EST. Please let callers know that our VIP support line is 555-0199.");
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(new Date());
+
+  useEffect(() => {
+    // Fetch knowledge on mount
+    fetch('/api/knowledge?locationId=demo-location-123')
+      .then(res => res.json())
+      .then(data => {
+        if (data.knowledgeText) setKnowledgeText(data.knowledgeText);
+        if (data.updatedAt) setLastSaved(new Date(data.updatedAt));
+      })
+      .catch(console.error);
+  }, []);
+
+  const handleSaveKnowledge = async () => {
+    setIsSaving(true);
+    try {
+      const res = await fetch('/api/knowledge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ locationId: 'demo-location-123', knowledgeText })
+      });
+      const data = await res.json();
+      if (data.success && data.updatedAt) {
+        setLastSaved(new Date(data.updatedAt));
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   if (!flags.enable_ai_studio) {
     return (
@@ -32,7 +65,7 @@ export function DashboardAIStudio() {
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
         
         {/* Voice AI Agent Card */}
-        <article className="bg-white border-2 border-slate-200 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 md:p-8 flex flex-col h-full hover:-translate-y-1 transition-transform duration-300">
+        <article className="bg-white/95 backdrop-blur-sm border-2 border-slate-100 rounded-[24px] shadow-sm p-6 md:p-8 flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <div className="flex justify-between items-start mb-6">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-700">
@@ -60,7 +93,7 @@ export function DashboardAIStudio() {
           <div className="flex flex-col gap-3 mt-auto">
             <button 
               onClick={() => setIsVoiceModalOpen(true)}
-              className="w-full bg-sky-700 text-white rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-widest hover:bg-sky-800 transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-[0.18em] transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:scale-[1.02]"
             >
               <FileEdit className="text-[18px]" />
               Edit Prompt
@@ -79,7 +112,7 @@ export function DashboardAIStudio() {
         </article>
 
         {/* Chat AI Agent Card */}
-        <article className="bg-white border-2 border-slate-200 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 md:p-8 flex flex-col h-full hover:-translate-y-1 transition-transform duration-300">
+        <article className="bg-white/95 backdrop-blur-sm border-2 border-slate-100 rounded-[24px] shadow-sm p-6 md:p-8 flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <div className="flex justify-between items-start mb-6">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-700">
@@ -105,11 +138,11 @@ export function DashboardAIStudio() {
           </div>
           
           <div className="flex flex-col gap-3 mt-auto">
-            <button className="w-full bg-sky-700 text-white rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-widest hover:bg-sky-800 transition-colors flex items-center justify-center gap-2">
+            <button className="w-full bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-[0.18em] transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:scale-[1.02]">
               <BookOpen className="text-[18px]" />
               Edit Knowledge Base
             </button>
-            <button className="w-full border-2 border-slate-300 bg-transparent text-slate-600 rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-widest hover:border-sky-300 hover:text-sky-700 transition-colors flex items-center justify-center gap-2">
+            <button className="w-full border-2 border-slate-200 bg-white text-slate-700 hover:text-sky-700 hover:border-sky-300 hover:shadow-sm rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2">
               <Inbox className="text-[18px]" />
               View Inbox
             </button>
@@ -117,7 +150,7 @@ export function DashboardAIStudio() {
         </article>
 
         {/* Review AI Agent Card */}
-        <article className="bg-white border-2 border-slate-200 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 md:p-8 flex flex-col h-full relative overflow-hidden group">
+        <article className="bg-white/95 backdrop-blur-sm border-2 border-slate-100 rounded-[24px] shadow-sm p-6 md:p-8 flex flex-col h-full relative overflow-hidden group hover:shadow-lg transition-all">
           {/* Subtle background pattern for standby state */}
           <div className="absolute inset-0 opacity-5 pointer-events-none bg-dot-grid"></div>
           
@@ -143,7 +176,7 @@ export function DashboardAIStudio() {
           <div className="mt-auto relative z-10">
             <button 
               onClick={() => setIsReviewModalOpen(true)}
-              className="w-full border-2 border-slate-300 bg-white text-slate-700 rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-widest hover:border-sky-300 hover:text-sky-700 hover:bg-sky-50 transition-all flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-[0.18em] transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:scale-[1.02]"
             >
               <Network className="text-[18px]" />
               Connect Integration
@@ -156,38 +189,77 @@ export function DashboardAIStudio() {
       {/* Training & Knowledge Base Section */}
       <section className="mt-16">
         <header className="mb-8">
-          <h2 className="text-2xl text-slate-900 font-black">Training &amp; Knowledge Base</h2>
-          <p className="text-base text-slate-700 mt-2">Manage the context and data sources your agents use to formulate responses.</p>
+          <h2 className="text-2xl text-slate-900 font-black">Business Knowledge Base</h2>
+          <p className="text-base text-slate-700 mt-2">Type out your current promotions, FAQs, and business policies. Your AI agents will instantly adapt to this knowledge.</p>
         </header>
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {/* Drag & Drop Zone */}
-          <div className="lg:col-span-8">
-            <div 
-              onDragEnter={(e) => { e.preventDefault(); setIsDragging(true); }}
-              onDragLeave={(e) => { e.preventDefault(); setIsDragging(false); }}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => { e.preventDefault(); setIsDragging(false); }}
-              className={`bg-white border-2 border-dashed rounded-[24px] p-6 sm:p-8 md:p-12 flex flex-col items-center justify-center text-center transition-all duration-300 group cursor-pointer h-full min-h-[320px] ${
-                isDragging ? 'border-sky-500 bg-sky-50/80 shadow-inner' : 'border-slate-300 hover:border-sky-500 hover:bg-sky-50/50'
-              }`}
-            >
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 transition-all duration-300 ${isDragging ? 'bg-sky-100 text-sky-700 scale-110' : 'bg-slate-100 group-hover:bg-sky-100 group-hover:text-sky-700'}`}>
-                <UploadCloud className={`text-[32px] transition-colors ${isDragging ? 'text-sky-700' : 'text-sky-600 group-hover:text-sky-700'}`} />
+          {/* Live Knowledge Editor */}
+          <div className="lg:col-span-8 flex flex-col">
+            <div className="bg-white/95 backdrop-blur-sm border-2 border-slate-100 rounded-[24px] shadow-sm hover:shadow-md transition-all flex flex-col h-full overflow-hidden focus-within:border-sky-300 focus-within:ring-4 focus-within:ring-sky-50">
+              <div className="bg-slate-50 border-b border-slate-100 px-6 py-4 flex justify-between items-center">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="text-sky-600 w-5 h-5" />
+                    <span className="font-bold text-slate-900 text-sm">Live Editor</span>
+                  </div>
+                  <div className="h-4 w-px bg-slate-300"></div>
+                  <select className="bg-white border border-slate-200 text-slate-700 text-xs rounded-lg focus:ring-sky-500 focus:border-sky-500 block p-1.5 font-medium cursor-pointer shadow-sm hover:border-sky-300 transition-colors">
+                    <option value="">Import from NWS/GHL...</option>
+                    <option value="cv_faq">FAQs (Custom Value)</option>
+                    <option value="cv_policies">Company Policies (Custom Value)</option>
+                    <option value="media_menu">Menu PDF (Media Library)</option>
+                  </select>
+                </div>
+                <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+                  {lastSaved ? `Last synced: ${lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : 'Unsaved changes'}
+                </div>
               </div>
-              <h4 className="text-2xl font-bold text-slate-900 mb-2">Upload Knowledge Sources</h4>
-              <p className="text-base text-slate-700 max-w-md mb-8">Drag and drop PDFs, DOCX, or text files here, or click to browse. Agents will instantly train on new documents.</p>
-              <button className={`text-white rounded-xl py-3 px-8 text-[12px] font-bold uppercase tracking-widest transition-all duration-300 shadow-md ${isDragging ? 'bg-sky-800 scale-105' : 'bg-sky-700 hover:bg-sky-800'}`}>
-                Select Files
-              </button>
+              
+              <textarea 
+                value={knowledgeText}
+                onChange={(e) => setKnowledgeText(e.target.value)}
+                placeholder="Type your business knowledge here... E.g. 'We are running a holiday special, buy one get one free until Friday.'"
+                className="flex-grow w-full min-h-[320px] p-6 bg-transparent border-none resize-none focus:ring-0 text-slate-700 leading-relaxed text-base custom-scrollbar placeholder-slate-400"
+              />
+              
+              <div className="bg-white border-t border-slate-100 px-6 py-4 flex justify-end items-center">
+                <button 
+                  onClick={handleSaveKnowledge}
+                  disabled={isSaving}
+                  className={`relative flex items-center justify-center gap-2 rounded-xl py-3 px-8 text-[12px] font-bold uppercase tracking-[0.18em] transition-all duration-300 shadow-md ${
+                    isSaving 
+                      ? 'bg-[#0c2a4a] text-white opacity-90 cursor-wait' 
+                      : 'bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white hover:scale-[1.02] hover:shadow-lg'
+                  }`}
+                >
+                  {isSaving ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Syncing...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="w-4 h-4" />
+                      Save &amp; Sync to Agents
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
           
           {/* Active Sources List */}
           <div className="lg:col-span-4">
-            <div className="bg-white border-2 border-slate-200 rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-4 sm:p-6 h-full flex flex-col">
-              <h3 className="text-[12px] font-bold text-slate-600 uppercase tracking-widest mb-6">Active Sources</h3>
+            <div className="bg-white/95 backdrop-blur-sm border-2 border-slate-100 rounded-[24px] shadow-sm hover:shadow-md transition-all p-4 sm:p-6 h-full flex flex-col">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-[12px] font-bold text-slate-500 uppercase tracking-widest">Documents &amp; Links</h3>
+                <button className="text-[11px] font-bold text-sky-600 bg-sky-50 hover:bg-sky-100 px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
+                  <UploadCloud className="w-3.5 h-3.5" />
+                  Upload
+                </button>
+              </div>
               
               <div className="flex flex-col gap-4 flex-grow overflow-y-auto pr-2 custom-scrollbar">
                 

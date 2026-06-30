@@ -17,6 +17,13 @@ import conversationsHandler from './api/crm/conversations.ts';
 import customValuesHandler from './api/ghl/custom-values.ts';
 import vapiInboundHandler from './api/vapi/inbound.ts';
 import vapiFunctionsHandler from './api/vapi/functions.ts';
+import knowledgeHandler from './api/knowledge/index.ts';
+import snapshotsHandler, { pushToGHL as pushSnapshotToGHL } from './api/ghl/snapshots.ts';
+import websiteIntakeHandler from './api/website/intake.ts';
+import websiteRequestsHandler from './api/website/requests.ts';
+import featureFlagsHandler from './api/ghl/feature-flags.ts';
+import nicheBlueprintHandler from './api/ai/niche-blueprint.ts';
+import chatWidgetHandler from './api/ghl/chat-widget.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,6 +59,19 @@ app.post('/api/demo-agent/start-call', adaptVercel(startCallHandler));
 app.post('/api/ghl/custom-values', adaptVercel(customValuesHandler));
 app.post('/api/vapi/inbound', adaptVercel(vapiInboundHandler));
 app.post('/api/vapi/functions', adaptVercel(vapiFunctionsHandler));
+app.get('/api/knowledge', adaptVercel(knowledgeHandler));
+app.post('/api/knowledge', adaptVercel(knowledgeHandler));
+app.get('/api/ghl/snapshots', adaptVercel(snapshotsHandler));
+app.post('/api/ghl/snapshots', adaptVercel(snapshotsHandler));
+app.put('/api/ghl/snapshots', adaptVercel(snapshotsHandler));
+app.delete('/api/ghl/snapshots', adaptVercel(snapshotsHandler));
+app.post('/api/ghl/snapshots/push', adaptVercel(pushSnapshotToGHL));
+app.get('/api/website/intake', adaptVercel(websiteIntakeHandler));
+app.post('/api/website/intake', adaptVercel(websiteIntakeHandler));
+app.get('/api/website/requests', adaptVercel(websiteRequestsHandler));
+app.get('/api/ghl/feature-flags', adaptVercel(featureFlagsHandler));
+app.post('/api/ai/niche-blueprint', adaptVercel(nicheBlueprintHandler));
+app.get('/api/ghl/chat-widget', adaptVercel(chatWidgetHandler));
 
 // Map the dynamic results route
 app.get('/api/results/:id', (req, res) => {

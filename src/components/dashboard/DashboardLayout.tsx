@@ -1,6 +1,7 @@
 import { Outlet, Navigate, useLocation } from "react-router-dom";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { DashboardTopNav } from "./DashboardTopNav";
+import { OfflineBanner } from "./OfflineBanner";
 import { useAuth } from "../../contexts/AuthContext";
 import { Shield } from "lucide-react";
 
@@ -53,17 +54,19 @@ export function DashboardLayout() {
   if (path.includes('/settings') && !p.settings) return <Navigate to="/dashboard" replace />;
 
   return (
-    <div className="bg-[#f0f9ff] bg-dot-grid font-sans text-slate-900 overflow-hidden flex h-screen antialiased">
-      <DashboardSidebar />
+    <>
+      <OfflineBanner />
+      <div className="bg-[#f0f9ff] bg-dot-grid font-sans text-slate-900 overflow-hidden flex h-screen antialiased">
+        <DashboardSidebar />
       
       <div className="flex-1 flex flex-col ml-0 md:ml-72 min-h-screen relative w-full overflow-hidden">
         <DashboardTopNav />
-        
         {/* Main Content Canvas - The Outlet renders child routes like DashboardOverview */}
-        <main className="flex-1 overflow-y-auto pt-24 pb-24 px-4 md:px-12 w-full max-w-[1280px] mx-auto custom-scrollbar">
+        <main className="flex-1 overflow-y-auto pt-24 pb-24 px-4 md:px-12 w-full custom-scrollbar">
           <Outlet />
         </main>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

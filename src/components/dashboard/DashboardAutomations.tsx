@@ -79,7 +79,7 @@ export function DashboardAutomations() {
             <h1 className="text-3xl md:text-4xl text-slate-900 font-black mb-4 tracking-tight">Automations Hub</h1>
             <p className="text-lg text-slate-700 max-w-2xl">Manage your playbooks and workflow automations.</p>
           </div>
-          <button className="flex items-center justify-center gap-2 w-full md:w-auto px-5 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-bold shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:bg-slate-800 transition-colors">
+          <button className="flex items-center justify-center gap-2 w-full md:w-auto px-6 py-2.5 bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl text-[12px] uppercase tracking-[0.18em] font-bold shadow-md transition-all hover:shadow-lg hover:scale-[1.02]">
              <Settings className="w-4 h-4" /> Advanced Builder
           </button>
         </div>
@@ -87,7 +87,7 @@ export function DashboardAutomations() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24 max-w-5xl">
         {playbooks.map(pb => (
-          <div key={pb.id} className="bg-white rounded-[24px] border-2 border-slate-200 p-4 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)] flex flex-col justify-between hover:border-sky-300 transition-colors group">
+          <div key={pb.id} className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 p-4 sm:p-6 shadow-sm flex flex-col justify-between hover:border-sky-200 hover:shadow-md transition-all group">
             <div>
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center gap-3">
@@ -140,7 +140,7 @@ export function DashboardAutomations() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="relative w-full max-w-lg bg-white rounded-[32px] shadow-[0_32px_64px_rgba(0,0,0,0.2)] border-2 border-slate-200 overflow-hidden pointer-events-auto"
+              className="relative w-full max-w-lg bg-white/95 backdrop-blur-md rounded-[32px] shadow-xl border border-slate-200 overflow-hidden pointer-events-auto"
             >
               <div className="p-6 sm:p-8">
                 <div className="flex justify-between items-start mb-6">
@@ -193,7 +193,7 @@ export function DashboardAutomations() {
                   <button 
                     onClick={handleSaveAndActivate}
                     disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 py-4 bg-sky-500 hover:bg-sky-600 text-white font-black text-lg rounded-xl shadow-[0_8px_30px_rgba(14,165,233,0.3)] transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center gap-2 py-4 bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white font-bold text-[12px] uppercase tracking-[0.18em] rounded-xl shadow-md transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     {isLoading ? (
                       <>

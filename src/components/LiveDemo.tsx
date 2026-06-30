@@ -29,10 +29,10 @@ export default function LiveDemo() {
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Interactive Sandbox</span>
         <h2 className="text-3xl md:text-5xl tracking-tight leading-none text-text-base mt-3 font-sans font-black">
-          See Samantha in Action.
+          See Our Demo Agent in Action.
         </h2>
         <p className="mt-4 text-sm sm:text-sm text-text-muted leading-relaxed max-w-xl mx-auto font-medium">
-          Interact with Samantha, our autonomous voice and chat receptionist, in real-time. Test its capabilities or schedule a custom integration session.
+          Interact with our autonomous voice and chat receptionist demo in real-time. Test its capabilities or schedule a custom integration session.
         </p>
 
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
@@ -64,7 +64,7 @@ export default function LiveDemo() {
               </div>
               <h3 className="text-lg font-black text-text-base mb-2">Test Live Voice</h3>
               <p className="text-sm text-text-muted leading-relaxed mb-6 font-medium">
-                Speak directly with Samantha through your browser microphone. No phone numbers required.
+                Speak directly with the demo agent through your browser microphone. No phone numbers required.
               </p>
             </div>
             <button

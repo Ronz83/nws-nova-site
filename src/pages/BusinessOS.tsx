@@ -742,7 +742,7 @@ export default function BusinessOS() {
                 <div className="flex flex-col gap-3">
                   {[
                     "Everything in Starter",
-                    "Voice AI Employee (Samantha)",
+                    "Voice AI Receptionist",
                     "Unlimited Contacts & Pipelines",
                     "Advanced Automation Sequences",
                     "Reputation Management AI",

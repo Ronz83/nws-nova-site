@@ -9,7 +9,7 @@ const useCases = [
     useCase: "After-Hours Lead Capture",
     logo: "🏠",
     challenge: "Agents frequently miss inbound inquiry calls after hours or while on showings. Buyers rarely leave voicemails, opting to call the next agent on the list.",
-    solution: "Samantha AI Voice deployed alongside our CRM pipeline. Samantha answers every call 24/7, qualifies buyer intent, captures budget requirements, and books property viewings directly into the agent's calendar.",
+    solution: "A custom AI Voice agent deployed alongside our CRM pipeline. The agent answers every call 24/7, qualifies buyer intent, captures budget requirements, and books property viewings directly into the agent's calendar.",
     results: [
       { title: "Zero Missed Opportunities", desc: "Every after-hours call is answered instantly and handled professionally.", icon: <Phone size={14} /> },
       { title: "Automated Qualification", desc: "Leads are pre-qualified for budget and timeline before they reach the agent.", icon: <TrendingUp size={14} /> },
@@ -23,7 +23,7 @@ const useCases = [
     useCase: "Automated Patient Intake & Support",
     logo: "🏥",
     challenge: "Front desk staff spend up to 70% of their day on the phone. Patients experience long hold times, leading to frustration and negative online reviews.",
-    solution: "A custom NWS website integrated with Samantha voice and chat. Samantha handles appointment intake, answers insurance pre-screen questions, and manages rescheduling. Post-visit, automated SMS requests generate Google reviews.",
+    solution: "A custom NWS website integrated with an AI voice and chat agent. The agent handles appointment intake, answers insurance pre-screen questions, and manages rescheduling. Post-visit, automated SMS requests generate Google reviews.",
     results: [
       { title: "Eliminate Hold Times", desc: "Patients get immediate answers to FAQs and booking requests.", icon: <Phone size={14} /> },
       { title: "Staff Reallocation", desc: "Front desk freed up to focus entirely on in-clinic patient care.", icon: <TrendingUp size={14} /> },
@@ -37,7 +37,7 @@ const useCases = [
     useCase: "Streamlined Client Onboarding",
     logo: "⚖️",
     challenge: "New client intake is often a slow email chain. Lawyers spend billable hours on administrative triage and back-and-forth scheduling.",
-    solution: "Samantha handles structured intake calls. It walks callers through an intake script, captures matter types, asks conflict-check questions, and books consultations automatically into the firm's calendar.",
+    solution: "A custom AI agent handles structured intake calls. It walks callers through an intake script, captures matter types, asks conflict-check questions, and books consultations automatically into the firm's calendar.",
     results: [
       { title: "Instant Intake", desc: "Intake process reduced from days of email tag to a 5-minute call.", icon: <Phone size={14} /> },
       { title: "Consistent Data", desc: "Every required detail is captured flawlessly before the consultation.", icon: <TrendingUp size={14} /> },
@@ -51,7 +51,7 @@ const useCases = [
     useCase: "Reservation Management & Reviews",
     logo: "🍽️",
     challenge: "During peak dinner rush, staff cannot answer the phone. Missed reservation calls lead to lost revenue and frustrated potential diners.",
-    solution: "Samantha handles reservation calls during peak hours and after closing. Our CRM sends an automated SMS confirmation before the reservation, and a review request afterward.",
+    solution: "An AI voice receptionist handles reservation calls during peak hours and after closing. Our CRM sends an automated SMS confirmation before the reservation, and a review request afterward.",
     results: [
       { title: "Maximized Covers", desc: "No booking is ever lost due to an unanswered phone.", icon: <Phone size={14} /> },
       { title: "Reduced No-Shows", desc: "Automated SMS reminders ensure tables stay full.", icon: <TrendingUp size={14} /> },
