@@ -32,52 +32,40 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Express adapter for Vercel handlers
-const adaptVercel = (handler: any) => async (req: express.Request, res: express.Response) => {
-  try {
-    // Express req/res are highly compatible with VercelRequest/VercelResponse
-    // including req.body, req.query, res.status(), res.json()
-    await handler(req, res);
-  } catch (err) {
-    console.error('API Route Error:', err);
-    if (!res.headersSent) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
-};
+
 
 // Map the API routes
-app.post('/api/workbench/analyze', adaptVercel(analyzeHandler));
-app.post('/api/workbench/chat', adaptVercel(chatHandler));
-app.post('/api/crm/contact', adaptVercel(contactHandler));
-app.get('/api/crm/opportunities', adaptVercel(opportunitiesHandler));
-app.get('/api/crm/conversations', adaptVercel(conversationsHandler));
-app.get('/api/connect/install', adaptVercel(installHandler));
-app.get('/api/connect/callback', adaptVercel(callbackHandler));
-app.post('/api/connect/provision', adaptVercel(provisionHandler));
-app.post('/api/demo-agent/start-call', adaptVercel(startCallHandler));
-app.post('/api/ghl/custom-values', adaptVercel(customValuesHandler));
-app.post('/api/vapi/inbound', adaptVercel(vapiInboundHandler));
-app.post('/api/vapi/functions', adaptVercel(vapiFunctionsHandler));
-app.get('/api/knowledge', adaptVercel(knowledgeHandler));
-app.post('/api/knowledge', adaptVercel(knowledgeHandler));
-app.get('/api/ghl/snapshots', adaptVercel(snapshotsHandler));
-app.post('/api/ghl/snapshots', adaptVercel(snapshotsHandler));
-app.put('/api/ghl/snapshots', adaptVercel(snapshotsHandler));
-app.delete('/api/ghl/snapshots', adaptVercel(snapshotsHandler));
-app.post('/api/ghl/snapshots/push', adaptVercel(pushSnapshotToGHL));
-app.get('/api/website/intake', adaptVercel(websiteIntakeHandler));
-app.post('/api/website/intake', adaptVercel(websiteIntakeHandler));
-app.get('/api/website/requests', adaptVercel(websiteRequestsHandler));
-app.get('/api/ghl/feature-flags', adaptVercel(featureFlagsHandler));
-app.post('/api/ai/niche-blueprint', adaptVercel(nicheBlueprintHandler));
-app.get('/api/ghl/chat-widget', adaptVercel(chatWidgetHandler));
+app.post('/api/workbench/analyze', analyzeHandler);
+app.post('/api/workbench/chat', chatHandler);
+app.post('/api/crm/contact', contactHandler);
+app.get('/api/crm/opportunities', opportunitiesHandler);
+app.get('/api/crm/conversations', conversationsHandler);
+app.get('/api/connect/install', installHandler);
+app.get('/api/connect/callback', callbackHandler);
+app.post('/api/connect/provision', provisionHandler);
+app.post('/api/demo-agent/start-call', startCallHandler);
+app.post('/api/ghl/custom-values', customValuesHandler);
+app.post('/api/vapi/inbound', vapiInboundHandler);
+app.post('/api/vapi/functions', vapiFunctionsHandler);
+app.get('/api/knowledge', knowledgeHandler);
+app.post('/api/knowledge', knowledgeHandler);
+app.get('/api/ghl/snapshots', snapshotsHandler);
+app.post('/api/ghl/snapshots', snapshotsHandler);
+app.put('/api/ghl/snapshots', snapshotsHandler);
+app.delete('/api/ghl/snapshots', snapshotsHandler);
+app.post('/api/ghl/snapshots/push', pushSnapshotToGHL);
+app.get('/api/website/intake', websiteIntakeHandler);
+app.post('/api/website/intake', websiteIntakeHandler);
+app.get('/api/website/requests', websiteRequestsHandler);
+app.get('/api/ghl/feature-flags', featureFlagsHandler);
+app.post('/api/ai/niche-blueprint', nicheBlueprintHandler);
+app.get('/api/ghl/chat-widget', chatWidgetHandler);
 
 // Map the dynamic results route
 app.get('/api/results/:id', (req, res) => {
-  // Inject the Express param into req.query so the Vercel handler finds it
+  // Inject the Express param into req.query so the handler finds it
   req.query = { ...req.query, id: req.params.id };
-  return adaptVercel(resultsHandler)(req, res);
+  return resultsHandler(req, res);
 });
 
 // Serve static standalone sales pages without .html extension
