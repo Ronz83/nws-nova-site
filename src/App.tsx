@@ -53,6 +53,12 @@ function PageLoader() {
   );
 }
 
+// Redirects for standalone static HTML pages in the public directory
+function StaticPageRedirect({ url }: { url: string }) {
+  window.location.href = url;
+  return <PageLoader />;
+}
+
 // Layout for the main public website (includes Nav, Footer, and Samantha)
 function PublicLayout() {
   return (
@@ -112,6 +118,11 @@ export default function App() {
                 <Route path="website-requests" element={<DashboardWebsiteRequests />} />
                 <Route path="niche-blueprints" element={<DashboardNicheBlueprints />} />
               </Route>
+
+              {/* Static HTML Pages Redirects */}
+              <Route path="/smart-start" element={<StaticPageRedirect url="/smart-start/index.html" />} />
+              <Route path="/ai-receptionist" element={<StaticPageRedirect url="/ai-receptionist/index.html" />} />
+              <Route path="/business-audit" element={<StaticPageRedirect url="/business-audit/index.html" />} />
 
               <Route path="/kb-test" element={
                 <div className="p-8">
