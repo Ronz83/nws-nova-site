@@ -80,6 +80,11 @@ app.get('/api/results/:id', (req, res) => {
   return adaptVercel(resultsHandler)(req, res);
 });
 
+// Serve static standalone sales pages without .html extension
+app.get('/smart-start', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'smart-start.html')));
+app.get('/business-audit', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'business-audit.html')));
+app.get('/ai-receptionist', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'ai-receptionist.html')));
+
 // Serve static frontend files from Vite's build output
 app.use(express.static(path.join(__dirname, 'dist')));
 
