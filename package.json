@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "tsx --env-file=.env.local server.ts"
+    "start": "tsx server.ts",
+    "dev:server": "tsx --env-file=.env.local server.ts"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.13",
