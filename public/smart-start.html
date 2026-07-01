@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NWS Smart Start — Claim Your Free Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0F1C;
+      --surface: #111928;
+      --surface2: #182236;
+      --border: #1E2D45;
+      --coral: #FF6B4D;
+      --coral-dim: rgba(255,107,77,0.15);
+      --coral-glow: 0 0 20px rgba(255,107,77,0.35);
+      --teal: #2BD9C2;
+      --teal-dim: rgba(43,217,194,0.12);
+      --gold: #F2B705;
+      --gold-dim: rgba(242,183,5,0.12);
+      --text: #E8EDF5;
+      --text-muted: #7A90B0;
+      --text-faint: #3E5070;
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 80px;
+    }
+
+    /* ─── TOP NAV ─── */
+    .top-nav {
+      width: 100%;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(10,15,28,0.92);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--coral); }
+    .trust-badge {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trust-badge::before {
+      content: '🔒';
+      font-size: 0.8rem;
+    }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-wrap {
+      width: 100%;
+      max-width: 680px;
+      padding: 28px 24px 0;
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .progress-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--coral);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .progress-step-count {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .progress-bar-track {
+      height: 5px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--coral) 0%, #ff9070 100%);
+      border-radius: 999px;
+      transition: width 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    .step-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .step-dot {
+      flex: 1;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--border);
+      transition: background 0.3s;
+    }
+    .step-dot.done { background: var(--coral); }
+    .step-dot.active { background: var(--coral); opacity: 0.5; }
+
+    /* ─── SURVEY CONTAINER ─── */
+    .survey-container {
+      width: 100%;
+      max-width: 680px;
+      padding: 32px 24px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ─── STEP SLIDE ANIMATION ─── */
+    .step {
+      display: none;
+      animation: slideInRight 0.38s cubic-bezier(.4,0,.2,1) both;
+    }
+    .step.active { display: block; }
+    .step.slide-out {
+      animation: slideOutLeft 0.28s cubic-bezier(.4,0,.2,1) both;
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(48px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideOutLeft {
+      from { opacity: 1; transform: translateX(0); }
+      to   { opacity: 0; transform: translateX(-48px); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ─── STEP HEADER ─── */
+    .step-header { margin-bottom: 28px; }
+    .step-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+    }
+    .step-subtext {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── OPTION CARDS (single & multi) ─── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .card-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+    .card-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+
+    .option-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 14px;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(.4,0,.2,1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .option-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--coral-dim);
+      opacity: 0;
+      transition: opacity 0.22s;
+      border-radius: inherit;
+    }
+    .option-card:hover {
+      border-color: rgba(255,107,77,0.5);
+      transform: translateY(-2px);
+    }
+    .option-card:hover::before { opacity: 0.5; }
+    .option-card.selected {
+      border-color: var(--coral);
+      box-shadow: var(--coral-glow);
+    }
+    .option-card.selected::before { opacity: 1; }
+    .option-card .card-icon { font-size: 1.75rem; line-height: 1; }
+    .option-card .card-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .option-card.selected .card-label { color: #fff; }
+    .option-card.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 0.7rem;
+      color: var(--coral);
+      font-weight: 700;
+    }
+
+    /* Horizontal option cards (goal/website status) */
+    .card-grid.horiz-cards { grid-template-columns: 1fr; gap: 10px; }
+    .card-grid.horiz-cards .option-card {
+      flex-direction: row;
+      text-align: left;
+      padding: 14px 18px;
+      gap: 14px;
+      align-items: center;
+    }
+    .card-grid.horiz-cards .option-card .card-icon { font-size: 1.4rem; }
+    .card-grid.horiz-cards .option-card .card-label { font-size: 0.875rem; }
+
+    /* ─── CHECKBOX GRID ─── */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.18s;
+      user-select: none;
+    }
+    .checkbox-item:hover { border-color: rgba(43,217,194,0.4); }
+    .checkbox-item.checked {
+      border-color: var(--teal);
+      background: var(--teal-dim);
+    }
+    .checkbox-item input[type="checkbox"] { display: none; }
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s;
+      font-size: 0.7rem;
+    }
+    .checkbox-item.checked .check-box {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #0A0F1C;
+      font-weight: 700;
+    }
+    .check-label {
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* ─── FORM INPUTS ─── */
+    .form-group { margin-bottom: 18px; }
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      padding: 13px 16px;
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      -webkit-appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 3px rgba(255,107,77,0.15);
+    }
+    .form-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A90B0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+    .form-select option { background: #182236; }
+    .form-textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* ─── SECTION DIVIDER ─── */
+    .section-divider {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-faint);
+      margin: 24px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(.4,0,.2,1);
+      text-decoration: none;
+      letter-spacing: 0.2px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--coral) 0%, #ff8060 100%);
+      color: #fff;
+      padding: 15px 32px;
+      width: 100%;
+      font-size: 1rem;
+      box-shadow: 0 4px 24px rgba(255,107,77,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,107,77,0.5);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      padding: 12px 20px;
+    }
+    .btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
+    .btn-nav-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .btn-nav-row .btn-secondary { flex-shrink: 0; }
+    .btn-nav-row .btn-primary { flex: 1; }
+
+    /* ─── STEP 5 REVEAL ─── */
+    .reveal-section { margin-bottom: 32px; }
+    .reveal-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .reveal-subtext { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; }
+
+    .pain-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-left: 4px solid #FF3B3B;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      animation: fadeUp 0.4s cubic-bezier(.4,0,.2,1) both;
+    }
+    .pain-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .pain-card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pain-card-body { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+    .badge-leak {
+      background: rgba(255,59,59,0.15);
+      color: #FF6B6B;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+      border: 1px solid rgba(255,59,59,0.3);
+    }
+
+    /* ─── OFFER COLUMNS ─── */
+    .offer-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      animation: fadeUp 0.5s cubic-bezier(.4,0,.2,1) both;
+    }
+    .offer-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .offer-card.free-card { border-color: var(--teal); }
+    .offer-card.plan-card { border-color: var(--gold); }
+
+    .offer-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .badge-free { color: var(--teal); }
+    .badge-price { color: var(--gold); }
+    .badge-per-mo {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .offer-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+    .free-card .offer-title { color: var(--teal); }
+    .plan-card .offer-title { color: var(--gold); }
+
+    .offer-list { list-style: none; flex: 1; }
+    .offer-list li {
+      font-size: 0.8rem;
+      color: var(--text);
+      line-height: 1.5;
+      padding: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .offer-list li .li-check { color: var(--teal); flex-shrink: 0; margin-top: 1px; }
+    .offer-list li .li-check.gold { color: var(--gold); }
+
+    .offer-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 14px;
+      line-height: 1.5;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .urgency-bar {
+      background: rgba(242,183,5,0.08);
+      border: 1px solid rgba(242,183,5,0.2);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      text-align: center;
+      margin: 16px 0;
+      font-weight: 600;
+    }
+
+    .enterprise-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .enterprise-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--gold);
+    }
+    .enterprise-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    /* ─── SUCCESS SCREEN ─── */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 40px 0 20px;
+      animation: fadeUp 0.5s cubic-bezier(.4,0,.2,1) both;
+    }
+    .success-screen.visible { display: block; }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--teal-dim);
+      border: 2px solid var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 24px;
+      animation: popIn 0.5s cubic-bezier(.175,.885,.32,1.275) both;
+    }
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .success-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .success-body {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto 28px;
+    }
+    .success-plan-reminder {
+      background: var(--surface);
+      border: 1.5px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 24px auto;
+      max-width: 480px;
+      text-align: left;
+    }
+    .success-plan-reminder h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .success-plan-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .success-plan-tier {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .success-plan-features { list-style: none; }
+    .success-plan-features li {
+      font-size: 0.82rem;
+      color: var(--text);
+      padding: 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .success-plan-features li::before { content: '✅'; font-size: 0.7rem; }
+
+    /* ─── UTILITY ─── */
+    .mt-8 { margin-top: 8px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+    .hidden { display: none !important; }
+    .error-msg {
+      color: #FF6B6B;
+      font-size: 0.75rem;
+      margin-top: 6px;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      .offer-columns { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .card-grid.four-col { grid-template-columns: repeat(2, 1fr); }
+      .card-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+      .checkbox-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 400px) {
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+      .card-grid.horiz-cards { grid-template-columns: 1fr; }
+      .checkbox-grid { grid-template-columns: 1fr; }
+      .card-grid.three-col { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <div class="logo">N<span>W</span>S</div>
+    <div class="trust-badge">100% Free &amp; No Credit Card Required</div>
+  </nav>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-meta">
+      <span class="progress-label" id="progressLabel">Step 1 — Industry</span>
+      <span class="progress-step-count" id="progressCount">1 / 6</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progressFill" style="width:16.67%"></div>
+    </div>
+    <div class="step-dots" id="stepDots"></div>
+  </div>
+
+  <!-- SURVEY CONTAINER -->
+  <div class="survey-container" id="surveyContainer">
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- STEP 1: INDUSTRY -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div class="step active" id="step-1">
+      <div class="step-header">
+        <h1 class="step-headline">What type of business do you run?</h1>
+        <p class="step-subtext">We'll tailor your free website and recommendations to your industry.</p>
+      </div>
+
+      <div class="card-grid" id="industryGrid">
+        <div class="option-card" data-value="home_services" onclick="selectIndustry(this)">
+          <span class="card-icon">🏠</span>
+          <span class="card-label">Home Services</span>
+        </div>
+        <div class="option-card" data-value="automotive" onclick="selectIndustry(this)">
+          <span class="card-icon">🚗</span>
+          <span class="card-label">Automotive</span>
+        </div>
+        <div class="option-card" data-value="real_estate" onclick="selectIndustry(this)">
+          <span class="card-icon">🏡</span>
+          <span class="card-label">Real Estate</span>
+        </div>
+        <div class="option-card" data-value="dental_medical" onclick="selectIndustry(this)">
+          <span class="card-icon">🦷</span>
+          <span class="card-label">Dental &amp; Medical</span>
+        </div>
+        <div class="option-card" data-value="veterinary" onclick="selectIndustry(this)">
+          <span class="card-icon">🐾</span>
+          <span class="card-label">Veterinary</span>
+        </div>
+        <div class="option-card" data-value="hospitality" onclick="selectIndustry(this)">
+          <span class="card-icon">🏨</span>
+          <span class="card-label">Hospitality</span>
+        </div>
+        <div class="option-card" data-value="death_care" onclick="selectIndustry(this)">
+          <span class="card-icon">⚰️</span>
+          <span class="card-label">Death Care</span>
+        </div>
+        <div class="option-card" data-value="other" onclick="selectIndustry(this)">
+          <span class="card-icon">🏪</span>
+          <span class="card-label">Other / General</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- STEP 2: BUSINESS BASICS -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div class="step" id="step-2">
+      <div class="step-header">
+        <h2 class="step-headline">Tell us about your business</h2>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="businessName">Business Name</label>
+          <input class="form-input" type="text" id="businessName" placeholder="e.g. Smith's Plumbing" oninput="state.businessName = this.value" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="location">City / Location</label>
+          <input class="form-input" type="text" id="location" placeholder="e.g. Miami, FL" oninput="state.location = this.value" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="yearsInBusiness">How long have you been in business?</label>
+        <select class="form-select" id="yearsInBusiness" onchange="state.yearsInBusiness = this.value">
+          <option value="" disabled selected>Select one...</option>
+          <option value="less_than_1">Less than 1 year</option>
+          <option value="1_to_3">1–3 years</option>
+          <option value="3_to_10">3–10 years</option>
+          <option value="10_plus">10+ years</option>
+        </select>
+      </div>
+
+      <div class="section-divider">Team size</div>
+      <div class="card-grid two-col" id="staffGrid">
+        <div class="option-card" data-value="solo" onclick="selectStaff(this)">
+          <span class="card-icon">👤</span>
+          <span class="card-label">Just me</span>
+        </div>
+        <div class="option-card" data-value="small" onclick="selectStaff(this)">
+          <span class="card-icon">👥</span>
+          <span class="card-label">2–10 people</span>
+        </div>
+        <div class="option-card" data-value="medium" onclick="selectStaff(this)">
+          <span class="card-icon">🏢</span>
+          <span class="card-label">11–50 people</span>
+        </div>
+        <div class="option-card" data-value="large" onclick="selectStaff(this)">
+          <span class="card-icon">🏭</span>
+          <span class="card-label">50+ people</span>
+        </div>
+      </div>
+      <p class="error-msg" id="err-step2">Please fill in your business name and select a team size.</p>
+
+      <div class="btn-nav-row">
+        <button class="btn btn-secondary" onclick="goToStep(1)">← Back</button>
+        <button class="btn btn-primary" onclick="advanceStep2()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- STEP 3: WEBSITE QUESTIONS -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div class="step" id="step-3">
+      <div class="step-header">
+        <h2 class="step-headline">Let's build your free website right</h2>
+        <p class="step-subtext">Answer these so we build exactly what your business needs.</p>
+      </div>
+
+      <div class="section-divider">Do you currently have a website?</div>
+      <div class="card-grid horiz-cards" id="websiteStatusGrid">
+        <div class="option-card" data-value="yes_works" onclick="selectSingle(this, 'websiteStatusGrid', 'hasWebsite')">
+          <span class="card-icon">✅</span>
+          <span class="card-label">Yes — and it works great</span>
+        </div>
+        <div class="option-card" data-value="yes_needs_work" onclick="selectSingle(this, 'websiteStatusGrid', 'hasWebsite')">
+          <span class="card-icon">⚠️</span>
+          <span class="card-label">Yes — but it needs work</span>
+        </div>
+        <div class="option-card" data-value="no" onclick="selectSingle(this, 'websiteStatusGrid', 'hasWebsite')">
+          <span class="card-icon">❌</span>
+          <span class="card-label">No website at all</span>
+        </div>
+      </div>
+
+      <div class="section-divider">What's the #1 thing you want your website to do?</div>
+      <div class="card-grid horiz-cards" id="primaryGoalGrid">
+        <div class="option-card" data-value="get_calls" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
+          <span class="card-icon">📞</span>
+          <span class="card-label">Get more calls</span>
+        </div>
+        <div class="option-card" data-value="book_appointments" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
+          <span class="card-icon">📅</span>
+          <span class="card-label">Book more appointments</span>
+        </div>
+        <div class="option-card" data-value="generate_leads" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
+          <span class="card-icon">🎯</span>
+          <span class="card-label">Generate leads</span>
+        </div>
+        <div class="option-card" data-value="showcase_work" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
+          <span class="card-icon">🖼️</span>
+          <span class="card-label">Showcase my work</span>
+        </div>
+        <div class="option-card" data-value="sell_products" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
+          <span class="card-icon">🛒</span>
+          <span class="card-label">Sell products</span>
+        </div>
+      </div>
+
+      <div class="section-divider">Which pages do you need? <span style="color:var(--text-faint);font-size:0.7rem;text-transform:none;letter-spacing:0">(check all that apply)</span></div>
+      <div class="checkbox-grid" id="pagesGrid">
+        <label class="checkbox-item" onclick="togglePage(this, 'Home')">
+          <input type="checkbox" /><div class="check-box"></div><span class="check-label">🏠 Home</span>
+        </label>
+        <label class="checkbox-item" onclick="togglePage(this, 'About Us')">
+          <input type="checkbox" /><div class="check-box"></div><span class="check-label">👤 About Us</span>
+        </label>
+        <label class="checkbox-item" onclick="togglePage(this, 'Services')">
+          <input type="checkbox" /><div class="check-box"></div><span class="check-label">⚙️ Services</span>
+        </label>
+        <label class="checkbox-item" onclick="togglePage(this, 'Contact')">
+          <input type="checkbox" /><div class="check-box"></div><span class="check-label">📬 Contact</span>
+        </label>
+        <label class="checkbox-item" onclick="togglePage(this, 'Gallery/Portfolio')">
+          <input type="checkbox" /><div class="check-box"></div><span class="check-label">🖼️ Gallery / Portfolio</span>
+        </label>
+        <label class="checkbox-item" onclick="togglePage(this, 'Testimonials')">
+          <input type="checkbox" /><div class="check-box"></div><span class="check-label">⭐ Testimonials</span>
+        </label>
+        <label class="checkbox-item" onclick="togglePage(this, 'Booking/Appointment')">
+          <input type="checkbox" /><div class="check-box"></div><span class="check-label">📅 Booking / Appt</span>
+        </label>
+        <label class="checkbox-item" onclick="togglePage(this, 'Blog')">
+          <input type="checkbox" /><div class="check-box"></div><span class="check-label">✍️ Blog</span>
+        </label>
+        <label class="checkbox-item" onclick="togglePage(this, 'FAQ')">
+          <input type="checkbox" /><div class="check-box"></div><span class="check-label">❓ FAQ</span>
+        </label>
+      </div>
+
+      <div class="section-divider">What's your brand vibe?</div>
+      <div class="card-grid three-col" id="brandVibeGrid">
+        <div class="option-card" data-value="professional" onclick="selectSingle(this, 'brandVibeGrid', 'brandVibe')">
+          <span class="card-icon">🏛️</span>
+          <span class="card-label">Professional &amp; Corporate</span>
+        </div>
+        <div class="option-card" data-value="modern" onclick="selectSingle(this, 'brandVibeGrid', 'brandVibe')">
+          <span class="card-icon">⚡</span>
+          <span class="card-label">Modern &amp; Bold</span>
+        </div>
+        <div class="option-card" data-value="warm" onclick="selectSingle(this, 'brandVibeGrid', 'brandVibe')">
+          <span class="card-icon">☀️</span>
+          <span class="card-label">Warm &amp; Friendly</span>
+        </div>
+      </div>
+
+      <p class="error-msg" id="err-step3">Please answer all questions above before continuing.</p>
+
+      <div class="btn-nav-row">
+        <button class="btn btn-secondary" onclick="goToStep(2)">← Back</button>
+        <button class="btn btn-primary" onclick="advanceStep3()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- STEP 4: PAIN POINTS -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div class="step" id="step-4">
+      <div class="step-header">
+        <h2 class="step-headline">Where are you losing customers right now?</h2>
+        <p class="step-subtext">Be honest — this is how we build the right solution for you.</p>
+      </div>
+
+      <div class="checkbox-grid" id="painPointsGrid" style="grid-template-columns:1fr;"></div>
+
+      <p class="error-msg" id="err-step4">Select at least one pain point to continue.</p>
+
+      <div class="btn-nav-row" style="margin-top:24px;">
+        <button class="btn btn-secondary" onclick="goToStep(3)">← Back</button>
+        <button class="btn btn-primary" onclick="advanceStep4()">Show My Analysis →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- STEP 5: THE REVEAL -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div class="step" id="step-5">
+
+      <!-- PART A: Pain Analysis -->
+      <div id="revealPartA" class="reveal-section">
+        <h2 class="reveal-headline" id="revealHeadline">Here's what our analysis found</h2>
+        <p class="reveal-subtext">Based on your answers</p>
+        <div id="painCardsContainer"></div>
+      </div>
+
+      <!-- PART B: The Offer (revealed after 1.5s) -->
+      <div id="revealPartB" class="hidden">
+
+        <div class="section-divider" style="margin-top:0;">Here's what you get</div>
+
+        <!-- Starter / Pro offers -->
+        <div id="offerStandardWrap">
+          <div class="offer-columns" id="offerColumns">
+            <!-- FREE column -->
+            <div class="offer-card free-card">
+              <div class="offer-title">100% Free</div>
+              <div class="offer-badge"><span class="badge-free">FREE</span></div>
+              <ul class="offer-list" id="freeList">
+                <li><span class="li-check">✅</span> Custom website built for <span id="offerIndustryLabel" style="color:var(--teal);font-weight:600;margin-left:3px">&nbsp;</span></li>
+                <li><span class="li-check">✅</span> Mobile-responsive design</li>
+                <li><span class="li-check">✅</span> All the pages you selected</li>
+                <li><span class="li-check">✅</span> Lead capture forms</li>
+                <li><span class="li-check">✅</span> Click-to-call + WhatsApp button</li>
+                <li><span class="li-check">✅</span> Local SEO structure</li>
+                <li><span class="li-check">✅</span> Your business audit PDF report</li>
+                <li><span class="li-check" style="color:var(--gold)">🌴</span> <strong style="color:var(--gold)">Free CB Connect listing</strong> — your business on the Caribbean's #1 business directory (<a href="https://dir.caricombusiness.com" target="_blank" style="color:var(--gold);text-decoration:underline">dir.caricombusiness.com</a>)</li>
+              </ul>
+              <p class="offer-note">Website code is yours to keep. Upgrade to the NWS Plan to have us host, connect your AI agent, and automate your growth.</p>
+            </div>
+
+            <!-- PLAN column -->
+            <div class="offer-card plan-card" id="planCard">
+              <div class="offer-title" id="planTitle">NWS Starter Plan</div>
+              <div class="offer-badge">
+                <span class="badge-price" id="planPriceDisplay">$299</span>
+                <span class="badge-per-mo">/mo</span>
+              </div>
+              <ul class="offer-list" id="planFeaturesList"></ul>
+              <p class="offer-note" id="planNote"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enterprise offer (shown instead of columns for 50+) -->
+        <div id="offerEnterpriseWrap" class="hidden">
+          <div class="enterprise-card">
+            <h3>🏭 Enterprise — Custom Pricing</h3>
+            <p>Your team's size and requirements go beyond our standard tiers. We build bespoke automation and AI solutions for operations at your scale. Let's talk.</p>
+            <a class="btn btn-primary" style="max-width:280px;margin:0 auto;" href="mailto:info@noveltywebsolutions.com?subject=Enterprise%20Inquiry%20from%20Smart%20Start">Book a Discovery Call →</a>
+          </div>
+        </div>
+
+        <div class="urgency-bar">🔥 July Promotion — 10 spots remaining. Free website + free CB Connect directory listing included with every signup this month.</div>
+
+        <button class="btn btn-primary mt-8" onclick="goToStep(6)">Claim My Free Website →</button>
+      </div>
+
+      <div class="btn-nav-row" style="margin-top:16px;">
+        <button class="btn btn-secondary" onclick="goToStep(4)">← Back</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- STEP 6: CONTACT FORM -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div class="step" id="step-6">
+      <div class="step-header">
+        <h2 class="step-headline">Almost there — where do we send your free website?</h2>
+        <p class="step-subtext">We'll reach out within 24 hours to kick things off.</p>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="firstName">First Name</label>
+          <input class="form-input" type="text" id="firstName" placeholder="Jane" oninput="state.firstName = this.value" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="lastName">Last Name</label>
+          <input class="form-input" type="text" id="lastName" placeholder="Smith" oninput="state.lastName = this.value" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" type="email" id="email" placeholder="jane@mybusiness.com" oninput="state.email = this.value" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="phone">Phone / WhatsApp Number</label>
+        <input class="form-input" type="tel" id="phone" placeholder="+1 (555) 000-0000" oninput="state.phone = this.value" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="notes">Anything else we should know? <span style="color:var(--text-faint)">(Optional)</span></label>
+        <textarea class="form-textarea" id="notes" placeholder="Tell us anything that'll help us build a better website for you..." oninput="state.notes = this.value"></textarea>
+      </div>
+
+      <p class="error-msg" id="err-step6">Please fill in your name, email, and phone number.</p>
+
+      <div class="btn-nav-row">
+        <button class="btn btn-secondary" onclick="goToStep(5)">← Back</button>
+        <button class="btn btn-primary" onclick="submitForm()">Claim My Free Website + Audit →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- SUCCESS SCREEN -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">🎉</div>
+      <h2 class="success-headline">You're in!</h2>
+      <p class="success-body">
+        We'll be in touch within <strong>24 hours</strong> to get your website started.<br />
+        Check your email for your free Business Audit Report in the meantime.
+      </p>
+
+      <div class="success-plan-reminder" id="successPlanReminder">
+        <h4>Your Recommended Plan</h4>
+        <div class="success-plan-price" id="successPrice">$299<span style="font-size:1rem;color:var(--text-muted)">/mo</span></div>
+        <div class="success-plan-tier" id="successTier">NWS Starter Plan</div>
+        <ul class="success-plan-features" id="successFeatures"></ul>
+      </div>
+
+      <a id="mailtoLink" href="#" class="btn btn-primary" style="max-width:380px;margin:0 auto;">
+        Open Email Confirmation →
+      </a>
+      <p style="font-size:0.75rem;color:var(--text-faint);margin-top:14px;">
+        Or reach us directly at <a href="mailto:info@noveltywebsolutions.com" style="color:var(--teal)">info@noveltywebsolutions.com</a>
+      </p>
+    </div>
+
+  </div><!-- /survey-container -->
+
+  <script>
+    // ═══════════════════════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════════════════════
+    const state = {
+      industry: null,
+      businessName: '',
+      location: '',
+      yearsInBusiness: '',
+      staffSize: '',
+      hasWebsite: '',
+      primaryGoal: '',
+      pagesNeeded: [],
+      brandVibe: '',
+      painPoints: [],
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      notes: '',
+      planTier: '',
+      recommendedPrice: '',
+    };
+
+    // ═══════════════════════════════════════════════════════
+    // DATA MAPS
+    // ═══════════════════════════════════════════════════════
+    const industryLabels = {
+      home_services: 'Home Services',
+      automotive: 'Automotive',
+      real_estate: 'Real Estate',
+      dental_medical: 'Dental & Medical',
+      veterinary: 'Veterinary',
+      hospitality: 'Hospitality',
+      death_care: 'Death Care',
+      other: 'General Business',
+    };
+
+    const painPointMap = {
+      home_services: [
+        { emoji: '📵', label: 'Missing calls after hours', impact: 'Industry data shows missed calls cost service businesses $200–$800 per unanswered call.' },
+        { emoji: '⏳', label: 'Losing leads who don\'t hear back fast', impact: 'Leads contacted within 5 minutes are 21× more likely to convert than those reached after 30 minutes.' },
+        { emoji: '🏆', label: 'Customers choosing competitors who respond faster', impact: 'Speed-to-lead is the #1 differentiator in local home services markets.' },
+        { emoji: '🔁', label: 'No system to follow up with leads', impact: 'Most local businesses lose 40–60% of potential revenue to zero follow-up.' },
+        { emoji: '⭐', label: 'Difficult to get Google reviews', impact: 'Businesses with 50+ reviews earn 47% more revenue than those with fewer than 10.' },
+      ],
+      automotive: [
+        { emoji: '🔧', label: 'Customers don\'t come back for recommended repairs', impact: 'Declined repair follow-up alone represents $3,000–$8,000 in lost revenue per bay monthly.' },
+        { emoji: '📅', label: 'Missed service inquiries on weekends', impact: 'Over 60% of automotive searches happen outside business hours.' },
+        { emoji: '🔁', label: 'No way to follow up after a visit', impact: 'Repeat customers spend 67% more than first-time visitors — but only if you stay in contact.' },
+        { emoji: '⭐', label: 'Low online review count', impact: '93% of consumers check online reviews before choosing an automotive business.' },
+        { emoji: '🗓️', label: 'Hard to fill last-minute appointment slots', impact: 'Empty bays cost an average of $400–$900/day in unbilled labor.' },
+      ],
+      real_estate: [
+        { emoji: '🧊', label: 'Portal leads go cold before you can call', impact: 'Real estate leads lose 80% of their conversion potential if not contacted within 10 minutes.' },
+        { emoji: '🏃', label: 'Losing leads to agents who respond faster', impact: '78% of buyers work with the first agent who responds to their inquiry.' },
+        { emoji: '📬', label: 'No automated follow-up for interested buyers', impact: 'Agents using automated follow-up close 33% more deals annually.' },
+        { emoji: '📋', label: 'Juggling too many leads manually', impact: 'Manual lead management results in an average 35% of leads being lost or forgotten.' },
+        { emoji: '👁️', label: 'Not enough online visibility', impact: 'Only 12% of buyers find their agent through a referral — the rest start online.' },
+      ],
+      dental_medical: [
+        { emoji: '📋', label: 'Patients don\'t accept treatment plans', impact: 'Practices with automated treatment follow-up see 28% higher case acceptance rates.' },
+        { emoji: '🚫', label: 'Too many no-shows and cancellations', impact: 'No-shows cost an average dental practice $50,000–$80,000 per year.' },
+        { emoji: '🔔', label: 'Slow patient recall process', impact: 'Practices with automated recall fill 40% more hygiene chairs annually.' },
+        { emoji: '📞', label: 'Staff spending too much time on the phone', impact: 'Front desk phone management costs the average practice 12+ hours per week.' },
+        { emoji: '⭐', label: 'Not enough new patient reviews', impact: '84% of patients trust online reviews as much as personal recommendations.' },
+      ],
+      veterinary: [
+        { emoji: '🐾', label: 'Pet owners don\'t return for follow-up care', impact: 'Practices with automated recall reminders see 31% higher patient retention.' },
+        { emoji: '🚫', label: 'Appointment no-shows waste clinic capacity', impact: 'Each missed appointment costs clinics an average of $120–$250 in lost revenue.' },
+        { emoji: '📞', label: 'Staff overwhelmed with calls and inquiries', impact: 'Front desk overflow costs the average clinic 10–15 hours weekly in wasted staff time.' },
+        { emoji: '💉', label: 'No automated wellness reminders', impact: 'Automated reminders increase preventive care compliance by up to 40%.' },
+        { emoji: '🌙', label: 'After-hours emergency calls go unanswered', impact: 'Unanswered calls during off-hours result in 65% of pet owners calling a competitor.' },
+      ],
+      hospitality: [
+        { emoji: '🌙', label: 'Lose bookings after hours', impact: '43% of restaurant reservations are made outside business hours — and go unanswered.' },
+        { emoji: '🚫', label: 'No-shows hurt revenue', impact: 'Restaurant no-shows cost the industry an estimated $225 per empty table per evening.' },
+        { emoji: '📋', label: 'Hard to manage waitlists efficiently', impact: 'Manual waitlists lead to 22% higher table abandonment rates.' },
+        { emoji: '🔁', label: 'Inconsistent follow-up with guests', impact: 'A single follow-up message increases repeat visit rate by 26%.' },
+        { emoji: '📱', label: 'Slow response to DMs and inquiries', impact: '53% of consumers won\'t wait more than one hour for a social media response before moving on.' },
+      ],
+      death_care: [
+        { emoji: '🌿', label: 'Pre-need leads not being nurtured', impact: 'Only 28% of pre-need inquiries are followed up with — leaving significant revenue untouched.' },
+        { emoji: '👥', label: 'Staff stretched thin during high-volume periods', impact: 'Demand spikes during peak periods can overwhelm small teams, risking service quality.' },
+        { emoji: '💻', label: 'No digital presence for grief support resources', impact: 'Funeral homes with online grief support content see 3× more engagement from at-need families.' },
+        { emoji: '🤝', label: 'Hard to handle sensitive inquiries at scale', impact: 'Automated intake routing ensures no sensitive inquiry falls through the cracks.' },
+        { emoji: '📬', label: 'No system for aftercare follow-up', impact: 'Aftercare outreach increases memorial merchandise and future pre-need conversations by 35%.' },
+      ],
+      other: [
+        { emoji: '🔁', label: 'Inconsistent lead follow-up', impact: 'Only 27% of leads are ever contacted after initial inquiry — and follow-up drops off sharply after the first attempt.' },
+        { emoji: '📵', label: 'Missing calls or messages', impact: 'Missed calls cost the average small business $1,200–$3,000 per month in lost opportunity.' },
+        { emoji: '👁️', label: 'Low online visibility', impact: '97% of consumers search online for local businesses before making a purchase decision.' },
+        { emoji: '⭐', label: 'Hard to get more reviews', impact: 'Businesses averaging 4+ stars earn 18% more revenue than those below 4 stars.' },
+        { emoji: '📅', label: 'No automated booking system', impact: 'Businesses with online booking capture 30% more appointments than phone-only operations.' },
+      ],
+    };
+
+    const starterFeatures = [
+      'Website hosted on NWS platform (we manage everything)',
+      'Your own AI business agent (you name them, we train them)',
+      'Industry-specific CRM pipeline setup',
+      'WhatsApp + email automation sequences',
+      'Missed call instant response',
+      'Appointment booking automation',
+      'Review routing (4–5 stars → Google; 1–3 → private feedback)',
+      'Lead reactivation campaigns',
+      'Monthly performance report',
+      'Priority support',
+    ];
+    const proFeatures = [
+      'Everything in Starter, PLUS:',
+      'Multi-department AI agents',
+      'Multi-location support',
+      'Advanced workflow customization',
+      'Dedicated account manager',
+      'Custom integrations',
+    ];
+
+    const priceMap = {
+      home_services_starter: '$349',
+      automotive_starter: '$399',
+      real_estate_starter: '$399',
+      dental_medical_starter: '$449',
+      veterinary_starter: '$449',
+      hospitality_starter: '$349',
+      death_care_starter: '$449',
+      other_starter: '$299',
+    };
+
+    // ═══════════════════════════════════════════════════════
+    // STEP NAVIGATION
+    // ═══════════════════════════════════════════════════════
+    let currentStep = 1;
+    const totalSteps = 6;
+    const stepLabels = ['Industry', 'Business Info', 'Website Details', 'Pain Points', 'Your Analysis', 'Claim It'];
+
+    function buildDots() {
+      const wrap = document.getElementById('stepDots');
+      wrap.innerHTML = '';
+      for (let i = 1; i <= totalSteps; i++) {
+        const d = document.createElement('div');
+        d.className = 'step-dot';
+        if (i < currentStep) d.classList.add('done');
+        else if (i === currentStep) d.classList.add('active');
+        wrap.appendChild(d);
+      }
+    }
+
+    function updateProgress(step) {
+      currentStep = step;
+      const pct = ((step - 1) / totalSteps) * 100 + (100 / totalSteps);
+      document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
+      document.getElementById('progressLabel').textContent = `Step ${step} — ${stepLabels[step - 1]}`;
+      document.getElementById('progressCount').textContent = `${step} / ${totalSteps}`;
+      buildDots();
+    }
+
+    function goToStep(n) {
+      const curr = document.getElementById(`step-${currentStep}`);
+      if (curr) {
+        curr.classList.add('slide-out');
+        setTimeout(() => {
+          curr.classList.remove('active', 'slide-out');
+          showStep(n);
+        }, 260);
+      } else {
+        showStep(n);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showStep(n) {
+      const el = document.getElementById(`step-${n}`);
+      if (!el) return;
+      el.classList.add('active');
+      updateProgress(n);
+      if (n === 4) buildPainPoints();
+      if (n === 5) buildReveal();
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // STEP 1 — INDUSTRY
+    // ═══════════════════════════════════════════════════════
+    function selectIndustry(card) {
+      document.querySelectorAll('#industryGrid .option-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      state.industry = card.dataset.value;
+      setTimeout(() => goToStep(2), 400);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // STEP 2 — BUSINESS BASICS
+    // ═══════════════════════════════════════════════════════
+    function selectStaff(card) {
+      document.querySelectorAll('#staffGrid .option-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      state.staffSize = card.dataset.value;
+    }
+
+    function advanceStep2() {
+      const err = document.getElementById('err-step2');
+      if (!state.businessName.trim() || !state.staffSize) {
+        err.classList.add('visible');
+        return;
+      }
+      err.classList.remove('visible');
+      computePlan();
+      goToStep(3);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // STEP 3 — WEBSITE QUESTIONS
+    // ═══════════════════════════════════════════════════════
+    function selectSingle(card, gridId, stateKey) {
+      document.querySelectorAll(`#${gridId} .option-card`).forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      state[stateKey] = card.dataset.value;
+    }
+
+    function togglePage(label, pageName) {
+      label.classList.toggle('checked');
+      const cb = label.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;
+      const box = label.querySelector('.check-box');
+      box.textContent = cb.checked ? '✓' : '';
+      if (cb.checked) {
+        if (!state.pagesNeeded.includes(pageName)) state.pagesNeeded.push(pageName);
+      } else {
+        state.pagesNeeded = state.pagesNeeded.filter(p => p !== pageName);
+      }
+    }
+
+    function advanceStep3() {
+      const err = document.getElementById('err-step3');
+      if (!state.hasWebsite || !state.primaryGoal || !state.brandVibe) {
+        err.classList.add('visible');
+        return;
+      }
+      err.classList.remove('visible');
+      goToStep(4);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // STEP 4 — PAIN POINTS
+    // ═══════════════════════════════════════════════════════
+    function buildPainPoints() {
+      const grid = document.getElementById('painPointsGrid');
+      const industry = state.industry || 'other';
+      const points = painPointMap[industry] || painPointMap.other;
+      grid.innerHTML = '';
+      state.painPoints = [];
+      points.forEach((p, i) => {
+        const label = document.createElement('label');
+        label.className = 'checkbox-item';
+        label.dataset.pain = i;
+        label.innerHTML = `
+          <input type="checkbox" />
+          <div class="check-box"></div>
+          <span class="check-label">${p.emoji} ${p.label}</span>
+        `;
+        label.addEventListener('click', () => {
+          label.classList.toggle('checked');
+          const cb = label.querySelector('input');
+          cb.checked = !cb.checked;
+          const box = label.querySelector('.check-box');
+          box.textContent = cb.checked ? '✓' : '';
+          if (cb.checked) {
+            if (!state.painPoints.find(x => x.label === p.label)) state.painPoints.push(p);
+          } else {
+            state.painPoints = state.painPoints.filter(x => x.label !== p.label);
+          }
+        });
+        grid.appendChild(label);
+      });
+    }
+
+    function advanceStep4() {
+      const err = document.getElementById('err-step4');
+      if (state.painPoints.length === 0) {
+        err.classList.add('visible');
+        return;
+      }
+      err.classList.remove('visible');
+      goToStep(5);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // PLAN COMPUTATION
+    // ═══════════════════════════════════════════════════════
+    function computePlan() {
+      const { staffSize, industry } = state;
+      if (staffSize === 'large') {
+        state.planTier = 'enterprise';
+        state.recommendedPrice = 'Contact Sales';
+      } else if (staffSize === 'medium') {
+        state.planTier = 'pro';
+        state.recommendedPrice = '$799';
+      } else {
+        state.planTier = 'starter';
+        const key = `${industry}_starter`;
+        state.recommendedPrice = priceMap[key] || '$299';
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // STEP 5 — REVEAL
+    // ═══════════════════════════════════════════════════════
+    function buildReveal() {
+      // Re-compute plan in case we navigated back
+      computePlan();
+
+      // PART A — headline
+      const name = state.businessName.trim() || 'your business';
+      document.getElementById('revealHeadline').textContent = `Here's what our analysis found for ${name}`;
+
+      // Build pain cards
+      const container = document.getElementById('painCardsContainer');
+      container.innerHTML = '';
+      const displayPains = state.painPoints.slice(0, 3);
+      displayPains.forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'pain-card';
+        card.style.animationDelay = `${i * 0.15}s`;
+        card.innerHTML = `
+          <div class="pain-card-top">
+            <div class="pain-card-title">${p.emoji} ${p.label}</div>
+            <span class="badge-leak">🔴 Revenue Leak Detected</span>
+          </div>
+          <p class="pain-card-body">${p.impact}</p>
+        `;
+        container.appendChild(card);
+      });
+
+      // PART A visible immediately; PART B after 1.5s
+      const partB = document.getElementById('revealPartB');
+      partB.classList.add('hidden');
+
+      setTimeout(() => {
+        partB.classList.remove('hidden');
+        partB.style.animation = 'fadeUp 0.6s cubic-bezier(.4,0,.2,1) both';
+        buildOfferColumns();
+      }, 1500);
+    }
+
+    function buildOfferColumns() {
+      const { planTier, recommendedPrice, industry } = state;
+      const industryLabel = industryLabels[industry] || 'Your Industry';
+
+      // Update industry label in free column
+      document.getElementById('offerIndustryLabel').textContent = industryLabel;
+
+      const standardWrap = document.getElementById('offerStandardWrap');
+      const enterpriseWrap = document.getElementById('offerEnterpriseWrap');
+
+      if (planTier === 'enterprise') {
+        standardWrap.classList.add('hidden');
+        enterpriseWrap.classList.remove('hidden');
+        return;
+      }
+
+      standardWrap.classList.remove('hidden');
+      enterpriseWrap.classList.add('hidden');
+
+      // Plan column
+      const priceDisplay = document.getElementById('planPriceDisplay');
+      const planTitle = document.getElementById('planTitle');
+      const featuresList = document.getElementById('planFeaturesList');
+      const planNote = document.getElementById('planNote');
+
+      if (planTier === 'pro') {
+        planTitle.textContent = 'NWS Business Pro';
+        priceDisplay.textContent = '$799';
+        const features = proFeatures;
+        featuresList.innerHTML = features.map(f =>
+          `<li><span class="li-check gold">✅</span> ${f}</li>`
+        ).join('');
+        planNote.textContent = 'Includes everything in Starter. Billed monthly. Cancel anytime.';
+      } else {
+        // starter
+        planTitle.textContent = 'NWS Starter Plan';
+        priceDisplay.textContent = recommendedPrice;
+        featuresList.innerHTML = starterFeatures.map(f =>
+          `<li><span class="li-check gold">✅</span> ${f}</li>`
+        ).join('');
+        planNote.textContent = 'Billed monthly. Cancel anytime. No setup fees.';
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // STEP 6 — CONTACT FORM + SUBMIT
+    // ═══════════════════════════════════════════════════════
+    function submitForm() {
+      const err = document.getElementById('err-step6');
+      const { firstName, lastName, email, phone } = state;
+      if (!firstName.trim() || !lastName.trim() || !email.trim() || !phone.trim()) {
+        err.classList.add('visible');
+        return;
+      }
+      // Basic email check
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        err.textContent = 'Please enter a valid email address.';
+        err.classList.add('visible');
+        return;
+      }
+      err.classList.remove('visible');
+      showSuccess();
+    }
+
+    function showSuccess() {
+      // Hide all steps and progress
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById('progressWrap').classList.add('hidden');
+
+      // Build mailto
+      const industry = industryLabels[state.industry] || 'General';
+      const tier = state.planTier === 'starter' ? 'Starter' : state.planTier === 'pro' ? 'Business Pro' : 'Enterprise';
+      const subject = encodeURIComponent(`Smart Start: ${state.businessName} — ${industry} — ${tier}`);
+      const body = encodeURIComponent(
+        `Business: ${state.businessName}\nLocation: ${state.location}\nIndustry: ${industry}\nPlan: ${tier}\nEmail: ${state.email}\nPhone: ${state.phone}\nNotes: ${state.notes}`
+      );
+      document.getElementById('mailtoLink').href = `mailto:info@noveltywebsolutions.com?subject=${subject}&body=${body}`;
+
+      // Populate success reminder
+      const { planTier, recommendedPrice } = state;
+      const priceEl = document.getElementById('successPrice');
+      const tierEl = document.getElementById('successTier');
+      const featList = document.getElementById('successFeatures');
+
+      if (planTier === 'enterprise') {
+        priceEl.innerHTML = 'Custom';
+        tierEl.textContent = 'NWS Enterprise';
+        featList.innerHTML = '<li>Custom pricing based on your needs</li><li>Dedicated team and SLA</li>';
+      } else if (planTier === 'pro') {
+        priceEl.innerHTML = `$799<span style="font-size:1rem;color:var(--text-muted)">/mo</span>`;
+        tierEl.textContent = 'NWS Business Pro';
+        featList.innerHTML = proFeatures.slice(0, 4).map(f => `<li>${f}</li>`).join('');
+      } else {
+        priceEl.innerHTML = `${recommendedPrice}<span style="font-size:1rem;color:var(--text-muted)">/mo</span>`;
+        tierEl.textContent = 'NWS Starter Plan';
+        featList.innerHTML = starterFeatures.slice(0, 5).map(f => `<li>${f}</li>`).join('');
+      }
+
+      document.getElementById('successScreen').classList.add('visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════════
+    buildDots();
+  </script>
+</body>
+</html>
