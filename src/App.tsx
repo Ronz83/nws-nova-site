@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { FeatureProvider } from "./contexts/FeatureContext";
 
@@ -41,6 +41,11 @@ const ResultsPage = lazy(() => import("./pages/ResultsPage"));
 const BusinessOS  = lazy(() => import("./pages/BusinessOS"));
 const KBTestPage  = lazy(() => import("./pages/KBTestPage"));
 
+// Giveaway Funnel Pages
+const SmartStart     = lazy(() => import("./pages/SmartStart"));
+const BusinessAudit  = lazy(() => import("./pages/BusinessAudit"));
+const AIReceptionist = lazy(() => import("./pages/AIReceptionist"));
+
 // Minimal page loader shown during lazy-load transitions
 function PageLoader() {
   return (
@@ -51,12 +56,6 @@ function PageLoader() {
       </div>
     </div>
   );
-}
-
-// Redirects for standalone static HTML pages in the public directory
-function StaticPageRedirect({ url }: { url: string }) {
-  window.location.href = url;
-  return <PageLoader />;
 }
 
 // Layout for the main public website (includes Nav, Footer, and Samantha)
@@ -77,61 +76,109 @@ function PublicLayout() {
 }
 
 export default function App() {
+  const hostname = window.location.hostname;
+  const isBusinessOS = hostname === 'businessesos.com' || hostname === 'www.businessesos.com';
+  const isOsDomain = hostname === 'os.noveltywebsolutions.com';
+
+  let domainRoutes;
+
+  if (isOsDomain) {
+    domainRoutes = (
+      <Routes>
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<DashboardOverview />} />
+          <Route path="ai-studio" element={<DashboardAIStudio />} />
+          <Route path="operations" element={<DashboardOperations />} />
+          <Route path="growth" element={<DashboardGrowth />} />
+          <Route path="automations" element={<DashboardAutomations />} />
+          <Route path="training" element={<DashboardTraining />} />
+          <Route path="settings" element={<DashboardSettings />} />
+          <Route path="snapshots" element={<DashboardSnapshots />} />
+          <Route path="website" element={<DashboardWebsite />} />
+          <Route path="website-requests" element={<DashboardWebsiteRequests />} />
+          <Route path="niche-blueprints" element={<DashboardNicheBlueprints />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    );
+  } else if (isBusinessOS) {
+    domainRoutes = (
+      <Routes>
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Suspense fallback={<PageLoader />}><BusinessOS /></Suspense>} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/smart-start" element={<Suspense fallback={<PageLoader />}><SmartStart /></Suspense>} />
+          <Route path="/ai-receptionist" element={<Suspense fallback={<PageLoader />}><AIReceptionist /></Suspense>} />
+          <Route path="/business-audit" element={<Suspense fallback={<PageLoader />}><BusinessAudit /></Suspense>} />
+          <Route path="/demo/:slug" element={<Demo />} />
+          <Route path="/results/:id" element={<ResultsPage />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    );
+  } else {
+    // Default (noveltywebsolutions.com and localhost)
+    domainRoutes = (
+      <Routes>
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Index />} />
+          
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<Blog />} />
+          
+          <Route path="/services" element={<Services />} />
+          <Route path="/services/samantha-ai" element={<SamanthaAI />} />
+          <Route path="/services/business-os" element={<Suspense fallback={<PageLoader />}><BusinessOS /></Suspense>} />
+          
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/gdpr" element={<GDPR />} />
+          
+          <Route path="/demo/:slug" element={<Demo />} />
+          <Route path="/results/:id" element={<ResultsPage />} />
+        </Route>
+
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<DashboardOverview />} />
+          <Route path="ai-studio" element={<DashboardAIStudio />} />
+          <Route path="operations" element={<DashboardOperations />} />
+          <Route path="growth" element={<DashboardGrowth />} />
+          <Route path="automations" element={<DashboardAutomations />} />
+          <Route path="training" element={<DashboardTraining />} />
+          <Route path="settings" element={<DashboardSettings />} />
+          <Route path="snapshots" element={<DashboardSnapshots />} />
+          <Route path="website" element={<DashboardWebsite />} />
+          <Route path="website-requests" element={<DashboardWebsiteRequests />} />
+          <Route path="niche-blueprints" element={<DashboardNicheBlueprints />} />
+        </Route>
+
+        {/* Giveaway Funnel Pages */}
+        <Route path="/smart-start" element={<Suspense fallback={<PageLoader />}><SmartStart /></Suspense>} />
+        <Route path="/ai-receptionist" element={<Suspense fallback={<PageLoader />}><AIReceptionist /></Suspense>} />
+        <Route path="/business-audit" element={<Suspense fallback={<PageLoader />}><BusinessAudit /></Suspense>} />
+
+        <Route path="/kb-test" element={
+          <div className="p-8">
+            <Suspense fallback={<PageLoader />}>
+              <KBTestPage />
+            </Suspense>
+          </div>
+        } />
+      </Routes>
+    );
+  }
+
   return (
     <AuthProvider>
       <FeatureProvider>
         <SamanthaProvider>
           <Router>
-            <Routes>
-              <Route element={<PublicLayout />}>
-                <Route path="/" element={<Index />} />
-                
-                <Route path="/pricing" element={<PricingPage />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<Blog />} />
-                
-                <Route path="/services" element={<Services />} />
-                <Route path="/services/samantha-ai" element={<SamanthaAI />} />
-                <Route path="/services/business-os" element={<BusinessOS />} />
-                
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/gdpr" element={<GDPR />} />
-                
-                <Route path="/demo/:slug" element={<Demo />} />
-                <Route path="/results/:id" element={<ResultsPage />} />
-              </Route>
-
-              <Route path="/dashboard" element={<DashboardLayout />}>
-                <Route index element={<DashboardOverview />} />
-                <Route path="ai-studio" element={<DashboardAIStudio />} />
-                <Route path="operations" element={<DashboardOperations />} />
-                <Route path="growth" element={<DashboardGrowth />} />
-                <Route path="automations" element={<DashboardAutomations />} />
-                <Route path="training" element={<DashboardTraining />} />
-                <Route path="settings" element={<DashboardSettings />} />
-                <Route path="snapshots" element={<DashboardSnapshots />} />
-                <Route path="website" element={<DashboardWebsite />} />
-                <Route path="website-requests" element={<DashboardWebsiteRequests />} />
-                <Route path="niche-blueprints" element={<DashboardNicheBlueprints />} />
-              </Route>
-
-              {/* Static HTML Pages Redirects */}
-              <Route path="/smart-start" element={<StaticPageRedirect url="/smart-start/index.html" />} />
-              <Route path="/ai-receptionist" element={<StaticPageRedirect url="/ai-receptionist/index.html" />} />
-              <Route path="/business-audit" element={<StaticPageRedirect url="/business-audit/index.html" />} />
-
-              <Route path="/kb-test" element={
-                <div className="p-8">
-                  <Suspense fallback={<PageLoader />}>
-                    <KBTestPage />
-                  </Suspense>
-                </div>
-              } />
-            </Routes>
+            {domainRoutes}
           </Router>
         </SamanthaProvider>
       </FeatureProvider>
