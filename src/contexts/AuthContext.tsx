@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { supabase } from '../lib/supabase';
 
-export type UserRole = 'agency_admin' | 'location_admin' | 'location_user';
+export type UserRole = 'agency_admin' | 'location_admin' | 'location_user' | 'super_admin' | 'portal_admin' | 'portal_user';
 
 export interface Permissions {
   operations: boolean;
@@ -31,6 +31,8 @@ interface AuthContextType {
   loginAsEmployee: () => Promise<void>;
   logout: () => Promise<void>;
   updateUserPermissions: (newPermissions: Permissions) => Promise<void>;
+  isStaff: () => boolean;
+  hasPortalAccess: (minRole: 'super_admin' | 'admin' | 'user') => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -195,8 +197,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const isStaff = () => {
+    return user?.role === 'super_admin' || user?.role === 'portal_admin' || user?.role === 'portal_user';
+  };
+
+  const hasPortalAccess = (minRole: 'super_admin' | 'admin' | 'user') => {
+    if (!isStaff()) return false;
+    if (minRole === 'user') return true;
+    if (minRole === 'admin') return user?.role === 'super_admin' || user?.role === 'portal_admin';
+    if (minRole === 'super_admin') return user?.role === 'super_admin';
+    return false;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, loginAsAdmin, loginAsEmployee, logout, updateUserPermissions }}>
+    <AuthContext.Provider value={{ user, isLoading, loginAsAdmin, loginAsEmployee, logout, updateUserPermissions, isStaff, hasPortalAccess }}>
       {children}
     </AuthContext.Provider>
   );

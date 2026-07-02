@@ -1,4 +1,4 @@
-import { Building2, ArrowUpCircle, HelpCircle, User, LogOut, LayoutDashboard, Settings2, BrainCircuit, TrendingUp, Settings, Zap, GraduationCap, Package, Globe, ClipboardList, Lightbulb } from 'lucide-react';
+import { Building2, ArrowUpCircle, HelpCircle, User, LogOut, LayoutDashboard, Settings2, BrainCircuit, TrendingUp, Settings, Zap, GraduationCap, Globe } from 'lucide-react';
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useFeatures } from "../../contexts/FeatureContext";
@@ -16,9 +16,7 @@ export function DashboardSidebar() {
     { name: "Growth", path: "/dashboard/growth", icon: TrendingUp, show: flags.enable_growth && user?.permissions.growth },
     { name: "Training", path: "/dashboard/training", icon: GraduationCap, show: flags.enable_training },
     { name: "Your Website", path: "/dashboard/website", icon: Globe, show: true },
-    { name: "Fulfillment", path: "/dashboard/website-requests", icon: ClipboardList, show: user?.role === 'agency_admin' },
-    { name: "Snapshots", path: "/dashboard/snapshots", icon: Package, show: user?.role === 'agency_admin' },
-    { name: "Niche Blueprints", path: "/dashboard/niche-blueprints", icon: Lightbulb, show: user?.role === 'agency_admin' },
+
     { name: "Settings", path: "/dashboard/settings", icon: Settings, show: user?.permissions.settings },
   ];
 

@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import { SamanthaProvider } from "./context/SamanthaContext";
 import { GlobalSamantha } from "./components/samantha/GlobalSamantha";
 
-// Dashboard Components
+// Dashboard Components (Client-Facing)
 import { DashboardLayout } from "./components/dashboard/DashboardLayout";
 import { DashboardOverview } from "./components/dashboard/DashboardOverview";
 import { DashboardAIStudio } from "./components/dashboard/DashboardAIStudio";
@@ -17,8 +17,11 @@ import { DashboardGrowth } from "./components/dashboard/DashboardGrowth";
 import { DashboardSettings } from "./components/dashboard/DashboardSettings";
 import { DashboardAutomations } from "./components/dashboard/DashboardAutomations";
 import { DashboardTraining } from "./components/dashboard/DashboardTraining";
-import { DashboardSnapshots } from "./components/dashboard/DashboardSnapshots";
 import { DashboardWebsite } from "./components/dashboard/DashboardWebsite";
+
+// Portal Components (Internal Admin)
+import { PortalLayout } from "./components/portal/PortalLayout";
+import { DashboardSnapshots } from "./components/dashboard/DashboardSnapshots";
 import { DashboardWebsiteRequests } from "./components/dashboard/DashboardWebsiteRequests";
 import { DashboardNicheBlueprints } from "./components/dashboard/DashboardNicheBlueprints";
 
@@ -39,12 +42,17 @@ const Terms       = lazy(() => import("./pages/Terms"));
 const GDPR        = lazy(() => import("./pages/GDPR"));
 const ResultsPage = lazy(() => import("./pages/ResultsPage"));
 const BusinessOS  = lazy(() => import("./pages/BusinessOS"));
-const KBTestPage  = lazy(() => import("./pages/KBTestPage"));
 
 // Giveaway Funnel Pages
 const SmartStart     = lazy(() => import("./pages/SmartStart"));
 const BusinessAudit  = lazy(() => import("./pages/BusinessAudit"));
 const AIReceptionist = lazy(() => import("./pages/AIReceptionist"));
+
+// Portal Lazy Pages
+const PortalOverview   = lazy(() => import("./pages/portal/PortalOverview"));
+const PortalUsers      = lazy(() => import("./pages/portal/PortalUsers"));
+const PortalSystem     = lazy(() => import("./pages/portal/PortalSystem"));
+const PortalGHLControl = lazy(() => import("./pages/portal/PortalGHLControl"));
 
 // Minimal page loader shown during lazy-load transitions
 function PageLoader() {
@@ -79,10 +87,27 @@ export default function App() {
   const hostname = window.location.hostname;
   const isBusinessOS = hostname === 'businessesos.com' || hostname === 'www.businessesos.com';
   const isOsDomain = hostname === 'os.noveltywebsolutions.com';
+  const isPortalDomain = hostname === 'portal.noveltywebsolutions.com';
 
   let domainRoutes;
 
-  if (isOsDomain) {
+  if (isPortalDomain) {
+    domainRoutes = (
+      <Routes>
+        <Route path="/" element={<Navigate to="/portal" replace />} />
+        <Route path="/portal" element={<PortalLayout />}>
+          <Route index element={<Suspense fallback={<PageLoader />}><PortalOverview /></Suspense>} />
+          <Route path="snapshots" element={<DashboardSnapshots />} />
+          <Route path="niche-blueprints" element={<DashboardNicheBlueprints />} />
+          <Route path="fulfillment" element={<DashboardWebsiteRequests />} />
+          <Route path="ghl-control" element={<Suspense fallback={<PageLoader />}><PortalGHLControl /></Suspense>} />
+          <Route path="users" element={<Suspense fallback={<PageLoader />}><PortalUsers /></Suspense>} />
+          <Route path="system" element={<Suspense fallback={<PageLoader />}><PortalSystem /></Suspense>} />
+        </Route>
+        <Route path="*" element={<Navigate to="/portal" replace />} />
+      </Routes>
+    );
+  } else if (isOsDomain) {
     domainRoutes = (
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -94,10 +119,7 @@ export default function App() {
           <Route path="automations" element={<DashboardAutomations />} />
           <Route path="training" element={<DashboardTraining />} />
           <Route path="settings" element={<DashboardSettings />} />
-          <Route path="snapshots" element={<DashboardSnapshots />} />
           <Route path="website" element={<DashboardWebsite />} />
-          <Route path="website-requests" element={<DashboardWebsiteRequests />} />
-          <Route path="niche-blueprints" element={<DashboardNicheBlueprints />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
@@ -143,32 +165,7 @@ export default function App() {
           <Route path="/results/:id" element={<ResultsPage />} />
         </Route>
 
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<DashboardOverview />} />
-          <Route path="ai-studio" element={<DashboardAIStudio />} />
-          <Route path="operations" element={<DashboardOperations />} />
-          <Route path="growth" element={<DashboardGrowth />} />
-          <Route path="automations" element={<DashboardAutomations />} />
-          <Route path="training" element={<DashboardTraining />} />
-          <Route path="settings" element={<DashboardSettings />} />
-          <Route path="snapshots" element={<DashboardSnapshots />} />
-          <Route path="website" element={<DashboardWebsite />} />
-          <Route path="website-requests" element={<DashboardWebsiteRequests />} />
-          <Route path="niche-blueprints" element={<DashboardNicheBlueprints />} />
-        </Route>
-
-        {/* Giveaway Funnel Pages */}
-        <Route path="/smart-start" element={<Suspense fallback={<PageLoader />}><SmartStart /></Suspense>} />
-        <Route path="/ai-receptionist" element={<Suspense fallback={<PageLoader />}><AIReceptionist /></Suspense>} />
-        <Route path="/business-audit" element={<Suspense fallback={<PageLoader />}><BusinessAudit /></Suspense>} />
-
-        <Route path="/kb-test" element={
-          <div className="p-8">
-            <Suspense fallback={<PageLoader />}>
-              <KBTestPage />
-            </Suspense>
-          </div>
-        } />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     );
   }
