@@ -86,11 +86,11 @@ function ChoiceCard({ selected, onClick, children }: { selected: boolean; onClic
       onClick={onClick}
       className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-all cursor-pointer flex items-center gap-3 ${
         selected
-          ? 'border-sky-500 bg-sky-50 text-sky-900'
-          : 'border-slate-100 hover:border-slate-300 bg-white text-slate-700'
+          ? 'border-accent-primary bg-accent-glow text-accent-primary shadow-[0_0_12px_rgba(255,107,77,0.15)]'
+          : 'border-border-base hover:border-accent-primary/50 bg-card-bg text-text-base'
       }`}
     >
-      {selected && <CheckCircle size={15} className="text-sky-500 shrink-0" />}
+      {selected && <CheckCircle size={15} className="text-accent-primary shrink-0" />}
       {children}
     </button>
   );
@@ -103,8 +103,8 @@ function TextField({ label, value, onChange, placeholder, type = 'text', require
 }) {
   return (
     <div>
-      <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-        {label}{required && <span className="text-sky-500 ml-0.5">*</span>}
+      <label className="block text-sm font-bold text-text-base uppercase tracking-wider mb-1.5">
+        {label}{required && <span className="text-accent-primary ml-0.5">*</span>}
       </label>
       <input
         type={type}
@@ -112,7 +112,7 @@ function TextField({ label, value, onChange, placeholder, type = 'text', require
         required={required}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full border-2 border-slate-100 rounded-xl px-4 py-3 text-[15px] text-slate-800 placeholder:text-slate-300 focus:outline-none focus:border-sky-400 transition-colors"
+        className="w-full border-2 border-border-base rounded-xl px-4 py-3 text-[15px] text-text-base placeholder:text-text-muted/50 focus:outline-none focus:border-accent-primary transition-colors bg-card-bg"
       />
     </div>
   );
@@ -161,16 +161,16 @@ export default function SurveyModal({ domain, onComplete }: Props) {
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-2xl w-full max-w-[460px] shadow-2xl overflow-hidden"
+        className="bg-card-bg rounded-2xl w-full max-w-[460px] shadow-2xl overflow-hidden border border-border-base"
       >
         {/* Header */}
         <div className="px-6 py-3.5 flex items-center gap-3" style={{ background: '#0c1a2e' }}>
-          <div className="w-7 h-7 rounded-full bg-sky-500 flex items-center justify-center shrink-0">
+          <div className="w-7 h-7 rounded-full bg-accent-primary flex items-center justify-center shrink-0">
             <span className="text-white text-sm font-black">NWS</span>
           </div>
           <div>
             <p className="text-white text-[13px] font-black leading-none">Intelligence Engine</p>
-            <p className="text-sky-700 text-sm font-mono mt-0.5 truncate max-w-[240px]">{domain}</p>
+            <p className="text-accent-primary text-sm font-mono mt-0.5 truncate max-w-[240px]">{domain}</p>
           </div>
         </div>
 
@@ -194,8 +194,8 @@ export default function SurveyModal({ domain, onComplete }: Props) {
               {step === 1 && (
                 <div className="space-y-5">
                   <div>
-                    <h2 className="text-xl font-black text-slate-900 leading-snug">First, what's your name?</h2>
-                    <p className="text-sm text-slate-600 mt-1">We'll personalise your report for you.</p>
+                    <h2 className="text-xl font-black text-text-base leading-snug">First, what's your name?</h2>
+                    <p className="text-sm text-text-muted mt-1">We'll personalise your report for you.</p>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <TextField label="First name" value={data.firstName} onChange={v => set('firstName', v)} placeholder="Jane" required />
@@ -208,8 +208,8 @@ export default function SurveyModal({ domain, onComplete }: Props) {
               {step === 2 && (
                 <div className="space-y-4">
                   <div>
-                    <h2 className="text-xl font-black text-slate-900 leading-snug">What's your role?</h2>
-                    <p className="text-sm text-slate-600 mt-1">Helps us tailor your recommendations.</p>
+                    <h2 className="text-xl font-black text-text-base leading-snug">What's your role?</h2>
+                    <p className="text-sm text-text-muted mt-1">Helps us tailor your recommendations.</p>
                   </div>
                   <div className="space-y-2">
                     {ROLES.map(r => (
@@ -226,8 +226,8 @@ export default function SurveyModal({ domain, onComplete }: Props) {
               {step === 3 && (
                 <div className="space-y-4">
                   <div>
-                    <h2 className="text-xl font-black text-slate-900 leading-snug">What industry are you in?</h2>
-                    <p className="text-sm text-slate-600 mt-1">We'll benchmark you against similar businesses.</p>
+                    <h2 className="text-xl font-black text-text-base leading-snug">What industry are you in?</h2>
+                    <p className="text-sm text-text-muted mt-1">We'll benchmark you against similar businesses.</p>
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     {INDUSTRIES.map(ind => (
@@ -237,12 +237,12 @@ export default function SurveyModal({ domain, onComplete }: Props) {
                         onClick={() => set('industry', ind.value)}
                         className={`flex flex-col items-center gap-1 py-3 px-2 rounded-xl border-2 text-center cursor-pointer transition-all ${
                           data.industry === ind.value
-                            ? 'border-sky-500 bg-sky-50'
-                            : 'border-slate-100 hover:border-slate-200 bg-white'
+                            ? 'border-accent-primary bg-accent-glow'
+                            : 'border-border-base hover:border-accent-primary/50 bg-card-bg'
                         }`}
                       >
                         <span className="text-2xl">{ind.icon}</span>
-                        <span className={`text-sm font-bold leading-tight ${data.industry === ind.value ? 'text-sky-700' : 'text-slate-700'}`}>
+                        <span className={`text-sm font-bold leading-tight ${data.industry === ind.value ? 'text-accent-primary' : 'text-text-base'}`}>
                           {ind.value.split(' /')[0]}
                         </span>
                       </button>
@@ -255,15 +255,15 @@ export default function SurveyModal({ domain, onComplete }: Props) {
               {step === 4 && (
                 <div className="space-y-4">
                   <div>
-                    <h2 className="text-xl font-black text-slate-900 leading-snug">What's your #1 challenge right now?</h2>
-                    <p className="text-sm text-slate-600 mt-1">We'll focus your report on this first.</p>
+                    <h2 className="text-xl font-black text-text-base leading-snug">What's your #1 challenge right now?</h2>
+                    <p className="text-sm text-text-muted mt-1">We'll focus your report on this first.</p>
                   </div>
                   <div className="space-y-2">
                     {CHALLENGES.map(c => (
                       <ChoiceCard key={c.value} selected={data.challenge === c.value} onClick={() => set('challenge', c.value)}>
                         <div className="flex-1 min-w-0">
-                          <p className="text-[13px] font-bold text-slate-800 leading-snug">{c.label}</p>
-                          <p className="text-sm text-slate-600 mt-0.5 leading-snug">{c.desc}</p>
+                          <p className="text-[13px] font-bold text-text-base leading-snug">{c.label}</p>
+                          <p className="text-sm text-text-muted mt-0.5 leading-snug">{c.desc}</p>
                         </div>
                       </ChoiceCard>
                     ))}
@@ -275,8 +275,8 @@ export default function SurveyModal({ domain, onComplete }: Props) {
               {step === 5 && (
                 <div className="space-y-5">
                   <div>
-                    <h2 className="text-xl font-black text-slate-900 leading-snug">How big is your team?</h2>
-                    <p className="text-sm text-slate-600 mt-1">We scale the solution to fit your operation.</p>
+                    <h2 className="text-xl font-black text-text-base leading-snug">How big is your team?</h2>
+                    <p className="text-sm text-text-muted mt-1">We scale the solution to fit your operation.</p>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     {TEAM_SIZES.map(t => (
@@ -286,17 +286,17 @@ export default function SurveyModal({ domain, onComplete }: Props) {
                         onClick={() => set('teamSize', t.value)}
                         className={`py-5 px-4 rounded-xl border-2 font-black text-[15px] cursor-pointer transition-all ${
                           data.teamSize === t.value
-                            ? 'border-sky-500 bg-sky-50 text-sky-700'
-                            : 'border-slate-100 hover:border-slate-300 text-slate-700'
+                            ? 'border-accent-primary bg-accent-glow text-accent-primary'
+                            : 'border-border-base hover:border-accent-primary/50 bg-card-bg text-text-base'
                         }`}
                       >
                         {t.label}
                       </button>
                     ))}
                   </div>
-                  <div className="bg-slate-50 rounded-xl p-3 flex items-start gap-2.5">
-                    <span className="text-sky-500 text-lg shrink-0">⚡</span>
-                    <p className="text-[12px] text-slate-700 leading-relaxed">
+                  <div className="bg-bg-tint border border-border-base rounded-xl p-3 flex items-start gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
+                    <p className="text-[12px] text-text-muted leading-relaxed">
                       Your custom AI agent is built to scale with your team — whether you're solo or 50+, it handles the volume.
                     </p>
                   </div>
@@ -307,7 +307,7 @@ export default function SurveyModal({ domain, onComplete }: Props) {
               {step === 6 && (
                 <form id="survey-final" onSubmit={handleFinalSubmit} className="space-y-5">
                   <div>
-                    <h2 className="text-xl font-black text-slate-900 leading-snug">Where should we send your report?</h2>
+                    <h2 className="text-xl font-black text-text-base leading-snug">Where should we send your report?</h2>
                     <p className="text-sm text-slate-600 mt-1">Your full intelligence report, AI script, and quick win checklist — all free.</p>
                   </div>
                   <div className="space-y-3">
@@ -330,7 +330,7 @@ export default function SurveyModal({ domain, onComplete }: Props) {
             <button
               type="button"
               onClick={back}
-              className="flex items-center gap-1.5 px-4 py-3.5 rounded-xl border-2 border-slate-100 text-slate-700 text-[13px] font-bold cursor-pointer hover:border-slate-300 transition-colors bg-white"
+              className="flex items-center gap-1.5 px-4 py-3.5 rounded-xl border-2 border-border-base text-text-muted text-[13px] font-bold cursor-pointer hover:border-accent-primary/50 transition-colors bg-card-bg"
             >
               <ArrowLeft size={14} /> Back
             </button>

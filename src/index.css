@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -21,6 +21,40 @@
 
   --animate-laser: laser 4s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   DARK FUNNEL MARKETING THEME (Overrides)
+───────────────────────────────────────── */
+.theme-dark-funnel {
+  /* Core Variables */
+  --bg-base: #0A0F1C;
+  --bg-tint: #111928;
+  --text-base: #ffffff;
+  --text-muted: #94a3b8;
+  --border-base: #1e293b;
+  --accent-primary: #FF6B4D;
+  --accent-deep: #E65A3F;
+  --accent-amber: #FF8B73;
+  --accent-glow: rgba(255, 107, 77, 0.15);
+  --accent-warm: rgba(255, 107, 77, 0.08);
+  --card-bg: #111928;
+  --card-hover: #1e293b;
+  --glass-bg: rgba(17, 25, 40, 0.7);
+
+  /* Tailwind v4 @theme color overrides */
+  --color-bg-base: var(--bg-base);
+  --color-bg-tint: var(--bg-tint);
+  --color-text-base: var(--text-base);
+  --color-text-muted: var(--text-muted);
+  --color-border-base: var(--border-base);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-amber: var(--accent-amber);
+  --color-card-bg: var(--card-bg);
+  --color-card-hover: var(--card-hover);
+  
+  color-scheme: dark;
 }
 
 /* ─────────────────────────────────────────
