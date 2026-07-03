@@ -16,6 +16,9 @@ import {
   Calendar,
 } from "lucide-react";
 import BookingModal from "../components/BookingModal";
+import { PRICING_TIERS, FREE_TIER } from "../config/pricing";
+import { redirectToCheckout } from "../lib/stripe";
+import { useNavigate } from "react-router-dom";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    DESIGN TOKENS — Dark Tech Variant
@@ -197,7 +200,32 @@ function DashboardPreview() {
 // ── Page ────────────────────────────────────────────────────────────────────
 export default function BusinessOS() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isYearly, setIsYearly] = useState(false);
+  const [loading, setLoading] = useState<string | null>(null);
+  const navigate = useNavigate();
+
   const onBookDemo = () => setIsBookingOpen(true);
+
+  const handleCheckout = async (tierId: string) => {
+    if (tierId === 'free') {
+      navigate('/business-os/onboarding');
+      return;
+    }
+    
+    setLoading(tierId);
+    try {
+      const tier = PRICING_TIERS.find(t => t.id === tierId);
+      if (!tier) throw new Error("Tier not found");
+      
+      const priceId = isYearly ? tier.stripeYearly : tier.stripeMonthly;
+      await redirectToCheckout(priceId, undefined, undefined, tierId);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to initiate checkout. Please try again or contact support.");
+    } finally {
+      setLoading(null);
+    }
+  };
 
   return (
     <>
@@ -665,152 +693,139 @@ export default function BusinessOS() {
               <p className="mt-4 text-lg text-white/70 font-medium max-w-2xl mx-auto">
                 Start with what you need. Scale as you grow. All plans include a 14-day free trial.
               </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-
-              {/* Starter */}
-              <div
-                className="rounded-[24px] p-6 lg:p-8 flex flex-col gap-5"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
-              >
-                <div>
-                  <span className="text-sm uppercase tracking-[0.2em] text-white/50 font-bold">Starter</span>
-                  <div className="mt-3 flex items-end gap-1">
-                    <span className="text-5xl font-black text-white">$97</span>
-                    <span className="text-base text-white/50 font-medium mb-1">/month</span>
-                  </div>
-                  <p className="mt-2 text-sm text-white/60 font-medium">
-                    For solo operators and small teams getting started with AI.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-3">
-                  {[
-                    "Smart CRM (up to 1,000 contacts)",
-                    "Chat AI Employee",
-                    "Basic Automation Workflows",
-                    "Email + SMS Campaigns",
-                    "NWS Caribbean Support",
-                  ].map((f) => (
-                    <div key={f} className="flex items-center gap-3 text-sm text-white/70 font-medium">
-                      <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
-                        style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}
-                      >
-                        <CheckCircle size={11} className="text-white/50" />
-                      </div>
-                      {f}
-                    </div>
-                  ))}
-                </div>
-                <button
-                  onClick={onBookDemo}
-                  className="mt-2 text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-4 rounded-xl transition-all duration-200 cursor-pointer"
-                  style={{ border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.06)" }}
-                >
-                  Start Free Trial
-                </button>
-              </div>
-
-              {/* Growth — Featured */}
-              <div
-                className="relative rounded-[24px] p-6 lg:p-8 flex flex-col gap-5 -mt-4 -mb-4"
-                style={{
-                  background: "linear-gradient(160deg, rgba(14,165,233,0.12) 0%, rgba(3,105,161,0.08) 100%)",
-                  border: "1px solid rgba(56,189,248,0.35)",
-                  boxShadow: "0 0 60px rgba(14,165,233,0.12), 0 24px 48px rgba(0,0,0,0.4)",
-                }}
-              >
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span
-                    className="text-sm font-bold uppercase tracking-[0.18em] text-white px-5 py-2 rounded-full"
-                    style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 60%, #38bdf8 100%)" }}
+              <div className="flex justify-center items-center mt-8">
+                <div className="flex items-center justify-center gap-3">
+                  <span className={`text-sm font-bold transition-colors ${!isYearly ? "text-white" : "text-white/50"}`}>Monthly</span>
+                  <button 
+                    onClick={() => setIsYearly(!isYearly)}
+                    className="relative w-14 h-7 bg-white/10 rounded-full cursor-pointer transition-colors border border-white/20"
+                    aria-label="Toggle billing cycle"
                   >
-                    Most Popular
+                    <div className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-300 ${isYearly ? "translate-x-7 bg-sky-400" : ""}`} />
+                  </button>
+                  <span className={`text-sm font-bold flex items-center gap-1.5 transition-colors ${isYearly ? "text-white" : "text-white/50"}`}>
+                    Yearly 
+                    <span className="text-[10px] uppercase tracking-widest bg-emerald-400/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-400/30">2 Months Free</span>
                   </span>
                 </div>
-                <div>
-                  <span className="text-sm uppercase tracking-[0.2em] text-sky-400 font-bold">Growth</span>
-                  <div className="mt-3 flex items-end gap-1">
-                    <span className="text-5xl font-black text-white">$297</span>
-                    <span className="text-base text-white/50 font-medium mb-1">/month</span>
-                  </div>
-                  <p className="mt-2 text-sm text-white/60 font-medium">
-                    For growing businesses ready to run on autopilot.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-3">
-                  {[
-                    "Everything in Starter",
-                    "Voice AI Receptionist",
-                    "Unlimited Contacts & Pipelines",
-                    "Advanced Automation Sequences",
-                    "Reputation Management AI",
-                    "Priority Caribbean Support",
-                  ].map((f) => (
-                    <div key={f} className="flex items-center gap-3 text-sm text-white/80 font-medium">
-                      <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
-                        style={{ background: "rgba(14,165,233,0.2)", border: "1px solid rgba(56,189,248,0.3)" }}
-                      >
-                        <CheckCircle size={11} className="text-sky-400" />
-                      </div>
-                      {f}
-                    </div>
-                  ))}
-                </div>
-                <a
-                  href="#"
-                  className="mt-2 text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02] text-center"
-                  style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)" }}
-                >
-                  Start Free Trial
-                </a>
               </div>
+            </div>
 
-              {/* Pro */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+
+              {/* Free Tier */}
               <div
                 className="rounded-[24px] p-6 lg:p-8 flex flex-col gap-5"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}
               >
                 <div>
-                  <span className="text-sm uppercase tracking-[0.2em] text-white/50 font-bold">Pro</span>
+                  <span className="text-sm uppercase tracking-[0.2em] text-white/50 font-bold">Basic Access</span>
                   <div className="mt-3 flex items-end gap-1">
-                    <span className="text-5xl font-black text-white">$497</span>
-                    <span className="text-base text-white/50 font-medium mb-1">/month</span>
+                    <span className="text-3xl lg:text-4xl font-black text-white">{FREE_TIER.name}</span>
                   </div>
-                  <p className="mt-2 text-sm text-white/60 font-medium">
-                    For established businesses that want a full AI operations team.
+                  <div className="text-3xl font-black font-mono text-white mt-1">$0</div>
+                  <p className="mt-2 text-sm text-white/60 font-medium pb-4 border-b border-white/10">
+                    {FREE_TIER.description}
                   </p>
                 </div>
-                <div className="flex flex-col gap-3">
-                  {[
-                    "Everything in Growth",
-                    "Custom AI Workflows",
-                    "Multi-location Support",
-                    "AI Multi-Agent Deployment",
-                    "Custom App Integration",
-                  ].map((f) => (
-                    <div key={f} className="flex items-center gap-3 text-sm text-white/70 font-medium">
+                <div className="flex flex-col gap-3 flex-grow">
+                  {FREE_TIER.features.map((f) => (
+                    <div key={f} className="flex items-start gap-3 text-sm text-white/60 font-medium">
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
-                        style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}
+                        className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
                       >
-                        <CheckCircle size={11} className="text-white/50" />
+                        <CheckCircle size={11} className="text-white/40" />
                       </div>
                       {f}
                     </div>
                   ))}
                 </div>
                 <button
-                  onClick={onBookDemo}
+                  onClick={() => handleCheckout('free')}
                   className="mt-2 text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-4 rounded-xl transition-all duration-200 cursor-pointer"
                   style={{ border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.06)" }}
                 >
-                  Start Free Trial
+                  Start Free
                 </button>
               </div>
 
+              {/* Paid Tiers */}
+              {PRICING_TIERS.map(plan => {
+                const currentPrice = isYearly ? plan.priceYearly : plan.priceMonthly;
+                const formattedPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(currentPrice);
+
+                return (
+                  <div
+                    key={plan.id}
+                    className={`relative rounded-[24px] p-6 lg:p-8 flex flex-col gap-5 ${plan.isPopular ? "lg:-mt-4 lg:-mb-4" : ""}`}
+                    style={plan.isPopular ? {
+                      background: "linear-gradient(160deg, rgba(14,165,233,0.12) 0%, rgba(3,105,161,0.08) 100%)",
+                      border: "1px solid rgba(56,189,248,0.35)",
+                      boxShadow: "0 0 60px rgba(14,165,233,0.12), 0 24px 48px rgba(0,0,0,0.4)"
+                    } : {
+                      background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)"
+                    }}
+                  >
+                    {plan.isPopular && (
+                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                        <span
+                          className="text-xs font-bold uppercase tracking-[0.18em] text-white px-5 py-2 rounded-full flex items-center gap-1.5"
+                          style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 60%, #38bdf8 100%)" }}
+                        >
+                          <Sparkles size={12} /> Most Popular
+                        </span>
+                      </div>
+                    )}
+                    {!plan.isPopular && (
+                      <span className="text-sm uppercase tracking-[0.2em] text-white/50 font-bold">Premium</span>
+                    )}
+
+                    <div>
+                      <div className="mt-3 flex items-end gap-1">
+                        <span className="text-2xl font-black text-white">{plan.name}</span>
+                      </div>
+                      <div className="mt-1 flex items-end gap-1">
+                        <span className="text-4xl font-black font-mono text-white">{formattedPrice}</span>
+                        <span className="text-sm text-white/50 font-medium mb-1">/{isYearly ? 'yr' : 'mo'}</span>
+                      </div>
+                      {isYearly && <div className="text-xs text-emerald-400 font-bold mt-1">Billed at {formattedPrice}/yr</div>}
+                      {!isYearly && <div className="text-xs text-emerald-400 font-bold mt-1 opacity-0">Spacer</div>}
+                      
+                      <p className="mt-2 text-sm text-white/60 font-medium pb-4 border-b border-white/10">
+                        {plan.description}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-3 flex-grow">
+                      {plan.features.map((f) => (
+                        <div key={f} className="flex items-start gap-3 text-sm text-white/80 font-medium">
+                          <div
+                            className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                            style={plan.isPopular 
+                              ? { background: "rgba(14,165,233,0.2)", border: "1px solid rgba(56,189,248,0.3)" }
+                              : { background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}
+                          >
+                            <CheckCircle size={11} className={plan.isPopular ? "text-sky-400" : "text-white/50"} />
+                          </div>
+                          {f}
+                        </div>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => handleCheckout(plan.id)}
+                      disabled={loading === plan.id}
+                      className="mt-2 text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02] text-center"
+                      style={plan.isPopular 
+                        ? { background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)" }
+                        : { border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.06)" }}
+                    >
+                      {loading === plan.id ? "Loading..." : "Get Started"}
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

@@ -1,23 +1,20 @@
-
 import React from 'react';
 
-
 const htmlContent = `
-
   <!-- TOP NAV -->
   <nav class="top-nav">
     <div class="logo">N<span>W</span>S</div>
-    <div class="trust-badge">100% Free &amp; No Credit Card Required</div>
+    <div class="trust-badge">Get Business OS Free — No Credit Card Required</div>
   </nav>
 
   <!-- PROGRESS BAR -->
   <div class="progress-wrap" id="progressWrap">
     <div class="progress-meta">
       <span class="progress-label" id="progressLabel">Step 1 — Industry</span>
-      <span class="progress-step-count" id="progressCount">1 / 6</span>
+      <span class="progress-step-count" id="progressCount">1 / 5</span>
     </div>
     <div class="progress-bar-track">
-      <div class="progress-bar-fill" id="progressFill" style="width:16.67%"></div>
+      <div class="progress-bar-fill" id="progressFill" style="width:20%"></div>
     </div>
     <div class="step-dots" id="stepDots"></div>
   </div>
@@ -31,7 +28,7 @@ const htmlContent = `
     <div class="step active" id="step-1">
       <div class="step-header">
         <h1 class="step-headline">What type of business do you run?</h1>
-        <p class="step-subtext">We'll tailor your free website and recommendations to your industry.</p>
+        <p class="step-subtext">We'll tailor your Business OS and recommendations to your industry.</p>
       </div>
 
       <div class="card-grid" id="industryGrid">
@@ -49,7 +46,7 @@ const htmlContent = `
         </div>
         <div class="option-card" data-value="dental_medical" onclick="selectIndustry(this)">
           <span class="card-icon">🦷</span>
-          <span class="card-label">Dental &amp; Medical</span>
+          <span class="card-label">Dental & Medical</span>
         </div>
         <div class="option-card" data-value="veterinary" onclick="selectIndustry(this)">
           <span class="card-icon">🐾</span>
@@ -128,132 +125,28 @@ const htmlContent = `
     </div>
 
     <!-- ══════════════════════════════════════════════════ -->
-    <!-- STEP 3: WEBSITE QUESTIONS -->
+    <!-- STEP 3: PAIN POINTS -->
     <!-- ══════════════════════════════════════════════════ -->
     <div class="step" id="step-3">
       <div class="step-header">
-        <h2 class="step-headline">Let's build your free website right</h2>
-        <p class="step-subtext">Answer these so we build exactly what your business needs.</p>
-      </div>
-
-      <div class="section-divider">Do you currently have a website?</div>
-      <div class="card-grid horiz-cards" id="websiteStatusGrid">
-        <div class="option-card" data-value="yes_works" onclick="selectSingle(this, 'websiteStatusGrid', 'hasWebsite')">
-          <span class="card-icon">✅</span>
-          <span class="card-label">Yes — and it works great</span>
-        </div>
-        <div class="option-card" data-value="yes_needs_work" onclick="selectSingle(this, 'websiteStatusGrid', 'hasWebsite')">
-          <span class="card-icon">⚠️</span>
-          <span class="card-label">Yes — but it needs work</span>
-        </div>
-        <div class="option-card" data-value="no" onclick="selectSingle(this, 'websiteStatusGrid', 'hasWebsite')">
-          <span class="card-icon">❌</span>
-          <span class="card-label">No website at all</span>
-        </div>
-      </div>
-
-      <div class="section-divider">What's the #1 thing you want your website to do?</div>
-      <div class="card-grid horiz-cards" id="primaryGoalGrid">
-        <div class="option-card" data-value="get_calls" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
-          <span class="card-icon">📞</span>
-          <span class="card-label">Get more calls</span>
-        </div>
-        <div class="option-card" data-value="book_appointments" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
-          <span class="card-icon">📅</span>
-          <span class="card-label">Book more appointments</span>
-        </div>
-        <div class="option-card" data-value="generate_leads" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
-          <span class="card-icon">🎯</span>
-          <span class="card-label">Generate leads</span>
-        </div>
-        <div class="option-card" data-value="showcase_work" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
-          <span class="card-icon">🖼️</span>
-          <span class="card-label">Showcase my work</span>
-        </div>
-        <div class="option-card" data-value="sell_products" onclick="selectSingle(this, 'primaryGoalGrid', 'primaryGoal')">
-          <span class="card-icon">🛒</span>
-          <span class="card-label">Sell products</span>
-        </div>
-      </div>
-
-      <div class="section-divider">Which pages do you need? <span style="color:var(--text-faint);font-size:0.7rem;text-transform:none;letter-spacing:0">(check all that apply)</span></div>
-      <div class="checkbox-grid" id="pagesGrid">
-        <label class="checkbox-item" onclick="togglePage(this, 'Home')">
-          <input type="checkbox" /><div class="check-box"></div><span class="check-label">🏠 Home</span>
-        </label>
-        <label class="checkbox-item" onclick="togglePage(this, 'About Us')">
-          <input type="checkbox" /><div class="check-box"></div><span class="check-label">👤 About Us</span>
-        </label>
-        <label class="checkbox-item" onclick="togglePage(this, 'Services')">
-          <input type="checkbox" /><div class="check-box"></div><span class="check-label">⚙️ Services</span>
-        </label>
-        <label class="checkbox-item" onclick="togglePage(this, 'Contact')">
-          <input type="checkbox" /><div class="check-box"></div><span class="check-label">📬 Contact</span>
-        </label>
-        <label class="checkbox-item" onclick="togglePage(this, 'Gallery/Portfolio')">
-          <input type="checkbox" /><div class="check-box"></div><span class="check-label">🖼️ Gallery / Portfolio</span>
-        </label>
-        <label class="checkbox-item" onclick="togglePage(this, 'Testimonials')">
-          <input type="checkbox" /><div class="check-box"></div><span class="check-label">⭐ Testimonials</span>
-        </label>
-        <label class="checkbox-item" onclick="togglePage(this, 'Booking/Appointment')">
-          <input type="checkbox" /><div class="check-box"></div><span class="check-label">📅 Booking / Appt</span>
-        </label>
-        <label class="checkbox-item" onclick="togglePage(this, 'Blog')">
-          <input type="checkbox" /><div class="check-box"></div><span class="check-label">✍️ Blog</span>
-        </label>
-        <label class="checkbox-item" onclick="togglePage(this, 'FAQ')">
-          <input type="checkbox" /><div class="check-box"></div><span class="check-label">❓ FAQ</span>
-        </label>
-      </div>
-
-      <div class="section-divider">What's your brand vibe?</div>
-      <div class="card-grid three-col" id="brandVibeGrid">
-        <div class="option-card" data-value="professional" onclick="selectSingle(this, 'brandVibeGrid', 'brandVibe')">
-          <span class="card-icon">🏛️</span>
-          <span class="card-label">Professional &amp; Corporate</span>
-        </div>
-        <div class="option-card" data-value="modern" onclick="selectSingle(this, 'brandVibeGrid', 'brandVibe')">
-          <span class="card-icon">⚡</span>
-          <span class="card-label">Modern &amp; Bold</span>
-        </div>
-        <div class="option-card" data-value="warm" onclick="selectSingle(this, 'brandVibeGrid', 'brandVibe')">
-          <span class="card-icon">☀️</span>
-          <span class="card-label">Warm &amp; Friendly</span>
-        </div>
-      </div>
-
-      <p class="error-msg" id="err-step3">Please answer all questions above before continuing.</p>
-
-      <div class="btn-nav-row">
-        <button class="btn btn-secondary" onclick="goToStep(2)">← Back</button>
-        <button class="btn btn-primary" onclick="advanceStep3()">Continue →</button>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════════ -->
-    <!-- STEP 4: PAIN POINTS -->
-    <!-- ══════════════════════════════════════════════════ -->
-    <div class="step" id="step-4">
-      <div class="step-header">
-        <h2 class="step-headline">Where are you losing customers right now?</h2>
-        <p class="step-subtext">Be honest — this is how we build the right solution for you.</p>
+        <h2 class="step-headline">Where are you losing revenue right now?</h2>
+        <p class="step-subtext">Be honest — this is how we build the right automation for you.</p>
       </div>
 
       <div class="checkbox-grid" id="painPointsGrid" style="grid-template-columns:1fr;"></div>
 
-      <p class="error-msg" id="err-step4">Select at least one pain point to continue.</p>
+      <p class="error-msg" id="err-step3">Select at least one pain point to continue.</p>
 
       <div class="btn-nav-row" style="margin-top:24px;">
-        <button class="btn btn-secondary" onclick="goToStep(3)">← Back</button>
-        <button class="btn btn-primary" onclick="advanceStep4()">Show My Analysis →</button>
+        <button class="btn btn-secondary" onclick="goToStep(2)">← Back</button>
+        <button class="btn btn-primary" onclick="advanceStep3()">Show My Analysis →</button>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════ -->
-    <!-- STEP 5: THE REVEAL -->
+    <!-- STEP 4: THE REVEAL -->
     <!-- ══════════════════════════════════════════════════ -->
-    <div class="step" id="step-5">
+    <div class="step" id="step-4">
 
       <!-- PART A: Pain Analysis -->
       <div id="revealPartA" class="reveal-section">
@@ -267,31 +160,29 @@ const htmlContent = `
 
         <div class="section-divider" style="margin-top:0;">Here's what you get</div>
 
-        <!-- Starter / Pro offers -->
+        <!-- Starter / Growth / Pro offers -->
         <div id="offerStandardWrap">
           <div class="offer-columns" id="offerColumns">
             <!-- FREE column -->
             <div class="offer-card free-card">
-              <div class="offer-title">100% Free</div>
+              <div class="offer-title">Business OS Free</div>
               <div class="offer-badge"><span class="badge-free">FREE</span></div>
               <ul class="offer-list" id="freeList">
-                <li><span class="li-check">✅</span> Custom website built for <span id="offerIndustryLabel" style="color:var(--teal);font-weight:600;margin-left:3px">&nbsp;</span></li>
-                <li><span class="li-check">✅</span> Mobile-responsive design</li>
-                <li><span class="li-check">✅</span> All the pages you selected</li>
-                <li><span class="li-check">✅</span> Lead capture forms</li>
-                <li><span class="li-check">✅</span> Click-to-call + WhatsApp button</li>
-                <li><span class="li-check">✅</span> Local SEO structure</li>
+                <li><span class="li-check">✅</span> Industry CRM (50 contacts max)</li>
+                <li><span class="li-check">✅</span> Essential Business Website Template</li>
+                <li><span class="li-check">✅</span> Unified Inbox (preview mode)</li>
+                <li><span class="li-check">✅</span> Lead capture form</li>
                 <li><span class="li-check">✅</span> Your business audit PDF report</li>
-                <li><span class="li-check" style="color:var(--gold)">🌴</span> <strong style="color:var(--gold)">Free CB Connect listing</strong> — your business on the Caribbean's #1 business directory (<a href="https://dir.caricombusiness.com" target="_blank" style="color:var(--gold);text-decoration:underline">dir.caricombusiness.com</a>)</li>
+                <li><span class="li-check" style="color:var(--gold)">🌴</span> <strong style="color:var(--gold)">Free CB Connect listing</strong> — your business on the Caribbean's #1 directory</li>
               </ul>
-              <p class="offer-note">Website code is yours to keep. Upgrade to the NWS Plan to have us host, connect your AI agent, and automate your growth.</p>
+              <p class="offer-note">The software is yours free. Upgrade to a paid tier to host your site on your domain, unlock unlimited CRM contacts, and add AI automations.</p>
             </div>
 
             <!-- PLAN column -->
             <div class="offer-card plan-card" id="planCard">
-              <div class="offer-title" id="planTitle">NWS Starter Plan</div>
+              <div class="offer-title" id="planTitle">NWS Recommended Tier</div>
               <div class="offer-badge">
-                <span class="badge-price" id="planPriceDisplay">\$299</span>
+                <span class="badge-price" id="planPriceDisplay">$97</span>
                 <span class="badge-per-mo">/mo</span>
               </div>
               <ul class="offer-list" id="planFeaturesList"></ul>
@@ -300,31 +191,22 @@ const htmlContent = `
           </div>
         </div>
 
-        <!-- Enterprise offer (shown instead of columns for 50+) -->
-        <div id="offerEnterpriseWrap" class="hidden">
-          <div class="enterprise-card">
-            <h3>🏭 Enterprise — Custom Pricing</h3>
-            <p>Your team's size and requirements go beyond our standard tiers. We build bespoke automation and AI solutions for operations at your scale. Let's talk.</p>
-            <a class="btn btn-primary" style="max-width:280px;margin:0 auto;" href="mailto:info@noveltywebsolutions.com?subject=Enterprise%20Inquiry%20from%20Smart%20Start">Book a Discovery Call →</a>
-          </div>
-        </div>
+        <div class="urgency-bar">🔥 July Promotion — 10 spots remaining. Free website + free CB Connect directory listing included with every free signup this month.</div>
 
-        <div class="urgency-bar">🔥 July Promotion — 10 spots remaining. Free website + free CB Connect directory listing included with every signup this month.</div>
-
-        <button class="btn btn-primary mt-8" onclick="goToStep(6)">Claim My Free Website →</button>
+        <button class="btn btn-primary mt-8" onclick="goToStep(5)">Claim My Free Business OS →</button>
       </div>
 
       <div class="btn-nav-row" style="margin-top:16px;">
-        <button class="btn btn-secondary" onclick="goToStep(4)">← Back</button>
+        <button class="btn btn-secondary" onclick="goToStep(3)">← Back</button>
       </div>
     </div>
 
     <!-- ══════════════════════════════════════════════════ -->
-    <!-- STEP 6: CONTACT FORM -->
+    <!-- STEP 5: CONTACT FORM -->
     <!-- ══════════════════════════════════════════════════ -->
-    <div class="step" id="step-6">
+    <div class="step" id="step-5">
       <div class="step-header">
-        <h2 class="step-headline">Almost there — where do we send your free website?</h2>
+        <h2 class="step-headline">Almost there — where do we set up your account?</h2>
         <p class="step-subtext">We'll reach out within 24 hours to kick things off.</p>
       </div>
 
@@ -351,14 +233,14 @@ const htmlContent = `
 
       <div class="form-group">
         <label class="form-label" for="notes">Anything else we should know? <span style="color:var(--text-faint)">(Optional)</span></label>
-        <textarea class="form-textarea" id="notes" placeholder="Tell us anything that'll help us build a better website for you..." oninput="state.notes = this.value"></textarea>
+        <textarea class="form-textarea" id="notes" placeholder="Tell us anything that'll help us set up your OS better..." oninput="state.notes = this.value"></textarea>
       </div>
 
-      <p class="error-msg" id="err-step6">Please fill in your name, email, and phone number.</p>
+      <p class="error-msg" id="err-step5">Please fill in your name, email, and phone number.</p>
 
       <div class="btn-nav-row">
-        <button class="btn btn-secondary" onclick="goToStep(5)">← Back</button>
-        <button class="btn btn-primary" onclick="submitForm()">Claim My Free Website + Audit →</button>
+        <button class="btn btn-secondary" onclick="goToStep(4)">← Back</button>
+        <button class="btn btn-primary" onclick="submitForm()">Create My Free Account →</button>
       </div>
     </div>
 
@@ -369,14 +251,14 @@ const htmlContent = `
       <div class="success-icon">🎉</div>
       <h2 class="success-headline">You're in!</h2>
       <p class="success-body">
-        We'll be in touch within <strong>24 hours</strong> to get your website started.<br />
+        We'll be in touch within <strong>24 hours</strong> to get your account set up.<br />
         Check your email for your free Business Audit Report in the meantime.
       </p>
 
       <div class="success-plan-reminder" id="successPlanReminder">
-        <h4>Your Recommended Plan</h4>
-        <div class="success-plan-price" id="successPrice">\$299<span style="font-size:1rem;color:var(--text-muted)">/mo</span></div>
-        <div class="success-plan-tier" id="successTier">NWS Starter Plan</div>
+        <h4>Your Recommended Upgrade</h4>
+        <div class="success-plan-price" id="successPrice">$97<span style="font-size:1rem;color:var(--text-muted)">/mo</span></div>
+        <div class="success-plan-tier" id="successTier">NWS Starter Tier</div>
         <ul class="success-plan-features" id="successFeatures"></ul>
       </div>
 
@@ -389,22 +271,15 @@ const htmlContent = `
     </div>
 
   </div><!-- /survey-container -->
+`;
 
-  `;
 const scriptContent = `
-    // ═══════════════════════════════════════════════════════
-    // STATE
-    // ═══════════════════════════════════════════════════════
     const state = {
       industry: null,
       businessName: '',
       location: '',
       yearsInBusiness: '',
       staffSize: '',
-      hasWebsite: '',
-      primaryGoal: '',
-      pagesNeeded: [],
-      brandVibe: '',
       painPoints: [],
       firstName: '',
       lastName: '',
@@ -415,9 +290,6 @@ const scriptContent = `
       recommendedPrice: '',
     };
 
-    // ═══════════════════════════════════════════════════════
-    // DATA MAPS
-    // ═══════════════════════════════════════════════════════
     const industryLabels = {
       home_services: 'Home Services',
       automotive: 'Automotive',
@@ -431,18 +303,18 @@ const scriptContent = `
 
     const painPointMap = {
       home_services: [
-        { emoji: '📵', label: 'Missing calls after hours', impact: 'Industry data shows missed calls cost service businesses \$200–\$800 per unanswered call.' },
-        { emoji: '⏳', label: 'Losing leads who don\'t hear back fast', impact: 'Leads contacted within 5 minutes are 21× more likely to convert than those reached after 30 minutes.' },
+        { emoji: '📵', label: 'Missing calls after hours', impact: 'Industry data shows missed calls cost service businesses $200–$800 per unanswered call.' },
+        { emoji: '⏳', label: 'Losing leads who don\\'t hear back fast', impact: 'Leads contacted within 5 minutes are 21× more likely to convert than those reached after 30 minutes.' },
         { emoji: '🏆', label: 'Customers choosing competitors who respond faster', impact: 'Speed-to-lead is the #1 differentiator in local home services markets.' },
         { emoji: '🔁', label: 'No system to follow up with leads', impact: 'Most local businesses lose 40–60% of potential revenue to zero follow-up.' },
         { emoji: '⭐', label: 'Difficult to get Google reviews', impact: 'Businesses with 50+ reviews earn 47% more revenue than those with fewer than 10.' },
       ],
       automotive: [
-        { emoji: '🔧', label: 'Customers don\'t come back for recommended repairs', impact: 'Declined repair follow-up alone represents \$3,000–\$8,000 in lost revenue per bay monthly.' },
+        { emoji: '🔧', label: 'Customers don\\'t come back for recommended repairs', impact: 'Declined repair follow-up alone represents $3,000–$8,000 in lost revenue per bay monthly.' },
         { emoji: '📅', label: 'Missed service inquiries on weekends', impact: 'Over 60% of automotive searches happen outside business hours.' },
         { emoji: '🔁', label: 'No way to follow up after a visit', impact: 'Repeat customers spend 67% more than first-time visitors — but only if you stay in contact.' },
         { emoji: '⭐', label: 'Low online review count', impact: '93% of consumers check online reviews before choosing an automotive business.' },
-        { emoji: '🗓️', label: 'Hard to fill last-minute appointment slots', impact: 'Empty bays cost an average of \$400–\$900/day in unbilled labor.' },
+        { emoji: '🗓️', label: 'Hard to fill last-minute appointment slots', impact: 'Empty bays cost an average of $400–$900/day in unbilled labor.' },
       ],
       real_estate: [
         { emoji: '🧊', label: 'Portal leads go cold before you can call', impact: 'Real estate leads lose 80% of their conversion potential if not contacted within 10 minutes.' },
@@ -452,25 +324,25 @@ const scriptContent = `
         { emoji: '👁️', label: 'Not enough online visibility', impact: 'Only 12% of buyers find their agent through a referral — the rest start online.' },
       ],
       dental_medical: [
-        { emoji: '📋', label: 'Patients don\'t accept treatment plans', impact: 'Practices with automated treatment follow-up see 28% higher case acceptance rates.' },
-        { emoji: '🚫', label: 'Too many no-shows and cancellations', impact: 'No-shows cost an average dental practice \$50,000–\$80,000 per year.' },
+        { emoji: '📋', label: 'Patients don\\'t accept treatment plans', impact: 'Practices with automated treatment follow-up see 28% higher case acceptance rates.' },
+        { emoji: '🚫', label: 'Too many no-shows and cancellations', impact: 'No-shows cost an average dental practice $50,000–$80,000 per year.' },
         { emoji: '🔔', label: 'Slow patient recall process', impact: 'Practices with automated recall fill 40% more hygiene chairs annually.' },
         { emoji: '📞', label: 'Staff spending too much time on the phone', impact: 'Front desk phone management costs the average practice 12+ hours per week.' },
         { emoji: '⭐', label: 'Not enough new patient reviews', impact: '84% of patients trust online reviews as much as personal recommendations.' },
       ],
       veterinary: [
-        { emoji: '🐾', label: 'Pet owners don\'t return for follow-up care', impact: 'Practices with automated recall reminders see 31% higher patient retention.' },
-        { emoji: '🚫', label: 'Appointment no-shows waste clinic capacity', impact: 'Each missed appointment costs clinics an average of \$120–\$250 in lost revenue.' },
+        { emoji: '🐾', label: 'Pet owners don\\'t return for follow-up care', impact: 'Practices with automated recall reminders see 31% higher patient retention.' },
+        { emoji: '🚫', label: 'Appointment no-shows waste clinic capacity', impact: 'Each missed appointment costs clinics an average of $120–$250 in lost revenue.' },
         { emoji: '📞', label: 'Staff overwhelmed with calls and inquiries', impact: 'Front desk overflow costs the average clinic 10–15 hours weekly in wasted staff time.' },
         { emoji: '💉', label: 'No automated wellness reminders', impact: 'Automated reminders increase preventive care compliance by up to 40%.' },
         { emoji: '🌙', label: 'After-hours emergency calls go unanswered', impact: 'Unanswered calls during off-hours result in 65% of pet owners calling a competitor.' },
       ],
       hospitality: [
         { emoji: '🌙', label: 'Lose bookings after hours', impact: '43% of restaurant reservations are made outside business hours — and go unanswered.' },
-        { emoji: '🚫', label: 'No-shows hurt revenue', impact: 'Restaurant no-shows cost the industry an estimated \$225 per empty table per evening.' },
+        { emoji: '🚫', label: 'No-shows hurt revenue', impact: 'Restaurant no-shows cost the industry an estimated $225 per empty table per evening.' },
         { emoji: '📋', label: 'Hard to manage waitlists efficiently', impact: 'Manual waitlists lead to 22% higher table abandonment rates.' },
         { emoji: '🔁', label: 'Inconsistent follow-up with guests', impact: 'A single follow-up message increases repeat visit rate by 26%.' },
-        { emoji: '📱', label: 'Slow response to DMs and inquiries', impact: '53% of consumers won\'t wait more than one hour for a social media response before moving on.' },
+        { emoji: '📱', label: 'Slow response to DMs and inquiries', impact: '53% of consumers won\\'t wait more than one hour for a social media response before moving on.' },
       ],
       death_care: [
         { emoji: '🌿', label: 'Pre-need leads not being nurtured', impact: 'Only 28% of pre-need inquiries are followed up with — leaving significant revenue untouched.' },
@@ -481,7 +353,7 @@ const scriptContent = `
       ],
       other: [
         { emoji: '🔁', label: 'Inconsistent lead follow-up', impact: 'Only 27% of leads are ever contacted after initial inquiry — and follow-up drops off sharply after the first attempt.' },
-        { emoji: '📵', label: 'Missing calls or messages', impact: 'Missed calls cost the average small business \$1,200–\$3,000 per month in lost opportunity.' },
+        { emoji: '📵', label: 'Missing calls or messages', impact: 'Missed calls cost the average small business $1,200–$3,000 per month in lost opportunity.' },
         { emoji: '👁️', label: 'Low online visibility', impact: '97% of consumers search online for local businesses before making a purchase decision.' },
         { emoji: '⭐', label: 'Hard to get more reviews', impact: 'Businesses averaging 4+ stars earn 18% more revenue than those below 4 stars.' },
         { emoji: '📅', label: 'No automated booking system', impact: 'Businesses with online booking capture 30% more appointments than phone-only operations.' },
@@ -489,43 +361,32 @@ const scriptContent = `
     };
 
     const starterFeatures = [
-      'Website hosted on NWS platform (we manage everything)',
-      'Your own AI business agent (you name them, we train them)',
-      'Industry-specific CRM pipeline setup',
-      'WhatsApp + email automation sequences',
-      'Missed call instant response',
-      'Appointment booking automation',
-      'Review routing (4–5 stars → Google; 1–3 → private feedback)',
-      'Lead reactivation campaigns',
-      'Monthly performance report',
-      'Priority support',
+      'Unlimited CRM Contacts',
+      'Custom Hosted Website (SEO Ready)',
+      'Full Unified Inbox (Email/FB/IG)',
+      'Basic Email Campaigns',
+      'Appointment Booking'
+    ];
+    const growthFeatures = [
+      'Everything in Starter, PLUS:',
+      'Voice AI Receptionist (24/7 coverage)',
+      'Chat AI Website Widget',
+      'Reputation Management AI',
+      'Advanced Workflow Automations',
+      'WhatsApp Integration'
     ];
     const proFeatures = [
-      'Everything in Starter, PLUS:',
-      'Multi-department AI agents',
-      'Multi-location support',
-      'Advanced workflow customization',
-      'Dedicated account manager',
-      'Custom integrations',
+      'Everything in Growth, PLUS:',
+      'Custom AI Workflow Builder',
+      'Multi-Location Support',
+      'NWS Business Mobile App',
+      'White Glove Onboarding',
+      '24/7 SLA Priority Support'
     ];
 
-    const priceMap = {
-      home_services_starter: '\$349',
-      automotive_starter: '\$399',
-      real_estate_starter: '\$399',
-      dental_medical_starter: '\$449',
-      veterinary_starter: '\$449',
-      hospitality_starter: '\$349',
-      death_care_starter: '\$449',
-      other_starter: '\$299',
-    };
-
-    // ═══════════════════════════════════════════════════════
-    // STEP NAVIGATION
-    // ═══════════════════════════════════════════════════════
     let currentStep = 1;
-    const totalSteps = 6;
-    const stepLabels = ['Industry', 'Business Info', 'Website Details', 'Pain Points', 'Your Analysis', 'Claim It'];
+    const totalSteps = 5;
+    const stepLabels = ['Industry', 'Business Info', 'Pain Points', 'Your Analysis', 'Claim It'];
 
     function buildDots() {
       const wrap = document.getElementById('stepDots');
@@ -567,13 +428,10 @@ const scriptContent = `
       if (!el) return;
       el.classList.add('active');
       updateProgress(n);
-      if (n === 4) buildPainPoints();
-      if (n === 5) buildReveal();
+      if (n === 3) buildPainPoints();
+      if (n === 4) buildReveal();
     }
 
-    // ═══════════════════════════════════════════════════════
-    // STEP 1 — INDUSTRY
-    // ═══════════════════════════════════════════════════════
     function selectIndustry(card) {
       document.querySelectorAll('#industryGrid .option-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
@@ -581,9 +439,6 @@ const scriptContent = `
       setTimeout(() => goToStep(2), 400);
     }
 
-    // ═══════════════════════════════════════════════════════
-    // STEP 2 — BUSINESS BASICS
-    // ═══════════════════════════════════════════════════════
     function selectStaff(card) {
       document.querySelectorAll('#staffGrid .option-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
@@ -601,41 +456,6 @@ const scriptContent = `
       goToStep(3);
     }
 
-    // ═══════════════════════════════════════════════════════
-    // STEP 3 — WEBSITE QUESTIONS
-    // ═══════════════════════════════════════════════════════
-    function selectSingle(card, gridId, stateKey) {
-      document.querySelectorAll(\`#\${gridId} .option-card\`).forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      state[stateKey] = card.dataset.value;
-    }
-
-    function togglePage(label, pageName) {
-      label.classList.toggle('checked');
-      const cb = label.querySelector('input[type="checkbox"]');
-      cb.checked = !cb.checked;
-      const box = label.querySelector('.check-box');
-      box.textContent = cb.checked ? '✓' : '';
-      if (cb.checked) {
-        if (!state.pagesNeeded.includes(pageName)) state.pagesNeeded.push(pageName);
-      } else {
-        state.pagesNeeded = state.pagesNeeded.filter(p => p !== pageName);
-      }
-    }
-
-    function advanceStep3() {
-      const err = document.getElementById('err-step3');
-      if (!state.hasWebsite || !state.primaryGoal || !state.brandVibe) {
-        err.classList.add('visible');
-        return;
-      }
-      err.classList.remove('visible');
-      goToStep(4);
-    }
-
-    // ═══════════════════════════════════════════════════════
-    // STEP 4 — PAIN POINTS
-    // ═══════════════════════════════════════════════════════
     function buildPainPoints() {
       const grid = document.getElementById('painPointsGrid');
       const industry = state.industry || 'other';
@@ -667,46 +487,36 @@ const scriptContent = `
       });
     }
 
-    function advanceStep4() {
-      const err = document.getElementById('err-step4');
+    function advanceStep3() {
+      const err = document.getElementById('err-step3');
       if (state.painPoints.length === 0) {
         err.classList.add('visible');
         return;
       }
       err.classList.remove('visible');
-      goToStep(5);
+      goToStep(4);
     }
 
-    // ═══════════════════════════════════════════════════════
-    // PLAN COMPUTATION
-    // ═══════════════════════════════════════════════════════
     function computePlan() {
-      const { staffSize, industry } = state;
+      const { staffSize } = state;
       if (staffSize === 'large') {
-        state.planTier = 'enterprise';
-        state.recommendedPrice = 'Contact Sales';
-      } else if (staffSize === 'medium') {
         state.planTier = 'pro';
-        state.recommendedPrice = '\$799';
+        state.recommendedPrice = '$497';
+      } else if (staffSize === 'small' || staffSize === 'medium') {
+        state.planTier = 'growth';
+        state.recommendedPrice = '$297';
       } else {
         state.planTier = 'starter';
-        const key = \`\${industry}_starter\`;
-        state.recommendedPrice = priceMap[key] || '\$299';
+        state.recommendedPrice = '$97';
       }
     }
 
-    // ═══════════════════════════════════════════════════════
-    // STEP 5 — REVEAL
-    // ═══════════════════════════════════════════════════════
     function buildReveal() {
-      // Re-compute plan in case we navigated back
       computePlan();
 
-      // PART A — headline
       const name = state.businessName.trim() || 'your business';
       document.getElementById('revealHeadline').textContent = \`Here's what our analysis found for \${name}\`;
 
-      // Build pain cards
       const container = document.getElementById('painCardsContainer');
       container.innerHTML = '';
       const displayPains = state.painPoints.slice(0, 3);
@@ -724,7 +534,6 @@ const scriptContent = `
         container.appendChild(card);
       });
 
-      // PART A visible immediately; PART B after 1.5s
       const partB = document.getElementById('revealPartB');
       partB.classList.add('hidden');
 
@@ -739,109 +548,120 @@ const scriptContent = `
       const { planTier, recommendedPrice, industry } = state;
       const industryLabel = industryLabels[industry] || 'Your Industry';
 
-      // Update industry label in free column
-      document.getElementById('offerIndustryLabel').textContent = industryLabel;
-
-      const standardWrap = document.getElementById('offerStandardWrap');
-      const enterpriseWrap = document.getElementById('offerEnterpriseWrap');
-
-      if (planTier === 'enterprise') {
-        standardWrap.classList.add('hidden');
-        enterpriseWrap.classList.remove('hidden');
-        return;
-      }
-
-      standardWrap.classList.remove('hidden');
-      enterpriseWrap.classList.add('hidden');
-
-      // Plan column
       const priceDisplay = document.getElementById('planPriceDisplay');
       const planTitle = document.getElementById('planTitle');
       const featuresList = document.getElementById('planFeaturesList');
       const planNote = document.getElementById('planNote');
 
       if (planTier === 'pro') {
-        planTitle.textContent = 'NWS Business Pro';
-        priceDisplay.textContent = '\$799';
-        const features = proFeatures;
-        featuresList.innerHTML = features.map(f =>
+        planTitle.textContent = 'Business OS Pro';
+        priceDisplay.textContent = '$497';
+        featuresList.innerHTML = proFeatures.map(f =>
           \`<li><span class="li-check gold">✅</span> \${f}</li>\`
         ).join('');
-        planNote.textContent = 'Includes everything in Starter. Billed monthly. Cancel anytime.';
+        planNote.textContent = 'For multi-location SMBs. Billed monthly. Cancel anytime.';
+      } else if (planTier === 'growth') {
+        planTitle.textContent = 'Business OS Growth';
+        priceDisplay.textContent = '$297';
+        featuresList.innerHTML = growthFeatures.map(f =>
+          \`<li><span class="li-check gold">✅</span> \${f}</li>\`
+        ).join('');
+        planNote.textContent = 'Our most popular tier. Includes AI Receptionist. Billed monthly.';
       } else {
-        // starter
-        planTitle.textContent = 'NWS Starter Plan';
-        priceDisplay.textContent = recommendedPrice;
+        planTitle.textContent = 'Business OS Starter';
+        priceDisplay.textContent = '$97';
         featuresList.innerHTML = starterFeatures.map(f =>
           \`<li><span class="li-check gold">✅</span> \${f}</li>\`
         ).join('');
-        planNote.textContent = 'Billed monthly. Cancel anytime. No setup fees.';
+        planNote.textContent = 'Perfect for solo operators. Billed monthly. Cancel anytime.';
       }
     }
 
-    // ═══════════════════════════════════════════════════════
-    // STEP 6 — CONTACT FORM + SUBMIT
-    // ═══════════════════════════════════════════════════════
-    function submitForm() {
-      const err = document.getElementById('err-step6');
-      const { firstName, lastName, email, phone } = state;
+    async function submitForm() {
+      const err = document.getElementById('err-step5');
+      const { firstName, lastName, email, phone, businessName } = state;
       if (!firstName.trim() || !lastName.trim() || !email.trim() || !phone.trim()) {
         err.classList.add('visible');
         return;
       }
-      // Basic email check
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+\$/.test(email)) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         err.textContent = 'Please enter a valid email address.';
         err.classList.add('visible');
         return;
       }
       err.classList.remove('visible');
-      showSuccess();
+
+      const btn = document.querySelector('#step-5 .btn-primary');
+      if (btn) {
+        btn.innerHTML = 'Provisioning Workspace... <span style="display:inline-block;animation:spin 1s linear infinite;">⏳</span>';
+        btn.style.opacity = '0.7';
+        btn.style.pointerEvents = 'none';
+      }
+
+      try {
+        const res = await fetch('/api/connect/provision', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ firstName, lastName, email, phone, businessName })
+        });
+        
+        if (!res.ok) {
+          throw new Error('Auto-provisioning failed.');
+        }
+        showSuccess(true);
+      } catch (e) {
+        console.error(e);
+        showSuccess(false);
+      }
     }
 
-    function showSuccess() {
-      // Hide all steps and progress
+    function showSuccess(autoProvisioned = false) {
       document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
       document.getElementById('progressWrap').classList.add('hidden');
 
-      // Build mailto
-      const industry = industryLabels[state.industry] || 'General';
-      const tier = state.planTier === 'starter' ? 'Starter' : state.planTier === 'pro' ? 'Business Pro' : 'Enterprise';
-      const subject = encodeURIComponent(\`Smart Start: \${state.businessName} — \${industry} — \${tier}\`);
-      const body = encodeURIComponent(
-        \`Business: \${state.businessName}\nLocation: \${state.location}\nIndustry: \${industry}\nPlan: \${tier}\nEmail: \${state.email}\nPhone: \${state.phone}\nNotes: \${state.notes}\`
-      );
-      document.getElementById('mailtoLink').href = \`mailto:info@noveltywebsolutions.com?subject=\${subject}&body=\${body}\`;
+      if (autoProvisioned) {
+        document.querySelector('.success-body').innerHTML = \`
+          Your Free Business OS workspace is ready! 🎉<br />
+          Check your email (<strong>\${state.email}</strong>) for your temporary password and Business Audit Report.
+        \`;
+        const mailto = document.getElementById('mailtoLink');
+        if (mailto) mailto.style.display = 'none';
+      } else {
+        const industry = industryLabels[state.industry] || 'General';
+        const tier = state.planTier === 'starter' ? 'Starter' : state.planTier === 'growth' ? 'Growth' : 'Pro';
+        const subject = encodeURIComponent(\`Business OS: \${state.businessName} — \${industry} — \${tier}\`);
+        const body = encodeURIComponent(
+          \`Business: \${state.businessName}\\nLocation: \${state.location}\\nIndustry: \${industry}\\nPlan: \${tier}\\nEmail: \${state.email}\\nPhone: \${state.phone}\\nNotes: \${state.notes}\`
+        );
+        document.getElementById('mailtoLink').href = \`mailto:info@noveltywebsolutions.com?subject=\${subject}&body=\${body}\`;
+      }
 
-      // Populate success reminder
       const { planTier, recommendedPrice } = state;
       const priceEl = document.getElementById('successPrice');
       const tierEl = document.getElementById('successTier');
       const featList = document.getElementById('successFeatures');
 
-      if (planTier === 'enterprise') {
-        priceEl.innerHTML = 'Custom';
-        tierEl.textContent = 'NWS Enterprise';
-        featList.innerHTML = '<li>Custom pricing based on your needs</li><li>Dedicated team and SLA</li>';
-      } else if (planTier === 'pro') {
-        priceEl.innerHTML = \`\$799<span style="font-size:1rem;color:var(--text-muted)">/mo</span>\`;
-        tierEl.textContent = 'NWS Business Pro';
+      if (planTier === 'pro') {
+        priceEl.innerHTML = \`$497<span style="font-size:1rem;color:var(--text-muted)">/mo</span>\`;
+        tierEl.textContent = 'Business OS Pro';
         featList.innerHTML = proFeatures.slice(0, 4).map(f => \`<li>\${f}</li>\`).join('');
+      } else if (planTier === 'growth') {
+        priceEl.innerHTML = \`$297<span style="font-size:1rem;color:var(--text-muted)">/mo</span>\`;
+        tierEl.textContent = 'Business OS Growth';
+        featList.innerHTML = growthFeatures.slice(0, 4).map(f => \`<li>\${f}</li>\`).join('');
       } else {
         priceEl.innerHTML = \`\${recommendedPrice}<span style="font-size:1rem;color:var(--text-muted)">/mo</span>\`;
-        tierEl.textContent = 'NWS Starter Plan';
-        featList.innerHTML = starterFeatures.slice(0, 5).map(f => \`<li>\${f}</li>\`).join('');
+        tierEl.textContent = 'Business OS Starter';
+        featList.innerHTML = starterFeatures.slice(0, 4).map(f => \`<li>\${f}</li>\`).join('');
       }
 
       document.getElementById('successScreen').classList.add('visible');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ═══════════════════════════════════════════════════════
-    // INIT
-    // ═══════════════════════════════════════════════════════
     buildDots();
-  `;
+`;
+
 const styleContent = `
 .funnel-theme-wrapper {
 
@@ -998,104 +818,77 @@ const styleContent = `
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-
-    /* ─── STEP HEADER ─── */
-    .step-header { margin-bottom: 28px; }
-    .step-headline {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.5px;
-      margin-bottom: 10px;
-    }
-    .step-subtext {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.6;
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
     }
 
-    /* ─── OPTION CARDS (single & multi) ─── */
+    /* ─── CARDS ─── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
-    .card-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+    .card-grid.two-col { grid-template-columns: 1fr 1fr; }
     .card-grid.three-col { grid-template-columns: repeat(3, 1fr); }
-    .card-grid.four-col { grid-template-columns: repeat(4, 1fr); }
-
+    .card-grid.horiz-cards { grid-template-columns: 1fr 1fr; }
     .option-card {
       background: var(--surface);
       border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 14px;
+      border-radius: var(--radius-sm);
+      padding: 16px 12px;
+      text-align: center;
       cursor: pointer;
-      transition: all 0.22s cubic-bezier(.4,0,.2,1);
+      transition: all 0.2s;
+      user-select: none;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      text-align: center;
-      user-select: none;
-      position: relative;
-      overflow: hidden;
-    }
-    .option-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--coral-dim);
-      opacity: 0;
-      transition: opacity 0.22s;
-      border-radius: inherit;
     }
     .option-card:hover {
-      border-color: rgba(255,107,77,0.5);
+      border-color: rgba(43,217,194,0.4);
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    .option-card:hover::before { opacity: 0.5; }
     .option-card.selected {
-      border-color: var(--coral);
-      box-shadow: var(--coral-glow);
+      border-color: var(--teal);
+      background: var(--teal-dim);
     }
-    .option-card.selected::before { opacity: 1; }
-    .option-card .card-icon { font-size: 1.75rem; line-height: 1; }
-    .option-card .card-label {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.8rem;
+    .card-icon { font-size: 1.8rem; line-height: 1; }
+    .horiz-cards .option-card {
+      flex-direction: row;
+      justify-content: flex-start;
+      padding: 14px 18px;
+      gap: 12px;
+    }
+    .horiz-cards .card-icon { font-size: 1.4rem; }
+    .card-label {
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--text);
       line-height: 1.3;
     }
-    .option-card.selected .card-label { color: #fff; }
-    .option-card.selected::after {
-      content: '✓';
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      font-size: 0.7rem;
-      color: var(--coral);
-      font-weight: 700;
-    }
 
-    /* Horizontal option cards (goal/website status) */
-    .card-grid.horiz-cards { grid-template-columns: 1fr; gap: 10px; }
-    .card-grid.horiz-cards .option-card {
-      flex-direction: row;
-      text-align: left;
-      padding: 14px 18px;
-      gap: 14px;
-      align-items: center;
+    /* ─── TYPOGRAPHY ─── */
+    .step-header { margin-bottom: 24px; }
+    .step-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
     }
-    .card-grid.horiz-cards .option-card .card-icon { font-size: 1.4rem; }
-    .card-grid.horiz-cards .option-card .card-label { font-size: 0.875rem; }
+    .step-subtext {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
 
     /* ─── CHECKBOX GRID ─── */
     .checkbox-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-bottom: 28px;
     }
@@ -1252,7 +1045,7 @@ const styleContent = `
     .btn-nav-row .btn-secondary { flex-shrink: 0; }
     .btn-nav-row .btn-primary { flex: 1; }
 
-    /* ─── STEP 5 REVEAL ─── */
+    /* ─── STEP 4 REVEAL ─── */
     .reveal-section { margin-bottom: 32px; }
     .reveal-headline {
       font-family: 'Space Grotesk', sans-serif;
@@ -1286,7 +1079,7 @@ const styleContent = `
       align-items: center;
       gap: 8px;
     }
-    .pain-card-& { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+    .pain-card-body { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
     .badge-leak {
       background: rgba(255,59,59,0.15);
       color: #FF6B6B;
@@ -1377,27 +1170,6 @@ const styleContent = `
       font-weight: 600;
     }
 
-    .enterprise-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      text-align: center;
-    }
-    .enterprise-card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--gold);
-    }
-    .enterprise-card p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 18px;
-      line-height: 1.6;
-    }
-
     /* ─── SUCCESS SCREEN ─── */
     .success-screen {
       display: none;
@@ -1430,7 +1202,7 @@ const styleContent = `
       letter-spacing: -0.5px;
       margin-bottom: 12px;
     }
-    .success-& {
+    .success-body {
       font-size: 0.95rem;
       color: var(--text-muted);
       line-height: 1.7;
@@ -1507,7 +1279,7 @@ const styleContent = `
     }
   
 }
-`;
+`
 
 export default function SmartStart() {
 
@@ -1524,7 +1296,6 @@ export default function SmartStart() {
     <div className="funnel-theme-wrapper">
       <style dangerouslySetInnerHTML={{ __html: styleContent }} />
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-      
     </div>
   );
 }

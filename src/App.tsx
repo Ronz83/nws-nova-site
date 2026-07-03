@@ -56,6 +56,9 @@ const PortalGHLControl = lazy(() => import("./pages/portal/PortalGHLControl"));
 const PortalBusinessOS = lazy(() => import("./pages/portal/PortalBusinessOS"));
 const PortalCaricom    = lazy(() => import("./pages/portal/PortalCaricom"));
 const PortalLogin      = lazy(() => import("./pages/portal/PortalLogin"));
+const PortalSnapshots  = lazy(() => import("./pages/portal/PortalSnapshots"));
+const PortalNicheBlueprints = lazy(() => import("./pages/portal/PortalNicheBlueprints"));
+const PortalFulfillment= lazy(() => import("./pages/portal/PortalFulfillment"));
 
 // Operations
 const PortalPipeline     = lazy(() => import("./pages/portal/PortalPipeline"));
@@ -116,6 +119,10 @@ export default function App() {
           <Route path="system" element={<Suspense fallback={<PageLoader />}><PortalSystem /></Suspense>} />
           <Route path="business-os" element={<Suspense fallback={<PageLoader />}><PortalBusinessOS /></Suspense>} />
           <Route path="caricom-business" element={<Suspense fallback={<PageLoader />}><PortalCaricom /></Suspense>} />
+          
+          <Route path="snapshots" element={<Suspense fallback={<PageLoader />}><PortalSnapshots /></Suspense>} />
+          <Route path="niche-blueprints" element={<Suspense fallback={<PageLoader />}><PortalNicheBlueprints /></Suspense>} />
+          <Route path="fulfillment" element={<Suspense fallback={<PageLoader />}><PortalFulfillment /></Suspense>} />
           
           <Route path="pipeline" element={<Suspense fallback={<PageLoader />}><PortalPipeline /></Suspense>} />
           <Route path="tools" element={<Suspense fallback={<PageLoader />}><PortalActiveTools /></Suspense>} />

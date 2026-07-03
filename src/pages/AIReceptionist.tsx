@@ -295,7 +295,7 @@ const htmlContent = `
             <div class="glass pricing-card featured reveal reveal-delay-2">
                 <div class="pricing-badge">Most Popular</div>
                 <div class="pricing-label">Monthly Service</div>
-                <div class="pricing-amount">\$397<span>/mo</span></div>
+                <div class="pricing-amount">\$297<span>/mo</span></div>
                 <div class="pricing-range">Everything you need. Nothing you don't.</div>
                 <ul class="pricing-features">
                     <li>24/7 AI voice receptionist (unlimited calls)</li>
@@ -375,7 +375,7 @@ const htmlContent = `
             </div>
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">
-                    What's included in the \$397/month?
+                    What's included in the \$297/month?
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">

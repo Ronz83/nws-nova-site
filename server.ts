@@ -24,17 +24,22 @@ import websiteRequestsHandler from './api/website/requests.ts';
 import featureFlagsHandler from './api/ghl/feature-flags.ts';
 import nicheBlueprintHandler from './api/ai/niche-blueprint.ts';
 import chatWidgetHandler from './api/ghl/chat-widget.ts';
+import stripeCheckoutHandler from './api/stripe/checkout.ts';
+import stripeWebhookHandler from './api/stripe/webhook.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
+
+// Stripe Webhook needs the raw body to verify signatures
+app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), stripeWebhookHandler);
+
 app.use(express.json());
 
-
-
 // Map the API routes
+app.post('/api/stripe/checkout', stripeCheckoutHandler);
 app.post('/api/workbench/analyze', analyzeHandler);
 app.post('/api/workbench/chat', chatHandler);
 app.post('/api/crm/contact', contactHandler);

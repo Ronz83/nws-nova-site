@@ -975,8 +975,8 @@ const htmlContent = `
 
     <div class="rec-card leads" id="rec-leads">
       <div class="rec-header">
-        <span class="rec-title">AI Receptionist</span>
-        <span class="rec-price">\$397/mo</span>
+        <span class="rec-title">AI Receptionist (Growth Tier)</span>
+        <span class="rec-price">\$297/mo</span>
       </div>
       <div class="rec-body">
         Prospects are visiting, but you're missing the capture. An AI-powered receptionist ensures every inquiry gets answered instantly — 24/7, no leads left behind.
@@ -991,8 +991,8 @@ const htmlContent = `
 
     <div class="rec-card followup" id="rec-followup">
       <div class="rec-header">
-        <span class="rec-title">Sales Automation</span>
-        <span class="rec-price">\$297/mo</span>
+        <span class="rec-title">Sales Automation (Starter Tier)</span>
+        <span class="rec-price">\$97/mo</span>
       </div>
       <div class="rec-body">
         Leads go cold when follow-up is manual or delayed. Automated workflows ensure every prospect gets the right message at the right time, moving them toward a sale.
@@ -1007,8 +1007,8 @@ const htmlContent = `
 
     <div class="rec-card visibility" id="rec-visibility">
       <div class="rec-header">
-        <span class="rec-title">AI Visibility</span>
-        <span class="rec-price">\$397/mo</span>
+        <span class="rec-title">AI Visibility (Growth Tier)</span>
+        <span class="rec-price">\$297/mo</span>
       </div>
       <div class="rec-body">
         Your business is invisible in local search and social. We fix your Google profile, build your review engine, and create consistent social presence that drives discovery.
@@ -1023,11 +1023,11 @@ const htmlContent = `
 
     <div class="rec-card bundle" id="rec-bundle">
       <div class="rec-header">
-        <span class="rec-title">🚀 Scale Bundle — Full Stack Growth</span>
-        <span class="rec-price">Save \$300/mo</span>
+        <span class="rec-title">🚀 Scale Bundle — NWS Business OS Pro</span>
+        <span class="rec-price">\$497/mo</span>
       </div>
       <div class="rec-body">
-        Multiple gaps compound each other. When 4 or more areas are underperforming, a bundled approach delivers the biggest ROI — and saves you \$300/month versus individual services.
+        Multiple gaps compound each other. When 4 or more areas are underperforming, our Pro tier delivers the biggest ROI — combining all features with custom AI multi-agent workflows.
         <ul class="rec-features">
           <li>Everything in all recommended services above</li>
           <li>Dedicated account manager</li>

@@ -9,23 +9,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 25 OAuth scopes covering Tiers 1-3 (CRM + Voice AI + Growth + Finance)
   // See: ghl_scope_audit.md for full cross-reference
   const scopes = [
-    // Tier 1 — CRM & Voice AI Booking (12)
+    'locations.readonly', 'locations.write', 
+    'users.readonly', 'users.write',
     'contacts.readonly', 'contacts.write',
-    'conversations.readonly', 'conversations.write',
-    'conversations/message.readonly', 'conversations/message.write',
-    'opportunities.readonly', 'opportunities.write',
-    'calendars.readonly', 'calendars/events.write',
-    'locations.readonly', 'users.readonly',
-    // Tier 2 — Growth Hub & Marketing (7)
-    'campaigns.readonly', 'campaigns.write',
-    'social-media-posting.readonly', 'social-media-posting.write',
-    'workflows.readonly',
-    'forms.readonly', 'surveys.readonly',
-    // Tier 3 — Money Hub & Finance (6)
-    'invoices.readonly', 'invoices.write',
-    'payments.readonly', 'payments.write',
-    'payments/transactions.readonly',
-    'products.readonly',
+    'conversations.readonly', 'conversations.write'
   ].join(' ');
   // Force the frontend URL (5173) since Vite's proxy rewrites the host header to 3001
   const baseUrl = process.env.NODE_ENV === 'production' 
