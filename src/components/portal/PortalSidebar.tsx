@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { LayoutDashboard, Users, Settings, Package, Lightbulb, ClipboardList, Database, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, Settings, Package, Lightbulb, ClipboardList, Database, LogOut, Building2, Globe } from "lucide-react";
 
 export function PortalSidebar() {
   const location = useLocation();
@@ -16,7 +16,13 @@ export function PortalSidebar() {
     { name: "System Config", path: "/portal/system", icon: Settings, show: hasPortalAccess('super_admin') },
   ];
 
+  const productLinks = [
+    { name: "Business OS Admin", path: "/portal/business-os", icon: Building2, show: hasPortalAccess('super_admin') },
+    { name: "Caricom Business", path: "/portal/caricom-business", icon: Globe, show: hasPortalAccess('super_admin') },
+  ];
+
   const navLinks = allLinks.filter(link => link.show);
+  const visibleProductLinks = productLinks.filter(link => link.show);
 
   return (
     <aside className="h-screen w-72 fixed left-0 top-0 bg-slate-950 border-r border-slate-800 z-50 flex flex-col hidden md:flex">
@@ -25,16 +31,38 @@ export function PortalSidebar() {
         <p className="text-[10px] font-bold text-sky-500 mt-1 uppercase tracking-widest">Internal Operations</p>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-4 space-y-1">
-        {navLinks.map(link => {
-          const isActive = location.pathname === link.path || (location.pathname.startsWith(link.path) && link.path !== '/portal');
-          return (
-            <Link key={link.name} to={link.path} className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-sky-900/40 text-sky-400' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}>
-              <link.icon className="w-5 h-5 shrink-0" />
-              <span className={`text-sm ${isActive ? 'font-bold' : 'font-medium'}`}>{link.name}</span>
-            </Link>
-          );
-        })}
+      <div className="flex-1 overflow-y-auto p-4 space-y-6">
+        <div>
+          <h3 className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Core Systems</h3>
+          <div className="space-y-1">
+            {navLinks.map(link => {
+              const isActive = location.pathname === link.path || (location.pathname.startsWith(link.path) && link.path !== '/portal');
+              return (
+                <Link key={link.name} to={link.path} className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-sky-900/40 text-sky-400' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}>
+                  <link.icon className="w-5 h-5 shrink-0" />
+                  <span className={`text-sm ${isActive ? 'font-bold' : 'font-medium'}`}>{link.name}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        {visibleProductLinks.length > 0 && (
+          <div>
+            <h3 className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Product Management</h3>
+            <div className="space-y-1">
+              {visibleProductLinks.map(link => {
+                const isActive = location.pathname === link.path || location.pathname.startsWith(link.path);
+                return (
+                  <Link key={link.name} to={link.path} className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-sky-900/40 text-sky-400' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}>
+                    <link.icon className="w-5 h-5 shrink-0" />
+                    <span className={`text-sm ${isActive ? 'font-bold' : 'font-medium'}`}>{link.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="p-4 border-t border-slate-800 bg-slate-950">

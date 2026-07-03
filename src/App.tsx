@@ -53,6 +53,8 @@ const PortalOverview   = lazy(() => import("./pages/portal/PortalOverview"));
 const PortalUsers      = lazy(() => import("./pages/portal/PortalUsers"));
 const PortalSystem     = lazy(() => import("./pages/portal/PortalSystem"));
 const PortalGHLControl = lazy(() => import("./pages/portal/PortalGHLControl"));
+const PortalBusinessOS = lazy(() => import("./pages/portal/PortalBusinessOS"));
+const PortalCaricom    = lazy(() => import("./pages/portal/PortalCaricom"));
 
 // Minimal page loader shown during lazy-load transitions
 function PageLoader() {
@@ -103,6 +105,8 @@ export default function App() {
           <Route path="ghl-control" element={<Suspense fallback={<PageLoader />}><PortalGHLControl /></Suspense>} />
           <Route path="users" element={<Suspense fallback={<PageLoader />}><PortalUsers /></Suspense>} />
           <Route path="system" element={<Suspense fallback={<PageLoader />}><PortalSystem /></Suspense>} />
+          <Route path="business-os" element={<Suspense fallback={<PageLoader />}><PortalBusinessOS /></Suspense>} />
+          <Route path="caricom-business" element={<Suspense fallback={<PageLoader />}><PortalCaricom /></Suspense>} />
         </Route>
         <Route path="*" element={<Navigate to="/portal" replace />} />
       </Routes>
