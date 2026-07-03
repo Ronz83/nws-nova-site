@@ -1,7 +1,6 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import { PortalSidebar } from "./PortalSidebar";
 import { useAuth } from "../../contexts/AuthContext";
-import { Shield } from "lucide-react";
 
 export function PortalLayout() {
   const { user, isLoading, isStaff } = useAuth();
@@ -15,20 +14,7 @@ export function PortalLayout() {
   }
 
   if (!user || !isStaff()) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center bg-slate-900 relative">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border-2 border-slate-100 max-w-md w-full text-center z-10">
-          <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Shield className="w-8 h-8 text-red-500" />
-          </div>
-          <h2 className="text-2xl font-black text-slate-900 mb-2">Access Denied</h2>
-          <p className="text-slate-500 mb-6">You must be a staff member to access the Master Control Portal.</p>
-          <a href="https://noveltywebsolutions.com" className="w-full inline-block bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-sm text-sm">
-            Return to Main Site
-          </a>
-        </div>
-      </div>
-    );
+    return <Navigate to="/portal/login" replace />;
   }
 
   return (

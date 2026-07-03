@@ -19,6 +19,10 @@
   --color-card-hover: var(--card-hover);
   --color-glass-bg: var(--glass-bg);
 
+  --color-accent-purple: #c392ff;
+  --color-accent-pink: #ffadba;
+  --color-text-secondary: #9297a8;
+
   --animate-laser: laser 4s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
 }

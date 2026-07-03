@@ -64,6 +64,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const fetchUserAndPermissions = async () => {
       setIsLoading(true);
       try {
+        const hostname = window.location.hostname;
+        const isPortalDomain = hostname === 'portal.noveltywebsolutions.com';
+
+        // 1. PORTAL DOMAIN FLOW (Supabase Auth)
+        if (isPortalDomain) {
+          const { data: { session } } = await supabase.auth.getSession();
+          
+          if (!session?.user) {
+            setUser(null);
+            setIsLoading(false);
+            return;
+          }
+
+          // Map Supabase user metadata to Portal roles
+          // We assume staff accounts are pre-created in Supabase with user_metadata.role set
+          const role = (session.user.user_metadata?.role as UserRole) || 'portal_user';
+          const name = session.user.user_metadata?.full_name || session.user.email || 'Staff Member';
+
+          setUser({
+            id: session.user.id,
+            name,
+            email: session.user.email || '',
+            role,
+            permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
+            businessName: 'NWS Portal',
+            businessLogo: '/business_os_logo.png'
+          });
+
+          // Set up auth state listener for the portal
+          const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_OUT') {
+              setUser(null);
+            } else if (session?.user) {
+              const updatedRole = (session.user.user_metadata?.role as UserRole) || 'portal_user';
+              setUser({
+                id: session.user.id,
+                name: session.user.user_metadata?.full_name || session.user.email || 'Staff Member',
+                email: session.user.email || '',
+                role: updatedRole,
+                permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
+                businessName: 'NWS Portal',
+                businessLogo: '/business_os_logo.png'
+              });
+            }
+          });
+
+          setIsLoading(false);
+          return () => {
+            authListener.subscription.unsubscribe();
+          };
+        }
+
+        // 2. CLIENT DOMAIN FLOW (GHL SSO URL Params)
         const params = new URLSearchParams(window.location.search);
         const roleParam = params.get('role') as UserRole || 'location_user';
         const userId = params.get('userId') || params.get('user_id');
@@ -180,6 +233,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
+    if (window.location.hostname === 'portal.noveltywebsolutions.com') {
+      await supabase.auth.signOut();
+    }
     setUser(null);
   };
 

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { LayoutDashboard, Users, Settings, Package, Lightbulb, ClipboardList, Database, LogOut, Building2, Globe } from "lucide-react";
+import { LayoutDashboard, Users, Settings, Package, Lightbulb, ClipboardList, Database, LogOut, Building2, Globe, Kanban, Wrench, UserPlus, GraduationCap, PhoneCall } from "lucide-react";
 
 export function PortalSidebar() {
   const location = useLocation();
@@ -8,6 +8,8 @@ export function PortalSidebar() {
 
   const allLinks = [
     { name: "Portal Overview", path: "/portal", icon: LayoutDashboard, show: hasPortalAccess('user') },
+    { name: "New Client", path: "/portal/new-client", icon: UserPlus, show: hasPortalAccess('admin') },
+    { name: "Sales Academy", path: "/portal/academy", icon: GraduationCap, show: hasPortalAccess('admin') },
     { name: "Snapshots", path: "/portal/snapshots", icon: Package, show: hasPortalAccess('admin') },
     { name: "Niche Blueprints", path: "/portal/niche-blueprints", icon: Lightbulb, show: hasPortalAccess('admin') },
     { name: "Fulfillment", path: "/portal/fulfillment", icon: ClipboardList, show: hasPortalAccess('admin') },
@@ -16,12 +18,21 @@ export function PortalSidebar() {
     { name: "System Config", path: "/portal/system", icon: Settings, show: hasPortalAccess('super_admin') },
   ];
 
+  const operationsLinks = [
+    { name: "Client Pipeline", path: "/portal/pipeline", icon: Kanban, show: hasPortalAccess('user') },
+    { name: "Active Tools", path: "/portal/tools", icon: Wrench, show: hasPortalAccess('user') },
+    { name: "New Client", path: "/portal/new-client", icon: UserPlus, show: hasPortalAccess('admin') },
+    { name: "Sales Academy", path: "/portal/academy", icon: GraduationCap, show: hasPortalAccess('user') },
+    { name: "Call Assistant", path: "/portal/call-assistant", icon: PhoneCall, show: hasPortalAccess('user') },
+  ];
+
   const productLinks = [
     { name: "Business OS Admin", path: "/portal/business-os", icon: Building2, show: hasPortalAccess('super_admin') },
     { name: "Caricom Business", path: "/portal/caricom-business", icon: Globe, show: hasPortalAccess('super_admin') },
   ];
 
   const navLinks = allLinks.filter(link => link.show);
+  const visibleOperationsLinks = operationsLinks.filter(link => link.show);
   const visibleProductLinks = productLinks.filter(link => link.show);
 
   return (
@@ -46,6 +57,23 @@ export function PortalSidebar() {
             })}
           </div>
         </div>
+
+        {visibleOperationsLinks.length > 0 && (
+          <div>
+            <h3 className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Operations</h3>
+            <div className="space-y-1">
+              {visibleOperationsLinks.map(link => {
+                const isActive = location.pathname === link.path || location.pathname.startsWith(link.path);
+                return (
+                  <Link key={link.name} to={link.path} className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-sky-900/40 text-sky-400' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}>
+                    <link.icon className="w-5 h-5 shrink-0" />
+                    <span className={`text-sm ${isActive ? 'font-bold' : 'font-medium'}`}>{link.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {visibleProductLinks.length > 0 && (
           <div>

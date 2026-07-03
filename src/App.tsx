@@ -55,6 +55,14 @@ const PortalSystem     = lazy(() => import("./pages/portal/PortalSystem"));
 const PortalGHLControl = lazy(() => import("./pages/portal/PortalGHLControl"));
 const PortalBusinessOS = lazy(() => import("./pages/portal/PortalBusinessOS"));
 const PortalCaricom    = lazy(() => import("./pages/portal/PortalCaricom"));
+const PortalLogin      = lazy(() => import("./pages/portal/PortalLogin"));
+
+// Operations
+const PortalPipeline     = lazy(() => import("./pages/portal/PortalPipeline"));
+const PortalActiveTools  = lazy(() => import("./pages/portal/PortalActiveTools"));
+const PortalNewClient    = lazy(() => import("./pages/portal/PortalNewClient"));
+const PortalAcademy      = lazy(() => import("./pages/portal/PortalAcademy"));
+const PortalCallAssistant= lazy(() => import("./pages/portal/PortalCallAssistant"));
 
 // Minimal page loader shown during lazy-load transitions
 function PageLoader() {
@@ -97,6 +105,7 @@ export default function App() {
     domainRoutes = (
       <Routes>
         <Route path="/" element={<Navigate to="/portal" replace />} />
+        <Route path="/portal/login" element={<Suspense fallback={<PageLoader />}><PortalLogin /></Suspense>} />
         <Route path="/portal" element={<PortalLayout />}>
           <Route index element={<Suspense fallback={<PageLoader />}><PortalOverview /></Suspense>} />
           <Route path="snapshots" element={<DashboardSnapshots />} />
@@ -107,6 +116,12 @@ export default function App() {
           <Route path="system" element={<Suspense fallback={<PageLoader />}><PortalSystem /></Suspense>} />
           <Route path="business-os" element={<Suspense fallback={<PageLoader />}><PortalBusinessOS /></Suspense>} />
           <Route path="caricom-business" element={<Suspense fallback={<PageLoader />}><PortalCaricom /></Suspense>} />
+          
+          <Route path="pipeline" element={<Suspense fallback={<PageLoader />}><PortalPipeline /></Suspense>} />
+          <Route path="tools" element={<Suspense fallback={<PageLoader />}><PortalActiveTools /></Suspense>} />
+          <Route path="new-client" element={<Suspense fallback={<PageLoader />}><PortalNewClient /></Suspense>} />
+          <Route path="academy" element={<Suspense fallback={<PageLoader />}><PortalAcademy /></Suspense>} />
+          <Route path="call-assistant" element={<Suspense fallback={<PageLoader />}><PortalCallAssistant /></Suspense>} />
         </Route>
         <Route path="*" element={<Navigate to="/portal" replace />} />
       </Routes>
