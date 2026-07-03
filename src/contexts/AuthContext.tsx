@@ -73,9 +73,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!userId) {
            if (roleParam === 'agency_admin') {
              setUser({
-               id: 'admin_123', name: 'NWS Super Admin', email: 'admin@noveltywebsolutions.com', role: 'agency_admin',
+               id: 'admin_123', name: 'NWS Admin', email: 'admin@noveltywebsolutions.com', role: 'agency_admin',
                permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
                businessName: 'Business OS', businessLogo: '/business_os_logo.png'
+             });
+           } else if (roleParam === 'super_admin') {
+             setUser({
+               id: 'super_admin_123', name: 'Ronald Prescott', email: 'ronald@noveltywebsolutions.com', role: 'super_admin',
+               permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
+               businessName: 'NWS Master Portal', businessLogo: '/business_os_logo.png'
              });
            } else if (roleParam === 'location_user') {
              setUser({
