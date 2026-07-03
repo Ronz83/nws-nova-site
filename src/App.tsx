@@ -191,6 +191,25 @@ export default function App() {
           <Route path="/results/:id" element={<ResultsPage />} />
         </Route>
 
+        <Route path="/portal/login" element={<Suspense fallback={<PageLoader />}><PortalLogin /></Suspense>} />
+        <Route path="/portal" element={<PortalLayout />}>
+          <Route index element={<Suspense fallback={<PageLoader />}><PortalOverview /></Suspense>} />
+          <Route path="snapshots" element={<Suspense fallback={<PageLoader />}><PortalSnapshots /></Suspense>} />
+          <Route path="niche-blueprints" element={<Suspense fallback={<PageLoader />}><PortalNicheBlueprints /></Suspense>} />
+          <Route path="fulfillment" element={<Suspense fallback={<PageLoader />}><PortalFulfillment /></Suspense>} />
+          <Route path="ghl-control" element={<Suspense fallback={<PageLoader />}><PortalGHLControl /></Suspense>} />
+          <Route path="users" element={<Suspense fallback={<PageLoader />}><PortalUsers /></Suspense>} />
+          <Route path="system" element={<Suspense fallback={<PageLoader />}><PortalSystem /></Suspense>} />
+          <Route path="business-os" element={<Suspense fallback={<PageLoader />}><PortalBusinessOS /></Suspense>} />
+          <Route path="caricom-business" element={<Suspense fallback={<PageLoader />}><PortalCaricom /></Suspense>} />
+          
+          <Route path="pipeline" element={<Suspense fallback={<PageLoader />}><PortalPipeline /></Suspense>} />
+          <Route path="tools" element={<Suspense fallback={<PageLoader />}><PortalActiveTools /></Suspense>} />
+          <Route path="new-client" element={<Suspense fallback={<PageLoader />}><PortalNewClient /></Suspense>} />
+          <Route path="academy" element={<Suspense fallback={<PageLoader />}><PortalAcademy /></Suspense>} />
+          <Route path="call-assistant" element={<Suspense fallback={<PageLoader />}><PortalCallAssistant /></Suspense>} />
+        </Route>
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     );
