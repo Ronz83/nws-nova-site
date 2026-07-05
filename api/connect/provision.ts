@@ -1,7 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import fs from 'fs';
-import path from 'path';
-import { provisionWorkspace } from './provisionService.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -15,31 +12,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const result = await provisionWorkspace({
-      firstName,
-      lastName,
+    // Proxy to the dedicated businesses-os provisioning engine
+    const backendUrl = process.env.PROVISION_API_URL || 'https://api.businessesos.com/api/provision';
+    const apiKey = process.env.PROVISION_API_KEY || 'nws_provision_2026';
+
+    const payload = {
+      clientName: `${firstName} ${lastName}`.trim(),
+      businessName,
       email,
       phone,
-      businessName
+      industry: 'other' // default until industry selector is added to form
+    };
+
+    const backendRes = await fetch(backendUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey
+      },
+      body: JSON.stringify(payload)
     });
 
-    if (result.userError) {
-      return res.status(200).json({
-        success: true,
-        message: 'Workspace created, but user creation failed (check scopes).',
-        locationId: result.locationId,
-        userError: result.userError
-      });
+    const data = await backendRes.json();
+
+    if (!backendRes.ok) {
+      throw new Error(data.error || data.detail || 'Provisioning engine failed');
     }
 
     return res.status(200).json({
       success: true,
-      message: 'Workspace provisioned and user assigned successfully.',
-      locationId: result.locationId
+      message: 'Workspace provisioned successfully.',
+      locationId: data.locationId,
+      jobId: data.jobId
     });
 
   } catch (err: any) {
-    console.error('Provisioning error:', err);
+    console.error('Proxy Provisioning error:', err);
     return res.status(500).json({ error: 'Internal server error', details: err.message });
   }
 }
