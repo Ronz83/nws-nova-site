@@ -12,7 +12,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     'locations.readonly', 'locations.write', 
     'users.readonly', 'users.write',
     'contacts.readonly', 'contacts.write',
-    'conversations.readonly', 'conversations.write'
+    'conversations.readonly', 'conversations.write',
+    'opportunities.readonly', 'opportunities.write',
+    'conversation-ai.readonly', 'conversation-ai.write',
+    'voice-ai-agents.readonly', 'voice-ai-agents.write',
+    'locations/customValues.readonly', 'locations/customValues.write',
+    'snapshots.readonly',
+    'calendars.readonly', 'calendars.write',
+    'calendars/events.readonly', 'calendars/events.write',
+    'workflows.readonly'
   ].join(' ');
   // Force the frontend URL (5173) since Vite's proxy rewrites the host header to 3001
   const baseUrl = process.env.NODE_ENV === 'production' 

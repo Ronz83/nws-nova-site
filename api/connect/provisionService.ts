@@ -97,3 +97,46 @@ export async function provisionWorkspace(params: {
   console.log('User created and assigned successfully.');
   return { success: true, locationId };
 }
+
+export async function provisionAIAgent(locationId: string, agentConfig: any) {
+  // 1. Load the OAuth token
+  const tokenPath = path.resolve(process.cwd(), 'ghl_token.json');
+  if (!fs.existsSync(tokenPath)) {
+    throw new Error('OAuth token not found. Please authorize the app first.');
+  }
+
+  const tokenData = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
+  const { access_token } = tokenData;
+
+  if (!access_token) {
+    throw new Error('Invalid token structure. Missing access_token.');
+  }
+
+  const payload = {
+    locationId,
+    ...agentConfig
+  };
+
+  console.log('Provisioning AI Agent for location:', locationId);
+
+  const res = await fetch('https://services.leadconnectorhq.com/voice-ai/agents', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${access_token}`,
+      'Version': '2021-07-28',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error('AI Agent creation failed:', errorText);
+    throw new Error(`Failed to provision AI Agent: ${errorText}`);
+  }
+
+  const data = await res.json();
+  console.log('AI Agent created successfully.');
+  return { success: true, agent: data };
+}

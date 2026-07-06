@@ -1,10 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { LayoutDashboard, Users, Settings, Package, Lightbulb, ClipboardList, Database, LogOut, Building2, Globe, Kanban, Wrench, UserPlus, GraduationCap, PhoneCall } from "lucide-react";
+import { usePortalBrain } from "../../context/PortalBrainContext";
+import { LayoutDashboard, Users, Settings, Package, Lightbulb, ClipboardList, Database, LogOut, Building2, Globe, Kanban, Wrench, UserPlus, GraduationCap, PhoneCall, Cpu } from "lucide-react";
 
 export function PortalSidebar() {
   const location = useLocation();
   const { user, logout, hasPortalAccess } = useAuth();
+  const { openCommandBar } = usePortalBrain();
 
   const allLinks = [
     { name: "Portal Overview", path: "/portal", icon: LayoutDashboard, show: hasPortalAccess('user') },
@@ -42,7 +44,22 @@ export function PortalSidebar() {
         <p className="text-[10px] font-bold text-sky-500 mt-1 uppercase tracking-widest">Internal Operations</p>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
+      <div className="px-4 pt-6 pb-2">
+        <button 
+          onClick={openCommandBar}
+          className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-sky-500/10 to-indigo-500/10 border border-sky-500/20 hover:border-sky-500/40 text-sky-400 transition-all group"
+        >
+          <div className="flex items-center gap-3">
+            <Cpu className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <span className="text-sm font-bold">Portal Brain</span>
+          </div>
+          <div className="flex items-center gap-1 text-[10px] font-mono bg-sky-950 px-1.5 py-0.5 rounded border border-sky-900">
+            <span>⌘</span><span>K</span>
+          </div>
+        </button>
+      </div>
+      
+      <div className="flex-1 overflow-y-auto p-4 pt-2 space-y-6">
         <div>
           <h3 className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Core Systems</h3>
           <div className="space-y-1">

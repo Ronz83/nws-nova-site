@@ -26,6 +26,7 @@ import nicheBlueprintHandler from './api/ai/niche-blueprint.ts';
 import chatWidgetHandler from './api/ghl/chat-widget.ts';
 import stripeCheckoutHandler from './api/stripe/checkout.ts';
 import stripeWebhookHandler from './api/stripe/webhook.ts';
+import brainChatHandler from './api/brain/chat.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -65,6 +66,7 @@ app.get('/api/website/requests', websiteRequestsHandler);
 app.get('/api/ghl/feature-flags', featureFlagsHandler);
 app.post('/api/ai/niche-blueprint', nicheBlueprintHandler);
 app.get('/api/ghl/chat-widget', chatWidgetHandler);
+app.post('/api/brain/chat', brainChatHandler);
 
 // Map the dynamic results route
 app.get('/api/results/:id', (req, res) => {

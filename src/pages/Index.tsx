@@ -4,7 +4,7 @@ import Features from "../components/Features";
 import HowItWorks from "../components/HowItWorks";
 import LiveDemo from "../components/LiveDemo";
 import ROICalculator from "../components/ROICalculator";
-import Pricing from "../components/Pricing";
+
 import FAQ from "../components/FAQ";
 import CTA from "../components/CTA";
 import BookingModal from "../components/BookingModal";
@@ -33,8 +33,26 @@ export default function Index() {
       
       <ROICalculator onBookDemo={handleOpenBooking} />
       
-      {/* New Consultative Pricing Plans */}
-      <Pricing onBookDemo={handleOpenBooking} onSignUp={() => setIsSignupOpen(true)} />
+      {/* Consultation CTA */}
+      <section className="py-24 px-6 border-t border-border-base bg-bg-tint">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Custom Engagements</span>
+          <h2 className="text-3xl md:text-5xl tracking-tight leading-none text-text-base mt-3 font-sans font-black">
+            Every engagement starts with a conversation.
+          </h2>
+          <p className="mt-5 text-sm text-text-muted max-w-xl mx-auto leading-relaxed font-medium">
+            We don't do one-size-fits-all. Book a free 30-minute strategy call and we'll map exactly what your business needs.
+          </p>
+          <a
+            href="https://calendly.com/noveltywebsolutions"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-8 py-4 rounded-xl shadow-md transition-all duration-200"
+          >
+            Book Free Consultation
+          </a>
+        </div>
+      </section>
       
       <AppMarketplace onBookDemo={handleOpenBooking} />
 

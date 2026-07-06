@@ -33,7 +33,7 @@ const services = [
     badge: "AI Operations",
     title: "24/7 AI Voice Receptionist",
     tagline: "An AI employee that answers your phone, always.",
-    description: "Samantha is trained on your specific business — products, pricing, FAQs, and escalation rules. It handles unlimited concurrent inbound calls, qualifies leads, books calendar appointments, and syncs everything to your CRM automatically.",
+    description: "Samantha is trained on your specific business — products, pricing, FAQs, and escalation rules. It handles unlimited concurrent inbound calls, qualifies leads, books calendar appointments, and syncs everything to your CRM automatically. Meet Samantha — our showcase AI receptionist. When we set up your AI Receptionist Pack, you choose the name, the voice, and the personality that fits your brand.",
     price: "From $299/mo",
     priceNote: "+ $499 one-time setup",
     features: [
