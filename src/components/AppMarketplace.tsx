@@ -1,10 +1,6 @@
 import { CheckCircle, ArrowRight } from "lucide-react";
 
-interface AppMarketplaceProps {
-  onBookDemo: () => void;
-}
-
-export default function AppMarketplace({ onBookDemo }: AppMarketplaceProps) {
+export default function AppMarketplace() {
   const bullets = [
     "Pre-built for 6+ industries (Dental, Legal, Roofing, Handyman, Chiropractor, and more)",
     "Free tier to get started — no credit card required",

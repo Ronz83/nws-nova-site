@@ -54,7 +54,7 @@ export default function Index() {
         </div>
       </section>
       
-      <AppMarketplace onBookDemo={handleOpenBooking} />
+      <AppMarketplace />
 
       <FAQ />
       

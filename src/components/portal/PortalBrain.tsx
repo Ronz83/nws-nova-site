@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, Command, Bot, User, Cpu, Activity, Play, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Search, X, Command, Bot, User, Cpu, Activity, Play, CheckCircle2 } from 'lucide-react';
 import { usePortalBrain } from '../../context/PortalBrainContext';
 
 export default function PortalBrain() {
