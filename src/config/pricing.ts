@@ -18,8 +18,8 @@ export const PRICING_TIERS = [
     id: 'lite',
     name: 'Business OS Lite',
     description: 'Essential tools for solo operators and small teams to capture leads and automate basics.',
-    priceMonthly: 197,
-    priceYearly: 1970, // 2 months free
+    priceMonthly: 297,
+    priceYearly: 2970, // 2 months free
     stripeMonthly: STRIPE_PRICES.lite.monthly,
     stripeYearly: STRIPE_PRICES.lite.yearly,
     features: [
