@@ -722,7 +722,12 @@ export default function BusinessOS() {
                   <div className="mt-3 flex items-end gap-1">
                     <span className="text-3xl lg:text-4xl font-black text-white">{FREE_TIER.name}</span>
                   </div>
-                  <div className="text-3xl font-black font-mono text-white mt-1">$0</div>
+                  <div className="flex items-end gap-1 mt-1">
+                    <div className="text-3xl font-black font-mono text-white">$0</div>
+                    <div className="text-sm text-white/50 font-medium mb-1">
+                      /mo
+                    </div>
+                  </div>
                   <p className="mt-2 text-sm text-white/60 font-medium pb-4 border-b border-white/10">
                     {FREE_TIER.description}
                   </p>
