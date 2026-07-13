@@ -59,8 +59,9 @@ export default function LiveDemo() {
           {/* Voice demo */}
           <div className="border-2 border-slate-100 bg-white rounded-3xl p-8 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-lg hover:border-amber-200 transition-all duration-300">
             <div className="flex flex-col items-center">
-              <div className="p-4 border border-amber-100 rounded-2xl w-fit bg-amber-50 text-amber-600 mb-6 shadow-sm">
-                <PhoneCall size={24} />
+              <div className="mb-6 relative">
+                <img src="/avatars/avatar-1.png" alt="AI Receptionist" className="w-20 h-20 rounded-full object-cover shadow-sm ring-4 ring-amber-50" />
+                <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
               </div>
               <h3 className="text-lg font-black text-text-base mb-2">Test Live Voice</h3>
               <p className="text-sm text-text-muted leading-relaxed mb-6 font-medium">
@@ -69,9 +70,9 @@ export default function LiveDemo() {
             </div>
             <button
               onClick={handleOpenVoice}
-              className="text-sm uppercase tracking-[0.15em] font-bold border-2 border-slate-200 hover:border-amber-300 px-6 py-3 rounded-xl text-text-muted hover:text-amber-700 transition-all duration-300 w-full hover:bg-amber-50 cursor-pointer"
+              className="text-sm uppercase tracking-[0.15em] font-bold border-2 border-slate-200 hover:border-amber-300 px-6 py-3 rounded-xl text-text-muted hover:text-amber-700 transition-all duration-300 w-full hover:bg-amber-50 cursor-pointer flex items-center justify-center gap-2"
             >
-              Request a Live Demo
+              <PhoneCall size={16} /> Test AI Receptionist
             </button>
           </div>
         </div>
