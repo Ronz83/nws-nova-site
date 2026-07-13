@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Menu, X, Workflow, BookOpen, Briefcase, Mail } from "lucide-react";
 import Logo from "./Logo";
 import BookingModal from "./BookingModal";
-import { ThemeToggle } from "./ThemeToggle";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
@@ -39,14 +38,14 @@ export default function Navbar() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm uppercase tracking-[0.12em] font-bold transition-all duration-200 text-text-muted hover:text-text-base hover:bg-slate-50 dark:hover:bg-slate-800`}
+                      className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm uppercase tracking-[0.12em] font-bold transition-all duration-200 text-text-muted hover:text-text-base hover:bg-black/5`}
                     >
                       {item.label}
                     </a>
                   ) : (
                     <Link
                       to={item.href}
-                      className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-sky-700 dark:text-sky-400 bg-sky-50 dark:bg-sky-900/30" : "text-text-muted hover:text-text-base hover:bg-slate-50 dark:hover:bg-slate-800"}`}
+                      className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm uppercase tracking-[0.12em] font-bold transition-all duration-200 ${isActive(item.href) ? "text-accent-primary bg-accent-primary/10" : "text-text-muted hover:text-text-base hover:bg-black/5"}`}
                     >
                       {item.label}
                     </Link>
@@ -57,10 +56,9 @@ export default function Navbar() {
 
           {/* CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <ThemeToggle />
             <button
               onClick={() => setIsBookingOpen(true)}
-              className="text-sm uppercase tracking-[0.15em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-6 py-3.5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none hover:scale-[1.02]"
+              className="text-sm uppercase tracking-[0.15em] font-bold bg-accent-deep hover:bg-accent-primary text-white px-6 py-3.5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none hover:scale-[1.02]"
             >
               Book a Call
             </button>
@@ -69,7 +67,7 @@ export default function Navbar() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex lg:hidden p-2.5 text-text-base hover:bg-slate-100 rounded-xl border border-border-base cursor-pointer"
+            className="flex lg:hidden p-2.5 text-text-base hover:bg-black/5 rounded-xl border border-border-base cursor-pointer"
           >
             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -87,7 +85,7 @@ export default function Navbar() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-[0.15em] transition-all text-text-muted hover:text-text-base hover:bg-slate-50 dark:hover:bg-slate-800`}
+                      className={`flex items-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-[0.15em] transition-all text-text-muted hover:text-text-base hover:bg-black/5`}
                     >
                       {item.icon && <span className="text-text-muted">{item.icon}</span>}
                       {item.label}
@@ -96,7 +94,7 @@ export default function Navbar() {
                     <Link
                       to={item.href}
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-[0.15em] transition-all ${isActive(item.href) ? "text-sky-700 dark:text-sky-400 bg-sky-50 dark:bg-sky-900/30" : "text-text-muted hover:text-text-base hover:bg-slate-50 dark:hover:bg-slate-800"}`}
+                      className={`flex items-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-[0.15em] transition-all ${isActive(item.href) ? "text-accent-primary bg-accent-primary/10" : "text-text-muted hover:text-text-base hover:bg-black/5"}`}
                     >
                       {item.icon && <span className="text-text-muted">{item.icon}</span>}
                       {item.label}
