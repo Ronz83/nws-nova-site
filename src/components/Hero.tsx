@@ -18,12 +18,12 @@ export default function Hero(_props: HeroProps) {
   }, []);
 
   return (
-    <section className="relative min-h-[calc(100vh-96px)] flex items-center justify-center py-24 px-6 overflow-hidden bg-background">
+    <section className="relative min-h-[calc(100vh-96px)] flex items-center justify-center py-16 px-6 overflow-hidden bg-background">
 
-      {/* Rich ambient glows (Sun-drenched Caribbean) */}
-      <div className="absolute top-0 left-0 w-[800px] h-[800px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(0,210,193,0.15) 0%, transparent 70%)", transform: "translate(-30%, -30%)" }}></div>
-      <div className="absolute bottom-0 right-0 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(244,235,208,0.4) 0%, transparent 70%)", transform: "translate(30%, 30%)" }}></div>
-      <div className="absolute top-1/2 left-1/2 w-[900px] h-[900px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-30" style={{ background: "radial-gradient(circle, rgba(0,75,99,0.08) 0%, transparent 65%)" }}></div>
+      {/* Rich ambient glows */}
+      <div className="absolute top-0 left-0 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%)", transform: "translate(-30%, -30%)" }}></div>
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(245,158,11,0.14) 0%, transparent 70%)", transform: "translate(30%, 30%)" }}></div>
+      <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-30" style={{ background: "radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 65%)" }}></div>
 
       {/* Dot grid */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.35]" style={{ backgroundImage: "radial-gradient(#94a3b8 1px, transparent 1px)", backgroundSize: "28px 28px" }}></div>
@@ -34,12 +34,12 @@ export default function Hero(_props: HeroProps) {
         <div className="lg:col-span-5 flex flex-col text-left pt-4">
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 self-start border border-border-base bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-full text-[12px] tracking-[0.1em] uppercase font-bold text-accent-deep mb-8 shadow-sun-drenched">
-            <Sparkles size={12} className="text-accent-teal animate-pulse" />
+          <div className="inline-flex items-center gap-2 self-start border border-sky-200 bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-full text-sm tracking-[0.18em] uppercase font-bold text-sky-700 mb-8 shadow-sm">
+            <Sparkles size={12} className="text-sky-500 animate-pulse" />
             <span>Novelty Web Solutions · Operations Engine</span>
           </div>
 
-          <h1 className="font-display font-bold text-5xl sm:text-6xl md:text-7xl tracking-[-0.02em] leading-[1.1] text-text-base h-[140px] sm:h-[160px] md:h-[180px]">
+          <h1 className="font-display font-light text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[1.04] text-text-base h-[140px] sm:h-[160px] md:h-[180px]">
             Stop losing revenue to{" "}
             <br />
             <AnimatePresence mode="wait">
@@ -48,15 +48,16 @@ export default function Hero(_props: HeroProps) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="font-bold inline-block text-accent-teal"
+                className="italic font-normal inline-block"
+                style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #06b6d4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
               >
                 {ROTATING_WORDS[wordIdx]}
               </motion.span>
             </AnimatePresence>
           </h1>
 
-          <p className="font-sans font-semibold uppercase text-xs tracking-[0.1em] text-text-muted mt-6 flex items-center gap-2.5">
-            <span className="h-[2px] w-8 bg-accent-teal inline-block rounded-full"></span>
+          <p className="font-sans font-black uppercase text-sm tracking-[0.25em] text-text-muted mt-6 flex items-center gap-2.5">
+            <span className="h-[2px] w-8 bg-gradient-to-r from-sky-400 to-cyan-300 inline-block rounded-full"></span>
             Stop the operational bleeding
           </p>
 
@@ -67,8 +68,8 @@ export default function Hero(_props: HeroProps) {
           {/* Social proof pills */}
           <div className="mt-5 flex flex-wrap gap-3">
             {["24/7 AI Receptionist", "CRM Automation", "Caribbean-Based"].map(tag => (
-              <span key={tag} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-border-base text-xs font-bold text-text-muted shadow-sun-drenched label-caps">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent-teal inline-block"></span>
+              <span key={tag} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-sm font-bold text-slate-600 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
                 {tag}
               </span>
             ))}
@@ -78,13 +79,14 @@ export default function Hero(_props: HeroProps) {
           <div className="mt-8 flex flex-wrap gap-4 items-center">
             <a
               href="https://businessesos.com"
-              className="text-[12px] uppercase tracking-[0.1em] font-bold text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-sun-drenched hover:shadow-sun-drenched-lg cursor-pointer border-none hover:scale-[1.02] text-center bg-accent-primary hover:bg-accent-deep"
+              className="text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02] text-center"
+              style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)" }}
             >
               Start Your OS
             </a>
             <a
               href="#process"
-              className="text-[12px] uppercase tracking-[0.1em] font-bold border-2 border-border-base hover:border-accent-primary hover:text-accent-primary px-7 py-4 rounded-xl text-text-muted transition-all duration-200 hover:bg-black/5 cursor-pointer text-center"
+              className="text-sm uppercase tracking-[0.18em] font-bold border-2 border-slate-200 hover:border-sky-300 hover:text-accent-deep px-7 py-3.5 rounded-xl text-text-muted transition-all duration-200 hover:bg-sky-50 cursor-pointer text-center"
             >
               See How It Works
             </a>
