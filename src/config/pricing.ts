@@ -1,7 +1,7 @@
 export const STRIPE_PRICES = {
   lite: {
-    monthly: 'price_1Tp915KOur9dRgFb0bH8eP24',
-    yearly: 'price_1Tp915KOur9dRgFbqts8HEZW'
+    monthly: 'price_1TsoAAKOur9dRgFblJPCtIec',
+    yearly: 'price_1TsoABKOur9dRgFbZXIbF3cQ'
   },
   pro: {
     monthly: 'price_1Tp916KOur9dRgFbShITtJVO',
