@@ -24,9 +24,9 @@ export default function CTA({ onBookDemo }: CTAProps) {
               <span>Complimentary — No Commitment</span>
             </div>
 
-            <h2 className="font-display font-light text-4xl md:text-6xl tracking-tight leading-[1.06] text-white max-w-3xl">
+            <h2 className="font-display font-extrabold text-4xl md:text-6xl tracking-[-0.04em] leading-[1.06] text-white max-w-3xl">
               Ready to put your operations on{" "}
-              <span className="italic text-amber-300">autopilot?</span>
+              <span className="text-amber-300">Autopilot?</span>
             </h2>
 
             <p className="text-sm text-sky-100 max-w-md leading-relaxed font-medium">

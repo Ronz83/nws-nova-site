@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, ChevronDown, Phone, Layers, Database, Workflow, BookOpen, Briefcase, Mail, DollarSign } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, Layers, Database, Workflow, BookOpen, Briefcase, Mail } from "lucide-react";
 import Logo from "./Logo";
 import BookingModal from "./BookingModal";
 import { Link, useLocation } from "react-router-dom";
@@ -18,7 +18,6 @@ const navItems = [
   { label: "Business OS", href: "/services/business-os", icon: <Workflow size={14} /> },
   { label: "Portfolio", href: "/portfolio", icon: <Briefcase size={14} /> },
   { label: "Blog",      href: "/blog",      icon: <BookOpen size={14} /> },
-  { label: "Pricing",   href: "/pricing",   icon: <DollarSign size={14} /> },
   { label: "About",     href: "/about",     icon: null },
   { label: "Contact",   href: "/contact",   icon: <Mail size={14} /> },
 ];

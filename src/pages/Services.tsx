@@ -107,8 +107,8 @@ export default function Services() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-sky-100 blur-[120px] rounded-full pointer-events-none opacity-70"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">What We Build</span>
-          <h1 className="font-display font-light text-5xl md:text-7xl tracking-tight leading-[1.04] text-text-base mt-3">
-            Four services. <span className="italic text-accent-primary">One system.</span>
+          <h1 className="font-display font-extrabold text-5xl md:text-7xl tracking-[-0.04em] leading-[1.04] text-text-base mt-3">
+            Four Services. <span className="text-accent-primary">One System.</span>
           </h1>
           <p className="mt-5 text-sm text-text-muted max-w-xl mx-auto leading-relaxed font-medium">
             Every NWS engagement is built around the same philosophy — automate the operations so your team focuses on the work that actually moves the business forward.

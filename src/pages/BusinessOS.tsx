@@ -283,10 +283,9 @@ export default function BusinessOS() {
               </div>
 
               {/* H1 — Instrument Serif italic, sky gradient text */}
-              <h1 className="font-display font-light text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[1.04] text-white">
+              <h1 className="font-display font-extrabold text-5xl sm:text-6xl md:text-7xl tracking-[-0.04em] leading-[1.04] text-white">
                 The Business{" "}
                 <span
-                  className="italic font-normal"
                   style={{
                     backgroundImage: "linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #06b6d4 100%)",
                     WebkitBackgroundClip: "text",
@@ -297,7 +296,7 @@ export default function BusinessOS() {
                 >
                   Operating System
                 </span>{" "}
-                built for the Caribbean.
+                Built for the Caribbean.
               </h1>
 
               <p className="font-sans font-black uppercase text-sm tracking-[0.25em] text-sky-400 mt-6 flex items-center gap-2.5">
@@ -862,10 +861,10 @@ export default function BusinessOS() {
                 <span className="text-sm uppercase tracking-[0.22em] font-bold text-sky-300 mb-6 block">
                   Start Today
                 </span>
-                <h2 className="font-display font-light text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.04] text-white mb-6">
+                <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-[-0.04em] leading-[1.04] text-white mb-6">
                   Ready to run your business{" "}
                   <span
-                    className="italic font-normal pr-2"
+                    className="pr-2"
                     style={{
                       backgroundImage: "linear-gradient(135deg, #38bdf8 0%, #7dd3fc 100%)",
                       WebkitBackgroundClip: "text",
@@ -874,7 +873,7 @@ export default function BusinessOS() {
                       display: "inline-block",
                     }}
                   >
-                    smarter?
+                    Smarter?
                   </span>
                 </h2>
                 <p className="text-white/70 text-lg sm:text-xl max-w-xl mx-auto font-medium mb-10">

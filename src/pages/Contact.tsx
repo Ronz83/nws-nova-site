@@ -48,8 +48,8 @@ export default function Contact() {
         <div className="absolute top-0 right-0 w-80 h-80 bg-sky-100 blur-[120px] rounded-full pointer-events-none opacity-70"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Get in Touch</span>
-          <h1 className="font-display font-light text-5xl md:text-7xl tracking-tight leading-[1.04] text-text-base mt-3">
-            Let's build something <span className="italic text-accent-primary">remarkable.</span>
+          <h1 className="font-display font-extrabold text-5xl md:text-7xl tracking-[-0.04em] leading-[1.04] text-text-base mt-3">
+            Let's Build Something <span className="text-accent-primary">Remarkable.</span>
           </h1>
           <p className="mt-5 text-sm text-text-muted max-w-xl mx-auto leading-relaxed font-medium">
             Send us a message, book a strategy call, or reach out directly. We respond to all inquiries within one business day.

@@ -81,8 +81,8 @@ export default function Portfolio() {
         <div className="absolute inset-0 grid-overlay opacity-[0.25] pointer-events-none"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Use Case Templates</span>
-          <h1 className="font-display font-light text-5xl md:text-7xl tracking-tight leading-[1.04] text-text-base mt-3">
-            Real solutions. <span className="italic text-accent-primary">Real impact.</span>
+          <h1 className="font-display font-extrabold text-5xl md:text-7xl tracking-[-0.04em] leading-[1.04] text-text-base mt-3">
+            Real Solutions. <span className="text-accent-primary">Real Impact.</span>
           </h1>
           <p className="mt-5 text-sm text-text-muted max-w-xl mx-auto leading-relaxed font-medium">
             Explore how NWS automation systems and AI agents solve specific operational bottlenecks across different industries.

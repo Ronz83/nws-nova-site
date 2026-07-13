@@ -38,8 +38,8 @@ export default function Samantha() {
               <Mic size={11} className="animate-pulse text-sky-500" />
               AI Employee — Voice & Chat
             </div>
-            <h1 className="font-display font-light text-5xl md:text-6xl tracking-tight leading-[1.04] text-text-base">
-              Meet <span className="italic font-normal text-accent-primary">Samantha.</span>
+            <h1 className="font-display font-extrabold text-5xl md:text-6xl tracking-[-0.04em] leading-[1.04] text-text-base">
+              Meet <span className="text-accent-primary">Samantha.</span>
             </h1>
             <p className="mt-4 text-sm text-text-muted leading-relaxed font-medium max-w-md">
               Samantha is your always-on AI employee. It answers inbound calls, chats with website visitors, qualifies leads, and syncs everything to your CRM — without ever taking a lunch break.

@@ -89,8 +89,8 @@ export default function Blog() {
         <div className="absolute inset-0 grid-overlay opacity-[0.25] pointer-events-none"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-sm uppercase tracking-[0.2em] text-sky-600 font-bold">Insights & Guides</span>
-          <h1 className="font-display font-light text-5xl md:text-7xl tracking-tight leading-[1.04] text-text-base mt-3">
-            The NWS <span className="italic text-accent-primary">Playbook.</span>
+          <h1 className="font-display font-extrabold text-5xl md:text-7xl tracking-[-0.04em] leading-[1.04] text-text-base mt-3">
+            The NWS <span className="text-accent-primary">Playbook.</span>
           </h1>
           <p className="mt-5 text-sm text-text-muted max-w-xl mx-auto leading-relaxed font-medium">
             Practical guides, case studies, and insights for Caribbean business owners looking to automate operations and grow intelligently.

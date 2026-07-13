@@ -6,16 +6,7 @@ interface HeroProps {}
 
 export default function Hero(_props: HeroProps) {
   return (
-    <section className="relative min-h-[calc(100vh-96px)] flex items-center justify-center py-16 px-6 overflow-hidden" style={{ background: "linear-gradient(160deg, #f0f9ff 0%, #ffffff 40%, #fffbeb 100%)" }}>
-
-      {/* Rich ambient glows */}
-      <div className="absolute top-0 left-0 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%)", transform: "translate(-30%, -30%)" }}></div>
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(245,158,11,0.14) 0%, transparent 70%)", transform: "translate(30%, 30%)" }}></div>
-      <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-30" style={{ background: "radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 65%)" }}></div>
-
-      {/* Dot grid */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.35]" style={{ backgroundImage: "radial-gradient(#94a3b8 1px, transparent 1px)", backgroundSize: "28px 28px" }}></div>
-
+    <section className="relative min-h-[calc(100vh-96px)] flex items-center justify-center py-16 px-6">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10">
 
         {/* ── Left Column ── */}
@@ -28,13 +19,12 @@ export default function Hero(_props: HeroProps) {
           </div>
 
           {/* Headline */}
-          <h1 className="font-display font-light text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[1.04] text-text-base">
-            Stop losing revenue to{" "}
+          <h1 className="font-display font-extrabold text-5xl sm:text-6xl md:text-7xl tracking-[-0.04em] leading-[1.04] text-text-base">
+            Stop Losing Revenue to<br />
             <span
-              className="italic font-normal"
               style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #06b6d4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
             >
-              missed calls.
+              Missed Calls.
             </span>
           </h1>
 

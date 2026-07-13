@@ -25,8 +25,8 @@ export default function About() {
             <span>Company Profile / Vision</span>
           </div>
 
-          <h1 className="font-display font-light text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[1.02] text-text-base">
-            Bridging the gap between <span className="italic font-normal text-accent-primary">innovation</span> and execution.
+          <h1 className="font-display font-extrabold text-5xl sm:text-6xl md:text-7xl tracking-[-0.04em] leading-[1.02] text-text-base">
+            Bridging the Gap Between <span className="text-accent-primary">Innovation</span> and Execution.
           </h1>
 
           <p className="mt-6 text-sm sm:text-base text-text-muted leading-relaxed font-medium max-w-2xl">

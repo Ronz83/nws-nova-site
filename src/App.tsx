@@ -34,7 +34,6 @@ const Services    = lazy(() => import("./pages/Services"));
 const SamanthaAI  = lazy(() => import("./pages/SamanthaAI"));
 const Portfolio   = lazy(() => import("./pages/Portfolio"));
 const Contact     = lazy(() => import("./pages/Contact"));
-const PricingPage = lazy(() => import("./pages/PricingPage"));
 const Blog        = lazy(() => import("./pages/Blog"));
 const Demo        = lazy(() => import("./pages/Demo"));
 const Privacy     = lazy(() => import("./pages/Privacy"));
@@ -82,15 +81,25 @@ function PageLoader() {
 // Layout for the main public website (includes Nav, Footer, and Samantha)
 function PublicLayout() {
   return (
-    <div className="min-h-screen bg-bg-base text-text-base overflow-x-hidden relative">
-      <div className="absolute inset-0 grid-overlay opacity-[0.35] pointer-events-none"></div>
-      <Navbar />
-      <main className="relative z-10">
-        <Suspense fallback={<PageLoader />}>
-          <Outlet />
-        </Suspense>
-      </main>
-      <Footer />
+    <div className="min-h-screen text-text-base overflow-x-hidden relative" style={{ background: "linear-gradient(160deg, #f0f9ff 0%, #ffffff 40%, #fffbeb 100%)" }}>
+      
+      {/* Fixed Ambient Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-[700px] h-[700px] rounded-full" style={{ background: "radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%)", transform: "translate(-30%, -30%)" }}></div>
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full" style={{ background: "radial-gradient(circle, rgba(245,158,11,0.14) 0%, transparent 70%)", transform: "translate(30%, 30%)" }}></div>
+        <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] rounded-full -translate-x-1/2 -translate-y-1/2 opacity-30" style={{ background: "radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 65%)" }}></div>
+        <div className="absolute inset-0 opacity-[0.35]" style={{ backgroundImage: "radial-gradient(#94a3b8 1px, transparent 1px)", backgroundSize: "28px 28px" }}></div>
+      </div>
+
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">
+          <Suspense fallback={<PageLoader />}>
+            <Outlet />
+          </Suspense>
+        </main>
+        <Footer />
+      </div>
       <GlobalSamantha />
     </div>
   );
@@ -155,7 +164,6 @@ export default function App() {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Suspense fallback={<PageLoader />}><BusinessOS /></Suspense>} />
-          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/smart-start" element={<Suspense fallback={<PageLoader />}><SmartStart /></Suspense>} />
           <Route path="/ai-receptionist" element={<Suspense fallback={<PageLoader />}><AIReceptionist /></Suspense>} />
           <Route path="/business-audit" element={<Suspense fallback={<PageLoader />}><BusinessAudit /></Suspense>} />
@@ -172,7 +180,6 @@ export default function App() {
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Index />} />
           
-          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/portfolio" element={<Portfolio />} />
