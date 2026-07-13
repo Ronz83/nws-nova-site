@@ -1,12 +1,24 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import WorkbenchWizard from "./workbench/WorkbenchWizard";
+
+const ROTATING_WORDS = ["missed calls.", "bad follow-ups.", "slow quoting.", "tool chaos."];
 
 interface HeroProps {}
 
 export default function Hero(_props: HeroProps) {
+  const [wordIdx, setWordIdx] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIdx((prev) => (prev + 1) % ROTATING_WORDS.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="relative min-h-[calc(100vh-96px)] flex items-center justify-center py-16 px-6 overflow-hidden" style={{ background: "linear-gradient(160deg, #f0f9ff 0%, #ffffff 40%, #fffbeb 100%)" }}>
+    <section className="relative min-h-[calc(100vh-96px)] flex items-center justify-center py-16 px-6 overflow-hidden bg-background">
 
       {/* Rich ambient glows */}
       <div className="absolute top-0 left-0 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%)", transform: "translate(-30%, -30%)" }}></div>
@@ -27,15 +39,21 @@ export default function Hero(_props: HeroProps) {
             <span>Novelty Web Solutions · Operations Engine</span>
           </div>
 
-          {/* Headline */}
-          <h1 className="font-display font-light text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[1.04] text-text-base">
+          <h1 className="font-display font-light text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[1.04] text-text-base h-[140px] sm:h-[160px] md:h-[180px]">
             Stop losing revenue to{" "}
-            <span
-              className="italic font-normal"
-              style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #06b6d4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
-            >
-              missed calls.
-            </span>
+            <br />
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={wordIdx}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="italic font-normal inline-block"
+                style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #06b6d4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+              >
+                {ROTATING_WORDS[wordIdx]}
+              </motion.span>
+            </AnimatePresence>
           </h1>
 
           <p className="font-sans font-black uppercase text-sm tracking-[0.25em] text-text-muted mt-6 flex items-center gap-2.5">
@@ -43,9 +61,8 @@ export default function Hero(_props: HeroProps) {
             Stop the operational bleeding
           </p>
 
-          {/* Description */}
           <p className="mt-6 text-base sm:text-lg text-text-muted leading-relaxed font-medium max-w-lg">
-            Every missed call is a lost deal. Every manual follow-up drains your time and sanity. We deploy custom AI employees and high-converting websites that plug the leaks in your operations and capture every lead, 24/7.
+            Every missed call is a lost deal. Every manual follow-up drains your time and sanity. We deploy custom AI employees and the ultimate Business Operating System to capture every lead in the Caribbean, 24/7.
           </p>
 
           {/* Social proof pills */}
@@ -61,11 +78,11 @@ export default function Hero(_props: HeroProps) {
           {/* Actions */}
           <div className="mt-8 flex flex-wrap gap-4 items-center">
             <a
-              href="#pricing"
+              href="https://businessesos.com"
               className="text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02] text-center"
               style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)" }}
             >
-              Get Your Free Business Account
+              Start Your OS
             </a>
             <a
               href="#process"
