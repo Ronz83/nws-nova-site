@@ -21,9 +21,11 @@ export default function Footer() {
           {/* Links */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-sm">
             <div className="flex flex-col gap-3">
-              <span className="uppercase tracking-[0.2em] text-sky-700 font-bold text-sm mb-1">Products</span>
-              <a href="https://businessesos.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Business OS</a>
-              <span className="text-slate-500 opacity-60">TicketFlows (Soon)</span>
+              <span className="uppercase tracking-[0.2em] text-sky-700 font-bold text-sm mb-1">Services</span>
+              <Link to="/services"          className="hover:text-white transition-colors">Website Design</Link>
+              <Link to="/services/samantha-ai"      className="hover:text-white transition-colors">AI Voice Receptionist (Samantha)</Link>
+              <Link to="/services#crm"      className="hover:text-white transition-colors">CRM & Automations</Link>
+              <Link to="/services#reputation" className="hover:text-white transition-colors">Reputation Mgmt</Link>
             </div>
             <div className="flex flex-col gap-3">
               <span className="uppercase tracking-[0.2em] text-sky-700 font-bold text-sm mb-1">Company</span>
@@ -33,7 +35,9 @@ export default function Footer() {
               <Link to="/contact"    className="hover:text-white transition-colors">Contact</Link>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="uppercase tracking-[0.2em] text-sky-700 font-bold text-sm mb-1">Resources</span>
+              <span className="uppercase tracking-[0.2em] text-sky-700 font-bold text-sm mb-1">Product</span>
+              <Link to="/services/samantha-ai"       className="hover:text-white transition-colors">Demo the AI Agent</Link>
+              <Link to="/pricing"    className="hover:text-white transition-colors">Pricing</Link>
               <a href="/#roi"        className="hover:text-white transition-colors">ROI Calculator</a>
               <a href="/#faq"        className="hover:text-white transition-colors">FAQ</a>
             </div>

@@ -30,6 +30,8 @@ import Index from "./pages/Index";
 
 // Lazy-load all other pages — loaded on demand, not on initial bundle
 const About       = lazy(() => import("./pages/About"));
+const Services    = lazy(() => import("./pages/Services"));
+const SamanthaAI  = lazy(() => import("./pages/SamanthaAI"));
 const Portfolio   = lazy(() => import("./pages/Portfolio"));
 const Contact     = lazy(() => import("./pages/Contact"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
@@ -170,11 +172,16 @@ export default function App() {
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Index />} />
           
+          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<Blog />} />
+          
+          <Route path="/services" element={<Services />} />
+          <Route path="/services/samantha-ai" element={<SamanthaAI />} />
+          <Route path="/services/business-os" element={<Suspense fallback={<PageLoader />}><BusinessOS /></Suspense>} />
           
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />

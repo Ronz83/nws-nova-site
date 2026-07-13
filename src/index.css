@@ -28,23 +28,23 @@
 }
 
 /* ─────────────────────────────────────────
-   DARK MODE THEME (Unified Aesthetic)
+   DARK FUNNEL MARKETING THEME (Overrides)
 ───────────────────────────────────────── */
-.dark {
+.theme-dark-funnel {
   /* Core Variables */
-  --bg-base: #070f1a;
-  --bg-tint: #041021; /* deep navy tint */
-  --text-base: #f0f9ff; /* sky-50 */
-  --text-muted: #7dd3fc; /* sky-300 - no grey! */
-  --border-base: #0c4a6e; /* sky-950 - no grey! */
-  --accent-primary: #0ea5e9;
-  --accent-deep: #38bdf8;
-  --accent-amber: #f59e0b;
-  --accent-glow: rgba(14, 165, 233, 0.15);
-  --accent-warm: rgba(245, 158, 11, 0.08);
-  --card-bg: #041021;
-  --card-hover: #082f49; /* sky-900 - no grey! */
-  --glass-bg: rgba(7, 15, 26, 0.7);
+  --bg-base: #0A0F1C;
+  --bg-tint: #111928;
+  --text-base: #ffffff;
+  --text-muted: #94a3b8;
+  --border-base: #1e293b;
+  --accent-primary: #FF6B4D;
+  --accent-deep: #E65A3F;
+  --accent-amber: #FF8B73;
+  --accent-glow: rgba(255, 107, 77, 0.15);
+  --accent-warm: rgba(255, 107, 77, 0.08);
+  --card-bg: #111928;
+  --card-hover: #1e293b;
+  --glass-bg: rgba(17, 25, 40, 0.7);
 
   /* Tailwind v4 @theme color overrides */
   --color-bg-base: var(--bg-base);
