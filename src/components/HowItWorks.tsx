@@ -167,7 +167,7 @@ export default function HowItWorks() {
                       <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                         <div className="w-[99%] h-full bg-amber-400"></div>
                       </div>
-                      <p className="text-sm text-text-muted mt-3">You are approaching your free tier limit.</p>
+                      <p className="text-sm text-text-muted mt-3">You are approaching your monthly limit.</p>
                     </div>
 
                     {/* Upgrade Prompt */}

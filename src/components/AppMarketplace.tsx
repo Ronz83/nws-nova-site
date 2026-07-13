@@ -3,7 +3,7 @@ import { CheckCircle, ArrowRight } from "lucide-react";
 export default function AppMarketplace() {
   const bullets = [
     "Pre-built for 6+ industries (Dental, Legal, Roofing, Handyman, Chiropractor, and more)",
-    "Free tier to get started — no credit card required",
+    "Get started quickly and seamlessly — no credit card required",
     "Full AI stack: Voice Receptionist, CRM, Reputation Management, Unified Inbox",
   ];
 

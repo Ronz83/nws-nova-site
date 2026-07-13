@@ -13,7 +13,7 @@ const htmlContent = `
 <!-- ─── NAVBAR ─── -->
 <nav class="navbar" id="navbar">
     <div class="container">
-        <a href="#" class="logo">NWS<span>.</span></a>
+        <a href="/" class="logo">NWS<span>.</span></a>
         <div class="nav-links">
             <a href="#problem">The Problem</a>
             <a href="#solution">Solution</a>
