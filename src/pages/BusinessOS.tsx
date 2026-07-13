@@ -16,7 +16,7 @@ import {
   Calendar,
 } from "lucide-react";
 import BookingModal from "../components/BookingModal";
-import { PRICING_TIERS, FREE_TIER } from "../config/pricing";
+import { PRICING_TIERS } from "../config/pricing";
 import { redirectToCheckout } from "../lib/stripe";
 import { useNavigate } from "react-router-dom";
 
@@ -709,52 +709,7 @@ export default function BusinessOS() {
                 </div>
               </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-
-              {/* Free Tier */}
-              <div
-                className="rounded-[24px] p-6 lg:p-8 flex flex-col gap-5"
-                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}
-              >
-                <div>
-                  <span className="text-sm uppercase tracking-[0.2em] text-white/50 font-bold">Basic Access</span>
-                  <div className="mt-3 flex items-end gap-1">
-                    <span className="text-3xl lg:text-4xl font-black text-white">{FREE_TIER.name}</span>
-                  </div>
-                  <div className="flex items-end gap-1 mt-1">
-                    <div className="text-3xl font-black font-mono text-white">$0</div>
-                    <div className="text-sm text-white/50 font-medium mb-1">
-                      /mo
-                    </div>
-                  </div>
-                  <p className="mt-2 text-sm text-white/60 font-medium pb-4 border-b border-white/10">
-                    {FREE_TIER.description}
-                  </p>
-                </div>
-                <div className="flex flex-col gap-3 flex-grow">
-                  {FREE_TIER.features.map((f) => (
-                    <div key={f} className="flex items-start gap-3 text-sm text-white/60 font-medium">
-                      <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
-                      >
-                        <CheckCircle size={11} className="text-white/40" />
-                      </div>
-                      {f}
-                    </div>
-                  ))}
-                </div>
-                <button
-                  onClick={() => handleCheckout('free')}
-                  className="mt-2 text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-4 rounded-xl transition-all duration-200 cursor-pointer"
-                  style={{ border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.06)" }}
-                >
-                  Start Free
-                </button>
-              </div>
-
-              {/* Paid Tiers */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto">
               {PRICING_TIERS.map(plan => {
                 const currentPrice = isYearly ? plan.priceYearly : plan.priceMonthly;
                 const formattedPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(currentPrice);

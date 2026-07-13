@@ -76,17 +76,3 @@ export const PRICING_TIERS = [
   }
 ];
 
-export const FREE_TIER = {
-  id: 'free',
-  name: 'Business OS Free',
-  description: 'Your business deserves better tools. Start free and upgrade when you are ready.',
-  priceMonthly: 0,
-  features: [
-    'Basic CRM Shell (50 Contacts)',
-    '1 Pipeline View (Read-Only)',
-    'Unified Inbox Preview',
-    'Basic Website Template',
-    'CB Connect Directory Listing',
-    'Interactive Business Audit Report'
-  ]
-};
