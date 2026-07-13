@@ -331,7 +331,7 @@ export default function BusinessOS() {
                   className="text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02] text-center"
                   style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)" }}
                 >
-                  Start Free Trial
+                  Get Started
                 </a>
                 <button
                   onClick={onBookDemo}
@@ -690,7 +690,7 @@ export default function BusinessOS() {
                 Plans that grow with your business.
               </h2>
               <p className="mt-4 text-lg text-white/70 font-medium max-w-2xl mx-auto">
-                Start with what you need. Scale as you grow. All plans include a 14-day free trial.
+                Start with what you need. Scale as you grow.
               </p>
               <div className="flex justify-center items-center mt-8">
                 <div className="flex items-center justify-center gap-3">
@@ -838,14 +838,14 @@ export default function BusinessOS() {
                 </h2>
                 <p className="text-white/70 text-lg sm:text-xl max-w-xl mx-auto font-medium mb-10">
                   Join 50+ Caribbean businesses already running on NWS Business OS.
-                  14-day free trial. No credit card required.
+                  Get set up and start automating today.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
                   <a
                     href="#pricing"
                     className="text-sm uppercase tracking-[0.18em] font-bold bg-white text-sky-800 px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:bg-sky-50 cursor-pointer border-none hover:scale-[1.02]"
                   >
-                    Start Free Trial
+                    Get Started
                   </a>
                   <button
                     onClick={onBookDemo}
