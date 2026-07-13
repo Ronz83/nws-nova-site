@@ -42,7 +42,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
         {/* Content / Iframe */}
         <div className="flex-1 w-full relative bg-slate-50/30">
           <iframe
-            src="https://home.noveltywebsolutions.com/widget/booking/7XM9CtPbOpvqKfdXXFeq"
+            src="https://home.noveltywebsolutions.com/widget/booking/nws_discovery-call"
             style={{ width: "100%", height: "100%", border: "none" }}
             scrolling="yes"
             id="nws-CRM-booking-iframe"

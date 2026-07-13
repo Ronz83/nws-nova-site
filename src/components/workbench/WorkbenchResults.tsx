@@ -413,7 +413,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                     ))}
                   </div>
                 </div>
-                <a href="https://api.leadconnectorhq.com/widget/booking/7XM9CtPbOpvqKfdXXFeq" target="_blank" rel="noreferrer"
+                <a href="https://api.leadconnectorhq.com/widget/booking/nws_discovery-call" target="_blank" rel="noreferrer"
                   className="w-full flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.12em] font-black text-white py-3.5 rounded-xl transition-all hover:opacity-90 no-underline"
                   style={{ background:`linear-gradient(135deg,#0c4a6e,${plan.color})`, display:'flex' }}>
                   Book Free Strategy Call <ArrowRight size={12} />
@@ -642,7 +642,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                     <p className="text-white/75 text-[12px] leading-relaxed mb-4">
                       Book a free 30-minute call. Ronald reviews your report live, demos your agent running on {businessName}'s data, and gives you an exact timeline to go live.
                     </p>
-                    <a href="https://api.leadconnectorhq.com/widget/booking/7XM9CtPbOpvqKfdXXFeq" target="_blank" rel="noreferrer"
+                    <a href="https://api.leadconnectorhq.com/widget/booking/nws_discovery-call" target="_blank" rel="noreferrer"
                       className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.12em] font-black text-white py-3 px-6 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
                       style={{ background: 'linear-gradient(135deg, #0369a1, #0ea5e9)' }}>
                       Book Free Strategy Call <ArrowRight size={12} />
