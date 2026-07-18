@@ -29,7 +29,7 @@ const faqs: FAQItem[] = [
   },
   {
     q: "Is there a setup fee?",
-    a: "Yes. Website design projects start at $1,500 (one-time). The AI setup fee is $499 for Solo and $799 for Business — this covers voice tuning, CRM mapping, and a launch testing sprint.",
+    a: "Website design projects are custom-scoped based on the build, integrations, and content requirements. For AI offers, the setup fee is $499 for Solo and $799 for Business — this covers voice tuning, CRM mapping, and a launch testing sprint.",
   },
 ];
 

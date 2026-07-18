@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Phone, Database, Workflow, Sparkles, Layers, ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface BentoItemProps {
   className?: string;
@@ -106,10 +107,15 @@ export default function Features() {
             </div>
             <div className="flex flex-col gap-2 w-full border-t border-slate-100 pt-3.5">
               <div className="flex justify-between items-center text-sm font-mono text-text-muted/60 font-bold">
-                <span>PACKAGES FROM</span>
-                <span className="text-text-base font-bold">$1,500</span>
+                <span>CUSTOM SERVICE</span>
+                <span className="text-text-base font-bold">Scope on request</span>
               </div>
-              <span className="text-amber-600 uppercase tracking-widest font-bold group-hover:underline text-sm text-right">View Process →</span>
+              <Link
+                to="/services"
+                className="text-amber-600 uppercase tracking-widest font-bold group-hover:underline text-sm text-right"
+              >
+                View Service →
+              </Link>
             </div>
           </BentoCard>
 
