@@ -17,8 +17,9 @@ import {
 } from "lucide-react";
 import BookingModal from "../components/BookingModal";
 import { PRICING_TIERS } from "../config/pricing";
+import { BOOKING_URL } from "../config/links";
 import { redirectToCheckout } from "../lib/stripe";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    DESIGN TOKENS — Dark Tech Variant
@@ -203,6 +204,9 @@ export default function BusinessOS() {
   const [isYearly, setIsYearly] = useState(false);
   const [loading, setLoading] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const checkoutState = searchParams.get("checkout");
+  const selectedTier = searchParams.get("tier");
 
   const onBookDemo = () => setIsBookingOpen(true);
 
@@ -230,6 +234,35 @@ export default function BusinessOS() {
   return (
     <>
       <main className="relative overflow-x-hidden" style={{ background: "#080f1e" }}>
+        {checkoutState && (
+          <section className="px-6 pt-6">
+            <div
+              className="max-w-5xl mx-auto rounded-2xl border px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+              style={checkoutState === "success"
+                ? { background: "rgba(16, 185, 129, 0.12)", borderColor: "rgba(52, 211, 153, 0.35)", color: "#d1fae5" }
+                : { background: "rgba(245, 158, 11, 0.12)", borderColor: "rgba(251, 191, 36, 0.35)", color: "#fde68a" }}
+            >
+              <div>
+                <p className="text-sm uppercase tracking-[0.18em] font-bold">
+                  {checkoutState === "success" ? "Checkout Complete" : "Checkout Canceled"}
+                </p>
+                <p className="text-sm mt-1 text-white/80">
+                  {checkoutState === "success"
+                    ? `Your ${selectedTier ? `${selectedTier} ` : ""}subscription request was submitted successfully. Book your onboarding call and we will help you get live fast.`
+                    : "No charge was made. You can review the plans below or book a strategy call if you want help choosing the right setup."}
+                </p>
+              </div>
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center text-sm uppercase tracking-[0.18em] font-bold bg-white text-sky-800 px-5 py-3 rounded-xl shadow-md"
+              >
+                Book Onboarding Call
+              </a>
+            </div>
+          </section>
+        )}
 
         {/* ══════════════════════════════════════════════════
             SECTION 1 · HERO — full dark navy

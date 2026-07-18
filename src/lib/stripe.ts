@@ -6,6 +6,15 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export async function redirectToCheckout(priceId: string, customerEmail?: string, industry?: string, tier?: string) {
   try {
+    const currentUrl = new URL(window.location.href);
+    const successUrl = new URL(currentUrl.pathname, window.location.origin);
+    successUrl.searchParams.set('checkout', 'success');
+    if (tier) successUrl.searchParams.set('tier', tier);
+
+    const cancelUrl = new URL(currentUrl.pathname, window.location.origin);
+    cancelUrl.searchParams.set('checkout', 'canceled');
+    cancelUrl.hash = 'pricing';
+
     const response = await fetch('/api/stripe/checkout', {
       method: 'POST',
       headers: {
@@ -15,7 +24,9 @@ export async function redirectToCheckout(priceId: string, customerEmail?: string
         priceId,
         customerEmail,
         industry,
-        tier
+        tier,
+        successUrl: successUrl.toString(),
+        cancelUrl: cancelUrl.toString(),
       }),
     });
 

@@ -19,10 +19,14 @@ export default function Index() {
     setIsBookingOpen(true);
   };
 
+  const handleOpenSignup = () => {
+    setIsSignupOpen(true);
+  };
+
   return (
     <div className="relative">
       {/* Home Sections */}
-      <Hero />
+      <Hero onSignUp={handleOpenSignup} />
       
       <Features />
       
@@ -43,14 +47,12 @@ export default function Index() {
           <p className="mt-5 text-sm text-text-muted max-w-xl mx-auto leading-relaxed font-medium">
             We don't do one-size-fits-all. Book a free 30-minute strategy call and we'll map exactly what your business needs.
           </p>
-          <a
-            href="https://calendly.com/noveltywebsolutions"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={handleOpenBooking}
             className="mt-8 inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-8 py-4 rounded-xl shadow-md transition-all duration-200"
           >
             Book Free Consultation
-          </a>
+          </button>
         </div>
       </section>
       

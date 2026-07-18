@@ -2,9 +2,11 @@ import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import WorkbenchWizard from "./workbench/WorkbenchWizard";
 
-interface HeroProps {}
+interface HeroProps {
+  onSignUp: () => void;
+}
 
-export default function Hero(_props: HeroProps) {
+export default function Hero({ onSignUp }: HeroProps) {
   return (
     <section className="relative min-h-[calc(100vh-96px)] flex items-center justify-center py-16 px-6">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10">
@@ -50,13 +52,13 @@ export default function Hero(_props: HeroProps) {
 
           {/* Actions */}
           <div className="mt-8 flex flex-wrap gap-4 items-center">
-            <a
-              href="#pricing"
+            <button
+              onClick={onSignUp}
               className="text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02] text-center"
               style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)" }}
             >
               Get Your Free Business Account
-            </a>
+            </button>
             <a
               href="#process"
               className="text-sm uppercase tracking-[0.18em] font-bold border-2 border-slate-200 hover:border-sky-300 hover:text-accent-deep px-7 py-3.5 rounded-xl text-text-muted transition-all duration-200 hover:bg-sky-50 cursor-pointer text-center"

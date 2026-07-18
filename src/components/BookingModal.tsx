@@ -1,4 +1,5 @@
 import { X, Calendar } from "lucide-react";
+import { BOOKING_URL } from "../config/links";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -42,12 +43,23 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
         {/* Content / Iframe */}
         <div className="flex-1 w-full relative bg-slate-50/30">
           <iframe
-            src="https://home.noveltywebsolutions.com/widget/booking/nws_discovery-call"
+            src={BOOKING_URL}
             style={{ width: "100%", height: "100%", border: "none" }}
             scrolling="yes"
             id="nws-CRM-booking-iframe"
             title="NWS Booking Calendar"
           />
+        </div>
+
+        <div className="px-6 py-4 border-t border-border-base bg-white flex justify-end">
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm uppercase tracking-[0.18em] font-bold text-sky-700 hover:text-sky-900 transition-colors"
+          >
+            Open Booking in New Tab
+          </a>
         </div>
 
       </div>

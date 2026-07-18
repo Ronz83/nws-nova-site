@@ -39,6 +39,8 @@ const Demo        = lazy(() => import("./pages/Demo"));
 const Privacy     = lazy(() => import("./pages/Privacy"));
 const Terms       = lazy(() => import("./pages/Terms"));
 const GDPR        = lazy(() => import("./pages/GDPR"));
+const Book        = lazy(() => import("./pages/Book"));
+const PricingRedirect = lazy(() => import("./pages/PricingRedirect"));
 const ResultsPage = lazy(() => import("./pages/ResultsPage"));
 const BusinessOS  = lazy(() => import("./pages/BusinessOS"));
 
@@ -164,6 +166,8 @@ export default function App() {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Suspense fallback={<PageLoader />}><BusinessOS /></Suspense>} />
+          <Route path="/book" element={<Suspense fallback={<PageLoader />}><Book /></Suspense>} />
+          <Route path="/pricing" element={<Suspense fallback={<PageLoader />}><PricingRedirect target="/#pricing" /></Suspense>} />
           <Route path="/smart-start" element={<Suspense fallback={<PageLoader />}><SmartStart /></Suspense>} />
           <Route path="/ai-receptionist" element={<Suspense fallback={<PageLoader />}><AIReceptionist /></Suspense>} />
           <Route path="/business-audit" element={<Suspense fallback={<PageLoader />}><BusinessAudit /></Suspense>} />
@@ -179,6 +183,8 @@ export default function App() {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Index />} />
+          <Route path="/book" element={<Suspense fallback={<PageLoader />}><Book /></Suspense>} />
+          <Route path="/pricing" element={<Suspense fallback={<PageLoader />}><PricingRedirect target="/services/business-os#pricing" /></Suspense>} />
           
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
