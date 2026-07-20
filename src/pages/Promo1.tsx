@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Head from 'next/head';
 
 export default function Promo1() {
   const [days, setDays] = useState(29);
@@ -23,10 +22,6 @@ export default function Promo1() {
 
   return (
     <>
-      <Head>
-        <title>NWS Summer Launch — Founder Plan $297/mo</title>
-        <meta name="description" content="Limited-time business growth bundle from Novelty Web Solutions. AI receptionist, CRM, booking, reputation management — all in one system." />
-      </Head>
 
       <div className="min-h-screen bg-gradient-to-b from-[#080f1e] via-[#0c1a2e] to-[#080f1e] text-white font-sans" style={{ maxWidth: '100%', overflowX: 'hidden' }}>
         
