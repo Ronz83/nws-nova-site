@@ -199,6 +199,7 @@ export default function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/gdpr" element={<GDPR />} />
+          <Route path="/promo1" element={<Navigate to="/promo1.html" replace />} />
           <Route path="/demo/:slug" element={<Demo />} />
           <Route path="/results/:id" element={<ResultsPage />} />
         </Route>
