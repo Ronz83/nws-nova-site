@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 
 // NWS default widget IDs (shown on the public site only)
 export const NWS_VOICE_WIDGET_ID = '6914a81b33e99255993705fa';
-export const NWS_CHAT_WIDGET_ID = '6a2f1df4e20523fdce316b75';
+export const NWS_CHAT_WIDGET_ID = '6a556b66d166a8719f167972';
 
 interface SamanthaContextType {
   isVoiceOpen: boolean;
