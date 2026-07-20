@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from "react-router-dom";
+﻿import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { FeatureProvider } from "./contexts/FeatureContext";
 
@@ -25,10 +25,10 @@ import { DashboardSnapshots } from "./components/dashboard/DashboardSnapshots";
 import { DashboardWebsiteRequests } from "./components/dashboard/DashboardWebsiteRequests";
 import { DashboardNicheBlueprints } from "./components/dashboard/DashboardNicheBlueprints";
 
-// Eagerly load the homepage — it's the first thing users see
+// Eagerly load the homepage â€” it's the first thing users see
 import Index from "./pages/Index";
 
-// Lazy-load all other pages — loaded on demand, not on initial bundle
+// Lazy-load all other pages â€” loaded on demand, not on initial bundle
 const About       = lazy(() => import("./pages/About"));
 const Services    = lazy(() => import("./pages/Services"));
 const SamanthaAI  = lazy(() => import("./pages/SamanthaAI"));
@@ -48,6 +48,7 @@ const BusinessOS  = lazy(() => import("./pages/BusinessOS"));
 const SmartStart     = lazy(() => import("./pages/SmartStart"));
 const BusinessAudit  = lazy(() => import("./pages/BusinessAudit"));
 const AIReceptionist = lazy(() => import("./pages/AIReceptionist"));
+const Promo1 = lazy(() => import("./pages/Promo1"));
 
 // Portal Lazy Pages
 const PortalOverview   = lazy(() => import("./pages/portal/PortalOverview"));
@@ -199,7 +200,7 @@ export default function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/gdpr" element={<GDPR />} />
-          
+          <Route path="/promo1" element={<Suspense fallback={<PageLoader />}><Promo1 /></Suspense>} />
           <Route path="/demo/:slug" element={<Demo />} />
           <Route path="/results/:id" element={<ResultsPage />} />
         </Route>
