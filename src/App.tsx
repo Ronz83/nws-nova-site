@@ -48,7 +48,6 @@ const BusinessOS  = lazy(() => import("./pages/BusinessOS"));
 const SmartStart     = lazy(() => import("./pages/SmartStart"));
 const BusinessAudit  = lazy(() => import("./pages/BusinessAudit"));
 const AIReceptionist = lazy(() => import("./pages/AIReceptionist"));
-const Promo1 = lazy(() => import("./pages/Promo1"));
 
 // Portal Lazy Pages
 const PortalOverview   = lazy(() => import("./pages/portal/PortalOverview"));
@@ -200,7 +199,6 @@ export default function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/gdpr" element={<GDPR />} />
-          <Route path="/promo1" element={<Navigate to="/promo1.html" replace />} />
           <Route path="/demo/:slug" element={<Demo />} />
           <Route path="/results/:id" element={<ResultsPage />} />
         </Route>
