@@ -1,4 +1,4 @@
-import express from 'express';
+﻿import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -79,6 +79,7 @@ app.get('/api/results/:id', (req, res) => {
 app.get('/smart-start', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'smart-start', 'index.html')));
 app.get('/business-audit', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'business-audit', 'index.html')));
 app.get('/ai-receptionist', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'ai-receptionist', 'index.html')));
+app.get('/promo1', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'promo1.html')));
 
 // Serve static frontend files from Vite's build output
 app.use(express.static(path.join(__dirname, 'dist')));
