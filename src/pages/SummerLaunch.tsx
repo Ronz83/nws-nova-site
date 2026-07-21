@@ -11,7 +11,12 @@ import {
   ArrowRight,
   ChevronDown,
   ChevronUp,
+  Check,
+  Loader2,
 } from 'lucide-react';
+import { redirectToCheckout } from "../lib/stripe";
+import { PRICING_TIERS } from "../config/pricing";
+import WorkbenchWizard from "../components/workbench/WorkbenchWizard";
 
 const endDate = new Date('2026-08-19T23:59:59-04:00');
 
@@ -131,6 +136,26 @@ const faqs = [
 
 export default function SummerLaunch() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isYearly, setIsYearly] = useState(false);
+  const [loading, setLoading] = useState<string | null>(null);
+
+  const checkoutSuccess = new URLSearchParams(window.location.search).get('checkout') === 'success';
+  const checkoutTier = new URLSearchParams(window.location.search).get('tier');
+
+  const handleCheckout = async (tierId: string) => {
+    setLoading(tierId);
+    try {
+      const tier = PRICING_TIERS.find(t => t.id === tierId);
+      if (!tier) throw new Error("Tier not found");
+      const priceId = isYearly ? tier.stripeYearly : tier.stripeMonthly;
+      await redirectToCheckout(priceId, undefined, undefined, tierId);
+    } catch (error) {
+      console.error(error);
+      alert("Checkout failed. Please try again or contact support.");
+    } finally {
+      setLoading(null);
+    }
+  };
 
   // Button styles
   const btnPrimary: React.CSSProperties = {
@@ -183,6 +208,8 @@ export default function SummerLaunch() {
               { label: 'Live AI Demo', href: 'https://noveltywebsolutions.com/#samantha', highlight: true },
               { label: 'Agency', href: 'https://noveltywebsolutions.com/' },
               { label: 'Operating System', href: 'https://businessesos.com/' },
+              { label: 'Assessment', href: '#assessment', highlight: false },
+              { label: 'Pricing', href: '#pricing', highlight: false },
               { label: 'Included', href: '#included' },
               { label: 'Claim Offer', href: '#claim' },
             ].map((link) => (
@@ -224,6 +251,20 @@ export default function SummerLaunch() {
         </div>
       </div>
 
+      {/* Checkout success banner */}
+      {checkoutSuccess && (
+        <section style={{ maxWidth: 1180, margin: '0 auto', padding: '20px 20px 0' }}>
+          <div style={{ borderRadius: 16, padding: '16px 20px', background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(52,211,153,0.35)', color: '#d1fae5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+            <div>
+              <p style={{ fontSize: 13, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.12em' }}>Checkout Complete</p>
+              <p style={{ fontSize: 13, color: '#a7f3d0', marginTop: 4 }}>
+                Your {checkoutTier ? `${checkoutTier} ` : ""}subscription was submitted successfully.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Hero */}
       <section style={{ maxWidth: 1320, margin: '0 auto', padding: '54px 40px 100px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(400px, 0.75fr) minmax(580px, 1.25fr)', gap: 40, alignItems: 'start' }}>
@@ -253,9 +294,9 @@ export default function SummerLaunch() {
               <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" style={{ ...btnPrimary }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 22px 65px rgba(14,165,233,0.42)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 50px rgba(14,165,233,0.3)'}}>
                 Book a Demo <ArrowRight size={16} />
               </a>
-              <a href="https://businessesos.com/register?promo=true&tier=pro" style={{ ...btnSecondary }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.45)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.09)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.16)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.055)'}}>
-                Get Started <ArrowRight size={16} />
-              </a>
+              <button onClick={() => handleCheckout('lite')} disabled={loading === 'lite'} style={{ ...btnSecondary, opacity: loading === 'lite' ? 0.7 : 1, cursor: loading === 'lite' ? 'not-allowed' : 'pointer' }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.45)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.09)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.16)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.055)'}}>
+                {loading === 'lite' ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />} Subscribe $297/mo
+              </button>
             </div>
           </div>
 
@@ -468,6 +509,87 @@ export default function SummerLaunch() {
         </div>
       </section>
 
+      {/* Assessment Section */}
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="assessment">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>Free Assessment</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
+          Get Your Free Business Intelligence Report
+        </h2>
+        <p style={{ textAlign: 'center', color: C.muted, maxWidth: 640, margin: '0 auto 34px', lineHeight: 1.65, fontSize: 16 }}>
+          Enter your domain to scan your business, identify revenue leaks, and get a customized AI agent demo &mdash; free, no credit card.
+        </p>
+        <div style={{ maxWidth: 720, margin: '0 auto' }}>
+          <WorkbenchWizard />
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="pricing">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>Pricing</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
+          Choose Your Plan
+        </h2>
+        <p style={{ textAlign: 'center', color: C.muted, maxWidth: 640, margin: '0 auto 34px', lineHeight: 1.65, fontSize: 16 }}>
+          Pick the tier that fits your business. All plans include a free CaricomBusiness.com listing. Upgrade anytime.
+        </p>
+
+        {/* Yearly toggle */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 32 }}>
+          <div style={{ display: 'inline-flex', borderRadius: 999, padding: 4, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <button onClick={() => setIsYearly(false)} style={{ padding: '10px 22px', borderRadius: 999, fontWeight: 900, fontSize: 13, cursor: 'pointer', border: 'none', background: !isYearly ? 'rgba(14,165,233,0.2)' : 'transparent', color: !isYearly ? C.cyanLight : C.soft, transition: 'all .2s ease' }}>
+              Monthly
+            </button>
+            <button onClick={() => setIsYearly(true)} style={{ padding: '10px 22px', borderRadius: 999, fontWeight: 900, fontSize: 13, cursor: 'pointer', border: 'none', background: isYearly ? 'rgba(14,165,233,0.2)' : 'transparent', color: isYearly ? C.cyanLight : C.soft, transition: 'all .2s ease' }}>
+              Yearly <span style={{ color: C.emerald, fontSize: 11 }}>(2 months free)</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Pricing cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+          {PRICING_TIERS.map((tier) => {
+            const price = isYearly ? tier.priceYearly : tier.priceMonthly;
+            const priceLabel = isYearly ? `/year` : `/month`;
+            const isPopular = tier.id === 'pro';
+            const isSummerOffer = tier.id === 'lite';
+            return (
+              <div key={tier.id} style={{ position: 'relative', padding: isPopular ? '36px 28px' : '28px', borderRadius: 24, ...(isPopular ? { background: 'radial-gradient(circle at 50% 0%, rgba(56,189,248,0.28), transparent 42%), linear-gradient(145deg, rgba(14,165,233,0.16), rgba(8,15,30,0.76))', border: '1px solid rgba(56,189,248,0.26)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), 0 0 75px rgba(14,165,233,0.13)' } : cardBase), display: 'flex', flexDirection: 'column' }}>
+                {isPopular && (
+                  <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: C.cyan, color: '#fff', padding: '4px 16px', borderRadius: 999, fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', whiteSpace: 'nowrap' }}>
+                    Most Popular
+                  </div>
+                )}
+                {isSummerOffer && (
+                  <div style={{ display: 'inline-flex', alignSelf: 'flex-start', background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(52,211,153,0.25)', color: C.emerald, padding: '3px 10px', borderRadius: 999, fontSize: 10, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 14 }}>
+                    Summer Launch Offer
+                  </div>
+                )}
+                <h3 style={{ fontSize: 20, fontWeight: 900, marginBottom: 6 }}>{tier.name}</h3>
+                <p style={{ color: C.muted, fontSize: 13, lineHeight: 1.5, marginBottom: 16, flex: 1 }}>{tier.description}</p>
+                <div style={{ marginBottom: 16 }}>
+                  <span style={{ fontSize: 42, fontWeight: 900, color: C.cyanLight, letterSpacing: '-0.04em' }}>${price.toLocaleString()}</span>
+                  <span style={{ color: C.soft, fontSize: 14, marginLeft: 4 }}>{priceLabel}</span>
+                </div>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}> 
+                  {tier.features.map((f, i) => (
+                    <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 13, color: C.soft, lineHeight: 1.4 }}>
+                      <Check size={14} style={{ color: C.emerald, marginTop: 2, flexShrink: 0 }} />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button onClick={() => handleCheckout(tier.id)} disabled={loading === tier.id}
+                  style={{ width: '100%', ...(isPopular ? btnPrimary : btnSecondary), opacity: loading === tier.id ? 0.7 : 1, cursor: loading === tier.id ? 'not-allowed' : 'pointer', border: isPopular ? 'none' : '1px solid rgba(255,255,255,0.16)' }}
+                  onMouseEnter={(e) => { if (!loading) { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; if (isPopular) (e.currentTarget as HTMLElement).style.boxShadow = '0 22px 65px rgba(14,165,233,0.42)'; else { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.45)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.09)'; } }}}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = 'none'; if (isPopular) (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 50px rgba(14,165,233,0.3)'; else { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.16)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.055)'; }}}>
+                  {loading === tier.id ? <Loader2 size={16} className="animate-spin" /> : 'Subscribe Now'}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
       {/* Explore Section */}
       <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="learn">
         <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>Explore first</div>
@@ -531,12 +653,12 @@ export default function SummerLaunch() {
             </div>
             <p style={{ color: C.soft, fontSize: 13, margin: '8px 0 18px' }}>or $2,970 annually — 2 months free</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <a href="https://businessesos.com/register?promo=true&tier=pro" style={btnPrimary} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 22px 65px rgba(14,165,233,0.42)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 50px rgba(14,165,233,0.3)'}}>
-                Claim Your Spot <ArrowRight size={16} />
-              </a>
-              <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" style={btnSecondary} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.45)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.09)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.16)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.055)'}}>
-                Book a Call <ArrowRight size={16} />
-              </a>
+              <button onClick={() => handleCheckout('lite')} disabled={loading === 'lite'} style={{ ...btnPrimary, opacity: loading === 'lite' ? 0.7 : 1, cursor: loading === 'lite' ? 'not-allowed' : 'pointer', border: 'none' }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 22px 65px rgba(14,165,233,0.42)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 50px rgba(14,165,233,0.3)'}}>
+                {loading === 'lite' ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />} Subscribe $297/mo
+              </button>
+              <button onClick={() => handleCheckout('pro')} disabled={loading === 'pro'} style={{ ...btnSecondary, opacity: loading === 'pro' ? 0.7 : 1, cursor: loading === 'pro' ? 'not-allowed' : 'pointer' }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.45)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.09)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.16)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.055)'}}>
+                {loading === 'pro' ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />} Subscribe $597/mo (Popular)
+              </button>
             </div>
           </div>
         </div>
