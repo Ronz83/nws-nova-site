@@ -1,4 +1,5 @@
-import { Phone, MessageSquare, Brain, Zap, CheckCircle, ArrowRight, Mic, Globe } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Phone, MessageSquare, Brain, Zap, CheckCircle, ArrowRight, Mic, Globe, X } from "lucide-react";
 import { motion } from "framer-motion";
 const capabilities = [
   { icon: <Phone size={20} />, title: "Inbound Call Handling", desc: "Answers every call instantly. Qualifies leads, captures intake info, routes based on intent." },
@@ -17,7 +18,32 @@ const stats = [
 ];
 
 export default function Samantha() {
-  // showVoice removed - Vapi deprecated
+  const [activeEmbed, setActiveEmbed] = useState<'chat' | 'voice' | null>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const voiceContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!document.querySelector('script[src="https://beta.leadconnectorhq.com/loader.js"]')) {
+      const s = document.createElement('script');
+      s.src = 'https://beta.leadconnectorhq.com/loader.js';
+      s.async = true;
+      document.head.appendChild(s);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeEmbed === 'chat' && chatContainerRef.current && !chatContainerRef.current.querySelector('chat-widget')) {
+      const w = document.createElement('chat-widget');
+      w.setAttribute('data-widget-id', '6a556b66d166a8719f167972');
+      chatContainerRef.current.appendChild(w);
+    }
+    if (activeEmbed === 'voice' && voiceContainerRef.current && !voiceContainerRef.current.querySelector('chat-widget')) {
+      const w = document.createElement('chat-widget');
+      w.setAttribute('data-widget-id', '6914a81b33e99255993705fa');
+      voiceContainerRef.current.appendChild(w);
+    }
+  }, [activeEmbed]);
+
 return (
     <div className="min-h-screen bg-white text-text-base">
 
@@ -39,22 +65,10 @@ return (
               Samantha is your always-on AI employee. It answers inbound calls, chats with website visitors, qualifies leads, and syncs everything to your CRM — without ever taking a lunch break.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <button onClick={() => {
-                const s = document.createElement('script');
-                s.src = 'https://widgets.leadconnectorhq.com/loader.js';
-                s.setAttribute('data-resources-url', 'https://widgets.leadconnectorhq.com/chat-widget/loader.js');
-                s.setAttribute('data-widget-id', '6a556b66d166a8719f167972');
-                document.body.appendChild(s);
-              }} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
+              <button onClick={() => setActiveEmbed('chat')} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
                 <MessageSquare size={12} /> Chat with Samantha
               </button>
-              <button onClick={() => {
-                const s = document.createElement('script');
-                s.src = 'https://widgets.leadconnectorhq.com/loader.js';
-                s.setAttribute('data-resources-url', 'https://widgets.leadconnectorhq.com/chat-widget/loader.js');
-                s.setAttribute('data-widget-id', '6914a81b33e99255993705fa');
-                document.body.appendChild(s);
-              }} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold border-2 border-border-base hover:border-sky-300 px-7 py-4 rounded-xl text-text-muted hover:text-accent-deep hover:bg-sky-50 transition-all cursor-pointer">
+              <button onClick={() => setActiveEmbed('voice')} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold border-2 border-border-base hover:border-sky-300 px-7 py-4 rounded-xl text-text-muted hover:text-accent-deep hover:bg-sky-50 transition-all cursor-pointer">
                 <Phone size={12} /> Talk to Samantha
               </button>
             </div>
@@ -173,6 +187,35 @@ return (
         </div>
       </section>
 
+      {/* Chat Embed Modal */}
+      {activeEmbed === 'chat' && (
+        <div className="fixed inset-0 z-[9999] bg-black/40 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setActiveEmbed(null)}>
+          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-lg h-[80vh] max-h-[700px] flex flex-col" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 shrink-0">
+              <h3 className="font-black text-sm uppercase tracking-wider text-sky-600">Chat with Samantha</h3>
+              <button onClick={() => setActiveEmbed(null)} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer border-none bg-transparent">
+                <X size={18} className="text-slate-500" />
+              </button>
+            </div>
+            <div ref={chatContainerRef} className="flex-1 w-full" />
+          </div>
+        </div>
+      )}
+
+      {/* Voice Embed Modal */}
+      {activeEmbed === 'voice' && (
+        <div className="fixed inset-0 z-[9999] bg-black/40 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setActiveEmbed(null)}>
+          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-lg h-[80vh] max-h-[700px] flex flex-col" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 shrink-0">
+              <h3 className="font-black text-sm uppercase tracking-wider text-sky-600">Talk to Samantha</h3>
+              <button onClick={() => setActiveEmbed(null)} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer border-none bg-transparent">
+                <X size={18} className="text-slate-500" />
+              </button>
+            </div>
+            <div ref={voiceContainerRef} className="flex-1 w-full" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
