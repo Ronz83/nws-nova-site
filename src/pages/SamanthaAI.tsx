@@ -40,8 +40,14 @@ return (
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
               <button onClick={() => {
-                const el = document.getElementById('nws-chat-widget-btn');
-                if (el) { (el as HTMLElement).click(); }
+                // Trigger the GHL chat widget — the loader creates a chat-widget custom element
+                const chatEl = document.querySelector('chat-widget');
+                if (chatEl) {
+                  // Dispatch a custom event the GHL loader listens for
+                  chatEl.dispatchEvent(new CustomEvent('nws-open-chat'));
+                  // Also try the standard GHL widget open method
+                  if ((chatEl as any).open) { (chatEl as any).open(); }
+                }
               }} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
                 <MessageSquare size={12} /> Try Samantha Live
               </button>
