@@ -156,10 +156,17 @@ export default function SummerLaunch() {
 
   return (
     <div style={{ minHeight: '100vh', background: `linear-gradient(to bottom, ${C.bg}, ${C.bg2} 38%, ${C.bg})`, fontFamily: "'Open Sans', Arial, sans-serif", color: C.white }}>
-      {/* Top Banner */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 40, background: `repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, ${C.yellow}, ${C.yellowDark})`, color: '#08111f', textAlign: 'center', padding: '9px 16px', fontSize: 12, fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', borderBottom: '1px solid rgba(0,0,0,0.18)', boxShadow: '0 8px 24px rgba(245,158,11,0.18)' }}>
-        NWS Summer Launch Founder Plan — Enrollment closes when the launch period ends
+      {/* Animated Top Banner */}
+      <div style={{ position: 'sticky', top: 0, zIndex: 40, background: `repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, ${C.yellow}, ${C.yellowDark})`, color: '#08111f', borderBottom: '1px solid rgba(0,0,0,0.18)', boxShadow: '0 8px 24px rgba(245,158,11,0.18)', overflow: 'hidden', height: 36, display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', animation: 'scrollBanner 20s linear infinite', width: 'max-content' }}>
+          {Array.from({ length: 10 }).map((_, i) => (
+            <span key={i} style={{ display: 'inline-block', whiteSpace: 'nowrap', fontSize: 12, fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0 24px' }}>
+              NWS Summer Launch Founder Plan — Enrollment closes when the launch period ends
+            </span>
+          ))}
+        </div>
       </div>
+      <style>{`@keyframes scrollBanner { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
 
       {/* Nav */}
       <div style={{ position: 'sticky', top: 35, zIndex: 35, backdropFilter: 'blur(18px)', background: 'rgba(8,15,30,0.68)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
@@ -218,17 +225,24 @@ export default function SummerLaunch() {
       </div>
 
       {/* Hero */}
-      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '54px 20px 70px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(400px, 0.82fr) minmax(560px, 1.18fr)', gap: 36, alignItems: 'start' }}>
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '54px 20px 100px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(420px, 0.78fr) minmax(600px, 1.22fr)', gap: 48, alignItems: 'start' }}>
           {/* Left: Copy */}
           <div style={{ alignSelf: 'start', maxWidth: 620, paddingTop: 6 }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 16px', borderRadius: 999, background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.36)', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 24 }}>
               <span style={{ width: 9, height: 9, borderRadius: 99, background: C.emerald, boxShadow: '0 0 0 0 rgba(16,185,129,0.45)', animation: 'pulse 1.7s infinite' }}></span>
               Exclusive summer launch
             </div>
-            <h1 style={{ fontSize: 'clamp(48px, 7vw, 92px)', lineHeight: 0.92, letterSpacing: '-0.075em', fontWeight: 900, marginBottom: 24 }}>
-              NWS <span style={{ background: `linear-gradient(100deg, ${C.cyan}, ${C.cyanLight} 48%, #a7f3d0 105%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Summer Launch</span>
-            </h1>
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+                <span style={{ fontSize: 14, fontWeight: 800, color: C.cyanLight, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Summer Promo</span>
+                <span style={{ color: C.muted, fontSize: 18 }}>•</span>
+                <span style={{ fontSize: 14, fontWeight: 800, color: C.cyanLight, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Exclusive Launch</span>
+              </div>
+              <h1 style={{ fontSize: 'clamp(48px, 7vw, 92px)', lineHeight: 0.92, letterSpacing: '-0.075em', fontWeight: 900 }}>
+                NWS <span style={{ background: `linear-gradient(100deg, ${C.cyan}, ${C.cyanLight} 48%, #a7f3d0 105%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Summer Launch</span>
+              </h1>
+            </div>
             <p style={{ fontSize: 'clamp(17px, 2vw, 22px)', color: C.slate300, lineHeight: 1.45, fontWeight: 800, marginBottom: 16 }}>
               Launch smarter. Capture more leads. Automate more of the work.
             </p>
@@ -246,16 +260,9 @@ export default function SummerLaunch() {
           </div>
 
           {/* Right: Product Showcase */}
-          <div style={{ position: 'relative', alignSelf: 'start', width: '100%', minHeight: 600, borderRadius: 36, padding: 28, background: 'radial-gradient(circle at 55% 34%, rgba(56,189,248,0.25), transparent 35%), radial-gradient(circle at 50% 98%, rgba(14,165,233,0.2), transparent 36%), linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.022))', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08)' }}>
+          <div style={{ position: 'relative', alignSelf: 'start', width: '100%', minHeight: 660, borderRadius: 36, padding: 32, background: 'radial-gradient(circle at 55% 34%, rgba(56,189,248,0.25), transparent 35%), radial-gradient(circle at 50% 98%, rgba(14,165,233,0.2), transparent 36%), linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.022))', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08)' }}>
             {/* Promo Tape */}
-            <div style={{ position: 'absolute', top: 18, left: 16, right: 16, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, ${C.yellow}, ${C.yellowDark})`, color: '#07111f', border: '1px solid rgba(0,0,0,0.16)', borderRadius: 10, boxShadow: '0 12px 28px rgba(245,158,11,0.18)', zIndex: 9, overflow: 'hidden' }}>
-              <div style={{ display: 'flex', animation: 'scrollPromo 12s linear infinite', width: 'max-content' }}>
-                {Array.from({ length: 12 }).map((_, idx) => (
-                  <span key={idx} style={{ display: 'inline-block', whiteSpace: 'nowrap', fontFamily: 'Montserrat, sans-serif', fontSize: 13, fontWeight: 900, letterSpacing: '0.16em', textTransform: 'uppercase', textShadow: '0 1px 0 rgba(255,255,255,0.18)', padding: '0 12px' }}>Summer Promo</span>
-                ))}
-              </div>
-            </div>
-            <style>{`@keyframes scrollPromo { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
+
 
             {/* Grid */}
             <div style={{ position: 'relative', zIndex: 2, minHeight: 542, display: 'grid', gridTemplateColumns: '1fr 1.28fr 1fr', gridTemplateRows: '122px 122px 122px 128px', gap: 14, paddingTop: 36 }}>
