@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Check, Sparkles, ArrowRight, Zap, HelpCircle, Code, Workflow, Layers, Database } from "lucide-react";
-import BookingModal from "../components/BookingModal";
 
 const faqs = [
   { q: "Is there a minimum contract?", a: "No. Monthly plans are cancel-anytime. Website projects are milestone-based (deposit + final)." },
@@ -10,7 +9,6 @@ const faqs = [
 ];
 
 export default function PricingPage() {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [isYearly, setIsYearly] = useState(false);
   const [activeTab, setActiveTab] = useState("core");
@@ -300,7 +298,7 @@ export default function PricingPage() {
                     </ul>
 
                     <button
-                      onClick={() => setIsBookingOpen(true)}
+                      onClick={(e) => { e.preventDefault(); window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer"); }}
                       className={`w-full flex items-center justify-center gap-2 text-sm uppercase tracking-[0.18em] font-bold px-6 py-4 rounded-xl transition-all cursor-pointer border-2 shadow-sm ${plan.featured ? "bg-accent-deep hover:bg-sky-800 text-white border-transparent shadow-md" : "border-slate-200 hover:border-sky-300 text-sky-800 hover:text-sky-700 bg-transparent hover:bg-sky-50"}`}
                     >
                       {plan.cta} <ArrowRight size={12} />
@@ -336,8 +334,6 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
-
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ArrowRight, Star, TrendingUp, Phone } from "lucide-react";
-import BookingModal from "../components/BookingModal";
 
 const useCases = [
   {
@@ -63,7 +62,6 @@ const useCases = [
 
 export default function Portfolio() {
   const [active, setActive] = useState(0);
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const study = useCases[active];
 
   const accentMap: Record<string, string> = {
@@ -151,7 +149,7 @@ export default function Portfolio() {
               ))}
 
               <button
-                onClick={() => setIsBookingOpen(true)}
+                onClick={(e) => { e.preventDefault(); window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer"); }}
                 className="w-full mt-2 flex items-center justify-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-6 py-4 rounded-xl shadow-md cursor-pointer border-none transition-all"
               >
                 Implement This Solution <ArrowRight size={12} />
@@ -160,8 +158,6 @@ export default function Portfolio() {
           </div>
         </div>
       </section>
-
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }

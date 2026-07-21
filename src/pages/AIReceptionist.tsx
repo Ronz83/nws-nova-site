@@ -409,7 +409,7 @@ const htmlContent = `
             <span class="tag">🚀 Ready to Stop Losing Revenue?</span>
             <h2>Your Next Customer Is Calling.<br><span class="gradient-text">Will Someone Answer?</span></h2>
             <p>Get a free consultation. We'll map your call flow, show you the AI in action, and have a custom proposal ready within 24 hours.</p>
-            <a href="mailto:info@noveltywebsolutions.com?subject=AI%20Receptionist%20Inquiry" class="btn btn-primary btn-glow" style="font-size: 1.15rem; padding: 20px 48px;">
+            <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" class="btn btn-primary btn-glow" style="font-size: 1.15rem; padding: 20px 48px;" target="_blank" rel="noopener noreferrer">
                 Book Your Free Consultation
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
@@ -1342,7 +1342,6 @@ export default function AIReceptionist() {
 
   const [isBookingOpen, setIsBookingOpen] = React.useState(false);
   React.useEffect(() => {
-    (window as any).openBookingModal = () => setIsBookingOpen(true);
         return () => {
       delete (window as any).openBookingModal;    };
   }, []);

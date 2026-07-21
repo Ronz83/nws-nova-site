@@ -15,7 +15,6 @@ import {
   TrendingUp,
   Calendar,
 } from "lucide-react";
-import BookingModal from "../components/BookingModal";
 import { PRICING_TIERS } from "../config/pricing";
 import { BOOKING_URL } from "../config/links";
 import { redirectToCheckout } from "../lib/stripe";
@@ -200,7 +199,6 @@ function DashboardPreview() {
 
 // ── Page ────────────────────────────────────────────────────────────────────
 export default function BusinessOS() {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isYearly, setIsYearly] = useState(false);
   const [loading, setLoading] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -208,8 +206,7 @@ export default function BusinessOS() {
   const checkoutState = searchParams.get("checkout");
   const selectedTier = searchParams.get("tier");
 
-  const onBookDemo = () => setIsBookingOpen(true);
-
+  const onBookDemo = () => { window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer"); };
   const handleCheckout = async (tierId: string) => {
     if (tierId === 'free') {
       navigate('/business-os/onboarding');
@@ -894,8 +891,6 @@ export default function BusinessOS() {
         </section>
 
       </main>
-
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </>
   );
 }

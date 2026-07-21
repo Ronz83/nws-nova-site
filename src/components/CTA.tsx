@@ -1,10 +1,8 @@
 import { ArrowRight, Sparkles } from "lucide-react";
 
-interface CTAProps {
-  onBookDemo: () => void;
-}
 
-export default function CTA({ onBookDemo }: CTAProps) {
+
+export default function CTA() {
   return (
     <section className="px-6 py-10 bg-white border-t border-border-base">
       <div className="max-w-5xl mx-auto">
@@ -34,13 +32,10 @@ export default function CTA({ onBookDemo }: CTAProps) {
             </p>
 
             <div className="flex flex-wrap gap-4 items-center justify-center mt-2">
-              <button
-                onClick={onBookDemo}
-                className="flex items-center gap-2.5 text-sm uppercase tracking-[0.18em] font-bold bg-white hover:bg-amber-50 text-sky-800 px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none"
-              >
+              <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-sm uppercase tracking-[0.18em] font-bold bg-white hover:bg-amber-50 text-sky-800 px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none">
                 <span>Book Free Strategy Call</span>
                 <ArrowRight size={13} />
-              </button>
+              </a>
             </div>
 
             <p className="text-sm text-sky-200/70 uppercase tracking-widest font-bold mt-2">

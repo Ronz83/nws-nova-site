@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { Phone, Layers, Database, Workflow, Check, ArrowRight, ChevronDown } from "lucide-react";
-import BookingModal from "../components/BookingModal";
+import { useState } from "react";
 
 const services = [
   {
@@ -95,7 +94,6 @@ const services = [
 
 export default function Services() {
   const [activeService, setActiveService] = useState("web-design");
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const active = services.find(s => s.id === activeService)!;
 
   return (
@@ -171,7 +169,7 @@ export default function Services() {
             </div>
 
             <button
-              onClick={() => setIsBookingOpen(true)}
+              onClick={(e) => { e.preventDefault(); window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer"); }}
               className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none"
             >
               <span>Book a Consultation</span>
@@ -186,13 +184,11 @@ export default function Services() {
         <div className="max-w-3xl mx-auto text-center">
           <h3 className="text-2xl md:text-3xl font-black text-text-base">Not sure which service fits?</h3>
           <p className="text-sm text-text-muted mt-3 font-medium">Book a free 30-minute strategy call. We'll map your current setup and recommend the right entry point.</p>
-          <button onClick={() => setIsBookingOpen(true)} className="mt-6 inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-8 py-4 rounded-xl shadow-md cursor-pointer border-none transition-all">
+          <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-8 py-4 rounded-xl shadow-md cursor-pointer border-none transition-all">
             Book Free Consultation <ArrowRight size={12} />
-          </button>
+          </a>
         </div>
       </section>
-
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }

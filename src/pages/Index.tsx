@@ -6,16 +6,14 @@ import ROICalculator from "../components/ROICalculator";
 
 import FAQ from "../components/FAQ";
 import CTA from "../components/CTA";
-import BookingModal from "../components/BookingModal";
 import SignupModal from "../components/SignupModal";
 import AppMarketplace from "../components/AppMarketplace";
 
 export default function Index() {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
   const handleOpenBooking = () => {
-    setIsBookingOpen(true);
+    window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer");
   };
 
   const handleOpenSignup = () => {
@@ -58,10 +56,9 @@ export default function Index() {
 
       <FAQ />
       
-      <CTA onBookDemo={handleOpenBooking} />
+      <CTA />
 
       {/* Modals */}
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
       <SignupModal isOpen={isSignupOpen} onClose={() => setIsSignupOpen(false)} />
     </div>
   );

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Menu, X, ChevronDown, Phone, Layers, Database, Workflow, BookOpen, Briefcase, Mail } from "lucide-react";
 import Logo from "./Logo";
-import BookingModal from "./BookingModal";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
@@ -24,7 +23,6 @@ const navItems = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen]     = useState(false);
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [openDropdown, setOpenDropdown]  = useState<string | null>(null);
   const location = useLocation();
 
@@ -113,7 +111,7 @@ export default function Navbar() {
           {/* CTA */}
           <div className="hidden lg:flex items-center gap-3">
             <button
-              onClick={() => setIsBookingOpen(true)}
+              onClick={(e) => { e.preventDefault(); window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer"); }}
               className="text-sm uppercase tracking-[0.15em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-6 py-3.5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none hover:scale-[1.02]"
             >
               Book a Call
@@ -160,18 +158,13 @@ export default function Navbar() {
                 </div>
               ))}
 
-              <button
-                onClick={() => { setMobileOpen(false); setIsBookingOpen(true); }}
-                className="w-full mt-3 bg-accent-deep text-white font-bold uppercase tracking-[0.18em] text-sm rounded-xl py-4 cursor-pointer border-none shadow-md"
-              >
+              <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" className="w-full mt-3 bg-accent-deep text-white font-bold uppercase tracking-[0.18em] text-sm rounded-xl py-4 cursor-pointer border-none shadow-md">
                 Book a Strategy Call
-              </button>
+              </a>
             </nav>
           </div>
         )}
       </header>
-
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </>
   );
 }

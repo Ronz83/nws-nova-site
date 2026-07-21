@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { Compass, Sparkles, MapPin, Calendar, Heart, Shield, Cpu } from "lucide-react";
-import BookingModal from "../components/BookingModal";
 
 export default function About() {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white text-text-base relative overflow-hidden">
@@ -158,7 +155,7 @@ export default function About() {
 
           <div className="mt-8 flex justify-center">
             <button
-              onClick={() => setIsBookingOpen(true)}
+              onClick={(e) => { e.preventDefault(); window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer"); }}
               className="bg-white hover:bg-sky-50 text-sky-800 font-black uppercase tracking-[0.2em] text-sm px-8 py-4 rounded-xl flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer border-none font-sans"
             >
               <Calendar size={14} className="text-sky-600" />
@@ -170,7 +167,6 @@ export default function About() {
       </div>
 
       {/* Booking Modal */}
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }

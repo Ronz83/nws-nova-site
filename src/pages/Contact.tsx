@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
-import BookingModal from "../components/BookingModal";
 
 export default function Contact() {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [submitted, setSubmitted]         = useState(false);
   const [loading, setLoading]             = useState(false);
   const [error, setError]                 = useState<string | null>(null);
@@ -85,7 +83,7 @@ export default function Contact() {
                 <Phone size={20} className="text-amber-300 mb-3" />
                 <h4 className="font-black text-base mb-2">Prefer a call?</h4>
                 <p className="text-sm text-sky-100 font-medium leading-relaxed mb-4">Book a free 30-minute strategy call directly with Ronald.</p>
-                <button onClick={() => setIsBookingOpen(true)} className="w-full bg-white hover:bg-sky-50 text-sky-800 font-bold uppercase tracking-wider text-sm px-4 py-3 rounded-xl cursor-pointer border-none transition-all shadow-md">
+                <button onClick={(e) => { e.preventDefault(); window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer"); }} className="w-full bg-white hover:bg-sky-50 text-sky-800 font-bold uppercase tracking-wider text-sm px-4 py-3 rounded-xl cursor-pointer border-none transition-all shadow-md">
                   Book a Call
                 </button>
               </div>
@@ -101,7 +99,7 @@ export default function Contact() {
                 </div>
                 <h3 className="text-xl font-black text-text-base">Message Sent!</h3>
                 <p className="text-sm text-text-muted font-medium max-w-sm">We'll review your inquiry and get back to you within one business day. If it's urgent, book a call directly.</p>
-                <button onClick={() => setIsBookingOpen(true)} className="mt-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep text-white px-6 py-3 rounded-xl cursor-pointer border-none shadow-md">
+                <button onClick={(e) => { e.preventDefault(); window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer"); }} className="mt-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep text-white px-6 py-3 rounded-xl cursor-pointer border-none shadow-md">
                   Book a Call Now
                 </button>
               </div>
@@ -185,8 +183,6 @@ export default function Contact() {
           </div>
         </div>
       </section>
-
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }
