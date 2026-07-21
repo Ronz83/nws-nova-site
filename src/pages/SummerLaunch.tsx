@@ -248,11 +248,14 @@ export default function SummerLaunch() {
           {/* Right: Product Showcase */}
           <div style={{ position: 'relative', alignSelf: 'start', width: '100%', minHeight: 600, borderRadius: 36, padding: 28, background: 'radial-gradient(circle at 55% 34%, rgba(56,189,248,0.25), transparent 35%), radial-gradient(circle at 50% 98%, rgba(14,165,233,0.2), transparent 36%), linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.022))', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08)' }}>
             {/* Promo Tape */}
-            <div style={{ position: 'absolute', top: 18, left: 24, right: 24, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: `repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, ${C.yellow}, ${C.yellowDark})`, color: '#07111f', border: '1px solid rgba(0,0,0,0.16)', borderRadius: 10, boxShadow: '0 12px 28px rgba(245,158,11,0.18)', zIndex: 9 }}>
-              <span style={{ display: 'inline-block', whiteSpace: 'nowrap', fontFamily: 'Montserrat, sans-serif', fontSize: 13, fontWeight: 900, letterSpacing: '0.16em', textTransform: 'uppercase', textShadow: '0 1px 0 rgba(255,255,255,0.18)' }}>
-                Summer Promo &nbsp;•&nbsp; Summer Promo &nbsp;•&nbsp; Summer Promo &nbsp;•&nbsp; Summer Promo
-              </span>
+            <div style={{ position: 'absolute', top: 18, left: 16, right: 16, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, ${C.yellow}, ${C.yellowDark})`, color: '#07111f', border: '1px solid rgba(0,0,0,0.16)', borderRadius: 10, boxShadow: '0 12px 28px rgba(245,158,11,0.18)', zIndex: 9, overflow: 'hidden' }}>
+              <div style={{ display: 'flex', animation: 'scrollPromo 12s linear infinite', width: 'max-content' }}>
+                {Array.from({ length: 12 }).map((_, idx) => (
+                  <span key={idx} style={{ display: 'inline-block', whiteSpace: 'nowrap', fontFamily: 'Montserrat, sans-serif', fontSize: 13, fontWeight: 900, letterSpacing: '0.16em', textTransform: 'uppercase', textShadow: '0 1px 0 rgba(255,255,255,0.18)', padding: '0 12px' }}>Summer Promo</span>
+                ))}
+              </div>
             </div>
+            <style>{`@keyframes scrollPromo { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
 
             {/* Grid */}
             <div style={{ position: 'relative', zIndex: 2, minHeight: 542, display: 'grid', gridTemplateColumns: '1fr 1.28fr 1fr', gridTemplateRows: '122px 122px 122px 128px', gap: 14, paddingTop: 36 }}>
@@ -383,7 +386,7 @@ export default function SummerLaunch() {
               ['Integrated Booking System', '$29 value'],
               ['AI Receptionist', '$597 value'],
               ['Reputation Management System', '$29 value'],
-              ['Unified Messaging System', 'Included'],
+              ['Unified Messaging System', '$49 value'],
               ['Free Business Listing on CaricomBusiness.com', 'Included'],
             ].map(([name, val]) => (
               <div key={name} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', padding: '15px 0', borderBottom: `1px solid rgba(255,255,255,0.1)`, color: C.soft }}>
