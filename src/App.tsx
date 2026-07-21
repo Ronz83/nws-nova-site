@@ -200,10 +200,10 @@ export default function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/gdpr" element={<GDPR />} />
-          <Route path="/promo1" element={<Suspense fallback={<PageLoader />}><SummerLaunch /></Suspense>} />
           <Route path="/demo/:slug" element={<Demo />} />
           <Route path="/results/:id" element={<ResultsPage />} />
         </Route>
+        <Route path="/promo1" element={<Suspense fallback={<PageLoader />}><SummerLaunch /></Suspense>} />
 
         <Route path="/portal/login" element={<Suspense fallback={<PageLoader />}><PortalLogin /></Suspense>} />
         <Route path="/portal" element={<PortalLayout />}>
