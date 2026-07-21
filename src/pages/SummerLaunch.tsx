@@ -548,10 +548,17 @@ export default function SummerLaunch() {
         {/* Pricing cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
           {PRICING_TIERS.map((tier) => {
+            const summerCompareAt: Record<string, { monthly: number; yearly: number }> = {
+              lite: { monthly: 597, yearly: 5970 },
+              pro: { monthly: 997, yearly: 9970 },
+              platinum: { monthly: 1497, yearly: 14970 },
+            };
+            const compareAt = summerCompareAt[tier.id];
+            const comparePrice = isYearly ? compareAt.yearly : compareAt.monthly;
             const price = isYearly ? tier.priceYearly : tier.priceMonthly;
+            const savings = comparePrice - price;
             const priceLabel = isYearly ? `/year` : `/month`;
             const isPopular = tier.id === 'pro';
-            const isSummerOffer = tier.id === 'lite';
             return (
               <div key={tier.id} style={{ position: 'relative', padding: isPopular ? '36px 28px' : '28px', borderRadius: 24, ...(isPopular ? { background: 'radial-gradient(circle at 50% 0%, rgba(56,189,248,0.28), transparent 42%), linear-gradient(145deg, rgba(14,165,233,0.16), rgba(8,15,30,0.76))', border: '1px solid rgba(56,189,248,0.26)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), 0 0 75px rgba(14,165,233,0.13)' } : cardBase), display: 'flex', flexDirection: 'column' }}>
                 {isPopular && (
@@ -559,16 +566,20 @@ export default function SummerLaunch() {
                     Most Popular
                   </div>
                 )}
-                {isSummerOffer && (
-                  <div style={{ display: 'inline-flex', alignSelf: 'flex-start', background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(52,211,153,0.25)', color: C.emerald, padding: '3px 10px', borderRadius: 999, fontSize: 10, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 14 }}>
-                    Summer Launch Offer
-                  </div>
-                )}
+                <div style={{ display: 'inline-flex', alignSelf: 'flex-start', background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(52,211,153,0.25)', color: C.emerald, padding: '3px 10px', borderRadius: 999, fontSize: 10, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 14 }}>
+                  Summer Launch Offer
+                </div>
                 <h3 style={{ fontSize: 20, fontWeight: 900, marginBottom: 6 }}>{tier.name}</h3>
                 <p style={{ color: C.muted, fontSize: 13, lineHeight: 1.5, marginBottom: 16, flex: 1 }}>{tier.description}</p>
                 <div style={{ marginBottom: 16 }}>
-                  <span style={{ fontSize: 42, fontWeight: 900, color: C.cyanLight, letterSpacing: '-0.04em' }}>${price.toLocaleString()}</span>
-                  <span style={{ color: C.soft, fontSize: 14, marginLeft: 4 }}>{priceLabel}</span>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4 }}>
+                    <span style={{ fontSize: 18, fontWeight: 900, color: C.soft, textDecoration: 'line-through', textDecorationColor: 'rgba(255,255,255,0.3)' }}>${comparePrice.toLocaleString()}</span>
+                    <span style={{ fontSize: 42, fontWeight: 900, color: C.cyanLight, letterSpacing: '-0.04em' }}>${price.toLocaleString()}</span>
+                    <span style={{ color: C.soft, fontSize: 14 }}>{priceLabel}</span>
+                  </div>
+                  <span style={{ display: 'inline-flex', background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(52,211,153,0.25)', color: C.emerald, padding: '2px 8px', borderRadius: 999, fontSize: 11, fontWeight: 900 }}>
+                    Save ${savings.toLocaleString()}{isYearly ? '/yr' : '/mo'}
+                  </span>
                 </div>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}> 
                   {tier.features.map((f, i) => (
