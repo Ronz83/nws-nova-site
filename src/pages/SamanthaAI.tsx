@@ -39,18 +39,9 @@ return (
               Samantha is your always-on AI employee. It answers inbound calls, chats with website visitors, qualifies leads, and syncs everything to your CRM — without ever taking a lunch break.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <button onClick={() => {
-                // Trigger the GHL chat widget — the loader creates a chat-widget custom element
-                const chatEl = document.querySelector('chat-widget');
-                if (chatEl) {
-                  // Dispatch a custom event the GHL loader listens for
-                  chatEl.dispatchEvent(new CustomEvent('nws-open-chat'));
-                  // Also try the standard GHL widget open method
-                  if ((chatEl as any).open) { (chatEl as any).open(); }
-                }
-              }} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
+              <a href="https://home.noveltywebsolutions.com/widget/chat/nws_discovery-call" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
                 <MessageSquare size={12} /> Try Samantha Live
-              </button>
+              </a>
               <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold border-2 border-border-base hover:border-sky-300 px-7 py-4 rounded-xl text-text-muted hover:text-accent-deep hover:bg-sky-50 transition-all cursor-pointer">
                 Book a Discovery Call <ArrowRight size={12} />
               </a>
