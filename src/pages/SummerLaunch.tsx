@@ -573,7 +573,7 @@ export default function SummerLaunch() {
                 <p style={{ color: C.muted, fontSize: 13, lineHeight: 1.5, marginBottom: 16, flex: 1 }}>{tier.description}</p>
                 <div style={{ marginBottom: 16 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4 }}>
-                    <span style={{ fontSize: 18, fontWeight: 900, color: C.soft, textDecoration: 'line-through', textDecorationColor: 'rgba(255,255,255,0.3)' }}>${comparePrice.toLocaleString()}</span>
+                    <span style={{ fontSize: 18, fontWeight: 900, color: '#ef4444', textDecoration: 'line-through', textDecorationColor: '#ef4444' }}>${comparePrice.toLocaleString()}</span>
                     <span style={{ fontSize: 42, fontWeight: 900, color: C.cyanLight, letterSpacing: '-0.04em' }}>${price.toLocaleString()}</span>
                     <span style={{ color: C.soft, fontSize: 14 }}>{priceLabel}</span>
                   </div>
