@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import {
-  Star,
   Globe,
   Calendar,
   Phone,
   MessageSquare,
   Shield,
   Users,
+  Star,
   Zap,
   ArrowRight,
   ChevronDown,
@@ -14,6 +14,27 @@ import {
 } from 'lucide-react';
 
 const endDate = new Date('2026-08-19T23:59:59-04:00');
+
+// Color tokens — no Tailwind color classes used anywhere
+const C = {
+  bg: '#080f1e',
+  bg2: '#0c1a2e',
+  panel: '#0f172a',
+  panel2: '#111d31',
+  panel3: '#1e293b',
+  line: 'rgba(255,255,255,0.11)',
+  lineStrong: '#334155',
+  white: '#ffffff',
+  muted: '#94a3b8',
+  soft: '#cbd5e1',
+  slate300: '#e2e8f0',
+  cyan: '#0ea5e9',
+  cyanLight: '#38bdf8',
+  emerald: '#10B981',
+  yellow: '#facc15',
+  yellowDark: '#f59e0b',
+  danger: '#f87171',
+};
 
 function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({ days: 30, hours: 0, mins: 0, secs: 0 });
@@ -34,65 +55,49 @@ function CountdownTimer() {
     return () => clearInterval(id);
   }, []);
 
+  const itemStyle: React.CSSProperties = {
+    minWidth: 72, borderRadius: 14, background: 'rgba(255,255,255,0.06)',
+    border: `1px solid rgba(255,255,255,0.12)`, textAlign: 'center', padding: '12px 10px',
+  };
+
   return (
-    <div className="flex justify-center gap-3 flex-wrap mt-4">
+    <div style={{ display: 'flex', justifyContent: 'center', gap: 10, flexWrap: 'wrap', marginTop: 0 }}>
       {[
         { num: timeLeft.days, label: 'Days' },
         { num: timeLeft.hours, label: 'Hours' },
         { num: timeLeft.mins, label: 'Mins' },
         { num: timeLeft.secs, label: 'Secs' },
       ].map((item) => (
-        <div
-          key={item.label}
-          className="min-w-[72px] rounded-xl bg-white/[0.06] border border-white/[0.12] text-center py-3 px-2"
-        >
-          <div className="text-primary-2 text-2xl font-black">{item.num}</div>
-          <div className="text-muted text-[10px] uppercase tracking-[0.12em]">{item.label}</div>
+        <div key={item.label} style={itemStyle}>
+          <div style={{ color: C.cyanLight, fontSize: 26, fontWeight: 900 }}>{item.num}</div>
+          <div style={{ color: C.muted, fontSize: 10, textTransform: 'uppercase', letterSpacing: '.12em' }}>{item.label}</div>
         </div>
       ))}
     </div>
   );
 }
 
-const features = [
-  {
-    icon: Globe,
-    title: 'Smart Website Design',
-    desc: 'Modern, mobile-friendly pages that help visitors understand your value and take action.',
-  },
-  {
-    icon: Calendar,
-    title: 'Integrated Booking System',
-    desc: 'Give customers a simple way to request appointments, consultations, or next steps.',
-  },
-  {
-    icon: Phone,
-    title: 'AI Receptionist',
-    desc: 'Answer common questions, capture details, and route enquiries using approved information.',
-  },
-  {
-    icon: Shield,
-    title: 'Reputation Management',
-    desc: 'Request reviews, strengthen trust, and make good customer experiences easier to see.',
-  },
-  {
-    icon: MessageSquare,
-    title: 'Unified Messaging Inbox',
-    desc: 'Bring WhatsApp, website, email, and social messages into a cleaner follow-up process.',
-  },
-  {
-    icon: Users,
-    title: 'Free Business Listing',
-    desc: 'Get listed on CaricomBusiness.com so more regional buyers can discover your business.',
-  },
+interface FeatureItem {
+  icon: React.FC<{ size?: number; color?: string }>;
+  title: string;
+  desc: string;
+}
+
+const features: FeatureItem[] = [
+  { icon: Globe, title: 'Smart Website Design', desc: 'Modern, mobile-friendly pages that help visitors understand your value and take action.' },
+  { icon: Calendar, title: 'Integrated Booking System', desc: 'Give customers a simple way to request appointments, consultations, or next steps.' },
+  { icon: Phone, title: 'AI Receptionist', desc: 'Answer common questions, capture details, and route enquiries using approved information.' },
+  { icon: Shield, title: 'Reputation Management', desc: 'Request reviews, strengthen trust, and make good customer experiences easier to see.' },
+  { icon: MessageSquare, title: 'Unified Messaging Inbox', desc: 'Bring WhatsApp, website, email, and social messages into a cleaner follow-up process.' },
+  { icon: Users, title: 'Free Business Listing', desc: 'Get listed on CaricomBusiness.com so more regional buyers can discover your business.' },
 ];
 
 const problems = [
-  { icon: Zap, title: 'Missed leads after hours', desc: 'You lose potential customers while your team is unavailable.' },
-  { icon: Zap, title: 'Slow replies across channels', desc: 'Delayed responses across WhatsApp, website, and social media cost trust.' },
-  { icon: Zap, title: 'Scattered conversations', desc: 'It is hard to track messages when every platform becomes its own little island.' },
-  { icon: Zap, title: 'No clear follow-up process', desc: 'Leads go quiet without a system to remind, route, and nurture them.' },
-  { icon: Zap, title: 'Weak online presence', desc: 'Your website and profiles may be underselling the business before you speak to anyone.' },
+  { title: 'Missed leads after hours', desc: 'You lose potential customers while your team is unavailable.' },
+  { title: 'Slow replies across channels', desc: 'Delayed responses across WhatsApp, website, and social media cost trust.' },
+  { title: 'Scattered conversations', desc: 'It is hard to track messages when every platform becomes its own little island.' },
+  { title: 'No clear follow-up process', desc: 'Leads go quiet without a system to remind, route, and nurture them.' },
+  { title: 'Weak online presence', desc: 'Your website and profiles may be underselling the business before you speak to anyone.' },
 ];
 
 const steps = [
@@ -118,54 +123,55 @@ const industries = [
 ];
 
 const faqs = [
-  {
-    q: 'What exactly is included?',
-    a: 'The bundle includes smart website design, integrated booking, AI receptionist, reputation management, unified messaging, and a free business listing on CaricomBusiness.com.',
-  },
-  {
-    q: 'Does AI replace my team?',
-    a: 'No. The system handles approved first responses, intake, routing, and follow-up. Human decisions, service delivery, and sensitive conversations remain with your team.',
-  },
-  {
-    q: 'What does the system review cover?',
-    a: 'We map one real enquiry journey for your business, show where response or follow-up can break down, and demonstrate how the connected NWS workflow handles it.',
-  },
-  {
-    q: 'What is the founder plan price?',
-    a: 'The founder plan is $297 USD monthly, or $2,970 USD annually, which gives you two months free.',
-  },
+  { q: 'What exactly is included?', a: 'The bundle includes smart website design, integrated booking, AI receptionist, reputation management, unified messaging, and a free business listing on CaricomBusiness.com.' },
+  { q: 'Does AI replace my team?', a: 'No. The system handles approved first responses, intake, routing, and follow-up. Human decisions, service delivery, and sensitive conversations remain with your team.' },
+  { q: 'What does the system review cover?', a: 'We map one real enquiry journey for your business, show where response or follow-up can break down, and demonstrate how the connected NWS workflow handles it.' },
+  { q: 'What is the founder plan price?', a: 'The founder plan is $297 USD monthly, or $2,970 USD annually, which gives you two months free.' },
 ];
 
 export default function SummerLaunch() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  // Button styles
+  const btnPrimary: React.CSSProperties = {
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+    minHeight: 52, padding: '0 22px', borderRadius: 14, textDecoration: 'none',
+    fontWeight: 900, fontSize: 15, border: '1px solid transparent',
+    background: `linear-gradient(135deg, ${C.cyan}, #0284c7)`, color: C.white,
+    boxShadow: '0 16px 50px rgba(14,165,233,0.3)', cursor: 'pointer',
+    transition: 'transform .2s ease, box-shadow .2s ease',
+  };
+  const btnSecondary: React.CSSProperties = {
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+    minHeight: 52, padding: '0 22px', borderRadius: 14, textDecoration: 'none',
+    fontWeight: 900, fontSize: 15, border: '1px solid rgba(255,255,255,0.16)',
+    background: 'rgba(255,255,255,0.055)', color: C.white,
+    cursor: 'pointer', transition: 'transform .2s ease, background .2s ease, border-color .2s ease',
+  };
+  const cardBase: React.CSSProperties = {
+    background: `linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.032))`,
+    border: `1px solid ${C.line}`, borderRadius: 20,
+    boxShadow: '0 12px 35px rgba(0,0,0,0.16)',
+  };
+
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(to bottom, #080f1e, #0c1a2e 38%, #080f1e)' }}>
+    <div style={{ minHeight: '100vh', background: `linear-gradient(to bottom, ${C.bg}, ${C.bg2} 38%, ${C.bg})`, fontFamily: "'Open Sans', Arial, sans-serif", color: C.white }}>
       {/* Top Banner */}
-      <div
-        className="sticky top-0 z-40 text-center py-2 px-4 text-xs font-black uppercase tracking-[0.08em] text-slate-900"
-        style={{
-          background: 'repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, #facc15, #f59e0b)',
-          borderBottom: '1px solid rgba(0,0,0,0.18)',
-          boxShadow: '0 8px 24px rgba(245,158,11,0.18)',
-        }}
-      >
+      <div style={{ position: 'sticky', top: 0, zIndex: 40, background: `repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, ${C.yellow}, ${C.yellowDark})`, color: '#08111f', textAlign: 'center', padding: '9px 16px', fontSize: 12, fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', borderBottom: '1px solid rgba(0,0,0,0.18)', boxShadow: '0 8px 24px rgba(245,158,11,0.18)' }}>
         NWS Summer Launch Founder Plan — Enrollment closes when the launch period ends
       </div>
 
       {/* Nav */}
-      <div className="sticky top-[36px] z-30 backdrop-blur-md" style={{ background: 'rgba(8,15,30,0.68)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-        <div className="max-w-[1180px] mx-auto px-5 flex items-center justify-between py-4 gap-4 flex-wrap">
-          <a href="https://noveltywebsolutions.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 min-w-[230px] no-underline">
-            <div className="w-[50px] h-[50px] rounded-2xl grid place-items-center text-sm font-black text-white" style={{ background: 'linear-gradient(135deg, #0ea5e9, #0369a1)', border: '1px solid rgba(255,255,255,0.18)', boxShadow: '0 0 34px rgba(14,165,233,0.28)' }}>
-              NWS
-            </div>
+      <div style={{ position: 'sticky', top: 35, zIndex: 35, backdropFilter: 'blur(18px)', background: 'rgba(8,15,30,0.68)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div style={{ maxWidth: 1180, margin: '0 auto', padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18, flexWrap: 'wrap' }}>
+          <a href="https://noveltywebsolutions.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', minWidth: 230 }}>
+            <img src="/assets/nws-logo.png" alt="Novelty Web Solutions" style={{ width: 46, height: 46, objectFit: 'contain', flex: '0 0 auto', filter: 'drop-shadow(0 8px 18px rgba(14,165,233,0.18))' }} />
             <div>
-              <strong className="block font-black text-base leading-none">Novelty Web Solutions</strong>
-              <span className="block text-muted text-xs mt-1">Business growth systems for modern teams</span>
+              <strong style={{ display: 'block', fontWeight: 900, fontSize: 16, lineHeight: 1 }}>Novelty Web Solutions</strong>
+              <span style={{ display: 'block', color: C.muted, fontSize: 12, marginTop: 5 }}>Business growth systems for modern teams</span>
             </div>
           </a>
-          <nav className="flex items-center gap-2 flex-wrap">
+          <nav style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             {[
               { label: 'Live AI Demo', href: 'https://noveltywebsolutions.com/#samantha', highlight: true },
               { label: 'Agency', href: 'https://noveltywebsolutions.com/' },
@@ -178,7 +184,31 @@ export default function SummerLaunch() {
                 href={link.href}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className={`no-underline text-sm font-extrabold px-3 py-2.5 rounded-full border border-transparent transition-all duration-200 hover:text-white hover:bg-white/[0.07] hover:border-white/[0.12] hover:-translate-y-0.5 ${link.highlight ? '!text-white bg-cyan-500/16 border-cyan-400/32' : 'text-slate-300'}`}
+                style={{
+                  textDecoration: 'none',
+                  color: link.highlight ? C.white : C.soft,
+                  fontSize: 13, fontWeight: 800, padding: '10px 12px', borderRadius: 999,
+                  border: '1px solid transparent',
+                  background: link.highlight ? 'rgba(14,165,233,0.16)' : 'transparent',
+                  borderColor: link.highlight ? 'rgba(56,189,248,0.32)' : 'transparent',
+                  transition: 'color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  if (!link.highlight) {
+                    (e.target as HTMLElement).style.color = C.white;
+                    (e.target as HTMLElement).style.background = 'rgba(255,255,255,0.07)';
+                    (e.target as HTMLElement).style.borderColor = 'rgba(255,255,255,0.12)';
+                    (e.target as HTMLElement).style.transform = 'translateY(-1px)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!link.highlight) {
+                    (e.target as HTMLElement).style.color = C.soft;
+                    (e.target as HTMLElement).style.background = 'transparent';
+                    (e.target as HTMLElement).style.borderColor = 'transparent';
+                    (e.target as HTMLElement).style.transform = 'none';
+                  }
+                }}
               >
                 {link.label}
               </a>
@@ -188,137 +218,100 @@ export default function SummerLaunch() {
       </div>
 
       {/* Hero */}
-      <section className="max-w-[1180px] mx-auto px-5 pt-14 pb-16">
-        <div className="grid lg:grid-cols-[0.82fr_1.18fr] gap-9 items-start" style={{ gridTemplateAreas: "'copy showcase'", minHeight: '600px' }}>
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '54px 20px 70px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(400px, 0.82fr) minmax(560px, 1.18fr)', gap: 36, alignItems: 'start' }}>
           {/* Left: Copy */}
-          <div style={{ gridArea: 'copy', alignSelf: 'start', maxWidth: 620, paddingTop: 6 }}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-6" style={{ background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.36)', color: '#38bdf8', fontSize: 12, fontWeight: 900, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" style={{ boxShadow: '0 0 0 0 rgba(16,185,129,0.45)', animation: 'pulse 1.7s infinite' }}></span>
+          <div style={{ alignSelf: 'start', maxWidth: 620, paddingTop: 6 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 16px', borderRadius: 999, background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.36)', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 24 }}>
+              <span style={{ width: 9, height: 9, borderRadius: 99, background: C.emerald, boxShadow: '0 0 0 0 rgba(16,185,129,0.45)', animation: 'pulse 1.7s infinite' }}></span>
               Exclusive summer launch
             </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl leading-[0.92] tracking-[-0.075em] font-black mb-6">
-              NWS <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-emerald-300 bg-clip-text text-transparent">Summer Launch</span>
+            <h1 style={{ fontSize: 'clamp(48px, 7vw, 92px)', lineHeight: 0.92, letterSpacing: '-0.075em', fontWeight: 900, marginBottom: 24 }}>
+              NWS <span style={{ background: `linear-gradient(100deg, ${C.cyan}, ${C.cyanLight} 48%, #a7f3d0 105%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Summer Launch</span>
             </h1>
-            <p className="text-xl md:text-2xl text-slate-200 font-extrabold mb-4 leading-relaxed">
+            <p style={{ fontSize: 'clamp(17px, 2vw, 22px)', color: C.slate300, lineHeight: 1.45, fontWeight: 800, marginBottom: 16 }}>
               Launch smarter. Capture more leads. Automate more of the work.
             </p>
-            <p className="text-muted leading-relaxed mb-7">
+            <p style={{ color: C.muted, lineHeight: 1.72, fontSize: 16, maxWidth: 610, marginBottom: 28 }}>
               A limited-time business growth bundle from Novelty Web Solutions designed to help businesses modernize their online presence, improve customer response, and streamline daily operations.
             </p>
-            <div className="flex justify-center gap-3 flex-wrap">
-              <a
-                href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 min-h-[52px] px-5.5 rounded-xl no-underline font-black text-sm border border-transparent transition-all duration-200 cursor-pointer hover:-translate-y-0.5"
-                style={{ background: 'linear-gradient(135deg, #0ea5e9, #0284c7)', color: 'white', boxShadow: '0 16px 50px rgba(14,165,233,0.3)' }}
-              >
+            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
+              <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" style={{ ...btnPrimary }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 22px 65px rgba(14,165,233,0.42)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 50px rgba(14,165,233,0.3)'}}>
                 Book a Demo <ArrowRight size={16} />
               </a>
-              <a
-                href="https://businessesos.com/register?promo=true&tier=pro"
-                className="inline-flex items-center justify-center gap-2.5 min-h-[52px] px-5.5 rounded-xl no-underline font-black text-sm border border-white/[0.16] text-white transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:border-cyan-400/45 hover:bg-white/[0.09]"
-                style={{ background: 'rgba(255,255,255,0.055)' }}
-              >
+              <a href="https://businessesos.com/register?promo=true&tier=pro" style={{ ...btnSecondary }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.45)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.09)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.16)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.055)'}}>
                 Get Started <ArrowRight size={16} />
               </a>
             </div>
           </div>
 
           {/* Right: Product Showcase */}
-          <div className="relative rounded-3xl p-7" style={{ gridArea: 'showcase', alignSelf: 'start', minWidth: 0, background: 'radial-gradient(circle at 55% 34%, rgba(56,189,248,0.25), transparent 35%), radial-gradient(circle at 50% 98%, rgba(14,165,233,0.2), transparent 36%), linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.022))', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08)' }}>
+          <div style={{ position: 'relative', alignSelf: 'start', width: '100%', minHeight: 600, borderRadius: 36, padding: 28, background: 'radial-gradient(circle at 55% 34%, rgba(56,189,248,0.25), transparent 35%), radial-gradient(circle at 50% 98%, rgba(14,165,233,0.2), transparent 36%), linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.022))', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08)' }}>
             {/* Promo Tape */}
-            <div className="absolute top-5 left-6 right-6 h-9 flex items-center justify-center overflow-hidden rounded-lg" style={{ background: 'repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, #facc15, #f59e0b)', border: '1px solid rgba(0,0,0,0.16)', boxShadow: '0 12px 28px rgba(245,158,11,0.18)', zIndex: 9 }}>
-              <span className="text-xs font-black tracking-[0.16em] uppercase whitespace-nowrap" style={{ fontFamily: 'Montserrat, sans-serif', textShadow: '0 1px 0 rgba(255,255,255,0.18)' }}>
+            <div style={{ position: 'absolute', top: 18, left: 24, right: 24, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: `repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, ${C.yellow}, ${C.yellowDark})`, color: '#07111f', border: '1px solid rgba(0,0,0,0.16)', borderRadius: 10, boxShadow: '0 12px 28px rgba(245,158,11,0.18)', zIndex: 9 }}>
+              <span style={{ display: 'inline-block', whiteSpace: 'nowrap', fontFamily: 'Montserrat, sans-serif', fontSize: 13, fontWeight: 900, letterSpacing: '0.16em', textTransform: 'uppercase', textShadow: '0 1px 0 rgba(255,255,255,0.18)' }}>
                 Summer Promo &nbsp;•&nbsp; Summer Promo &nbsp;•&nbsp; Summer Promo &nbsp;•&nbsp; Summer Promo
               </span>
             </div>
 
-            {/* Grid Layout */}
-            <div className="relative z-20 pt-10 min-h-[542px]" style={{ display: 'grid', gridTemplateColumns: '1fr 1.28fr 1fr', gridTemplateRows: '122px 122px 122px 128px', gap: 14 }}>
+            {/* Grid */}
+            <div style={{ position: 'relative', zIndex: 2, minHeight: 542, display: 'grid', gridTemplateColumns: '1fr 1.28fr 1fr', gridTemplateRows: '122px 122px 122px 128px', gap: 14, paddingTop: 36 }}>
               {/* Side modules */}
-              <article className="rounded-2xl p-4 flex flex-col justify-start" style={{ background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)' }}>
-                <div className="w-10 h-10 rounded-xl grid place-items-center mb-3" style={{ background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.26)', color: '#38bdf8', fontSize: 21 }}>
-                  <Globe size={21} />
-                </div>
-                <h3 className="text-xs font-black uppercase tracking-tight leading-[1.08]">Smart Website Design</h3>
-                <p className="text-muted text-[11px] leading-relaxed mt-1.5">Modern pages built for trust and conversion.</p>
-              </article>
-
-              <article className="rounded-2xl p-4 flex flex-col justify-start" style={{ background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)' }}>
-                <div className="w-10 h-10 rounded-xl grid place-items-center mb-3" style={{ background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.26)', color: '#38bdf8', fontSize: 21 }}>
-                  <Calendar size={21} />
-                </div>
-                <h3 className="text-xs font-black uppercase tracking-tight leading-[1.08]">Integrated Booking</h3>
-                <p className="text-muted text-[11px] leading-relaxed mt-1.5">Make the next step easy for customers.</p>
-              </article>
-
-              <article className="rounded-2xl p-4 flex flex-col justify-start" style={{ background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)' }}>
-                <div className="w-10 h-10 rounded-xl grid place-items-center mb-3" style={{ background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.26)', color: '#38bdf8', fontSize: 21 }}>
-                  <Phone size={21} />
-                </div>
-                <h3 className="text-xs font-black uppercase tracking-tight leading-[1.08]">AI Receptionist</h3>
-                <p className="text-muted text-[11px] leading-relaxed mt-1.5">Capture and qualify enquiries faster.</p>
-              </article>
-
-              <article className="rounded-2xl p-4 flex flex-col justify-start" style={{ background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)' }}>
-                <div className="w-10 h-10 rounded-xl grid place-items-center mb-3" style={{ background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.26)', color: '#38bdf8', fontSize: 21 }}>
-                  <Shield size={21} />
-                </div>
-                <h3 className="text-xs font-black uppercase tracking-tight leading-[1.08]">Reputation Management</h3>
-                <p className="text-muted text-[11px] leading-relaxed mt-1.5">Turn happy customers into visible trust.</p>
-              </article>
-
-              <article className="rounded-2xl p-4 flex flex-col justify-start" style={{ background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)' }}>
-                <div className="w-10 h-10 rounded-xl grid place-items-center mb-3" style={{ background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.26)', color: '#38bdf8', fontSize: 21 }}>
-                  <MessageSquare size={21} />
-                </div>
-                <h3 className="text-xs font-black uppercase tracking-tight leading-[1.08]">Unified Messaging Inbox</h3>
-                <p className="text-muted text-[11px] leading-relaxed mt-1.5">Keep customer conversations in one place.</p>
-              </article>
-
-              <article className="rounded-2xl p-4 flex flex-col justify-start" style={{ background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)' }}>
-                <div className="w-10 h-10 rounded-xl grid place-items-center mb-3" style={{ background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.26)', color: '#38bdf8', fontSize: 21 }}>
-                  <Users size={21} />
-                </div>
-                <h3 className="text-xs font-black uppercase tracking-tight leading-[1.08]">CaricomBusiness Listing</h3>
-                <p className="text-muted text-[11px] leading-relaxed mt-1.5">Build regional visibility for your business.</p>
-              </article>
+              {[
+                { Icon: Globe, title: 'Smart Website Design', desc: 'Modern pages built for trust and conversion.', col: 1, row: 1 },
+                { Icon: Calendar, title: 'Integrated Booking', desc: 'Make the next step easy for customers.', col: 3, row: 1 },
+                { Icon: Phone, title: 'AI Receptionist', desc: 'Capture and qualify enquiries faster.', col: 1, row: 2 },
+                { Icon: Shield, title: 'Reputation Management', desc: 'Turn happy customers into visible trust.', col: 3, row: 2 },
+                { Icon: MessageSquare, title: 'Unified Messaging Inbox', desc: 'Keep customer conversations in one place.', col: 1, row: 3 },
+                { Icon: Users, title: 'CaricomBusiness Listing', desc: 'Build regional visibility for your business.', col: 3, row: 3 },
+              ].map(({ Icon, title, desc, col, row }) => (
+                <article key={title} style={{ position: 'relative', borderRadius: 24, padding: 16, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gridColumn: col, gridRow: row, background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)' }}>
+                  <div style={{ width: 42, height: 42, borderRadius: 14, display: 'grid', placeItems: 'center', marginBottom: 12, background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.26)', color: C.cyanLight, fontSize: 21 }}>
+                    <Icon size={21} />
+                  </div>
+                  <h3 style={{ fontSize: 13, lineHeight: 1.08, textTransform: 'uppercase', letterSpacing: '-0.01em', marginBottom: 7 }}>{title}</h3>
+                  <p style={{ color: C.muted, fontSize: 11, lineHeight: 1.35 }}>{desc}</p>
+                </article>
+              ))}
 
               {/* Center main box */}
-              <article className="rounded-2xl p-7 flex flex-col justify-between" style={{ gridColumn: 2, gridRow: '1 / 4', background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)', minHeight: 394 }}>
-                <div className="flex items-center gap-3.5 mb-4">
-                  <div className="w-[50px] h-[50px] rounded-xl grid place-items-center text-sm font-black text-white" style={{ background: 'linear-gradient(135deg, #0ea5e9, #0369a1)' }}>NWS</div>
+              <article style={{ gridColumn: 2, gridRow: '1 / 4', padding: 28, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)', minHeight: 394 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 0 }}>
+                  <img src="/assets/nws-logo.png" alt="NWS" style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.38))', flex: '0 0 auto' }} />
+                  <div style={{ fontSize: 32, fontWeight: 900, letterSpacing: '-0.06em' }}>N<span style={{ color: C.cyanLight }}>W</span>S</div>
                 </div>
                 <div>
-                  <h2 className="text-3xl md:text-[42px] leading-[0.94] tracking-[-0.045em] uppercase font-black">
+                  <h2 style={{ position: 'relative', zIndex: 2, fontSize: 'clamp(32px, 3.7vw, 42px)', lineHeight: '.94', letterSpacing: '-0.045em', textTransform: 'uppercase', fontWeight: 900 }}>
                     Business<br />Growth<br />Bundle
                   </h2>
-                  <p className="text-slate-300 text-sm leading-relaxed mt-3">One connected system for leads, conversations, bookings, follow-up and reputation.</p>
+                  <p style={{ position: 'relative', zIndex: 2, color: C.soft, fontSize: 13, lineHeight: 1.45, marginTop: 12 }}>One connected system for leads, conversations, bookings, follow-up and reputation.</p>
                 </div>
               </article>
 
               {/* Price plate */}
-              <div className="rounded-2xl p-5.5 flex items-center gap-5" style={{ gridColumn: '1 / -1', gridRow: 4, background: 'rgba(8,15,30,0.9)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 70px rgba(0,0,0,0.42), 0 0 60px rgba(14,165,233,0.14)' }}>
-                <div>
-                  <div className="text-muted text-xs font-black uppercase tracking-[0.14em] leading-snug">Founder plan</div>
-                  <div className="text-slate-300 text-xs font-bold uppercase tracking-[0.09em] leading-tight mt-1">Summer launch pricing</div>
+              <div style={{ gridColumn: '1 / -1', gridRow: 4, display: 'grid', gridTemplateColumns: 'minmax(170px, 215px) auto minmax(220px, 1fr)', gap: 20, alignItems: 'center', borderRadius: 24, padding: '22px 24px', background: 'rgba(8,15,30,0.9)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 70px rgba(0,0,0,0.42), 0 0 60px rgba(14,165,233,0.14)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                  <img src="/assets/nws-logo.png" alt="NWS" style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.38))', flex: '0 0 auto' }} />
+                  <div>
+                    <div style={{ color: C.muted, fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '.14em', lineHeight: 1.22 }}>Founder plan</div>
+                    <div style={{ color: C.soft, fontSize: 10, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', marginTop: 5, lineHeight: 1.25 }}>Summer launch pricing</div>
+                  </div>
                 </div>
-                <div className="text-5xl leading-[0.95] font-black tracking-[-0.06em] whitespace-nowrap" style={{ color: '#38bdf8' }}>
-                  $297<span className="text-base font-normal tracking-0 text-white">/month</span>
+                <div style={{ fontSize: 50, lineHeight: 0.95, fontWeight: 900, letterSpacing: '-0.06em', color: C.cyanLight, whiteSpace: 'nowrap' }}>
+                  $297<span style={{ color: C.white, fontSize: 16, letterSpacing: 0 }}>/month</span>
                 </div>
-                <p className="text-slate-300 text-sm leading-relaxed max-w-[280px]">or $2,970 annually, which gives you two months free.</p>
+                <p style={{ color: C.soft, fontSize: 13, lineHeight: 1.55, maxWidth: 280, margin: 0 }}>or $2,970 annually, which gives you two months free.</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Lower: Trust badges + countdown */}
-        <div className="flex flex-col items-center gap-3 mt-8 text-center">
-          <div className="flex justify-center gap-2.5 flex-wrap">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, width: '100%', marginTop: 8, textAlign: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 10, flexWrap: 'wrap', marginTop: 0 }}>
             {['All-in-one solution', 'AI + automation configured for your business', 'Guided setup included'].map((pill) => (
-              <span key={pill} className="px-3.5 py-2 rounded-full text-xs font-extrabold" style={{ background: 'rgba(255,255,255,0.055)', border: '1px solid rgba(255,255,255,0.11)', color: '#cbd5e1' }}>
-                <Star size={12} className="inline mr-1.5" /> {pill}
+              <span key={pill} style={{ padding: '8px 13px', borderRadius: 999, background: 'rgba(255,255,255,0.055)', border: '1px solid rgba(255,255,255,0.11)', color: C.soft, fontSize: 12, fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <Star size={12} /> {pill}
               </span>
             ))}
           </div>
@@ -327,25 +320,25 @@ export default function SummerLaunch() {
       </section>
 
       {/* Story Section */}
-      <section className="max-w-[1180px] mx-auto px-5 py-12">
-        <div className="grid md:grid-cols-[0.92fr_1.08fr] gap-7 rounded-[34px] p-8" style={{ background: 'radial-gradient(circle at 14% 16%, rgba(14,165,233,0.24), transparent 32%), linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.03))', border: '1px solid rgba(255,255,255,0.11)', boxShadow: '0 24px 80px rgba(0,0,0,0.38)' }}>
-          <div className="rounded-2xl p-8" style={{ background: 'rgba(8,15,30,0.6)', border: '1px solid rgba(56,189,248,0.18)' }}>
-            <blockquote className="text-2xl md:text-4xl leading-[1.04] font-black tracking-[-0.045em] mb-4.5">
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '0.92fr 1.08fr', gap: 28, borderRadius: 34, padding: 30, background: 'radial-gradient(circle at 14% 16%, rgba(14,165,233,0.24), transparent 32%), linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.03))', border: `1px solid ${C.line}`, boxShadow: '0 24px 80px rgba(0,0,0,0.38)' }}>
+          <div style={{ borderRadius: 26, padding: 30, background: 'rgba(8,15,30,0.6)', border: '1px solid rgba(56,189,248,0.18)' }}>
+            <blockquote style={{ fontSize: 'clamp(24px, 3vw, 36px)', lineHeight: 1.04, fontWeight: 900, letterSpacing: '-0.045em', marginBottom: 18 }}>
               "The lead you already paid for should not disappear between channels."
             </blockquote>
-            <p className="text-slate-300 leading-relaxed">
+            <p style={{ color: C.soft, lineHeight: 1.72 }}>
               A customer sees your business, checks your website, sends a message, then waits. Your team is busy. The enquiry is real, but the response gets delayed. By the time someone follows up, the moment has cooled.
             </p>
           </div>
-          <div className="flex flex-col justify-center">
-            <div className="text-cyan-400 text-xs font-black uppercase tracking-[0.14em] mb-2.5">The NWS perspective</div>
-            <h2 className="text-3xl md:text-4xl leading-[1.05] tracking-[-0.05em] font-black mb-4.5">
+          <div style={{ padding: '8px 6px' }}>
+            <div style={{ color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10, textAlign: 'left' }}>The NWS perspective</div>
+            <h2 style={{ fontSize: 'clamp(28px, 3.3vw, 44px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 18 }}>
               Most businesses do not need more tools first. They need a cleaner customer journey.
             </h2>
-            <p className="text-slate-300 leading-relaxed mb-3.5">
+            <p style={{ color: C.soft, lineHeight: 1.72, marginBottom: 14 }}>
               Novelty Web Solutions builds connected digital systems that help customers find you, ask questions, book appointments, receive fast responses, and stay in follow-up without forcing your team to chase everything manually.
             </p>
-            <p className="text-slate-300 leading-relaxed">
+            <p style={{ color: C.soft, lineHeight: 1.72 }}>
               That is the idea behind the NWS Summer Launch: a practical business growth bundle that combines website, booking, AI reception, unified messaging, review growth, and regional visibility into one managed system.
             </p>
           </div>
@@ -353,39 +346,38 @@ export default function SummerLaunch() {
       </section>
 
       {/* Features Section */}
-      <section className="max-w-[1180px] mx-auto px-5 py-12" id="included">
-        <div className="text-center text-cyan-400 text-xs font-black uppercase tracking-[0.14em] mb-3">What's included</div>
-        <h2 className="text-center text-3xl md:text-5xl leading-[1.05] tracking-[-0.05em] font-black mb-4">
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="included">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>What's included</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
           Classic bundle energy. Modern business polish.
         </h2>
-        <p className="text-center text-muted max-w-[740px] mx-auto mb-9 leading-relaxed text-base">
+        <p style={{ textAlign: 'center', color: C.muted, maxWidth: 740, margin: '0 auto 34px', lineHeight: 1.65, fontSize: 16 }}>
           A launch-ready offer stack designed to make your business easier to find, easier to contact, and easier to choose.
         </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 16 }}>
           {features.map((f) => (
-            <article
-              key={f.title}
-              className="rounded-2xl p-5.5 relative overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:border-cyan-400/35"
-              style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.032))', border: '1px solid rgba(255,255,255,0.11)', boxShadow: '0 12px 35px rgba(0,0,0,0.16)', minHeight: 218 }}
+            <article key={f.title} style={{ ...cardBase, minHeight: 218, padding: 22, position: 'relative', overflow: 'hidden', transition: 'transform .2s ease, border-color .2s ease' }}
+              onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.35)'}}
+              onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = C.line}}
             >
-              <div className="w-[52px] h-[52px] rounded-2xl grid place-items-center mb-4" style={{ background: 'rgba(14,165,233,0.12)', border: '1px solid rgba(14,165,233,0.25)', color: '#38bdf8' }}>
+              <div style={{ width: 52, height: 52, borderRadius: 18, display: 'grid', placeItems: 'center', marginBottom: 16, background: 'rgba(14,165,233,0.12)', border: '1px solid rgba(14,165,233,0.25)', color: C.cyanLight }}>
                 <f.icon size={24} />
               </div>
-              <h3 className="text-base leading-[1.12] font-black tracking-tight mb-2.5">{f.title}</h3>
-              <p className="text-muted leading-relaxed text-sm">{f.desc}</p>
+              <h3 style={{ fontSize: 17, lineHeight: 1.12, marginBottom: 10, letterSpacing: '-0.02em', fontWeight: 900 }}>{f.title}</h3>
+              <p style={{ color: C.muted, lineHeight: 1.55, fontSize: 13 }}>{f.desc}</p>
             </article>
           ))}
         </div>
       </section>
 
       {/* Value Section */}
-      <section className="max-w-[1180px] mx-auto px-5 py-12" id="value">
-        <div className="text-center text-cyan-400 text-xs font-black uppercase tracking-[0.14em] mb-3">Value stack</div>
-        <h2 className="text-center text-3xl md:text-5xl leading-[1.05] tracking-[-0.05em] font-black mb-10">
-          Unbeatable Value. <span className="bg-gradient-to-r from-cyan-400 to-emerald-300 bg-clip-text text-transparent">All in One Bundle.</span>
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="value">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>Value stack</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
+          Unbeatable Value. <span style={{ background: `linear-gradient(100deg, ${C.cyan}, ${C.cyanLight} 48%, #a7f3d0 105%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>All in One Bundle.</span>
         </h2>
-        <div className="grid lg:grid-cols-[1fr_320px] gap-5 items-stretch">
-          <div className="rounded-3xl p-8" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.03))', border: '1px solid rgba(255,255,255,0.11)', boxShadow: '0 24px 80px rgba(0,0,0,0.38)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 20, alignItems: 'stretch' }}>
+          <div style={{ borderRadius: 28, padding: 30, background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.03))', border: `1px solid ${C.line}`, boxShadow: '0 24px 80px rgba(0,0,0,0.38)' }}>
             {[
               ['Website Overhaul or New Website', '$1,500 value'],
               ['Integrated Booking System', '$29 value'],
@@ -394,59 +386,57 @@ export default function SummerLaunch() {
               ['Unified Messaging System', 'Included'],
               ['Free Business Listing on CaricomBusiness.com', 'Included'],
             ].map(([name, val]) => (
-              <div key={name} className="grid grid-cols-[1fr_auto] gap-4 items-center py-3.5 border-b border-white/[0.10] text-slate-300">
-                <span className="flex items-center gap-2.5 font-semibold">
-                  <span className="text-emerald-500 font-black">✓</span> {name}
+              <div key={name} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', padding: '15px 0', borderBottom: `1px solid rgba(255,255,255,0.1)`, color: C.soft }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700 }}>
+                  <span style={{ color: C.emerald, fontWeight: 900 }}>✓</span> {name}
                 </span>
-                <span className="font-black" style={{ color: '#38bdf8' }}>{val}</span>
+                <span style={{ fontFamily: "'Montserrat', 'Open Sans', Arial, sans-serif", fontWeight: 900, color: C.cyanLight }}>{val}</span>
               </div>
             ))}
           </div>
-          <div className="rounded-3xl p-7 flex flex-col justify-center text-center" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(56,189,248,0.28), transparent 42%), linear-gradient(145deg, rgba(14,165,233,0.16), rgba(8,15,30,0.76))', border: '1px solid rgba(56,189,248,0.26)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), 0 0 75px rgba(14,165,233,0.13)' }}>
-            <div className="text-5xl mb-4.5">✦</div>
-            <h3 className="text-2xl leading-[1.08] tracking-[-0.04em] font-black">One connected system. One monthly investment.</h3>
-            <p className="text-slate-300 leading-relaxed mt-3">Built for growing businesses that want a cleaner first impression, faster response, and better follow-up.</p>
+          <div style={{ borderRadius: 28, padding: 28, background: 'radial-gradient(circle at 50% 0%, rgba(56,189,248,0.28), transparent 42%), linear-gradient(145deg, rgba(14,165,233,0.16), rgba(8,15,30,0.76))', border: '1px solid rgba(56,189,248,0.26)', display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '100%', textAlign: 'center' }}>
+            <div style={{ fontSize: 54, marginBottom: 18 }}>✦</div>
+            <h3 style={{ fontSize: 28, lineHeight: 1.08, letterSpacing: '-0.04em', fontWeight: 900 }}>One connected system. One monthly investment.</h3>
+            <p style={{ marginTop: 12, color: C.soft, lineHeight: 1.55 }}>Built for growing businesses that want a cleaner first impression, faster response, and better follow-up.</p>
           </div>
         </div>
       </section>
 
       {/* Problems Section */}
-      <section className="max-w-[1180px] mx-auto px-5 py-12" id="problems">
-        <div className="text-center text-cyan-400 text-xs font-black uppercase tracking-[0.14em] mb-3">Why this matters</div>
-        <h2 className="text-center text-3xl md:text-5xl leading-[1.05] tracking-[-0.05em] font-black mb-4">
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="problems">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>Why this matters</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
           Your next customer may already be trying to reach you.
         </h2>
-        <p className="text-center text-muted max-w-[740px] mx-auto mb-9 leading-relaxed text-base">
+        <p style={{ textAlign: 'center', color: C.muted, maxWidth: 740, margin: '0 auto 34px', lineHeight: 1.65, fontSize: 16 }}>
           NWS helps you protect the demand you already create before it leaks through slow replies, scattered tools, or unclear follow-up.
         </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
           {problems.map((p) => (
-            <article key={p.title} className="rounded-2xl p-5.5 min-h-[205px]" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.032))', border: '1px solid rgba(255,255,255,0.11)', boxShadow: '0 12px 35px rgba(0,0,0,0.16)' }}>
-              <div className="w-[52px] h-[52px] rounded-2xl grid place-items-center mb-4" style={{ background: 'rgba(248,113,113,0.09)', border: '1px solid rgba(248,113,113,0.18)', color: '#f87171' }}>
-                <p.icon size={24} />
+            <article key={p.title} style={{ ...cardBase, padding: 22, minHeight: 205 }}>
+              <div style={{ width: 52, height: 52, borderRadius: 18, display: 'grid', placeItems: 'center', marginBottom: 16, background: 'rgba(248,113,113,0.09)', border: '1px solid rgba(248,113,113,0.18)', color: C.danger }}>
+                <Zap size={24} />
               </div>
-              <h3 className="text-base leading-[1.12] font-black tracking-tight mb-2.5">{p.title}</h3>
-              <p className="text-muted leading-relaxed text-sm">{p.desc}</p>
+              <h3 style={{ fontSize: 17, lineHeight: 1.12, marginBottom: 10, letterSpacing: '-0.02em', fontWeight: 900 }}>{p.title}</h3>
+              <p style={{ color: C.muted, lineHeight: 1.55, fontSize: 13 }}>{p.desc}</p>
             </article>
           ))}
         </div>
       </section>
 
       {/* How it Works */}
-      <section className="max-w-[1180px] mx-auto px-5 py-12" id="works">
-        <div className="text-center text-cyan-400 text-xs font-black uppercase tracking-[0.14em] mb-3">How it works</div>
-        <h2 className="text-center text-3xl md:text-5xl leading-[1.05] tracking-[-0.05em] font-black mb-10">
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="works">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>How it works</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
           From first impression to booked opportunity.
         </h2>
-        <div className="relative p-6 rounded-[30px]" style={{ background: 'rgba(255,255,255,0.038)', border: '1px solid rgba(255,255,255,0.11)' }}>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div style={{ position: 'relative', padding: 24, borderRadius: 30, background: 'rgba(255,255,255,0.038)', border: `1px solid ${C.line}` }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
             {steps.map((s) => (
-              <article key={s.num} className="text-center p-6 relative">
-                <div className="w-[58px] h-[58px] grid place-items-center mx-auto mb-4 rounded-full text-white font-black" style={{ background: 'rgba(14,165,233,0.18)', border: '1px solid rgba(56,189,248,0.3)' }}>
-                  {s.num}
-                </div>
-                <h3 className="text-base font-black tracking-tight mb-2.5">{s.title}</h3>
-                <p className="text-muted leading-relaxed text-sm">{s.desc}</p>
+              <article key={s.num} style={{ textAlign: 'center', padding: 24, position: 'relative' }}>
+                <div style={{ width: 58, height: 58, display: 'grid', placeItems: 'center', margin: '0 auto 16px', borderRadius: 999, color: C.white, fontWeight: 900, background: 'rgba(14,165,233,0.18)', border: '1px solid rgba(56,189,248,0.3)' }}>{s.num}</div>
+                <h3 style={{ fontSize: 17, lineHeight: 1.12, marginBottom: 10, letterSpacing: '-0.02em', fontWeight: 900 }}>{s.title}</h3>
+                <p style={{ color: C.muted, lineHeight: 1.55, fontSize: 13 }}>{s.desc}</p>
               </article>
             ))}
           </div>
@@ -454,103 +444,87 @@ export default function SummerLaunch() {
       </section>
 
       {/* Industries */}
-      <section className="max-w-[1180px] mx-auto px-5 py-12" id="industries">
-        <div className="text-center text-cyan-400 text-xs font-black uppercase tracking-[0.14em] mb-3">Who it's for</div>
-        <h2 className="text-center text-3xl md:text-5xl leading-[1.05] tracking-[-0.05em] font-black mb-10">
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="industries">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>Who it's for</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
           Configured around real business enquiries.
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
           {industries.map((ind) => (
-            <div key={ind.name} className="flex items-center gap-3 font-extrabold text-slate-200 py-4 px-5 rounded-2xl" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.032))', border: '1px solid rgba(255,255,255,0.11)' }}>
-              <span className="text-2xl">{ind.icon}</span> {ind.name}
+            <div key={ind.name} style={{ padding: 16, display: 'flex', alignItems: 'center', gap: 12, fontWeight: 800, color: C.slate300, borderRadius: 20, background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.032))', border: `1px solid ${C.line}` }}>
+              <span style={{ color: C.cyanLight, fontSize: 20 }}>{ind.icon}</span> {ind.name}
             </div>
           ))}
         </div>
       </section>
 
       {/* Explore Section */}
-      <section className="max-w-[1180px] mx-auto px-5 py-12" id="learn">
-        <div className="text-center text-cyan-400 text-xs font-black uppercase tracking-[0.14em] mb-3">Explore first</div>
-        <h2 className="text-center text-3xl md:text-5xl leading-[1.05] tracking-[-0.05em] font-black mb-10">
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="learn">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>Explore first</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
           Learn before you book.
         </h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           {[
             { title: 'Agency: Novelty Web Solutions', desc: 'See the agency behind the offer and explore how NWS helps businesses modernize their digital presence.', href: 'https://noveltywebsolutions.com/', linkText: 'Visit noveltywebsolutions.com' },
             { title: 'Operating System: Business OS', desc: 'Explore the CRM, AI receptionist, unified messaging, booking, and reputation tools behind the bundle.', href: 'https://businessesos.com/', linkText: 'Visit businessesos.com' },
           ].map((card) => (
-            <a
-              key={card.title}
-              href={card.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block rounded-2xl p-6 no-underline transition-all duration-200 hover:-translate-y-0.75 hover:border-cyan-400/32"
-              style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.032))', border: '1px solid rgba(255,255,255,0.11)', boxShadow: '0 12px 35px rgba(0,0,0,0.16)' }}
+            <a key={card.title} href={card.href} target="_blank" rel="noopener noreferrer" style={{ ...cardBase, display: 'block', padding: 24, textDecoration: 'none', transition: 'transform .2s ease, border-color .2s ease' }}
+              onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.32)'}}
+              onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = C.line}}
             >
-              <h3 className="text-lg font-black tracking-tight mb-2.5">{card.title}</h3>
-              <p className="text-muted leading-relaxed text-sm mb-3.5">{card.desc}</p>
-              <div className="text-cyan-400 font-black text-sm">{card.linkText} →</div>
+              <h3 style={{ marginBottom: 10, fontSize: 18, fontWeight: 900 }}>{card.title}</h3>
+              <p style={{ color: C.muted, lineHeight: 1.55, fontSize: 13 }}>{card.desc}</p>
+              <div style={{ marginTop: 14, color: C.cyanLight, fontWeight: 900, fontSize: 13 }}>{card.linkText} →</div>
             </a>
           ))}
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="max-w-[1180px] mx-auto px-5 py-12" id="faq">
-        <div className="text-center text-cyan-400 text-xs font-black uppercase tracking-[0.14em] mb-3">Quick answers</div>
-        <h2 className="text-center text-3xl md:text-5xl leading-[1.05] tracking-[-0.05em] font-black mb-10">
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="faq">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>Quick answers</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
           Frequently Asked Questions
         </h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           {faqs.map((faq, i) => (
-            <button
-              key={i}
-              onClick={() => setOpenFaq(openFaq === i ? null : i)}
-              className="block text-left rounded-2xl p-6 no-underline transition-all duration-200 hover:-translate-y-0.75 hover:border-cyan-400/32"
-              style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.032))', border: '1px solid rgba(255,255,255,0.11)', boxShadow: '0 12px 35px rgba(0,0,0,0.16)' }}
+            <button key={i} onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ ...cardBase, display: 'block', padding: 24, textAlign: 'left', cursor: 'pointer', transition: 'transform .2s ease, border-color .2s ease' }}
+              onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.32)'}}
+              onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = C.line}}
             >
-              <h3 className="text-lg font-black tracking-tight mb-2.5 flex items-center justify-between">
+              <h3 style={{ marginBottom: 10, fontSize: 18, fontWeight: 900, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 {faq.q}
-                {openFaq === i ? <ChevronUp size={18} className="text-cyan-400" /> : <ChevronDown size={18} className="text-muted" />}
+                {openFaq === i ? <ChevronUp size={18} style={{ color: C.cyanLight }} /> : <ChevronDown size={18} style={{ color: C.muted }} />}
               </h3>
-              {openFaq === i && <p className="text-muted leading-relaxed text-sm">{faq.a}</p>}
+              {openFaq === i && <p style={{ color: C.muted, lineHeight: 1.55, fontSize: 13 }}>{faq.a}</p>}
             </button>
           ))}
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="max-w-[1180px] mx-auto px-5 py-12" id="claim">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-center rounded-[30px] p-9" style={{ background: 'radial-gradient(circle at 82% 35%, rgba(14,165,233,0.25), transparent 38%), linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(56,189,248,0.20)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), 0 0 75px rgba(14,165,233,0.13)' }}>
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '34px 20px 54px' }} id="claim">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 32, alignItems: 'center', borderRadius: 30, padding: 36, background: 'radial-gradient(circle at 82% 35%, rgba(14,165,233,0.25), transparent 38%), linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(56,189,248,0.20)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), 0 0 75px rgba(14,165,233,0.13)' }}>
           <div>
-            <div className="text-cyan-400 text-xs font-black uppercase tracking-[0.14em] mb-3">Final call to action</div>
-            <h2 className="text-3xl md:text-5xl leading-[1.02] tracking-[-0.05em] font-black mb-3.5">
+            <div style={{ color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, textAlign: 'left' }}>Final call to action</div>
+            <h2 style={{ fontSize: 'clamp(30px, 4vw, 50px)', lineHeight: 1.02, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 14 }}>
               Ready to launch with NWS this summer?
             </h2>
-            <p className="text-slate-300 leading-relaxed max-w-[650px]">
+            <p style={{ color: C.soft, lineHeight: 1.65, maxWidth: 650 }}>
               We are opening only a few founder places in selected key industries, and enrollment closes when the launch period ends.
             </p>
           </div>
-          <div className="rounded-2xl p-6.5 min-w-[300px]" style={{ background: 'rgba(8,15,30,0.72)', border: '1px solid rgba(255,255,255,0.13)' }}>
-            <div className="text-5xl font-black tracking-[-0.06em] leading-none" style={{ color: '#38bdf8' }}>
-              $297 <span className="text-base font-normal tracking-0 text-white">monthly</span>
+          <div style={{ borderRadius: 24, padding: 26, minWidth: 300, background: 'rgba(8,15,30,0.72)', border: '1px solid rgba(255,255,255,0.13)' }}>
+            <div style={{ color: C.cyanLight, fontSize: 54, fontWeight: 900, letterSpacing: '-0.06em', lineHeight: 1 }}>
+              $297 <span style={{ fontSize: 16, color: C.white, letterSpacing: 0 }}>monthly</span>
             </div>
-            <p className="text-slate-300 text-sm mt-2 mb-4.5">or $2,970 annually — 2 months free</p>
-            <div className="flex flex-col gap-3">
-              <a
-                href="https://businessesos.com/register?promo=true&tier=pro"
-                className="inline-flex items-center justify-center gap-2.5 min-h-[52px] px-5.5 rounded-xl no-underline font-black text-sm border border-transparent transition-all duration-200 cursor-pointer hover:-translate-y-0.5"
-                style={{ background: 'linear-gradient(135deg, #0ea5e9, #0284c7)', color: 'white', boxShadow: '0 16px 50px rgba(14,165,233,0.3)' }}
-              >
+            <p style={{ color: C.soft, fontSize: 13, margin: '8px 0 18px' }}>or $2,970 annually — 2 months free</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <a href="https://businessesos.com/register?promo=true&tier=pro" style={btnPrimary} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 22px 65px rgba(14,165,233,0.42)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 50px rgba(14,165,233,0.3)'}}>
                 Claim Your Spot <ArrowRight size={16} />
               </a>
-              <a
-                href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 min-h-[52px] px-5.5 rounded-xl no-underline font-black text-sm border border-white/[0.16] text-white transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:border-cyan-400/45 hover:bg-white/[0.09]"
-                style={{ background: 'rgba(255,255,255,0.055)' }}
-              >
+              <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" style={btnSecondary} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.45)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.09)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.16)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.055)'}}>
                 Book a Call <ArrowRight size={16} />
               </a>
             </div>
@@ -559,16 +533,16 @@ export default function SummerLaunch() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/[0.10] py-6.5" style={{ borderTop: '1px solid rgba(255,255,255,0.10)' }}>
-        <div className="max-w-[1180px] mx-auto px-5 flex flex-wrap items-center justify-between gap-4">
+      <footer style={{ borderTop: `1px solid ${C.line}`, padding: '26px 20px' }}>
+        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
           <div>
-            <div className="font-black" style={{ color: '#38bdf8' }}>Novelty Web Solutions</div>
-            <div className="text-muted text-sm mt-1">Enterprise-level technology without enterprise-level complexity.</div>
+            <div style={{ color: C.cyanLight, fontWeight: 900 }}>Novelty Web Solutions</div>
+            <div style={{ color: C.muted, fontSize: 13, marginTop: 4 }}>Enterprise-level technology without enterprise-level complexity.</div>
           </div>
-          <div className="flex gap-4.5 flex-wrap">
-            <a href="https://noveltywebsolutions.com/" target="_blank" rel="noopener noreferrer" className="text-muted no-underline text-sm hover:!text-white transition-colors">Agency</a>
-            <a href="https://businessesos.com/" target="_blank" rel="noopener noreferrer" className="text-muted no-underline text-sm hover:!text-white transition-colors">Operating System</a>
-            <a href="https://noveltywebsolutions.com/#samantha" target="_blank" rel="noopener noreferrer" className="text-muted no-underline text-sm hover:!text-white transition-colors">Live AI Demo</a>
+          <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
+            <a href="https://noveltywebsolutions.com/" target="_blank" rel="noopener noreferrer" style={{ color: C.muted, textDecoration: 'none', fontSize: 13 }}>Agency</a>
+            <a href="https://businessesos.com/" target="_blank" rel="noopener noreferrer" style={{ color: C.muted, textDecoration: 'none', fontSize: 13 }}>Operating System</a>
+            <a href="https://noveltywebsolutions.com/#samantha" target="_blank" rel="noopener noreferrer" style={{ color: C.muted, textDecoration: 'none', fontSize: 13 }}>Live AI Demo</a>
           </div>
         </div>
       </footer>
