@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Phone, MessageSquare, Brain, Zap, CheckCircle, ArrowRight, Mic, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 import BookingModal from "../components/BookingModal";
@@ -174,7 +174,7 @@ export default function Samantha() {
           demoId="nws-nova-demo"
           businessName="Novelty Web Solutions"
           primaryColor="#0369a1"
-          apiBase=""
+          apiBase={window.location.origin}
           onClose={() => setShowVoice(false)}
         />
       )}
