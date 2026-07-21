@@ -1,6 +1,5 @@
 import { Phone, MessageSquare, Brain, Zap, CheckCircle, ArrowRight, Mic, Globe } from "lucide-react";
 import { motion } from "framer-motion";
-import { useSamantha } from "../context/SamanthaContext";
 const capabilities = [
   { icon: <Phone size={20} />, title: "Inbound Call Handling", desc: "Answers every call instantly. Qualifies leads, captures intake info, routes based on intent." },
   { icon: <MessageSquare size={20} />, title: "Live Web Chat", desc: "Embedded on your site. Answers questions, collects contact info, and hands off to CRM." },
@@ -18,7 +17,6 @@ const stats = [
 ];
 
 export default function Samantha() {
-  const { openChat, openVoice } = useSamantha();
 
 return (
     <div className="min-h-screen bg-white text-text-base">
@@ -41,10 +39,10 @@ return (
               Samantha is your always-on AI employee. It answers inbound calls, chats with website visitors, qualifies leads, and syncs everything to your CRM — without ever taking a lunch break.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <button onClick={openChat} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
+              <button className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
                 <MessageSquare size={12} /> Chat with Samantha
               </button>
-              <button onClick={openVoice} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold border-2 border-border-base hover:border-sky-300 px-7 py-4 rounded-xl text-text-muted hover:text-accent-deep hover:bg-sky-50 transition-all cursor-pointer">
+              <button className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold border-2 border-border-base hover:border-sky-300 px-7 py-4 rounded-xl text-text-muted hover:text-accent-deep hover:bg-sky-50 transition-all cursor-pointer">
                 <Phone size={12} /> Talk to Samantha
               </button>
             </div>

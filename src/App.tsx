@@ -5,8 +5,7 @@ import { FeatureProvider } from "./contexts/FeatureContext";
 import { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { SamanthaProvider } from "./context/SamanthaContext";
-import { GlobalSamantha } from "./components/samantha/GlobalSamantha";
+
 
 // Dashboard Components (Client-Facing)
 import { DashboardLayout } from "./components/dashboard/DashboardLayout";
@@ -193,7 +192,7 @@ export default function App() {
           <Route path="/blog/:slug" element={<Blog />} />
           
           <Route path="/services" element={<Services />} />
-          <Route path="/services/samantha-ai" element={<><SamanthaAI /><GlobalSamantha /></>} />
+          <Route path="/services/samantha-ai" element={<SamanthaAI />} />
           <Route path="/services/business-os" element={<Suspense fallback={<PageLoader />}><BusinessOS /></Suspense>} />
           
           <Route path="/terms" element={<Terms />} />
@@ -231,11 +230,9 @@ export default function App() {
   return (
     <AuthProvider>
       <FeatureProvider>
-        <SamanthaProvider>
           <Router>
             {domainRoutes}
           </Router>
-        </SamanthaProvider>
       </FeatureProvider>
     </AuthProvider>
   );
