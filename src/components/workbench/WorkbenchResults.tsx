@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Target, Zap, RefreshCw, Star, Clock, Download, RotateCcw, ArrowRight, Phone, Link2, ChevronDown, ChevronUp, TrendingUp, Calendar, DollarSign, Sparkles, BarChart2, ListChecks, Bot } from 'lucide-react';
-import { VoiceCallOverlay } from '../samantha/VoiceCallOverlay';
 import agentAvatar from '../../assets/ai-agent-avatar.png';
 
 interface Props {
@@ -81,8 +80,8 @@ function ScoreBar({ score, color = '#0ea5e9' }: { score: number; color?: string 
 export default function WorkbenchResults({ data, form, onRestart, resultUrl, initialTab = 0 }: Props) {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
-  const [showVoice, setShowVoice] = useState(false);
-  const [copied, setCopied] = useState(false);
+  // showVoice removed - Vapi deprecated
+const [copied, setCopied] = useState(false);
 
   const handleCopyLink = () => {
     if (!resultUrl) return;
@@ -92,7 +91,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
     });
   };
 
-  const { assessment, agent, businessName, firstName } = data;
+  const { assessment, businessName, firstName } = data;
 
   const handleDownloadReport = () => {
     const reportWindow = window.open('', '_blank');
@@ -452,7 +451,7 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
                 </div>
               </div>
               <button
-                onClick={() => agent?.assistantId ? setShowVoice(true) : alert('Agent is still initializing — try again in 30 seconds')}
+                onClick={() => {/* Vapi removed */}}
                 className="w-full flex items-center justify-center gap-3 text-sm font-black text-white py-4 rounded-xl cursor-pointer border-none transition-all hover:opacity-90"
                 style={{ background: 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)' }}>
                 <Phone size={16} />
@@ -656,19 +655,6 @@ export default function WorkbenchResults({ data, form, onRestart, resultUrl, ini
         </AnimatePresence>
       </div>
 
-      {/* Voice overlay — uses pre-provisioned agent from workbench analysis */}
-      {showVoice && (
-        <VoiceCallOverlay
-          demoId="nws-workbench"
-          businessName={businessName}
-          primaryColor="#0369a1"
-          apiBase=""
-          industry={form?.industry}
-          assistantId={agent?.assistantId}
-          publicKey={agent?.publicKey}
-          onClose={() => setShowVoice(false)}
-        />
-      )}
-    </div>
+      {/* Voice overlay — uses pre-provisioned agent from workbench analysis */}    </div>
   );
 }

@@ -1,4 +1,3 @@
-import { KnowledgeBaseManager } from '../components/knowledge-base/KnowledgeBaseManager';
 
 export default function KBTestPage() {
   return (
@@ -12,7 +11,7 @@ export default function KBTestPage() {
         </div>
         
         <div className="bg-white rounded-xl shadow-xl overflow-hidden ring-1 ring-gray-900/5">
-          <KnowledgeBaseManager />
+          {/* KnowledgeBaseManager removed - Vapi deprecated */}
         </div>
       </div>
     </div>

@@ -206,7 +206,7 @@ interface IntegrationDef {
 
 const INTEGRATIONS: IntegrationDef[] = [
   { key: "samantha_chat", label: "AI Web Chat", description: "GHL-connected website chat widget", icon: MessageSquare },
-  { key: "vapi_voice", label: "Vapi Voice Agent", description: "AI phone receptionist", icon: Mic },
+  { key: "vapi_voice", label: "Voice Agent", description: "AI phone receptionist", icon: Mic },
   { key: "google_business", label: "Google Business Profile", description: "Review automation", icon: Star },
   { key: "stripe_payments", label: "Stripe Payments", description: "Payment processing", icon: CreditCard },
   { key: "calendar_booking", label: "Calendar & Booking", description: "Appointment scheduling", icon: Calendar },
@@ -257,7 +257,7 @@ const SEED_SNAPSHOTS: Snapshot[] = [
     features: Object.fromEntries(
       ALL_FEATURE_KEYS.map((k) => [k, PLAN_FEATURES.growth.has(k)])
     ),
-    integrations: { samantha_chat: true, stripe_payments: true, email_engine: true, calendar_booking: false, vapi_voice: false, google_business: false, sms_marketing: false, social_connector: false },
+    integrations: { samantha_chat: true, stripe_payments: true, email_engine: true, calendar_booking: false, vapi_voice: false /* deprecated */, google_business: false, sms_marketing: false, social_connector: false },
     templateId: "tpl-general",
     updatedAt: now,
   },
@@ -274,7 +274,7 @@ const SEED_SNAPSHOTS: Snapshot[] = [
         PLAN_FEATURES.pro.has(k),
       ])
     ),
-    integrations: { samantha_chat: true, stripe_payments: true, email_engine: true, calendar_booking: true, vapi_voice: false, google_business: true, sms_marketing: true, social_connector: true },
+    integrations: { samantha_chat: true, stripe_payments: true, email_engine: true, calendar_booking: true, vapi_voice: false /* deprecated */, google_business: true, sms_marketing: true, social_connector: true },
     templateId: "tpl-auto",
     updatedAt: now,
   },

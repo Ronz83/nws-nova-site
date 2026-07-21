@@ -4,8 +4,6 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, XCircle, AlertCircle, ExternalLink, Download } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
-import { AIRoutingConfig } from './AIRoutingConfig';
-
 export function DashboardSettings() {
   const [activeTab, setActiveTab] = useState<'integrations' | 'billing' | 'team'>('team');
   const { user } = useAuth();
@@ -219,8 +217,8 @@ export function DashboardSettings() {
 
               {/* AI Routing Configuration */}
               <div className="mt-8">
-                <AIRoutingConfig />
-              </div>
+                {/* AIRoutingConfig removed - Vapi deprecated */}
+</div>
             </motion.div>
           )}
           {activeTab === 'integrations' && (
@@ -281,7 +279,7 @@ export function DashboardSettings() {
                 </div>
               </div>
 
-              {/* Vapi AI */}
+              {/* Vapi AI section removed */}
               <div className="bg-slate-50 rounded-xl border border-slate-200 p-5 md:p-6 flex flex-col justify-between hover:border-sky-200 transition-colors">
                 <div className="flex items-start justify-between mb-4">
                   <div>

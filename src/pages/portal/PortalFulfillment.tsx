@@ -17,7 +17,7 @@ interface Task {
 const mockTasks: Task[] = [
   { id: "1", title: "Setup GHL Sub-account", client: "Apex Auto Dealership", column: "Backlog", priority: "High", dueDate: "Oct 24", comments: 2, attachments: 0 },
   { id: "2", title: "Deploy MedSpa Snapshot", client: "Glow Aesthetics", column: "In Progress", priority: "Medium", dueDate: "Oct 25", comments: 5, attachments: 1 },
-  { id: "3", title: "Configure Vapi Voice Agent", client: "Smith Legal", column: "In Progress", priority: "High", dueDate: "Oct 23", comments: 1, attachments: 0 },
+  { id: "3", title: "Configure Voice Agent", client: "Smith Legal", column: "In Progress", priority: "High", dueDate: "Oct 23", comments: 1, attachments: 0 },
   { id: "4", title: "QA Website Content", client: "Apex Auto Dealership", column: "In Review", priority: "Medium", dueDate: "Oct 22", comments: 8, attachments: 3 },
   { id: "5", title: "DNS Handover", client: "Glow Aesthetics", column: "In Review", priority: "High", dueDate: "Oct 21", comments: 0, attachments: 1 },
   { id: "6", title: "Stripe Integration", client: "Apex Auto Dealership", column: "Completed", priority: "Low", dueDate: "Oct 20", comments: 0, attachments: 0 },

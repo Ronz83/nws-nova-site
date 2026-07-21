@@ -1,8 +1,6 @@
 
 import React from 'react';
 import BookingModal from '../components/BookingModal';
-import { VoiceCallOverlay } from '../components/samantha/VoiceCallOverlay';
-
 const htmlContent = `
 
 <!-- Background effects -->
@@ -1343,15 +1341,10 @@ const styleContent = `
 export default function AIReceptionist() {
 
   const [isBookingOpen, setIsBookingOpen] = React.useState(false);
-  const [showVoice, setShowVoice] = React.useState(false);
-
   React.useEffect(() => {
     (window as any).openBookingModal = () => setIsBookingOpen(true);
-    (window as any).openVoiceDemo = () => setShowVoice(true);
-    return () => {
-      delete (window as any).openBookingModal;
-      delete (window as any).openVoiceDemo;
-    };
+        return () => {
+      delete (window as any).openBookingModal;    };
   }, []);
 
   React.useEffect(() => {
@@ -1368,17 +1361,6 @@ export default function AIReceptionist() {
       <style dangerouslySetInnerHTML={{ __html: styleContent }} />
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
       
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
-      {showVoice && (
-        <VoiceCallOverlay
-          demoId="nws-giveaway-demo"
-          businessName="Your Business"
-          primaryColor="#2BD9C2"
-          apiBase=""
-          onClose={() => setShowVoice(false)}
-        />
-      )}
-
-    </div>
+      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />    </div>
   );
 }

@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Mic, FileEdit, List, Play, MessageSquare, BookOpen, Inbox, MessageCircle, Network, UploadCloud, FileText, Trash2, Code, File, RefreshCw, BrainCircuit, Save, Loader2 } from 'lucide-react';
 import { useFeatures } from '../../contexts/FeatureContext';
-import { VoiceAIConfigModal } from './VoiceAIConfigModal';
 import { ReviewAIModal } from './ReviewAIModal';
 
 export function DashboardAIStudio() {
   const { flags } = useFeatures();
-  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   const [knowledgeText, setKnowledgeText] = useState("We are currently running a 20% off promotion for all new customers. Our business hours are Monday through Friday, 9AM to 5PM EST. Please let callers know that our VIP support line is 555-0199.");
   const [isSaving, setIsSaving] = useState(false);
@@ -92,7 +90,7 @@ export function DashboardAIStudio() {
           
           <div className="flex flex-col gap-3 mt-auto">
             <button 
-              onClick={() => setIsVoiceModalOpen(true)}
+              onClick={() => {/* Vapi removed */}}
               className="w-full bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-[0.18em] transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:scale-[1.02]"
             >
               <FileEdit className="text-[18px]" />
@@ -326,8 +324,8 @@ export function DashboardAIStudio() {
       </section>
 
       {/* Modals */}
-      <VoiceAIConfigModal isOpen={isVoiceModalOpen} onClose={() => setIsVoiceModalOpen(false)} />
-      <ReviewAIModal isOpen={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)} />
+      {/* VoiceAIConfigModal removed - Vapi deprecated */}
+<ReviewAIModal isOpen={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)} />
     </>
   );
 }

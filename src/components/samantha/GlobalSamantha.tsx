@@ -1,11 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { MessageSquare, X } from 'lucide-react';
 import { useSamantha, NWS_VOICE_WIDGET_ID, NWS_CHAT_WIDGET_ID } from '../../context/SamanthaContext';
-import { VoiceCallOverlay } from './VoiceCallOverlay';
 import { useAuth } from '../../contexts/AuthContext';
 
 export function GlobalSamantha() {
-  const { isChatOpen, openChat, closeChat, isVoiceOpen, closeVoice, chatWidgetId, voiceWidgetId, setChatWidgetId, setVoiceWidgetId } = useSamantha();
+  const { isChatOpen, openChat, closeChat, isVoiceOpen, chatWidgetId, voiceWidgetId, setChatWidgetId, setVoiceWidgetId } = useSamantha();
   const { user } = useAuth();
   const voiceContainerRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -107,14 +106,8 @@ export function GlobalSamantha() {
       </div>
 
       {isVoiceOpen && (
-        <VoiceCallOverlay
-          demoId="global-samantha"
-          businessName="Novelty Web Solutions"
-          primaryColor="#0284c7"
-          apiBase="/api/demo-agent/start-call"
-          onClose={closeVoice}
-        />
-      )}
+        {/* VoiceCallOverlay removed - Vapi deprecated */}
+)}
     </>
   );
 }

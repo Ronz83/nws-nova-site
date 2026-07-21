@@ -2,7 +2,6 @@ import { useState } from "react";
 import Hero from "../components/Hero";
 import Features from "../components/Features";
 import HowItWorks from "../components/HowItWorks";
-import LiveDemo from "../components/LiveDemo";
 import ROICalculator from "../components/ROICalculator";
 
 import FAQ from "../components/FAQ";
@@ -33,9 +32,8 @@ export default function Index() {
       <HowItWorks />
       
       {/* Live Demo sandbox workbench */}
-      <LiveDemo />
-      
-      <ROICalculator onBookDemo={handleOpenBooking} />
+      {/* LiveDemo removed - Vapi deprecated */}
+<ROICalculator onBookDemo={handleOpenBooking} />
       
       {/* Consultation CTA */}
       <section className="py-24 px-6 border-t border-border-base bg-bg-tint">

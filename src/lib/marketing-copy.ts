@@ -119,10 +119,6 @@ export const INTEGRATION_MARKETING_COPY: Record<string, { title: string; descrip
     title: "Samantha AI Web Chat",
     description: "Our proprietary, branded chat widget installed directly on your site to engage visitors instantly."
   },
-  vapi_voice: {
-    title: "Vapi Voice Integration",
-    description: "Seamless connection with Vapi's cutting-edge voice models for incredibly realistic phone interactions."
-  },
   google_business: {
     title: "Google Business Sync",
     description: "Direct integration with your GBP to pull in reviews and respond to Google Maps messages."

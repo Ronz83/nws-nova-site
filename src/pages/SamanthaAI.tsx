@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Phone, MessageSquare, Brain, Zap, CheckCircle, ArrowRight, Mic, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 import BookingModal from "../components/BookingModal";
-import { VoiceCallOverlay } from "../components/samantha/VoiceCallOverlay";
-
 const capabilities = [
   { icon: <Phone size={20} />, title: "Inbound Call Handling", desc: "Answers every call instantly. Qualifies leads, captures intake info, routes based on intent." },
   { icon: <MessageSquare size={20} />, title: "Live Web Chat", desc: "Embedded on your site. Answers questions, collects contact info, and hands off to CRM." },
@@ -22,9 +20,8 @@ const stats = [
 
 export default function Samantha() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [showVoice, setShowVoice] = useState(false);
-
-  return (
+  // showVoice removed - Vapi deprecated
+return (
     <div className="min-h-screen bg-white text-text-base">
 
       {/* Hero */}
@@ -45,7 +42,7 @@ export default function Samantha() {
               Samantha is your always-on AI employee. It answers inbound calls, chats with website visitors, qualifies leads, and syncs everything to your CRM — without ever taking a lunch break.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <button onClick={() => setShowVoice(true)} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
+              <button onClick={() => {/* Vapi removed */}} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all shadow-md cursor-pointer border-none">
                 <Mic size={12} /> Try Samantha Live
               </button>
               <button onClick={() => setIsBookingOpen(true)} className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold border-2 border-border-base hover:border-sky-300 px-7 py-4 rounded-xl text-text-muted hover:text-accent-deep hover:bg-sky-50 transition-all cursor-pointer">
@@ -167,17 +164,6 @@ export default function Samantha() {
         </div>
       </section>
 
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
-
-      {showVoice && (
-        <VoiceCallOverlay
-          demoId="nws-nova-demo"
-          businessName="Novelty Web Solutions"
-          primaryColor="#0369a1"
-          apiBase=""
-          onClose={() => setShowVoice(false)}
-        />
-      )}
-    </div>
+      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />    </div>
   );
 }
