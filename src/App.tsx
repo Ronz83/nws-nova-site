@@ -103,7 +103,6 @@ function PublicLayout() {
         </main>
         <Footer />
       </div>
-      <GlobalSamantha />
     </div>
   );
 }
@@ -194,7 +193,7 @@ export default function App() {
           <Route path="/blog/:slug" element={<Blog />} />
           
           <Route path="/services" element={<Services />} />
-          <Route path="/services/samantha-ai" element={<SamanthaAI />} />
+          <Route path="/services/samantha-ai" element={<><SamanthaAI /><GlobalSamantha /></>} />
           <Route path="/services/business-os" element={<Suspense fallback={<PageLoader />}><BusinessOS /></Suspense>} />
           
           <Route path="/terms" element={<Terms />} />

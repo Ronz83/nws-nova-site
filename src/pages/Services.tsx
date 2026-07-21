@@ -168,13 +168,10 @@ export default function Services() {
               ))}
             </div>
 
-            <button
-              onClick={(e) => { e.preventDefault(); window.open("https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call", "_blank", "noopener,noreferrer"); }}
-              className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none"
-            >
+            <a href="/services/samantha-ai" className="flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-accent-deep hover:bg-sky-800 text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer border-none">
               <span>Book a Consultation</span>
               <ArrowRight size={12} />
-            </button>
+            </a>
           </div>
         </div>
       </section>
