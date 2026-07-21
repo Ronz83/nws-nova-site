@@ -157,7 +157,7 @@ export default function SummerLaunch() {
   return (
     <div style={{ minHeight: '100vh', background: `linear-gradient(to bottom, ${C.bg}, ${C.bg2} 38%, ${C.bg})`, fontFamily: "'Open Sans', Arial, sans-serif", color: C.white }}>
       {/* Animated Top Banner */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 40, background: `repeating-linear-gradient(135deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 28px), linear-gradient(180deg, ${C.yellow}, ${C.yellowDark})`, color: '#08111f', borderBottom: '1px solid rgba(0,0,0,0.18)', boxShadow: '0 8px 24px rgba(245,158,11,0.18)', overflow: 'hidden', height: 36, display: 'flex', alignItems: 'center' }}>
+      <div style={{ position: 'sticky', top: 0, zIndex: 40, background: `linear-gradient(180deg, ${C.yellow}, ${C.yellowDark})`, color: '#08111f', borderBottom: '1px solid rgba(0,0,0,0.12)', boxShadow: '0 8px 24px rgba(245,158,11,0.18)', overflow: 'hidden', height: 36, display: 'flex', alignItems: 'center' }}>
         <div style={{ display: 'flex', animation: 'scrollBanner 20s linear infinite', width: 'max-content' }}>
           {Array.from({ length: 10 }).map((_, i) => (
             <span key={i} style={{ display: 'inline-block', whiteSpace: 'nowrap', fontSize: 12, fontWeight: 900, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0 24px' }}>
@@ -225,8 +225,8 @@ export default function SummerLaunch() {
       </div>
 
       {/* Hero */}
-      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '54px 20px 100px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(420px, 0.78fr) minmax(600px, 1.22fr)', gap: 48, alignItems: 'start' }}>
+      <section style={{ maxWidth: 1320, margin: '0 auto', padding: '54px 40px 100px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(400px, 0.75fr) minmax(580px, 1.25fr)', gap: 40, alignItems: 'start' }}>
           {/* Left: Copy */}
           <div style={{ alignSelf: 'start', maxWidth: 620, paddingTop: 6 }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 16px', borderRadius: 999, background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.36)', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 24 }}>
@@ -260,12 +260,12 @@ export default function SummerLaunch() {
           </div>
 
           {/* Right: Product Showcase */}
-          <div style={{ position: 'relative', alignSelf: 'start', width: '100%', minHeight: 660, borderRadius: 36, padding: 32, background: 'radial-gradient(circle at 55% 34%, rgba(56,189,248,0.25), transparent 35%), radial-gradient(circle at 50% 98%, rgba(14,165,233,0.2), transparent 36%), linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.022))', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08)' }}>
+          <div style={{ position: 'relative', alignSelf: 'start', width: '100%', minHeight: 640, borderRadius: 36, padding: 24, background: 'radial-gradient(circle at 55% 34%, rgba(56,189,248,0.25), transparent 35%), radial-gradient(circle at 50% 98%, rgba(14,165,233,0.2), transparent 36%), linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.022))', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 24px 80px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08)' }}>
             {/* Promo Tape */}
 
 
             {/* Grid */}
-            <div style={{ position: 'relative', zIndex: 2, minHeight: 542, display: 'grid', gridTemplateColumns: '1fr 1.28fr 1fr', gridTemplateRows: '122px 122px 122px 128px', gap: 14, paddingTop: 36 }}>
+            <div style={{ position: 'relative', zIndex: 2, minHeight: 542, display: 'grid', gridTemplateColumns: '1fr 1.28fr 1fr', gridTemplateRows: '122px 122px 122px 128px', gap: 12, paddingTop: 12 }}>
               {/* Side modules */}
               {[
                 { Icon: Globe, title: 'Smart Website Design', desc: 'Modern pages built for trust and conversion.', col: 1, row: 1 },
@@ -275,42 +275,42 @@ export default function SummerLaunch() {
                 { Icon: MessageSquare, title: 'Unified Messaging Inbox', desc: 'Keep customer conversations in one place.', col: 1, row: 3 },
                 { Icon: Users, title: 'CaricomBusiness Listing', desc: 'Build regional visibility for your business.', col: 3, row: 3 },
               ].map(({ Icon, title, desc, col, row }) => (
-                <article key={title} style={{ position: 'relative', borderRadius: 24, padding: 16, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gridColumn: col, gridRow: row, background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)' }}>
-                  <div style={{ width: 42, height: 42, borderRadius: 14, display: 'grid', placeItems: 'center', marginBottom: 12, background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.26)', color: C.cyanLight, fontSize: 21 }}>
+                <article key={title} style={{ position: 'relative', borderRadius: 20, padding: 14, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gridColumn: col, gridRow: row, background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)' }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 12, display: 'grid', placeItems: 'center', marginBottom: 10, background: 'rgba(14,165,233,0.13)', border: '1px solid rgba(14,165,233,0.26)', color: C.cyanLight, fontSize: 18 }}>
                     <Icon size={21} />
                   </div>
-                  <h3 style={{ fontSize: 13, lineHeight: 1.08, textTransform: 'uppercase', letterSpacing: '-0.01em', marginBottom: 7 }}>{title}</h3>
-                  <p style={{ color: C.muted, fontSize: 11, lineHeight: 1.35 }}>{desc}</p>
+                  <h3 style={{ fontSize: 12, lineHeight: 1.08, textTransform: 'uppercase', letterSpacing: '-0.01em', marginBottom: 5 }}>{title}</h3>
+                  <p style={{ color: C.muted, fontSize: 10, lineHeight: 1.35 }}>{desc}</p>
                 </article>
               ))}
 
               {/* Center main box */}
-              <article style={{ gridColumn: 2, gridRow: '1 / 4', padding: 28, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)', minHeight: 394 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 0 }}>
-                  <img src="/assets/nws-logo.png" alt="NWS" style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.38))', flex: '0 0 auto' }} />
-                  <div style={{ fontSize: 32, fontWeight: 900, letterSpacing: '-0.06em' }}>N<span style={{ color: C.cyanLight }}>W</span>S</div>
+              <article style={{ gridColumn: 2, gridRow: '1 / 4', padding: 24, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: 'linear-gradient(155deg, rgba(255,255,255,0.18), transparent 28%), linear-gradient(145deg, #17233a, #09111f 70%)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 54px rgba(0,0,0,0.38), 0 0 58px rgba(14,165,233,0.12)', minHeight: 380 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 0 }}>
+                  <img src="/assets/nws-logo.png" alt="NWS" style={{ width: 44, height: 44, objectFit: 'contain', filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.38))', flex: '0 0 auto' }} />
+                  <div style={{ fontSize: 28, fontWeight: 900, letterSpacing: '-0.06em' }}>N<span style={{ color: C.cyanLight }}>W</span>S</div>
                 </div>
                 <div>
-                  <h2 style={{ position: 'relative', zIndex: 2, fontSize: 'clamp(32px, 3.7vw, 42px)', lineHeight: '.94', letterSpacing: '-0.045em', textTransform: 'uppercase', fontWeight: 900 }}>
+                  <h2 style={{ position: 'relative', zIndex: 2, fontSize: 'clamp(26px, 3vw, 36px)', lineHeight: '.94', letterSpacing: '-0.045em', textTransform: 'uppercase', fontWeight: 900 }}>
                     Business<br />Growth<br />Bundle
                   </h2>
-                  <p style={{ position: 'relative', zIndex: 2, color: C.soft, fontSize: 13, lineHeight: 1.45, marginTop: 12 }}>One connected system for leads, conversations, bookings, follow-up and reputation.</p>
+                  <p style={{ position: 'relative', zIndex: 2, color: C.soft, fontSize: 12, lineHeight: 1.45, marginTop: 10 }}>One connected system for leads, conversations, bookings, follow-up and reputation.</p>
                 </div>
               </article>
 
               {/* Price plate */}
               <div style={{ gridColumn: '1 / -1', gridRow: 4, display: 'grid', gridTemplateColumns: 'minmax(170px, 215px) auto minmax(220px, 1fr)', gap: 20, alignItems: 'center', borderRadius: 24, padding: '22px 24px', background: 'rgba(8,15,30,0.9)', border: '1px solid rgba(56,189,248,0.32)', boxShadow: '0 24px 70px rgba(0,0,0,0.42), 0 0 60px rgba(14,165,233,0.14)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                  <img src="/assets/nws-logo.png" alt="NWS" style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.38))', flex: '0 0 auto' }} />
+                  <img src="/assets/nws-logo.png" alt="NWS" style={{ width: 44, height: 44, objectFit: 'contain', filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.38))', flex: '0 0 auto' }} />
                   <div>
-                    <div style={{ color: C.muted, fontSize: 11, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '.14em', lineHeight: 1.22 }}>Founder plan</div>
-                    <div style={{ color: C.soft, fontSize: 10, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', marginTop: 5, lineHeight: 1.25 }}>Summer launch pricing</div>
+                    <div style={{ color: C.muted, fontSize: 10, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '.14em', lineHeight: 1.22 }}>Founder plan</div>
+                    <div style={{ color: C.soft, fontSize: 9, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', marginTop: 4, lineHeight: 1.25 }}>Summer launch pricing</div>
                   </div>
                 </div>
-                <div style={{ fontSize: 50, lineHeight: 0.95, fontWeight: 900, letterSpacing: '-0.06em', color: C.cyanLight, whiteSpace: 'nowrap' }}>
+                <div style={{ fontSize: 44, lineHeight: 0.95, fontWeight: 900, letterSpacing: '-0.06em', color: C.cyanLight, whiteSpace: 'nowrap' }}>
                   $297<span style={{ color: C.white, fontSize: 16, letterSpacing: 0 }}>/month</span>
                 </div>
-                <p style={{ color: C.soft, fontSize: 13, lineHeight: 1.55, maxWidth: 280, margin: 0 }}>or $2,970 annually, which gives you two months free.</p>
+                <p style={{ color: C.soft, fontSize: 12, lineHeight: 1.55, maxWidth: 260, margin: 0 }}>or $2,970 annually, which gives you two months free.</p>
               </div>
             </div>
           </div>
