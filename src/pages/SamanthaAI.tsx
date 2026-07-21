@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Phone, MessageSquare, Brain, Zap, CheckCircle, ArrowRight, Mic, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 const capabilities = [
@@ -19,15 +19,25 @@ const stats = [
 
 export default function Samantha() {
   const loaded = useRef<Set<string>>(new Set());
+  const initRef = useRef(false);
+
+  useEffect(() => {
+    if (initRef.current) return;
+    initRef.current = true;
+    if (!document.querySelector('script[src*="leadconnectorhq.com/loader.js"]')) {
+      const s = document.createElement('script');
+      s.src = 'https://widgets.leadconnectorhq.com/loader.js';
+      s.setAttribute('data-resources-url', 'https://widgets.leadconnectorhq.com/chat-widget/loader.js');
+      document.body.appendChild(s);
+    }
+  }, []);
 
   const loadWidget = (widgetId: string) => {
     if (loaded.current.has(widgetId)) return;
-    const s = document.createElement('script');
-    s.src = 'https://widgets.leadconnectorhq.com/loader.js';
-    s.setAttribute('data-resources-url', 'https://widgets.leadconnectorhq.com/chat-widget/loader.js');
-    s.setAttribute('data-widget-id', widgetId);
-    document.body.appendChild(s);
     loaded.current.add(widgetId);
+    const w = document.createElement('chat-widget');
+    w.setAttribute('data-widget-id', widgetId);
+    document.body.appendChild(w);
   };
 
 return (
