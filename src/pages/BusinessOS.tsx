@@ -781,12 +781,12 @@ export default function BusinessOS() {
                       </div>
                       <div className="mt-1 flex items-end gap-2">
                         <span className="text-2xl font-black font-mono line-through" style={{ color: '#ef4444', textDecorationColor: '#ef4444' }}>
-                          ${comparePrice.toLocaleString()} USD
+                          ${comparePrice.toLocaleString()} <span className="text-xs font-bold opacity-60">USD</span>
                         </span>
-                        <span className="text-4xl font-black font-mono text-white">{formattedPrice} USD</span>
+                        <span className="text-4xl font-black font-mono text-white">{formattedPrice} <span className="text-sm font-bold opacity-50">USD</span></span>
                         <span className="text-sm text-white/50 font-medium mb-1">/{isYearly ? 'yr' : 'mo'}</span>
                         <span className="text-[11px] font-bold bg-emerald-400/15 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-400/25">
-                          Save ${savings.toLocaleString()} USD{isYearly ? '/yr' : '/mo'}
+                          Save ${savings.toLocaleString()} <span className="text-xs font-bold opacity-60">USD</span>{isYearly ? '/yr' : '/mo'}
                         </span>
                       </div>
                       

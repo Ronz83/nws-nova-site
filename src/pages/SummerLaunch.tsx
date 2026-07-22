@@ -295,7 +295,7 @@ export default function SummerLaunch() {
                 Book a Demo <ArrowRight size={16} />
               </a>
               <button onClick={() => handleCheckout('lite')} disabled={loading === 'lite'} style={{ ...btnSecondary, opacity: loading === 'lite' ? 0.7 : 1, cursor: loading === 'lite' ? 'not-allowed' : 'pointer' }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.45)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.09)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.16)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.055)'}}>
-                {loading === 'lite' ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />} Subscribe $297/mo
+                {loading === 'lite' ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />} Subscribe $297 USD/mo
               </button>
             </div>
           </div>
@@ -349,9 +349,9 @@ export default function SummerLaunch() {
                   </div>
                 </div>
                 <div style={{ fontSize: 44, lineHeight: 0.95, fontWeight: 900, letterSpacing: '-0.06em', color: C.cyanLight, whiteSpace: 'nowrap' }}>
-                  $297<span style={{ color: C.white, fontSize: 16, letterSpacing: 0 }}>/month</span>
+                  $297 <span style={{ color: C.white, fontSize: 16, letterSpacing: 0 }}>/month <span style={{ fontSize: 10, opacity: 0.5 }}>USD</span></span>
                 </div>
-                <p style={{ color: C.soft, fontSize: 12, lineHeight: 1.55, maxWidth: 260, margin: 0 }}>or $2,970 annually, which gives you two months free.</p>
+                <p style={{ color: C.soft, fontSize: 12, lineHeight: 1.55, maxWidth: 260, margin: 0 }}>or $2,970 USD annually, which gives you two months free.</p>
               </div>
             </div>
           </div>
@@ -430,11 +430,11 @@ export default function SummerLaunch() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 20, alignItems: 'stretch' }}>
           <div style={{ borderRadius: 28, padding: 30, background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.03))', border: `1px solid ${C.line}`, boxShadow: '0 24px 80px rgba(0,0,0,0.38)' }}>
             {[
-              ['Website Overhaul or New Website', '$1,500 value'],
-              ['Integrated Booking System', '$29 value'],
-              ['AI Receptionist', '$597 value'],
-              ['Reputation Management System', '$29 value'],
-              ['Unified Messaging System', '$49 value'],
+              ['Website Overhaul or New Website', '$1,500 USD value'],
+              ['Integrated Booking System', '$29 USD value'],
+              ['AI Receptionist', '$597 USD value'],
+              ['Reputation Management System', '$29 USD value'],
+              ['Unified Messaging System', '$49 USD value'],
               ['Free Business Listing on CaricomBusiness.com', 'Included'],
             ].map(([name, val]) => (
               <div key={name} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', padding: '15px 0', borderBottom: `1px solid rgba(255,255,255,0.1)`, color: C.soft }}>
@@ -573,12 +573,12 @@ export default function SummerLaunch() {
                 <p style={{ color: C.muted, fontSize: 13, lineHeight: 1.5, marginBottom: 16, flex: 1 }}>{tier.description}</p>
                 <div style={{ marginBottom: 16 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4 }}>
-                    <span style={{ fontSize: 18, fontWeight: 900, color: '#ef4444', textDecoration: 'line-through', textDecorationColor: '#ef4444' }}>${comparePrice.toLocaleString()} USD</span>
-                    <span style={{ fontSize: 42, fontWeight: 900, color: C.cyanLight, letterSpacing: '-0.04em' }}>${price.toLocaleString()} USD</span>
+                    <span style={{ fontSize: 18, fontWeight: 900, color: '#ef4444', textDecoration: 'line-through', textDecorationColor: '#ef4444' }}>${comparePrice.toLocaleString()} <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.6 }}>USD</span></span>
+                    <span style={{ fontSize: 42, fontWeight: 900, color: C.cyanLight, letterSpacing: '-0.04em' }}>${price.toLocaleString()} <span style={{ fontSize: 14, fontWeight: 700, opacity: 0.5 }}>USD</span></span>
                     <span style={{ color: C.soft, fontSize: 14 }}>{priceLabel}</span>
                   </div>
                   <span style={{ display: 'inline-flex', background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(52,211,153,0.25)', color: C.emerald, padding: '2px 8px', borderRadius: 999, fontSize: 11, fontWeight: 900 }}>
-                    Save ${savings.toLocaleString()} USD{isYearly ? '/yr' : '/mo'}
+                    Save ${savings.toLocaleString()} <span style={{ fontSize: 9, fontWeight: 700 }}>USD</span>{isYearly ? '/yr' : '/mo'}
                   </span>
                 </div>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}> 
@@ -660,15 +660,15 @@ export default function SummerLaunch() {
           </div>
           <div style={{ borderRadius: 24, padding: 26, minWidth: 300, background: 'rgba(8,15,30,0.72)', border: '1px solid rgba(255,255,255,0.13)' }}>
             <div style={{ color: C.cyanLight, fontSize: 54, fontWeight: 900, letterSpacing: '-0.06em', lineHeight: 1 }}>
-              $297 <span style={{ fontSize: 16, color: C.white, letterSpacing: 0 }}>monthly</span>
+              $297 <span style={{ fontSize: 16, color: C.white, letterSpacing: 0 }}>monthly <span style={{ fontSize: 10, opacity: 0.5 }}>USD</span></span>
             </div>
-            <p style={{ color: C.soft, fontSize: 13, margin: '8px 0 18px' }}>or $2,970 annually — 2 months free</p>
+            <p style={{ color: C.soft, fontSize: 13, margin: '8px 0 18px' }}>or $2,970 USD annually — 2 months free</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <button onClick={() => handleCheckout('lite')} disabled={loading === 'lite'} style={{ ...btnPrimary, opacity: loading === 'lite' ? 0.7 : 1, cursor: loading === 'lite' ? 'not-allowed' : 'pointer', border: 'none' }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 22px 65px rgba(14,165,233,0.42)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 50px rgba(14,165,233,0.3)'}}>
-                {loading === 'lite' ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />} Subscribe $297/mo
+                {loading === 'lite' ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />} Subscribe $297 USD/mo
               </button>
               <button onClick={() => handleCheckout('pro')} disabled={loading === 'pro'} style={{ ...btnSecondary, opacity: loading === 'pro' ? 0.7 : 1, cursor: loading === 'pro' ? 'not-allowed' : 'pointer' }} onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(56,189,248,0.45)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.09)'}} onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.16)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.055)'}}>
-                {loading === 'pro' ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />} Subscribe $597/mo (Popular)
+                {loading === 'pro' ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />} Subscribe $597 USD/mo (Popular)
               </button>
             </div>
           </div>
