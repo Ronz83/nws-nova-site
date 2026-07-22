@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Phone, MessageSquare, Brain, Zap, CheckCircle, ArrowRight, Mic, Globe } from "lucide-react";
-import { motion } from "framer-motion";
+
 const capabilities = [
   { icon: <Phone size={20} />, title: "Inbound Call Handling", desc: "Answers every call instantly. Qualifies leads, captures intake info, routes based on intent." },
   { icon: <MessageSquare size={20} />, title: "Live Web Chat", desc: "Embedded on your site. Answers questions, collects contact info, and hands off to CRM." },
@@ -18,13 +18,15 @@ const stats = [
 ];
 
 export default function Samantha() {
+  const voiceRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (!document.querySelector('script[data-widget-id="6914a81b33e99255993705fa"]')) {
+    if (voiceRef.current && !voiceRef.current.querySelector('script')) {
       const s = document.createElement('script');
       s.src = 'https://widgets.leadconnectorhq.com/loader.js';
       s.setAttribute('data-resources-url', 'https://widgets.leadconnectorhq.com/chat-widget/loader.js');
       s.setAttribute('data-widget-id', '6914a81b33e99255993705fa');
-      document.body.appendChild(s);
+      voiceRef.current.appendChild(s);
     }
   }, []);
 
@@ -55,27 +57,8 @@ return (
             </div>
           </div>
 
-          {/* Voice Wave Visual */}
-          <div className="w-full h-64 border-2 border-slate-100 bg-white rounded-[28px] flex flex-col items-center justify-center gap-4 shadow-lg relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-sky-50 to-white pointer-events-none"></div>
-            <div className="relative z-10 flex flex-col items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-sky-500 flex items-center justify-center shadow-xl">
-                <Mic size={24} className="text-white" />
-              </div>
-              <div className="flex items-end gap-1.5 h-12">
-                {[0.3, 0.6, 0.9, 0.5, 1.0, 0.7, 0.4, 0.8, 0.6, 0.3, 0.9, 0.5].map((v, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-2 bg-sky-400 rounded-full"
-                    style={{ height: `${v * 100}%` }}
-                    animate={{ scaleY: [1, 1.5, 0.8, 1.3, 1] }}
-                    transition={{ duration: 1.4, repeat: Infinity, repeatType: "mirror", delay: i * 0.1, ease: "easeInOut" }}
-                  />
-                ))}
-              </div>
-              <span className="text-sm uppercase tracking-widest text-sky-600 font-bold">Samantha · Active · Listening</span>
-            </div>
-          </div>
+          {/* Voice Widget Embed */}
+          <div ref={voiceRef} className="w-full h-64 border-2 border-slate-100 bg-white rounded-[28px] shadow-lg overflow-hidden"></div>
         </div>
       </section>
 
