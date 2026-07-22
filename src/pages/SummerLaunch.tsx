@@ -205,7 +205,7 @@ export default function SummerLaunch() {
           </a>
           <nav style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             {[
-              { label: 'Live AI Demo', href: 'https://noveltywebsolutions.com/#samantha', highlight: true },
+              { label: 'Live AI Demo', href: 'https://noveltywebsolutions.com/services/samantha-ai', highlight: true },
               { label: 'Agency', href: 'https://noveltywebsolutions.com/' },
               { label: 'Operating System', href: 'https://businessesos.com/' },
               { label: 'Assessment', href: '#assessment', highlight: false },
@@ -685,7 +685,7 @@ export default function SummerLaunch() {
           <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
             <a href="https://noveltywebsolutions.com/" target="_blank" rel="noopener noreferrer" style={{ color: C.muted, textDecoration: 'none', fontSize: 13 }}>Agency</a>
             <a href="https://businessesos.com/" target="_blank" rel="noopener noreferrer" style={{ color: C.muted, textDecoration: 'none', fontSize: 13 }}>Operating System</a>
-            <a href="https://noveltywebsolutions.com/#samantha" target="_blank" rel="noopener noreferrer" style={{ color: C.muted, textDecoration: 'none', fontSize: 13 }}>Live AI Demo</a>
+            <a href="https://noveltywebsolutions.com/services/samantha-ai" target="_blank" rel="noopener noreferrer" style={{ color: C.muted, textDecoration: 'none', fontSize: 13 }}>Live AI Demo</a>
           </div>
         </div>
       </footer>

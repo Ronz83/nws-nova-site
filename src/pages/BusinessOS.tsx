@@ -743,6 +743,10 @@ export default function BusinessOS() {
               {PRICING_TIERS.map(plan => {
                 const currentPrice = isYearly ? plan.priceYearly : plan.priceMonthly;
                 const formattedPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(currentPrice);
+                const compareAtMap: Record<string, { monthly: number; yearly: number }> = { lite: { monthly: 597, yearly: 5970 }, pro: { monthly: 997, yearly: 9970 }, platinum: { monthly: 1497, yearly: 14970 } };
+                const compareAt = compareAtMap[plan.id];
+                const comparePrice = isYearly ? compareAt.yearly : compareAt.monthly;
+                const savings = comparePrice - currentPrice;
 
                 return (
                   <div
@@ -771,15 +775,20 @@ export default function BusinessOS() {
                     )}
 
                     <div>
-                      <div className="mt-3 flex items-end gap-1">
+                      <div className="flex items-center gap-2 mt-3">
                         <span className="text-2xl font-black text-white">{plan.name}</span>
+                        <span className="text-[10px] uppercase tracking-widest font-bold bg-emerald-400/15 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-400/25">Summer Launch</span>
                       </div>
-                      <div className="mt-1 flex items-end gap-1">
+                      <div className="mt-1 flex items-end gap-2">
+                        <span className="text-2xl font-black font-mono line-through" style={{ color: '#ef4444', textDecorationColor: '#ef4444' }}>
+                          ${comparePrice.toLocaleString()}
+                        </span>
                         <span className="text-4xl font-black font-mono text-white">{formattedPrice}</span>
                         <span className="text-sm text-white/50 font-medium mb-1">/{isYearly ? 'yr' : 'mo'}</span>
+                        <span className="text-[11px] font-bold bg-emerald-400/15 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-400/25">
+                          Save ${savings.toLocaleString()}{isYearly ? '/yr' : '/mo'}
+                        </span>
                       </div>
-                      {isYearly && <div className="text-xs text-emerald-400 font-bold mt-1">Billed at {formattedPrice}/yr</div>}
-                      {!isYearly && <div className="text-xs text-emerald-400 font-bold mt-1 opacity-0">Spacer</div>}
                       
                       <p className="mt-2 text-sm text-white/60 font-medium pb-4 border-b border-white/10">
                         {plan.description}
