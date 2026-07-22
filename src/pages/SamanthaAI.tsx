@@ -22,20 +22,29 @@ export default function Samantha() {
   const voiceRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (chatRef.current && !chatRef.current.querySelector('script')) {
+    if (!document.querySelector('script[src*="leadconnectorhq.com/loader.js"]')) {
       const s = document.createElement('script');
       s.src = 'https://widgets.leadconnectorhq.com/loader.js';
       s.setAttribute('data-resources-url', 'https://widgets.leadconnectorhq.com/chat-widget/loader.js');
-      s.setAttribute('data-widget-id', '6a556b66d166a8719f167972');
-      chatRef.current.appendChild(s);
+      document.head.appendChild(s);
     }
-    if (voiceRef.current && !voiceRef.current.querySelector('script')) {
-      const s = document.createElement('script');
-      s.src = 'https://widgets.leadconnectorhq.com/loader.js';
-      s.setAttribute('data-resources-url', 'https://widgets.leadconnectorhq.com/chat-widget/loader.js');
-      s.setAttribute('data-widget-id', '6914a81b33e99255993705fa');
-      voiceRef.current.appendChild(s);
-    }
+
+    const injectWidget = (container: HTMLDivElement, widgetId: string) => {
+      if (container.querySelector('chat-widget')) return;
+      const w = document.createElement('chat-widget');
+      w.setAttribute('data-widget-id', widgetId);
+      container.appendChild(w);
+    };
+
+    const check = setInterval(() => {
+      if (customElements.get('chat-widget')) {
+        if (chatRef.current) injectWidget(chatRef.current, '6a556b66d166a8719f167972');
+        if (voiceRef.current) injectWidget(voiceRef.current, '6914a81b33e99255993705fa');
+        clearInterval(check);
+      }
+    }, 200);
+
+    return () => clearInterval(check);
   }, []);
 
 return (
@@ -58,9 +67,21 @@ return (
             <p className="mt-4 text-sm text-text-muted leading-relaxed font-medium max-w-md">
               Samantha is your always-on AI employee. It answers inbound calls, chats with website visitors, qualifies leads, and syncs everything to your CRM — without ever taking a lunch break.
             </p>
-            <div className="flex flex-wrap gap-4 mt-8">
-              <div ref={chatRef} />
-              <div ref={voiceRef} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+              <div className="border-2 border-slate-100 bg-white rounded-2xl overflow-hidden shadow-sm">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100">
+                  <MessageSquare size={14} className="text-sky-600" />
+                  <span className="font-bold text-sm tracking-wide text-sky-700">Chat with Samantha</span>
+                </div>
+                <div ref={chatRef} style={{ height: '420px' }} />
+              </div>
+              <div className="border-2 border-slate-100 bg-white rounded-2xl overflow-hidden shadow-sm">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100">
+                  <Phone size={14} className="text-sky-600" />
+                  <span className="font-bold text-sm tracking-wide text-sky-700">Talk to Samantha</span>
+                </div>
+                <div ref={voiceRef} style={{ height: '420px' }} />
+              </div>
             </div>
           </div>
 
