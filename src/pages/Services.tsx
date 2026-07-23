@@ -90,27 +90,6 @@ const services = [
       "Local SEO keyword tracking dashboard",
     ],
   },
-  {
-    id: "apps-dev",
-    icon: <Code2 size={24} />,
-    color: "indigo",
-    iconBg: "bg-indigo-50 border-indigo-100 text-indigo-600",
-    badge: "Development",
-    title: "Apps & Development",
-    tagline: "Commercial and private applications built for the Caribbean.",
-    description: "Beyond websites and automations, we design and develop commercial and private applications tailored to regional businesses. From market-ready software products to custom internal tools, we handle design, development, and hosting.",
-    price: "",
-    priceNote: "",
-    features: [
-      "Commercial app development (market-ready products)",
-      "Private business web and mobile applications",
-      "Internal dashboards and client portals",
-      "Custom business tools and workflow applications",
-      "Full lifecycle: concept, design, development, hosting",
-      "API integrations and third-party connectivity",
-      "Ongoing maintenance and support available",
-    ],
-  },
 ];
 
 export default function Services() {
@@ -197,8 +176,47 @@ export default function Services() {
         </div>
       </section>
 
+      {/* Apps & Development Section */}
+      <section className="py-20 px-6 border-t border-border-base">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-sm uppercase tracking-[0.2em] text-indigo-600 font-bold">Apps & Development</span>
+            <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-[-0.04em] leading-[1.04] text-text-base mt-3">
+              Custom Software. <span className="text-accent-primary">Built for the Caribbean.</span>
+            </h2>
+            <p className="mt-4 text-sm text-text-muted max-w-xl mx-auto leading-relaxed font-medium">
+              Beyond websites and automations, we design and develop commercial and private applications tailored to regional businesses.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <div className="border-2 border-slate-100 bg-white rounded-[28px] p-8 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mb-5">
+                <Code2 size={24} />
+              </div>
+              <h3 className="text-xl font-black text-text-base mb-3">Commercial Apps</h3>
+              <p className="text-sm text-text-muted leading-relaxed font-medium">
+                Market-ready software products built for recurring business needs. We identify, design, and launch applications that solve real problems for Caribbean businesses.
+              </p>
+            </div>
+            <div className="border-2 border-slate-100 bg-white rounded-[28px] p-8 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mb-5">
+                <Monitor size={24} />
+              </div>
+              <h3 className="text-xl font-black text-text-base mb-3">Private Business Apps</h3>
+              <p className="text-sm text-text-muted leading-relaxed font-medium">
+                Custom web and mobile applications for internal dashboards, client portals, business tools, or external-facing apps. From concept to deployment, we handle design, development, and hosting.
+              </p>
+            </div>
+          </div>
+          <div className="text-center mt-10">
+            <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl shadow-md transition-all duration-200 cursor-pointer border-none">
+              Discuss Your App Idea <ArrowRight size={12} />
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Bottom CTA */}
-      <section className="py-16 px-6 border-t border-border-base bg-bg-tint">
         <div className="max-w-3xl mx-auto text-center">
           <h3 className="text-2xl md:text-3xl font-black text-text-base">Not sure which service fits?</h3>
           <p className="text-sm text-text-muted mt-3 font-medium">Book a free 30-minute strategy call. We'll map your current setup and recommend the right entry point.</p>
