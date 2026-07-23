@@ -217,6 +217,7 @@ export default function Services() {
       </section>
 
       {/* Bottom CTA */}
+      <section className="py-16 px-6 border-t border-border-base bg-bg-tint">
         <div className="max-w-3xl mx-auto text-center">
           <h3 className="text-2xl md:text-3xl font-black text-text-base">Not sure which service fits?</h3>
           <p className="text-sm text-text-muted mt-3 font-medium">Book a free 30-minute strategy call. We'll map your current setup and recommend the right entry point.</p>
