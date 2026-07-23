@@ -1,4 +1,4 @@
-import { Phone, Layers, Database, Workflow, Check, ArrowRight, ChevronDown } from "lucide-react";
+import { Phone, Layers, Database, Workflow, Code2, Monitor, Check, ArrowRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 const services = [
@@ -88,6 +88,27 @@ const services = [
       "Monthly reputation score report",
       "Competitor review benchmarking",
       "Local SEO keyword tracking dashboard",
+    ],
+  },
+  {
+    id: "apps-dev",
+    icon: <Code2 size={24} />,
+    color: "indigo",
+    iconBg: "bg-indigo-50 border-indigo-100 text-indigo-600",
+    badge: "Development",
+    title: "Apps & Development",
+    tagline: "Commercial and private applications built for the Caribbean.",
+    description: "Beyond websites and automations, we design and develop commercial and private applications tailored to regional businesses. From market-ready software products to custom internal tools, we handle design, development, and hosting.",
+    price: "",
+    priceNote: "",
+    features: [
+      "Commercial app development (market-ready products)",
+      "Private business web and mobile applications",
+      "Internal dashboards and client portals",
+      "Custom business tools and workflow applications",
+      "Full lifecycle: concept, design, development, hosting",
+      "API integrations and third-party connectivity",
+      "Ongoing maintenance and support available",
     ],
   },
 ];
