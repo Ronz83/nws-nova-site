@@ -9,6 +9,8 @@ import {
   Star,
   Zap,
   ArrowRight,
+  Code2,
+  Monitor,
   ChevronDown,
   ChevronUp,
   Check,
@@ -453,10 +455,9 @@ export default function SummerLaunch() {
         </div>
         <p style={{ textAlign: 'center', color: C.muted, fontSize: 12, maxWidth: 680, margin: '20px auto 0', lineHeight: 1.55 }}>
           Website included depends on your plan: <strong style={{ color: C.white }}>Lite</strong> — overhaul of your existing site &middot; <strong style={{ color: C.white }}>Pro</strong> — single page website &middot; <strong style={{ color: C.white }}>Platinum</strong> — multi-page site (up to 3 pages).
-          Need a fully custom multi-page site, app, or other custom development?{' '}
-          <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" style={{ color: C.cyanLight, textDecoration: 'underline' }}>Book a consultation</a>.
-          These are also available as standalone{' '}
-          <a href="https://noveltywebsolutions.com/" target="_blank" rel="noopener noreferrer" style={{ color: C.cyanLight, textDecoration: 'underline' }}>services on the main site</a>.
+          Need a fully custom site, app, or other development?{' '}
+          <a href="#apps-dev" style={{ color: C.cyanLight, textDecoration: 'underline' }}>See our Apps & Development services</a> or{' '}
+          <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" style={{ color: C.cyanLight, textDecoration: 'underline' }}>book a consultation</a>.
         </p>
       </section>
 
@@ -628,6 +629,45 @@ export default function SummerLaunch() {
               <div style={{ marginTop: 14, color: C.cyanLight, fontWeight: 900, fontSize: 13 }}>{card.linkText} →</div>
             </a>
           ))}
+        </div>
+      </section>
+
+      {/* Apps & Development Section */}
+      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 20px' }} id="apps-dev">
+        <div style={{ textAlign: 'center', color: C.cyanLight, fontSize: 12, fontWeight: 900, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12 }}>Apps & Development</div>
+        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.05, letterSpacing: '-0.05em', fontWeight: 900, marginBottom: 16 }}>
+          Custom Software. <span style={{ background: `linear-gradient(100deg, ${C.cyan}, ${C.cyanLight} 48%, #a7f3d0 105%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Built for the Caribbean.</span>
+        </h2>
+        <p style={{ textAlign: 'center', color: C.muted, maxWidth: 740, margin: '0 auto 34px', lineHeight: 1.65, fontSize: 16 }}>
+          Beyond the bundle, we design and develop commercial and private applications tailored to regional businesses.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div style={{ ...cardBase, padding: 24 }}>
+            <div style={{ width: 52, height: 52, borderRadius: 18, display: 'grid', placeItems: 'center', marginBottom: 16, background: 'rgba(14,165,233,0.12)', border: '1px solid rgba(14,165,233,0.25)', color: C.cyanLight }}>
+              <Code2 size={24} />
+            </div>
+            <h3 style={{ fontSize: 18, fontWeight: 900, marginBottom: 10 }}>Commercial Apps</h3>
+            <p style={{ color: C.muted, lineHeight: 1.55, fontSize: 13 }}>
+              Market-ready software products built for recurring business needs. We identify, design, and launch applications that solve real problems for Caribbean businesses.
+            </p>
+          </div>
+          <div style={{ ...cardBase, padding: 24 }}>
+            <div style={{ width: 52, height: 52, borderRadius: 18, display: 'grid', placeItems: 'center', marginBottom: 16, background: 'rgba(14,165,233,0.12)', border: '1px solid rgba(14,165,233,0.25)', color: C.cyanLight }}>
+              <Monitor size={24} />
+            </div>
+            <h3 style={{ fontSize: 18, fontWeight: 900, marginBottom: 10 }}>Private Business Apps</h3>
+            <p style={{ color: C.muted, lineHeight: 1.55, fontSize: 13 }}>
+              Custom web and mobile applications built for your specific operations — internal dashboards, client portals, business tools, or external-facing apps. From concept to deployment, we handle design, development, and hosting.
+            </p>
+          </div>
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 28 }}>
+          <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer"
+            style={{ ...btnPrimary, display: 'inline-flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}
+            onMouseEnter={(e) => {(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 22px 65px rgba(14,165,233,0.42)'}}
+            onMouseLeave={(e) => {(e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 50px rgba(14,165,233,0.3)'}}>
+            Discuss Your App Idea <ArrowRight size={16} />
+          </a>
         </div>
       </section>
 
