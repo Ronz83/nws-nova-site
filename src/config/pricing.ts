@@ -26,7 +26,7 @@ export const PRICING_TIERS = [
       'Unlimited CRM & Pipeline Management',
       'Unified Inbox (Email, FB, IG DMs)',
       'Chat AI (Website Chatbot)',
-      'Custom Website (Mobile, SEO, Hosted)',
+      'Website Overhaul (Existing Site Redesign)',
       'Appointment Booking Calendar',
       'Basic Email Campaigns',
       'Monthly Performance Report',
@@ -45,6 +45,7 @@ export const PRICING_TIERS = [
     isPopular: true,
     features: [
       'Everything in Lite, plus:',
+      'Single Page Website',
       'Voice AI Receptionist (Handles inbound calls)',
       'Reputation Management AI (Smart Routing)',
       'Advanced Workflow Automations (Drip, Nurture)',
@@ -64,6 +65,7 @@ export const PRICING_TIERS = [
     stripeYearly: STRIPE_PRICES.platinum.yearly,
     features: [
       'Everything in Pro, plus:',
+      'Multi-Page Website (Up to 3 Pages)',
       'Multi-Location Support',
       'Multi-Agent AI (Customer Service, Sales, Support)',
       'Custom AI Workflow Builder',

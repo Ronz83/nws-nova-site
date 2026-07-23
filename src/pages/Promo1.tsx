@@ -153,7 +153,7 @@ export default function Promo1() {
             </h2>
             <div className="space-y-3">
               {[
-                { item: 'Website Overhaul or New Website', value: '$1,500' },
+                { item: 'Website: Overhaul (Lite) / Single Page (Pro) / 3-Page (Platinum)', value: '$1,500' },
                 { item: 'Integrated Booking System', value: '$29' },
                 { item: 'AI Receptionist', value: '$597' },
                 { item: 'Reputation Management System', value: '$29' },

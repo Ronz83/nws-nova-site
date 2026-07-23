@@ -430,7 +430,7 @@ export default function SummerLaunch() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 20, alignItems: 'stretch' }}>
           <div style={{ borderRadius: 28, padding: 30, background: 'linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.03))', border: `1px solid ${C.line}`, boxShadow: '0 24px 80px rgba(0,0,0,0.38)' }}>
             {[
-              ['Website Overhaul or New Website', '$1,500 USD value'],
+              ['Website: Overhaul (Lite) / Single Page (Pro) / 3-Page (Platinum)', '$1,500 USD value'],
               ['Integrated Booking System', '$29 USD value'],
               ['AI Receptionist', '$597 USD value'],
               ['Reputation Management System', '$29 USD value'],
@@ -451,6 +451,13 @@ export default function SummerLaunch() {
             <p style={{ marginTop: 12, color: C.soft, lineHeight: 1.55 }}>Built for growing businesses that want a cleaner first impression, faster response, and better follow-up.</p>
           </div>
         </div>
+        <p style={{ textAlign: 'center', color: C.muted, fontSize: 12, maxWidth: 680, margin: '20px auto 0', lineHeight: 1.55 }}>
+          Website included depends on your plan: <strong style={{ color: C.white }}>Lite</strong> — overhaul of your existing site &middot; <strong style={{ color: C.white }}>Pro</strong> — single page website &middot; <strong style={{ color: C.white }}>Platinum</strong> — multi-page site (up to 3 pages).
+          Need a fully custom multi-page site, app, or other custom development?{' '}
+          <a href="https://home.noveltywebsolutions.com/widget/bookings/nws_discovery-call" target="_blank" rel="noopener noreferrer" style={{ color: C.cyanLight, textDecoration: 'underline' }}>Book a consultation</a>.
+          These are also available as standalone{' '}
+          <a href="https://noveltywebsolutions.com/" target="_blank" rel="noopener noreferrer" style={{ color: C.cyanLight, textDecoration: 'underline' }}>services on the main site</a>.
+        </p>
       </section>
 
       {/* Problems Section */}
