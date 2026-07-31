@@ -5,7 +5,7 @@ export default function Contact() {
   const [submitted, setSubmitted]         = useState(false);
   const [loading, setLoading]             = useState(false);
   const [error, setError]                 = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", email: "", company: "", service: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", service: "", message: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -17,21 +17,31 @@ export default function Contact() {
     setError(null);
 
     try {
-      const res = await fetch("/api/crm/contact", {
+      const [firstName, ...rest] = form.name.trim().split(" ");
+      const payload = {
+        firstName: firstName || "",
+        lastName:  rest.join(" "),
+        email:     form.email,
+        phone:     form.phone || "",
+        source:    "NWS Website",
+        industry:  form.service || "",
+        message:   [form.company && `Company: ${form.company}`, form.message].filter(Boolean).join("\n\n"),
+      };
+
+      const res = await fetch("https://api.noveltywebsolutions.com/webhook/nws-lead", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify(form),
+        body:    JSON.stringify(payload),
       });
 
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error ?? `Server error ${res.status}`);
+        throw new Error(`Server error ${res.status}`);
       }
 
       setSubmitted(true);
     } catch (err: any) {
       console.error("[Contact]", err.message);
-      setError("Something went wrong. Please email us directly at hello@noveltywebsolutions.com");
+      setError("Something went wrong — please email us directly at hello@noveltywebsolutions.com");
     } finally {
       setLoading(false);
     }
@@ -122,6 +132,7 @@ export default function Contact() {
                   {[
                     { name: "name",    label: "Your Name",     placeholder: "Ronald P.",        type: "text" },
                     { name: "email",   label: "Email Address", placeholder: "you@company.com",  type: "email" },
+                    { name: "phone",   label: "Phone (optional)", placeholder: "+1 246 555 0123", type: "tel" },
                     { name: "company", label: "Company",       placeholder: "Acme Corp",         type: "text" },
                   ].map(f => (
                     <div key={f.name} className={f.name === "company" ? "sm:col-span-2" : ""}>
@@ -129,7 +140,7 @@ export default function Contact() {
                       <input
                         type={f.type}
                         name={f.name}
-                        required={f.name !== "company"}
+                        required={f.name === "name" || f.name === "email"}
                         value={form[f.name as keyof typeof form]}
                         onChange={handleChange}
                         placeholder={f.placeholder}
