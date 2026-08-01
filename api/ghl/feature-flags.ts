@@ -11,10 +11,10 @@ const GHL_API_BASE = 'https://services.leadconnectorhq.com';
  */
 export default async function handler(req: Request, res: Response) {
   try {
-    const locationId = req.query.locationId as string;
+    const locationId = (req.query.locationId as string) || process.env.NWS_LOCATION_ID;
 
     if (!locationId) {
-      return res.status(400).json({ error: 'locationId is required' });
+      return res.status(500).json({ error: 'NWS_LOCATION_ID is not configured' });
     }
 
     // Get valid GHL token

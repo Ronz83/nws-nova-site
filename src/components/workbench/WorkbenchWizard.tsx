@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, ArrowRight } from 'lucide-react';
+import { Globe, ArrowRight, Mail } from 'lucide-react';
 import WorkbenchResults from './WorkbenchResults';
 import SurveyModal, { type SurveyData } from './SurveyModal';
 
@@ -196,7 +196,7 @@ function IdlePreview() {
 }
 
 // ── Main Wizard ───────────────────────────────────────────────────────
-type WizardState = 'idle' | 'surveying' | 'processing' | 'done';
+type WizardState = 'idle' | 'emailgate' | 'surveying' | 'processing' | 'done';
 
 export default function WorkbenchWizard() {
   const [wizardState, setWizardState]   = React.useState<WizardState>('idle');
@@ -206,6 +206,7 @@ export default function WorkbenchWizard() {
   const [resultUrl, setResultUrl]       = React.useState<string | null>(null);
   const [processingStage, setProcessingStage] = React.useState(0);
   const [error, setError]               = React.useState('');
+  const [gateEmail, setGateEmail]       = React.useState('');
 
   // Body scroll lock — works only when embedded in an iframe
   React.useEffect(() => {
@@ -229,7 +230,27 @@ export default function WorkbenchWizard() {
   // ── Step 0 submit — just opens the survey ──────────────────────────
   const handleDomainSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (domain.trim()) setWizardState('surveying');
+    if (domain.trim()) setWizardState('emailgate');
+  };
+
+  // ── Email gate — capture lead before opening the survey ─────────────
+  const handleEmailGateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const email = gateEmail.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+
+    // Notify nova (non-blocking — never blocks the scan)
+    try {
+      await fetch('https://api.noveltywebsolutions.com/webhook/nws-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, domain: domain.trim(), source: 'BIR Widget' }),
+      });
+    } catch {
+      console.warn('[bir] lead capture failed (non-fatal)');
+    }
+
+    setWizardState('surveying');
   };
 
   // ── Survey complete — run analysis with all data ───────────────────
@@ -290,6 +311,7 @@ export default function WorkbenchWizard() {
   const handleRestart = () => {
     setWizardState('idle');
     setDomain('');
+    setGateEmail('');
     setSurveyData(null);
     setResults(null);
     setResultUrl(null);
@@ -324,7 +346,7 @@ export default function WorkbenchWizard() {
     <>
       {/* ── Survey Modal overlay (shown during 'surveying' state) ── */}
       {wizardState === 'surveying' && (
-        <SurveyModal domain={domain} onComplete={handleSurveyComplete} />
+        <SurveyModal domain={domain} onComplete={handleSurveyComplete} initialEmail={gateEmail} />
       )}
 
       {/* ── Wizard Panel ─────────────────────────────────────────── */}
@@ -341,7 +363,7 @@ export default function WorkbenchWizard() {
             NWS Business Intelligence Engine
           </span>
           <div className="flex gap-1.5">
-            {(['idle', 'surveying', 'processing', 'done'] as WizardState[]).map((_s, i) => (
+            {(['idle', 'emailgate', 'surveying', 'processing', 'done'] as WizardState[]).map((_s, i) => (
               <div key={i} className={`w-2 h-2 rounded-full transition-all ${
                 (['idle', 'surveying', 'processing', 'done'] as WizardState[]).indexOf(wizardState) >= i
                   ? 'bg-sky-400' : 'bg-slate-700'
@@ -399,6 +421,51 @@ export default function WorkbenchWizard() {
 
                 {/* Live animated preview */}
                 <IdlePreview />
+              </motion.div>
+            )}
+
+            {/* ── EMAIL GATE: capture lead before results ── */}
+            {wizardState === 'emailgate' && (
+              <motion.div key="emailgate" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="flex flex-col gap-5 h-full">
+                <div>
+                  <h3 className="text-base font-black uppercase tracking-widest text-amber-400 mb-1">
+                    Where should we send your free report?
+                  </h3>
+                  <p className="text-[14px] text-slate-300 leading-relaxed font-medium">
+                    Enter your email and we'll scan <span className="text-sky-400 font-bold">{domain}</span>, build your custom AI demo, and deliver your full intelligence report — free.
+                  </p>
+                </div>
+                <form onSubmit={handleEmailGateSubmit}>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <div className="flex-1 flex items-center gap-3 bg-white/8 border border-white/12 rounded-xl px-5 py-4 focus-within:border-sky-500/70 focus-within:bg-white/10 transition-all">
+                      <Mail size={17} className="text-sky-700 shrink-0" />
+                      <input
+                        type="email"
+                        value={gateEmail}
+                        required
+                        onChange={e => setGateEmail(e.target.value)}
+                        placeholder="you@yourbusiness.com"
+                        className="flex-1 bg-transparent text-[15px] text-slate-200 placeholder:text-slate-600 border-none focus:outline-none font-mono"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="flex items-center justify-center gap-2 text-[13px] uppercase tracking-[0.15em] font-black bg-sky-500 hover:bg-sky-400 text-white px-6 py-4 rounded-xl transition-all cursor-pointer border-none shrink-0 shadow-lg shadow-sky-500/20"
+                    >
+                      Get My Report <ArrowRight size={14} />
+                    </button>
+                  </div>
+                  <p className="text-sm text-white/60 font-medium mt-2.5">
+                    No spam. Unsubscribe anytime. Report delivered instantly.
+                  </p>
+                </form>
+                <button
+                  type="button"
+                  onClick={() => setWizardState('idle')}
+                  className="self-start text-[12px] uppercase tracking-[0.15em] font-bold text-white/50 hover:text-white/80 transition-colors cursor-pointer border-none bg-transparent"
+                >
+                  ← Back
+                </button>
               </motion.div>
             )}
 

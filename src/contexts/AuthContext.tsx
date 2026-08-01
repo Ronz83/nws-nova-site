@@ -138,7 +138,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
              });
            } else if (roleParam === 'location_user') {
              setUser({
-               id: 'emp_456', name: 'John Doe', email: 'john@clientbusiness.com', role: 'location_user', clientId: 'client_acct_abc',
+               id: 'emp_456', name: 'John Doe', email: 'john@clientbusiness.com', role: 'location_user', clientId: import.meta.env.VITE_NWS_LOCATION_ID || undefined,
                permissions: { operations: true, growth: false, automations: false, aiStudio: false, settings: false, requireUpgrade: true },
                businessName: 'Business OS', businessLogo: '/business_os_logo.png'
              });

@@ -17,6 +17,7 @@ export interface SurveyData {
 interface Props {
   domain: string;
   onComplete: (data: SurveyData) => void;
+  initialEmail?: string;
 }
 
 // ── Question Data ─────────────────────────────────────────────────────
@@ -126,12 +127,12 @@ const slideVariants = {
   exit:  (dir: number) => ({ opacity: 0, x: dir > 0 ? -32 : 32 }),
 };
 
-export default function SurveyModal({ domain, onComplete }: Props) {
+export default function SurveyModal({ domain, onComplete, initialEmail }: Props) {
   const [step, setStep] = useState(1);
   const [dir, setDir] = useState(1);
   const [data, setData] = useState<SurveyData>({
     firstName: '', lastName: '', title: '', industry: '',
-    challenge: '', teamSize: '', email: '', phone: '',
+    challenge: '', teamSize: '', email: initialEmail ?? '', phone: '',
   });
 
   const set = (key: keyof SurveyData, val: string) =>
