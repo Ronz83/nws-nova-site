@@ -1,6 +1,7 @@
 import { Zap, Settings, ExternalLink, X, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../../contexts/AuthContext';
 
 const INITIAL_PLAYBOOKS = [
   { id: '1', title: 'Full AI Call Routing', description: 'Route all incoming calls through our AI receptionist.', status: 'inactive', triggers: 0, tier: 'pro' },
@@ -19,6 +20,7 @@ interface Playbook {
 }
 
 export function DashboardAutomations() {
+  const { user } = useAuth();
   const [playbooks, setPlaybooks] = useState<Playbook[]>(INITIAL_PLAYBOOKS);
   const [selectedPlaybook, setSelectedPlaybook] = useState<Playbook | null>(null);
   const [isSetupModalOpen, setIsSetupModalOpen] = useState(false);
@@ -49,12 +51,18 @@ export function DashboardAutomations() {
   };
 
   const handleSaveAndActivate = async () => {
+    if (!user?.clientId) {
+      alert("No Location ID found. Please ensure you are connected to a GHL sub-account.");
+      return;
+    }
+    
     setIsLoading(true);
     try {
       await fetch('/api/ghl/custom-values', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          locationId: user.clientId,
           forwardingNumber,
           bookingLink,
           aiPersona,

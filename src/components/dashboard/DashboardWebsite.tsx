@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   Globe,
@@ -27,6 +27,8 @@ interface IntakeForm {
   address: string;
   socialLinks: string;
   specialInstructions: string;
+  existingWebsiteUrl: string;
+  designInspirationUrl: string;
 }
 
 interface Submission {
@@ -46,6 +48,8 @@ const initialFormData: IntakeForm = {
   address: '',
   socialLinks: '',
   specialInstructions: '',
+  existingWebsiteUrl: '',
+  designInspirationUrl: '',
 };
 
 const cardClass =
@@ -66,6 +70,38 @@ export function DashboardWebsite() {
   const [submission, setSubmission] = useState<Submission | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [heroFile, setHeroFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (user?.clientId) {
+      fetch(`/api/website/intake?locationId=${user.clientId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && data.data) {
+            setForm((prev) => ({
+              ...prev,
+              businessName: data.data.business_name || prev.businessName,
+              tagline: data.data.tagline || prev.tagline,
+              primaryColor: data.data.primary_color || prev.primaryColor,
+              secondaryColor: data.data.secondary_color || prev.secondaryColor,
+              servicesList: data.data.services_list || prev.servicesList,
+              operatingHours: data.data.operating_hours || prev.operatingHours,
+              phone: data.data.phone || prev.phone,
+              email: data.data.email || prev.email,
+              address: data.data.address || prev.address,
+              socialLinks: data.data.social_links || prev.socialLinks,
+              specialInstructions: data.data.special_instructions || prev.specialInstructions,
+              existingWebsiteUrl: data.data.existing_website_url || prev.existingWebsiteUrl,
+              designInspirationUrl: data.data.design_inspiration_url || prev.designInspirationUrl,
+            }));
+            
+            // Note: Since we are not persisting existingWebsiteUrl or designInspirationUrl in the supabase table
+            // currently (because we bypassed the migration), those won't re-hydrate from DB, but the rest will.
+            // When user submits, everything will still be passed to the webhook.
+          }
+        })
+        .catch(console.error);
+    }
+  }, [user?.clientId]);
 
   function updateField(field: keyof IntakeForm, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -399,6 +435,46 @@ export function DashboardWebsite() {
                   }
                   placeholder="Instagram, Facebook, LinkedIn URLs..."
                 />
+              </div>
+
+              {/* Existing Website URL */}
+              <div>
+                <label className={labelClass}>
+                  <span className="flex items-center gap-2">
+                    <Globe className="w-4 h-4 text-slate-400" />
+                    Existing Website URL (Optional)
+                  </span>
+                </label>
+                <input
+                  type="url"
+                  className={inputClass}
+                  value={form.existingWebsiteUrl}
+                  onChange={(e) => updateField('existingWebsiteUrl', e.target.value)}
+                  placeholder="https://your-current-site.com"
+                />
+                <p className="text-xs text-slate-500 mt-1">
+                  If provided, our AI will overhaul and modernize this site while keeping SEO structures intact.
+                </p>
+              </div>
+
+              {/* Design Inspiration */}
+              <div>
+                <label className={labelClass}>
+                  <span className="flex items-center gap-2">
+                    <Palette className="w-4 h-4 text-slate-400" />
+                    Design Inspiration (Mobbin / Reference)
+                  </span>
+                </label>
+                <input
+                  type="url"
+                  className={inputClass}
+                  value={form.designInspirationUrl}
+                  onChange={(e) => updateField('designInspirationUrl', e.target.value)}
+                  placeholder="https://mobbin.com/..."
+                />
+                <p className="text-xs text-slate-500 mt-1">
+                  Paste a link to a Mobbin template or UI board for the builder to use as a structural reference.
+                </p>
               </div>
 
               {/* Special Instructions */}

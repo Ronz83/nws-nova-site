@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Calendar, ChevronDown, Download, Users, UserPlus, ArrowUp, CalendarCheck, CreditCard, DollarSign, Bot, BrainCircuit, Sparkles, ArrowRight, PlusSquare, Mail } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export function DashboardOverview() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [metrics, setMetrics] = useState<{ leads: number; appointments: number; revenue: number } | null>(null);
   const [loading, setLoading] = useState(true);
   const [activity, setActivity] = useState<any[]>([]);
@@ -21,9 +23,9 @@ export function DashboardOverview() {
         if (res.ok) {
           const data = await res.json();
           setMetrics({
-            leads: data.leads || 0,
-            appointments: data.appointments || 0,
-            revenue: data.revenue || 0
+            leads: data.metrics?.leads || 0,
+            appointments: data.metrics?.appointments || 0,
+            revenue: data.metrics?.revenue || 0
           });
         } else {
           setMetrics({ leads: 0, appointments: 0, revenue: 0 });
@@ -258,7 +260,12 @@ export function DashboardOverview() {
                 <h3 className="text-2xl font-black tracking-tight">NWS Insights</h3>
               </div>
               <p className="text-sky-100 mb-6 font-medium leading-relaxed">Your funnel conversion rate dropped by 2% today. Want me to analyze the drop-off points?</p>
-              <button className="bg-white text-sky-800 hover:bg-sky-50 font-bold text-[12px] uppercase tracking-[0.18em] py-3.5 px-6 rounded-xl transition-all shadow-md hover:shadow-lg w-fit flex items-center gap-2 hover:scale-[1.02]">
+              <button 
+                onClick={() => {
+                  alert("Analyzing funnel... A detailed report will be sent to your email shortly.");
+                }}
+                className="bg-white text-sky-800 hover:bg-sky-50 font-bold text-[12px] uppercase tracking-[0.18em] py-3.5 px-6 rounded-xl transition-all shadow-md hover:shadow-lg w-fit flex items-center gap-2 hover:scale-[1.02]"
+              >
                 Analyze Funnel
                 <ArrowRight className="text-[16px]" />
               </button>
@@ -269,11 +276,17 @@ export function DashboardOverview() {
           <div className="bg-white rounded-[24px] border-2 border-slate-100 p-8 shadow-sm flex-1 min-h-[234px]">
             <h3 className="font-bold text-[12px] text-slate-500 uppercase tracking-[0.18em] mb-6">Quick Actions</h3>
             <div className="grid grid-cols-2 gap-4">
-              <button className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-300 hover:bg-sky-50 hover:border-sky-500 transition-colors text-slate-900 group">
+              <button 
+                onClick={() => navigate('/dashboard/pipeline')}
+                className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-300 hover:bg-sky-50 hover:border-sky-500 transition-colors text-slate-900 group"
+              >
                 <PlusSquare className="text-sky-700 group-hover:text-sky-500 transition-colors w-5 h-5" />
                 <span className="text-sm font-medium">New Pipeline</span>
               </button>
-              <button className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-300 hover:bg-sky-50 hover:border-sky-500 transition-colors text-slate-900 group">
+              <button 
+                onClick={() => navigate('/dashboard/growth')}
+                className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-slate-300 hover:bg-sky-50 hover:border-sky-500 transition-colors text-slate-900 group"
+              >
                 <Mail className="text-sky-700 group-hover:text-sky-500 transition-colors w-5 h-5" />
                 <span className="text-sm font-medium">Campaign</span>
               </button>

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Mic, FileEdit, List, Play, MessageSquare, BookOpen, Inbox, MessageCircle, Network, UploadCloud, FileText, Trash2, Code, File, RefreshCw, BrainCircuit, Save, Loader2 } from 'lucide-react';
 import { useFeatures } from '../../contexts/FeatureContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { ReviewAIModal } from './ReviewAIModal';
 
 export function DashboardAIStudio() {
   const { flags } = useFeatures();
-    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const { user } = useAuth();
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   const [knowledgeText, setKnowledgeText] = useState("We are currently running a 20% off promotion for all new customers. Our business hours are Monday through Friday, 9AM to 5PM EST. Please let callers know that our VIP support line is 555-0199.");
   const [isSaving, setIsSaving] = useState(false);
@@ -13,22 +15,28 @@ export function DashboardAIStudio() {
 
   useEffect(() => {
     // Fetch knowledge on mount
-    fetch('/api/knowledge?locationId=demo-location-123')
-      .then(res => res.json())
-      .then(data => {
-        if (data.knowledgeText) setKnowledgeText(data.knowledgeText);
-        if (data.updatedAt) setLastSaved(new Date(data.updatedAt));
-      })
-      .catch(console.error);
-  }, []);
+    if (user?.clientId) {
+      fetch(`/api/knowledge?locationId=${user.clientId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.knowledgeText) setKnowledgeText(data.knowledgeText);
+          if (data.updatedAt) setLastSaved(new Date(data.updatedAt));
+        })
+        .catch(console.error);
+    }
+  }, [user?.clientId]);
 
   const handleSaveKnowledge = async () => {
+    if (!user?.clientId) {
+      alert("No Location ID found. Please ensure you are connected to a GHL sub-account.");
+      return;
+    }
     setIsSaving(true);
     try {
       const res = await fetch('/api/knowledge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ locationId: 'demo-location-123', knowledgeText })
+        body: JSON.stringify({ locationId: user.clientId, knowledgeText })
       });
       const data = await res.json();
       if (data.success && data.updatedAt) {

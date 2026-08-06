@@ -5,12 +5,62 @@ import { CheckCircle2, XCircle, AlertCircle, ExternalLink, Download } from 'luci
 
 import { useAuth } from '../../contexts/AuthContext';
 export function DashboardSettings() {
-  const [activeTab, setActiveTab] = useState<'integrations' | 'billing' | 'team'>('team');
+  const [activeTab, setActiveTab] = useState<'branding' | 'integrations' | 'billing' | 'team'>('branding');
   const { user } = useAuth();
 
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
   const [memberPermissions, setMemberPermissions] = useState<Record<string, any>>({});
   const [loadingTeam, setLoadingTeam] = useState(false);
+
+  // Branding State
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [primaryColor, setPrimaryColor] = useState('#0369a1');
+  const [secondaryColor, setSecondaryColor] = useState('#0ea5e9');
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setPrimaryColor(user.permissions?.primaryColor || '#0369a1');
+      setSecondaryColor(user.permissions?.secondaryColor || '#0ea5e9');
+    }
+  }, [user]);
+
+  const handleBrandingSave = async () => {
+    if (!user) return;
+    setUploadingLogo(true);
+    try {
+      let logoUrl = user.businessLogo;
+      
+      if (logoFile && user.clientId) {
+        const formData = new FormData();
+        formData.append('file', logoFile);
+        formData.append('locationId', user.clientId);
+        const res = await fetch('/api/crm/media', { method: 'POST', body: formData });
+        if (res.ok) {
+          const data = await res.json();
+          logoUrl = data.url;
+        }
+      }
+
+      await fetch('/api/profile/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          businessLogo: logoUrl,
+          primaryColor,
+          secondaryColor
+        })
+      });
+
+      // Optimistic refresh (In a real app, we'd update AuthContext)
+      window.location.reload();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setUploadingLogo(false);
+    }
+  };
 
   useEffect(() => {
     if (activeTab === 'team' && user?.role === 'agency_admin') {
@@ -98,6 +148,20 @@ export function DashboardSettings() {
             )}
           </button>
           <button
+            onClick={() => setActiveTab('branding')}
+            className={`flex-1 py-3 px-4 md:py-4 md:px-6 whitespace-nowrap text-center font-bold text-[13px] md:text-[14px] uppercase tracking-widest relative transition-colors ${
+              activeTab === 'branding' ? 'text-sky-600' : 'text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            Branding
+            {activeTab === 'branding' && (
+              <motion.div
+                layoutId="activeSettingsTab"
+                className="absolute bottom-0 left-0 right-0 h-1 bg-sky-600"
+              />
+            )}
+          </button>
+          <button
             onClick={() => setActiveTab('billing')}
             className={`flex-1 py-3 px-4 md:py-4 md:px-6 whitespace-nowrap text-center font-bold text-[13px] md:text-[14px] uppercase tracking-widest relative transition-colors ${
               activeTab === 'billing' ? 'text-sky-600' : 'text-slate-500 hover:text-slate-700'
@@ -128,6 +192,58 @@ export function DashboardSettings() {
         </div>
 
         <div className="p-4 md:p-8">
+          {activeTab === 'branding' && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-6 max-w-2xl"
+            >
+              <div className="mb-2">
+                <h3 className="font-bold text-slate-900 text-lg tracking-tight">White-label Branding</h3>
+                <p className="text-sm text-slate-600 mt-1">Upload your logo and colors to brand your workspace and client-facing apps.</p>
+              </div>
+
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+                <label className="block text-sm font-bold text-slate-700 mb-3">Logo Upload (High-Res)</label>
+                <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:border-sky-400 hover:bg-sky-50 transition-all bg-white">
+                  <span className="text-sm text-slate-600 font-medium">
+                    {logoFile ? logoFile.name : (user?.businessLogo ? 'Click to replace current logo' : 'Click to upload your primary logo')}
+                  </span>
+                  <span className="text-xs text-slate-400 mt-1">PNG, JPG, or SVG</span>
+                  <input type="file" className="hidden" accept="image/*,.svg" onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)} />
+                </label>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+                  <label className="block text-sm font-bold text-slate-700 mb-3">Primary Color</label>
+                  <div className="flex items-center gap-3">
+                    <input type="color" className="w-12 h-12 rounded-xl cursor-pointer" value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} />
+                    <input type="text" className="w-full bg-white border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:border-sky-300 focus:ring-4 focus:ring-sky-50 transition-all outline-none" value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} />
+                  </div>
+                </div>
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+                  <label className="block text-sm font-bold text-slate-700 mb-3">Secondary Color</label>
+                  <div className="flex items-center gap-3">
+                    <input type="color" className="w-12 h-12 rounded-xl cursor-pointer" value={secondaryColor} onChange={(e) => setSecondaryColor(e.target.value)} />
+                    <input type="text" className="w-full bg-white border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:border-sky-300 focus:ring-4 focus:ring-sky-50 transition-all outline-none" value={secondaryColor} onChange={(e) => setSecondaryColor(e.target.value)} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
+                <button 
+                  onClick={handleBrandingSave}
+                  disabled={uploadingLogo}
+                  className="bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl py-3 px-6 text-sm font-bold transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {uploadingLogo ? 'Saving...' : 'Save Branding'}
+                </button>
+              </div>
+            </motion.div>
+          )}
+
           {activeTab === 'team' && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}

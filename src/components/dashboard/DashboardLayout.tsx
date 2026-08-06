@@ -40,6 +40,12 @@ export function DashboardLayout() {
 
   // Permission Checks based on current route
   const path = location.pathname;
+
+  // Force onboarding if not completed
+  if (!user.onboarded && path !== '/onboarding') {
+    return <Navigate to="/onboarding" replace />;
+  }
+
   const p = user.permissions;
   
   if (path.includes('/operations') && !p.operations) return <Navigate to="/dashboard" replace />;

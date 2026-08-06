@@ -18,6 +18,8 @@ import { DashboardAutomations } from "./components/dashboard/DashboardAutomation
 import { DashboardTraining } from "./components/dashboard/DashboardTraining";
 import { DashboardWebsite } from "./components/dashboard/DashboardWebsite";
 
+const Onboarding = lazy(() => import("./pages/Onboarding"));
+
 // Portal Components (Internal Admin)
 import { PortalLayout } from "./components/portal/PortalLayout";
 import { DashboardSnapshots } from "./components/dashboard/DashboardSnapshots";
@@ -147,6 +149,7 @@ export default function App() {
     domainRoutes = (
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/onboarding" element={<Suspense fallback={<PageLoader />}><Onboarding /></Suspense>} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardOverview />} />
           <Route path="ai-studio" element={<DashboardAIStudio />} />

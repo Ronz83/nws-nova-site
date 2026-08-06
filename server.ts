@@ -15,6 +15,7 @@ import opportunitiesHandler from './api/crm/opportunities.ts';
 import contactsHandler from './api/crm/contacts.ts';
 import conversationsHandler from './api/crm/conversations.ts';
 import eventsHandler from './api/crm/events.ts';
+import mediaHandler from './api/crm/media.ts';
 import customValuesHandler from './api/ghl/custom-values.ts';
 import knowledgeHandler from './api/knowledge/index.ts';
 import snapshotsHandler, { pushToGHL as pushSnapshotToGHL } from './api/ghl/snapshots.ts';
@@ -26,6 +27,8 @@ import chatWidgetHandler from './api/ghl/chat-widget.ts';
 import stripeCheckoutHandler from './api/stripe/checkout.ts';
 import stripeWebhookHandler from './api/stripe/webhook.ts';
 import brainChatHandler from './api/brain/chat.ts';
+import ssoHandler from './api/auth/sso.ts';
+import profileSyncHandler from './api/profile/sync.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,6 +50,7 @@ app.get('/api/crm/contacts', contactsHandler);
 app.get('/api/crm/opportunities', opportunitiesHandler);
 app.get('/api/crm/conversations', conversationsHandler);
 app.get('/api/crm/events', eventsHandler);
+app.post('/api/crm/media', mediaHandler);
 app.get('/api/connect/install', installHandler);
 app.get('/api/connect/callback', callbackHandler);
 app.post('/api/connect/provision', provisionHandler);
@@ -65,6 +69,9 @@ app.get('/api/ghl/feature-flags', featureFlagsHandler);
 app.post('/api/ai/niche-blueprint', nicheBlueprintHandler);
 app.get('/api/ghl/chat-widget', chatWidgetHandler);
 app.post('/api/brain/chat', brainChatHandler);
+app.get('/api/auth/sso', ssoHandler);
+app.get('/api/profile/sync', profileSyncHandler);
+app.post('/api/profile/sync', profileSyncHandler);
 
 // Map the dynamic results route
 app.get('/api/results/:id', (req, res) => {

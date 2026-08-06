@@ -11,6 +11,8 @@ export interface Permissions {
   aiStudio: boolean;
   settings: boolean;
   requireUpgrade: boolean;
+  primaryColor?: string;
+  secondaryColor?: string;
 }
 
 export interface User {
@@ -22,6 +24,7 @@ export interface User {
   permissions: Permissions;
   businessName: string;
   businessLogo: string;
+  onboarded: boolean;
 }
 
 interface AuthContextType {
@@ -89,7 +92,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             role,
             permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
             businessName: 'NWS Portal',
-            businessLogo: '/business_os_logo.png'
+            businessLogo: '/business_os_logo.png',
+            onboarded: true
           });
 
           // Set up auth state listener for the portal
@@ -105,7 +109,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 role: updatedRole,
                 permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
                 businessName: 'NWS Portal',
-                businessLogo: '/business_os_logo.png'
+                businessLogo: '/business_os_logo.png',
+                onboarded: true
               });
             }
           });
@@ -128,19 +133,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
              setUser({
                id: 'admin_123', name: 'NWS Admin', email: 'admin@noveltywebsolutions.com', role: 'agency_admin',
                permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
-               businessName: 'Business OS', businessLogo: '/business_os_logo.png'
+               businessName: 'Business OS', businessLogo: '/business_os_logo.png', onboarded: true
              });
            } else if (roleParam === 'super_admin') {
              setUser({
                id: 'super_admin_123', name: 'Ronald Prescott', email: 'ronald@noveltywebsolutions.com', role: 'super_admin',
                permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
-               businessName: 'NWS Master Portal', businessLogo: '/business_os_logo.png'
+               businessName: 'NWS Master Portal', businessLogo: '/business_os_logo.png', onboarded: true
              });
            } else if (roleParam === 'location_user') {
              setUser({
                id: 'emp_456', name: 'John Doe', email: 'john@clientbusiness.com', role: 'location_user', clientId: import.meta.env.VITE_NWS_LOCATION_ID || undefined,
                permissions: { operations: true, growth: false, automations: false, aiStudio: false, settings: false, requireUpgrade: true },
-               businessName: 'Business OS', businessLogo: '/business_os_logo.png'
+               businessName: 'Business OS', businessLogo: '/business_os_logo.png', onboarded: false
              });
            } else {
              setUser(null);
@@ -170,7 +175,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             automations: permissions.automations,
             ai_studio: permissions.aiStudio,
             settings: permissions.settings,
-            require_upgrade: permissions.requireUpgrade
+            require_upgrade: permissions.requireUpgrade,
+            onboarded: false
           });
         } else if (data) {
           permissions = {
@@ -179,7 +185,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             automations: data.automations,
             aiStudio: data.ai_studio,
             settings: data.settings,
-            requireUpgrade: data.require_upgrade !== undefined ? data.require_upgrade : true
+            requireUpgrade: data.require_upgrade !== undefined ? data.require_upgrade : true,
+            primaryColor: data.primary_color,
+            secondaryColor: data.secondary_color
           };
         } else {
           // Fallback if there was another DB error
@@ -202,6 +210,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }
         }
 
+        let isUserOnboarded = false;
+        if (data && data.onboarded !== undefined) {
+          isUserOnboarded = data.onboarded;
+        }
+
         setUser({
           id: userId,
           name: params.get('name') || 'GHL User',
@@ -210,7 +223,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           clientId: locationId || undefined,
           permissions,
           businessName,
-          businessLogo
+          businessLogo,
+          onboarded: isUserOnboarded
         });
 
       } catch (err) {
