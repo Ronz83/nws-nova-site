@@ -1,73 +1,26 @@
-# React + TypeScript + Vite
+# NWS Business OS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The **NWS Business OS** is the custom, headless React frontend interface built for Novelty Web Solutions (NWS). It allows agency clients to interact with the underlying GoHighLevel (GHL) infrastructure without needing to log directly into the native, complex GHL dashboard.
 
-Currently, two official plugins are available:
+## Platform Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+To prevent confusion, the following definitions strictly apply:
+- **NWS (Novelty Web Solutions)**: The agency built directly on GoHighLevel (GHL).
+- **Businesses OS (This codebase)**: A custom frontend interface that allows users to interact with the NWS/GHL platform. Deployed at `businessesos.com`.
+- **TicketFlows**: A **standalone app**, separate from the core NWS agency infrastructure. (Do not confuse TicketFlows with the GHL white-label dashboard).
 
-## React Compiler
+## Architectural Philosophy: Frontend Simplicity
+This application follows a strict **frontend simplicity** rule: 
+- Do not overcomplicate the frontend. 
+- All complex logic (data processing, ad management, deep AI analysis, reputation management engines) must be handled by backend systems.
+- The frontend (this React application) remains a clean, efficient presentation layer designed to fetch data via APIs and display it beautifully.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Major Integrations (Completed)
+- **Training Hub (Launchpad)**: Fully interactive client onboarding checklist mapped to `localStorage` client IDs, featuring embedded masterclass videos.
+- **Growth Hub**: Fetches live marketing campaign data and social media post analytics using the GoHighLevel V2 API.
+- **Overview Hub**: Maps live GHL metrics (`leads`, `appointments`, `revenue`) and pulls the 5 most recent conversations (SMS/Email/WhatsApp) directly into the dashboard. Features simulated AI insights (teaser) to maintain frontend simplicity.
+- **SSO Integration**: An endpoint `/api/auth/sso` exists to securely authenticate users arriving from Custom Menu Links inside GoHighLevel or other standalone apps (like TicketFlows), instantly loading their custom dashboard.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Deployment
+This application is deployed via **Dokploy**. 
+- Always ensure the `dist` folder is removed from git tracking (`git rm -r --cached dist`) before deploying, or Nixpacks will serve stale cached assets instead of building the new code.
