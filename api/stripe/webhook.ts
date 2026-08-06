@@ -37,6 +37,7 @@ export default async function webhookHandler(req: any, res: any) {
         const email = session.customer_details?.email || session.customer_email || '';
         const phone = session.customer_details?.phone || '';
         const businessName = session.metadata?.businessName || `${firstName}'s Business`;
+        const planTier = session.metadata?.planTier || 'hauler';
 
         if (email) {
           console.log(`Provisioning workspace for ${email}...`);
@@ -45,9 +46,32 @@ export default async function webhookHandler(req: any, res: any) {
             lastName,
             email,
             phone: phone || undefined,
-            businessName
+            businessName,
+            planTier
           });
           console.log('Provisioning successful:', result);
+
+          if (result.userId && result.locationId) {
+            const { createClient } = require('@supabase/supabase-js');
+            const supabaseAdmin = createClient(
+              process.env.VITE_SUPABASE_URL || 'https://db4.noveltywebsolutions.com',
+              process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || ''
+            );
+
+            const isCorporate = planTier === 'corporate';
+            await supabaseAdmin.from('user_permissions').insert({
+              ghl_user_id: result.userId,
+              role: 'location_admin',
+              location_id: result.locationId,
+              operations: true,
+              growth: isCorporate,
+              automations: isCorporate,
+              ai_studio: true,
+              settings: isCorporate,
+              require_upgrade: !isCorporate
+            });
+            console.log('User permissions saved to Supabase');
+          }
         } else {
           console.error('No email found in checkout session to provision workspace.');
         }

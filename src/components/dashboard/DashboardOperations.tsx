@@ -6,6 +6,29 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFeatures } from '../../contexts/FeatureContext';
+import { useAuth } from '../../contexts/AuthContext';
+
+interface Contact {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  tags: string[];
+  lastActive: string;
+}
+
+interface PipelineStage {
+  id: string;
+  name: string;
+}
+
+interface Deal {
+  id: string;
+  title: string;
+  contact: string;
+  value: number;
+  stage: string;
+}
 
 interface Conversation {
   id: string;
@@ -17,56 +40,50 @@ interface Conversation {
   isVoice?: boolean;
 }
 
-const MOCK_PIPELINE_STAGES = [
-  { id: 'new', name: 'New Lead' },
-  { id: 'qualified', name: 'Qualified' },
-  { id: 'proposal', name: 'Proposal Sent' },
-  { id: 'won', name: 'Closed Won' }
-];
 
-const MOCK_PIPELINE_DEALS = [
-  { id: '1', title: 'Website Redesign', contact: 'Alice Smith', value: 4500, stage: 'new' },
-  { id: '2', title: 'SEO Campaign', contact: 'Bob Johnson', value: 2400, stage: 'new' },
-  { id: '3', title: 'Custom App', contact: 'Charlie Davis', value: 15000, stage: 'qualified' },
-  { id: '4', title: 'Consulting', contact: 'Diana Prince', value: 8000, stage: 'proposal' },
-  { id: '5', title: 'CRM Setup', contact: 'Evan Wright', value: 3200, stage: 'won' },
-];
 
-const MOCK_CONTACTS = [
-  { id: '1', name: 'Alice Smith', email: 'alice@example.com', phone: '(555) 012-3456', tags: ['VIP', 'Hot Lead'], lastActive: '2h ago' },
-  { id: '2', name: 'Bob Johnson', email: 'bob@example.com', phone: '(555) 098-7654', tags: ['Follow Up'], lastActive: '1d ago' },
-  { id: '3', name: 'Charlie Davis', email: 'charlie@example.com', phone: '(555) 111-2222', tags: ['Customer', 'Automotive'], lastActive: '3d ago' },
-  { id: '4', name: 'Diana Prince', email: 'diana@example.com', phone: '(555) 333-4444', tags: ['VIP'], lastActive: '1w ago' },
-];
+interface Event {
+  id: string;
+  title: string;
+  time: string;
+  type: string;
+}
 
-const MOCK_EVENTS = [
-  { id: '1', title: 'Strategy Call with Alice', time: '10:00 AM - 10:45 AM', type: 'call' },
-  { id: '2', title: 'Demo: Custom App', time: '1:00 PM - 2:00 PM', type: 'meeting' },
-  { id: '3', title: 'Follow-up Bob', time: '3:30 PM - 3:45 PM', type: 'task' },
-];
+
 
 type TabType = 'inbox' | 'pipeline' | 'contacts' | 'calendar';
 
 export function DashboardOperations() {
   const { flags } = useFeatures();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<TabType>('inbox');
 
   const [convsLoading, setConvsLoading] = useState(true);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [convsError, setConvsError] = useState('');
 
+  const [pipelineLoading, setPipelineLoading] = useState(false);
+  const [pipelineStages, setPipelineStages] = useState<PipelineStage[]>([]);
+  const [pipelineDeals, setPipelineDeals] = useState<Deal[]>([]);
+  const [pipelineError, setPipelineError] = useState('');
+
+  const [contactsLoading, setContactsLoading] = useState(false);
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [contactsError, setContactsError] = useState('');
+
+  const [eventsLoading, setEventsLoading] = useState(false);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [eventsError, setEventsError] = useState('');
+
   const fetchConversations = async () => {
+    if (!user?.clientId) return;
     setConvsLoading(true);
     setConvsError('');
     try {
-      // Simulate network request for mock data
-      await new Promise(resolve => setTimeout(resolve, 800));
-      setConversations([
-        { id: '1', name: 'Alice Smith', preview: 'Is my car ready for pickup?', time: '10:05 AM', type: 'SMS', unread: true },
-        { id: '2', name: 'Bob Johnson', preview: 'Can I schedule an appointment for next week?', time: 'Yesterday', type: 'GMB', unread: false },
-        { id: '3', name: 'Charlie Davis', preview: 'Thanks for the quick turnaround.', time: 'Monday', type: 'Email', unread: false },
-        { id: '4', name: 'David Lee (AI)', preview: 'Voice Transcript', time: 'Tuesday', type: 'Call', unread: true, isVoice: true }
-      ]);
+      const res = await fetch(`/api/crm/conversations?locationId=${user.clientId}`);
+      if (!res.ok) throw new Error('Failed to fetch conversations');
+      const data = await res.json();
+      setConversations(data.conversations || []);
     } catch (e: any) {
       setConvsError(e.message);
     } finally {
@@ -74,11 +91,86 @@ export function DashboardOperations() {
     }
   };
 
+  const fetchPipeline = async () => {
+    if (!user?.clientId) return;
+    setPipelineLoading(true);
+    try {
+      const res = await fetch(`/api/crm/opportunities?locationId=${user.clientId}`);
+      if (!res.ok) throw new Error('Failed to fetch pipeline');
+      const data = await res.json();
+      
+      setPipelineStages(data.stages || []);
+      const mappedDeals = (data.opportunities || []).map((o: any) => ({
+        id: o.id,
+        title: o.name || 'Opportunity',
+        contact: o.contact?.name || 'Unknown Contact',
+        value: o.monetaryValue || 0,
+        stage: o.pipelineStageId
+      }));
+      setPipelineDeals(mappedDeals);
+    } catch (e: any) {
+      setPipelineError(e.message);
+    } finally {
+      setPipelineLoading(false);
+    }
+  };
+
+  const fetchContacts = async () => {
+    if (!user?.clientId) return;
+    setContactsLoading(true);
+    try {
+      const res = await fetch(`/api/crm/contacts?locationId=${user.clientId}`);
+      if (!res.ok) throw new Error('Failed to fetch contacts');
+      const data = await res.json();
+      
+      const mappedContacts = (data.contacts || []).map((c: any) => ({
+        id: c.id,
+        name: c.contactName || `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Unknown',
+        email: c.email || 'No email',
+        phone: c.phone || 'No phone',
+        tags: c.tags || [],
+        lastActive: new Date(c.dateUpdated || Date.now()).toLocaleDateString()
+      }));
+      setContacts(mappedContacts);
+    } catch (e: any) {
+      setContactsError(e.message);
+    } finally {
+      setContactsLoading(false);
+    }
+  };
+
+  const fetchEvents = async () => {
+    if (!user?.clientId) return;
+    setEventsLoading(true);
+    try {
+      const res = await fetch(`/api/crm/events?locationId=${user.clientId}`);
+      if (!res.ok) throw new Error('Failed to fetch events');
+      const data = await res.json();
+      
+      const mappedEvents = (data.events || []).map((e: any) => ({
+        id: e.id,
+        title: e.title || 'Event',
+        time: `${new Date(e.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(e.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+        type: 'meeting'
+      }));
+      setEvents(mappedEvents);
+    } catch (e: any) {
+      setEventsError(e.message);
+    } finally {
+      setEventsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (flags.enable_operations) {
       fetchConversations();
+      if (user?.clientId) {
+        fetchContacts();
+        fetchPipeline();
+        fetchEvents();
+      }
     }
-  }, [flags.enable_operations]);
+  }, [flags.enable_operations, user?.clientId]);
 
   if (!flags.enable_operations) {
     return (
@@ -176,34 +268,46 @@ export function DashboardOperations() {
     </div>
   );
 
-  const renderPipeline = () => (
-    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-6 custom-scrollbar min-h-[600px] -mx-4 px-4 md:mx-0 md:px-0">
-      {MOCK_PIPELINE_STAGES.map(stage => (
-        <div key={stage.id} className="min-w-[280px] md:min-w-[320px] w-[280px] md:w-[320px] bg-gradient-to-b from-sky-50/50 to-transparent rounded-[24px] p-4 md:p-5 border-2 border-slate-100 flex flex-col">
-          <div className="flex justify-between items-center mb-4 md:mb-5 shrink-0">
-            <h3 className="font-black text-slate-900 tracking-tight">{stage.name}</h3>
-            <span className="bg-white text-sky-700 text-xs font-bold px-2.5 py-1 rounded-full border border-sky-200 shadow-sm">
-              {MOCK_PIPELINE_DEALS.filter(d => d.stage === stage.id).length}
-            </span>
-          </div>
-          <div className="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-1">
-            {MOCK_PIPELINE_DEALS.filter(d => d.stage === stage.id).map(deal => (
-              <div key={deal.id} className="bg-white p-4 md:p-5 rounded-2xl shadow-sm border-2 border-slate-100 hover:border-sky-300 transition-all duration-300 cursor-grab group hover:-translate-y-1 hover:shadow-md">
-                <h4 className="font-bold text-slate-900 mb-1 group-hover:text-sky-700 transition-colors">{deal.title}</h4>
-                <p className="text-sm text-slate-600 mb-4 font-medium">{deal.contact}</p>
-                <div className="flex justify-between items-center mt-auto">
-                  <span className="font-black text-sky-700 text-lg">${deal.value.toLocaleString()}</span>
-                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[11px] font-bold text-slate-700 border border-slate-300">
-                    {deal.contact.charAt(0)}
+  const renderPipeline = () => {
+    if (pipelineLoading) {
+      return <div className="flex items-center justify-center min-h-[600px]"><Loader2 className="w-8 h-8 animate-spin text-sky-500" /></div>;
+    }
+    if (pipelineError) {
+      return <div className="flex items-center justify-center min-h-[600px] text-red-500">{pipelineError}</div>;
+    }
+    if (pipelineStages.length === 0) {
+      return <div className="flex items-center justify-center min-h-[600px] text-slate-500">No pipelines found. Please create one in the backend.</div>;
+    }
+
+    return (
+      <div className="flex gap-4 md:gap-6 overflow-x-auto pb-6 custom-scrollbar min-h-[600px] -mx-4 px-4 md:mx-0 md:px-0">
+        {pipelineStages.map(stage => (
+          <div key={stage.id} className="min-w-[280px] md:min-w-[320px] w-[280px] md:w-[320px] bg-gradient-to-b from-sky-50/50 to-transparent rounded-[24px] p-4 md:p-5 border-2 border-slate-100 flex flex-col">
+            <div className="flex justify-between items-center mb-4 md:mb-5 shrink-0">
+              <h3 className="font-black text-slate-900 tracking-tight">{stage.name}</h3>
+              <span className="bg-white text-sky-700 text-xs font-bold px-2.5 py-1 rounded-full border border-sky-200 shadow-sm">
+                {pipelineDeals.filter(d => d.stage === stage.id).length}
+              </span>
+            </div>
+            <div className="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-1">
+              {pipelineDeals.filter(d => d.stage === stage.id).map(deal => (
+                <div key={deal.id} className="bg-white p-4 md:p-5 rounded-2xl shadow-sm border-2 border-slate-100 hover:border-sky-300 transition-all duration-300 cursor-grab group hover:-translate-y-1 hover:shadow-md">
+                  <h4 className="font-bold text-slate-900 mb-1 group-hover:text-sky-700 transition-colors">{deal.title}</h4>
+                  <p className="text-sm text-slate-600 mb-4 font-medium">{deal.contact}</p>
+                  <div className="flex justify-between items-center mt-auto">
+                    <span className="font-black text-sky-700 text-lg">${deal.value.toLocaleString()}</span>
+                    <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[11px] font-bold text-slate-700 border border-slate-300">
+                      {deal.contact.charAt(0).toUpperCase()}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
-  );
+        ))}
+      </div>
+    );
+  };
 
   const renderContacts = () => (
     <div className="bg-white/95 backdrop-blur-sm rounded-[24px] border-2 border-slate-100 shadow-sm overflow-hidden">
@@ -232,9 +336,29 @@ export function DashboardOperations() {
               <th className="p-4 md:p-6 font-bold"></th>
             </tr>
           </thead>
-          <tbody className="divide-y-2 divide-slate-100">
-            {MOCK_CONTACTS.map(contact => (
-              <tr key={contact.id} className="hover:bg-slate-50/80 transition-colors group">
+          <tbody className="divide-y-2 divide-slate-100 relative min-h-[200px]">
+            {contactsLoading ? (
+              <tr>
+                <td colSpan={5} className="p-8 text-center text-slate-500">
+                  <div className="flex justify-center mb-2"><Loader2 className="w-6 h-6 animate-spin text-sky-500" /></div>
+                  Loading contacts...
+                </td>
+              </tr>
+            ) : contactsError ? (
+              <tr>
+                <td colSpan={5} className="p-8 text-center text-red-500 font-medium">
+                  {contactsError}
+                </td>
+              </tr>
+            ) : contacts.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="p-8 text-center text-slate-500 font-medium">
+                  No contacts found in CRM.
+                </td>
+              </tr>
+            ) : (
+              contacts.map(contact => (
+                <tr key={contact.id} className="hover:bg-slate-50/80 transition-colors group">
                 <td className="p-4 md:p-6">
                   <div className="flex items-center gap-3 md:gap-4">
                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600 border border-slate-300 shrink-0">
@@ -265,7 +389,8 @@ export function DashboardOperations() {
                   </button>
                 </td>
               </tr>
-            ))}
+            ))
+            )}
           </tbody>
         </table>
       </div>
@@ -290,23 +415,32 @@ export function DashboardOperations() {
             <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Event</span>
           </button>
         </div>
-        <div className="space-y-4 md:space-y-6">
-          {MOCK_EVENTS.map(ev => (
-            <div key={ev.id} className="flex flex-col sm:flex-row gap-2 sm:gap-6 items-start group">
-              <div className="w-full sm:w-32 sm:text-right pt-2 shrink-0 flex sm:block items-center gap-2">
-                <div className="text-sm font-bold text-slate-900">{ev.time.split(' - ')[0]}</div>
-                <div className="text-xs text-slate-700 font-medium sm:mt-1">- {ev.time.split(' - ')[1]}</div>
-              </div>
-              <div className="w-full flex-1 bg-white border-2 border-slate-200 shadow-md rounded-2xl p-4 md:p-5 flex gap-5 group-hover:border-sky-300 group-hover:shadow transition-all cursor-pointer relative overflow-hidden">
-                <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${ev.type === 'call' ? 'bg-sky-500' : ev.type === 'meeting' ? 'bg-purple-500' : 'bg-emerald-500'}`}></div>
-                <div className="pl-2">
-                  <h4 className="font-bold text-slate-900 mb-1 text-base md:text-lg group-hover:text-sky-700 transition-colors">{ev.title}</h4>
-                  <p className="text-[10px] md:text-[11px] text-slate-700 font-bold uppercase tracking-widest">{ev.type}</p>
+        
+        {eventsLoading ? (
+          <div className="flex items-center justify-center py-12"><Loader2 className="w-8 h-8 animate-spin text-sky-500" /></div>
+        ) : eventsError ? (
+          <div className="text-red-500 font-medium py-12 text-center">{eventsError}</div>
+        ) : events.length === 0 ? (
+          <div className="text-slate-500 font-medium py-12 text-center">No events scheduled for this period.</div>
+        ) : (
+          <div className="space-y-4 md:space-y-6">
+            {events.map((ev: Event) => (
+              <div key={ev.id} className="flex flex-col sm:flex-row gap-2 sm:gap-6 items-start group">
+                <div className="w-full sm:w-32 sm:text-right pt-2 shrink-0 flex sm:block items-center gap-2">
+                  <div className="text-sm font-bold text-slate-900">{ev.time.split(' - ')[0]}</div>
+                  <div className="text-xs text-slate-700 font-medium sm:mt-1">- {ev.time.split(' - ')[1]}</div>
+                </div>
+                <div className="w-full flex-1 bg-white border-2 border-slate-200 shadow-md rounded-2xl p-4 md:p-5 flex gap-5 group-hover:border-sky-300 group-hover:shadow transition-all cursor-pointer relative overflow-hidden">
+                  <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${ev.type === 'call' ? 'bg-sky-500' : ev.type === 'meeting' ? 'bg-purple-500' : 'bg-emerald-500'}`}></div>
+                  <div className="pl-2">
+                    <h4 className="font-bold text-slate-900 mb-1 text-base md:text-lg group-hover:text-sky-700 transition-colors">{ev.title}</h4>
+                    <p className="text-[10px] md:text-[11px] text-slate-700 font-bold uppercase tracking-widest">{ev.type}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

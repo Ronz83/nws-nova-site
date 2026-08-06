@@ -1,4 +1,4 @@
-﻿import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { FeatureProvider } from "./contexts/FeatureContext";
 
@@ -109,7 +109,7 @@ function PublicLayout() {
 export default function App() {
   const hostname = window.location.hostname;
   const isBusinessOS = hostname === 'businessesos.com' || hostname === 'www.businessesos.com';
-  const isOsDomain = hostname === 'os.noveltywebsolutions.com';
+  const isOsDomain = hostname === 'app.businessesos.com' || hostname === 'os.noveltywebsolutions.com';
   const isPortalDomain = hostname === 'portal.noveltywebsolutions.com';
 
   let domainRoutes;

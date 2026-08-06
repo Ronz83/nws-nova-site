@@ -7,12 +7,12 @@ export default async function handler(req: Request, res: Response) {
   }
 
   try {
-    const tokenData = await getValidGHLToken();
-    const locationId = tokenData.locationId;
-
+    const { locationId } = req.query;
     if (!locationId) {
-      return res.status(400).json({ error: 'No location ID associated with this GHL token.' });
+      return res.status(400).json({ error: 'locationId query parameter is required' });
     }
+
+    const tokenData = await getValidGHLToken();
 
     // Fetch conversations (inbox)
     const url = `https://services.leadconnectorhq.com/conversations/search?locationId=${locationId}&limit=20`;

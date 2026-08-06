@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Calendar, ChevronDown, Download, Users, UserPlus, ArrowUp, CalendarCheck, CreditCard, DollarSign, Bot, BrainCircuit, CheckCircle2, User, Sparkles, ArrowRight, PlusSquare, Mail } from 'lucide-react';
+import { Calendar, ChevronDown, Download, Users, UserPlus, ArrowUp, CalendarCheck, CreditCard, DollarSign, Bot, BrainCircuit, Sparkles, ArrowRight, PlusSquare, Mail } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 export function DashboardOverview() {
   const { user } = useAuth();
   const [metrics, setMetrics] = useState<{ leads: number; appointments: number; revenue: number } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activity, setActivity] = useState<any[]>([]);
+  const [activityLoading, setActivityLoading] = useState(true);
 
   useEffect(() => {
     async function fetchMetrics() {
@@ -33,7 +35,35 @@ export function DashboardOverview() {
         setLoading(false);
       }
     }
+    
+    async function fetchActivity() {
+      if (!user?.clientId) {
+        setActivityLoading(false);
+        return;
+      }
+      try {
+        const res = await fetch(`/api/crm/conversations?locationId=${user.clientId}`);
+        if (res.ok) {
+          const data = await res.json();
+          // Map conversations to activity items
+          const mapped = (data.conversations || []).slice(0, 5).map((c: any) => ({
+            id: c.id,
+            title: `New Message from ${c.name}`,
+            description: `"${c.preview}" via ${c.type}`,
+            time: c.time,
+            icon: 'message'
+          }));
+          setActivity(mapped);
+        }
+      } catch (e) {
+        console.error("Failed to fetch activity", e);
+      } finally {
+        setActivityLoading(false);
+      }
+    }
+
     fetchMetrics();
+    fetchActivity();
   }, [user?.clientId]);
 
   return (
@@ -183,52 +213,32 @@ export function DashboardOverview() {
           
           <div className="flex-1 overflow-y-auto p-8 space-y-6">
             
-            {/* Activity Item 1 */}
-            <div className="flex gap-4">
-              <div className="relative shrink-0 mt-1">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center border-2 border-white ring-1 ring-slate-200 z-10 relative">
-                  <CheckCircle2 className="text-emerald-600 text-[20px]" />
+            {activityLoading ? (
+               <div className="flex justify-center py-8"><div className="w-8 h-8 rounded-full border-4 border-sky-500 border-t-transparent animate-spin"></div></div>
+            ) : activity.length === 0 ? (
+               <div className="text-center text-slate-500 py-8">No recent activity found.</div>
+            ) : (
+              activity.map((item, index) => (
+                <div key={item.id} className="flex gap-4">
+                  <div className="relative shrink-0 mt-1">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center border-2 border-white ring-1 ring-slate-200 z-10 relative">
+                      <Mail className="text-sky-600 text-[20px]" />
+                    </div>
+                    {index !== activity.length - 1 && (
+                      <div className="absolute top-10 bottom-[-24px] left-1/2 w-px bg-slate-200 -translate-x-1/2 z-0"></div>
+                    )}
+                  </div>
+                  <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-200">
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-slate-900">{item.title}</p>
+                      <span className="bg-sky-100 text-sky-700 text-xs px-2 py-0.5 rounded-full font-bold">CRM</span>
+                    </div>
+                    <p className="text-slate-700 mt-1 line-clamp-2">{item.description}</p>
+                    <span className="text-xs text-slate-600 mt-2 block">{item.time}</span>
+                  </div>
                 </div>
-                <div className="absolute top-10 bottom-[-24px] left-1/2 w-px bg-slate-200 -translate-x-1/2 z-0"></div>
-              </div>
-              <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <p className="font-medium text-slate-900">Payment Received</p>
-                <p className="text-slate-700 mt-1">Invoice #INV-2023-089 paid by TechCorp Inc. via Stripe.</p>
-                <span className="text-xs text-slate-600 mt-2 block">10 mins ago</span>
-              </div>
-            </div>
-
-            {/* Activity Item 2 */}
-            <div className="flex gap-4">
-              <div className="relative shrink-0 mt-1">
-                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center border-2 border-white ring-1 ring-slate-200 z-10 relative">
-                  <User className="text-sky-600 text-[20px]" />
-                </div>
-                <div className="absolute top-10 bottom-[-24px] left-1/2 w-px bg-slate-200 -translate-x-1/2 z-0"></div>
-              </div>
-              <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <div className="flex items-center justify-between">
-                  <p className="font-medium text-slate-900">New Lead Assigned</p>
-                  <span className="bg-sky-100 text-sky-700 text-xs px-2 py-0.5 rounded-full font-bold">CRM</span>
-                </div>
-                <p className="text-slate-700 mt-1">Sarah Jenkins was assigned 5 new inbound leads from the Fall Campaign.</p>
-                <span className="text-xs text-slate-600 mt-2 block">1 hour ago</span>
-              </div>
-            </div>
-
-            {/* Activity Item 3 */}
-            <div className="flex gap-4">
-              <div className="relative shrink-0 mt-1">
-                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center border-2 border-white ring-1 ring-slate-200 z-10 relative">
-                  <Bot className="text-purple-600 text-[20px]" />
-                </div>
-              </div>
-              <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <p className="font-medium text-slate-900">AI Voice Agent Triggered</p>
-                <p className="text-slate-700 mt-1">NWS AI handled an after-hours booking request successfully.</p>
-                <span className="text-xs text-slate-600 mt-2 block">3 hours ago</span>
-              </div>
-            </div>
+              ))
+            )}
 
           </div>
         </div>

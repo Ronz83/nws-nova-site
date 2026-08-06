@@ -7,12 +7,12 @@ export default async function handler(req: Request, res: Response) {
   }
 
   try {
-    const tokenData = await getValidGHLToken();
-    const locationId = tokenData.locationId;
-
+    const { locationId } = req.query;
     if (!locationId) {
-      return res.status(400).json({ error: 'No location ID associated with this GHL token.' });
+      return res.status(400).json({ error: 'locationId query parameter is required' });
     }
+
+    const tokenData = await getValidGHLToken();
 
     // Fetch pipelines for this location
     const pipelinesRes = await fetch(`https://services.leadconnectorhq.com/opportunities/pipelines?locationId=${locationId}`, {
@@ -52,7 +52,9 @@ export default async function handler(req: Request, res: Response) {
 
     const oppsJson = await oppsRes.json();
     return res.json({ 
+      pipelineId: pipelines[0].id,
       pipelineName: pipelines[0].name,
+      stages: pipelines[0].stages || [],
       opportunities: oppsJson.opportunities || [] 
     });
 

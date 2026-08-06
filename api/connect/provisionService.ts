@@ -7,8 +7,9 @@ export async function provisionWorkspace(params: {
   email: string;
   phone?: string;
   businessName: string;
+  planTier?: string;
 }) {
-  const { firstName, lastName, email, phone, businessName } = params;
+  const { firstName, lastName, email, phone, businessName, planTier } = params;
 
   // 1. Load the OAuth token
   const tokenPath = path.resolve(process.cwd(), 'ghl_token.json');
@@ -37,7 +38,8 @@ export async function provisionWorkspace(params: {
     state: "FL",
     country: "US",
     postalCode: "00000",
-    ...(process.env.VITE_GHL_STARTER_SNAPSHOT_ID ? { snapshotId: process.env.VITE_GHL_STARTER_SNAPSHOT_ID } : {})
+    ...(planTier === 'corporate' && process.env.VITE_GHL_CORPORATE_SNAPSHOT_ID ? { snapshotId: process.env.VITE_GHL_CORPORATE_SNAPSHOT_ID } : 
+       (process.env.VITE_GHL_STARTER_SNAPSHOT_ID ? { snapshotId: process.env.VITE_GHL_STARTER_SNAPSHOT_ID } : {}))
   };
 
   console.log('Provisioning new workspace:', businessName);
@@ -94,8 +96,11 @@ export async function provisionWorkspace(params: {
     return { success: true, locationId, userError: userErrorText };
   }
 
+  const userData = await userRes.json();
+  const userId = userData.user?.id || userData.id;
+
   console.log('User created and assigned successfully.');
-  return { success: true, locationId };
+  return { success: true, locationId, userId };
 }
 
 export async function provisionAIAgent(locationId: string, agentConfig: any) {
