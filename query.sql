@@ -1,1 +1,2 @@
-SELECT "applicationId", "refreshToken" FROM application WHERE name = 'Businesses OS';
+SELECT host, "applicationId" FROM domain;
+SELECT "applicationId", name FROM application;

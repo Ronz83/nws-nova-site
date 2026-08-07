@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import multer from 'multer';
-import { getValidToken } from '../lib/ghl.js';
+import { getValidGHLToken } from '../lib/ghl.js';
 import FormData from 'form-data';
 import fetch from 'node-fetch';
 
@@ -44,7 +44,7 @@ export default async function handler(req: Request, res: Response) {
     }
 
     // Get the valid OAuth token for this location
-    const token = await getValidToken(locationId as string);
+    const token = await getValidGHLToken(locationId as string);
     if (!token) {
       return res.status(401).json({ error: 'No valid token found for location' });
     }

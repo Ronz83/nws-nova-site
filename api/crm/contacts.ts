@@ -1,4 +1,4 @@
-import { getValidToken } from '../lib/ghl.js';
+import { getValidGHLToken } from '../lib/ghl.js';
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'GET') {
@@ -12,7 +12,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const token = await getValidToken();
+    const token = await getValidGHLToken();
 
     const response = await fetch(`https://services.leadconnectorhq.com/contacts/?locationId=${locationId}&limit=50`, {
       headers: {
