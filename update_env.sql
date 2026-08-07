@@ -1,0 +1,1 @@
+UPDATE application SET env = env || E'\n# Vibe Coder Webhook\nGHL_VIBE_CODER_WEBHOOK_URL=https://services.leadconnectorhq.com/hooks/PiPGhGQUHooNH7p8no1p/webhook-trigger/fb9c8a58-7e73-4df4-b4c8-6a4a49b40474\n' WHERE "applicationId" = '8EO5HoetU8ZkXfhWScvqo';

@@ -49,7 +49,12 @@ const BusinessOS  = lazy(() => import("./pages/BusinessOS"));
 const SmartStart     = lazy(() => import("./pages/SmartStart"));
 const BusinessAudit  = lazy(() => import("./pages/BusinessAudit"));
 const AIReceptionist = lazy(() => import("./pages/AIReceptionist"));
-const SummerLaunch = lazy(() => import("./pages/SummerLaunch"));
+const AIMessaging    = lazy(() => import("./pages/AIMessaging"));
+const Reputation     = lazy(() => import("./pages/Reputation"));
+const Copilot        = lazy(() => import("./pages/Copilot"));
+const IndustryTemplate = lazy(() => import("./pages/Industry"));
+const SummerLaunch   = lazy(() => import("./pages/SummerLaunch"));
+const SolopreneurPage= lazy(() => import("./pages/Solopreneur"));
 
 // Portal Lazy Pages
 const PortalOverview   = lazy(() => import("./pages/portal/PortalOverview"));
@@ -172,6 +177,11 @@ export default function App() {
           <Route path="/pricing" element={<Suspense fallback={<PageLoader />}><PricingRedirect target="/#pricing" /></Suspense>} />
           <Route path="/smart-start" element={<Suspense fallback={<PageLoader />}><SmartStart /></Suspense>} />
           <Route path="/ai-receptionist" element={<Suspense fallback={<PageLoader />}><AIReceptionist /></Suspense>} />
+          <Route path="/ai-messaging" element={<Suspense fallback={<PageLoader />}><AIMessaging /></Suspense>} />
+          <Route path="/reputation" element={<Suspense fallback={<PageLoader />}><Reputation /></Suspense>} />
+          <Route path="/copilot" element={<Suspense fallback={<PageLoader />}><Copilot /></Suspense>} />
+          <Route path="/for/:industry" element={<Suspense fallback={<PageLoader />}><IndustryTemplate /></Suspense>} />
+          <Route path="/solopreneur" element={<Suspense fallback={<PageLoader />}><SolopreneurPage /></Suspense>} />
           <Route path="/business-audit" element={<Suspense fallback={<PageLoader />}><BusinessAudit /></Suspense>} />
           <Route path="/demo/:slug" element={<Demo />} />
           <Route path="/results/:id" element={<ResultsPage />} />
@@ -205,6 +215,11 @@ export default function App() {
           <Route path="/results/:id" element={<ResultsPage />} />
         </Route>
         <Route path="/promo1" element={<Suspense fallback={<PageLoader />}><SummerLaunch /></Suspense>} />
+        <Route path="/solopreneur" element={<Suspense fallback={<PageLoader />}><SolopreneurPage /></Suspense>} />
+        <Route path="/ai-messaging" element={<Suspense fallback={<PageLoader />}><AIMessaging /></Suspense>} />
+        <Route path="/reputation" element={<Suspense fallback={<PageLoader />}><Reputation /></Suspense>} />
+        <Route path="/copilot" element={<Suspense fallback={<PageLoader />}><Copilot /></Suspense>} />
+        <Route path="/for/:industry" element={<Suspense fallback={<PageLoader />}><IndustryTemplate /></Suspense>} />
 
         <Route path="/portal/login" element={<Suspense fallback={<PageLoader />}><PortalLogin /></Suspense>} />
         <Route path="/portal" element={<PortalLayout />}>

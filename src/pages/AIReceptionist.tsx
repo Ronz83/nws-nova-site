@@ -292,8 +292,8 @@ const htmlContent = `
             </div>
             <div class="glass pricing-card featured reveal reveal-delay-2">
                 <div class="pricing-badge">Most Popular</div>
-                <div class="pricing-label">Monthly Service</div>
-                <div class="pricing-amount">\$297<span>/mo</span></div>
+                <div class="pricing-label">Monthly Service (Business OS Pro)</div>
+                <div class="pricing-amount">\$597<span>/mo</span></div>
                 <div class="pricing-range">Everything you need. Nothing you don't.</div>
                 <ul class="pricing-features">
                     <li>24/7 AI voice receptionist (unlimited calls)</li>
@@ -373,11 +373,11 @@ const htmlContent = `
             </div>
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">
-                    What's included in the \$297/month?
+                    What's included in the \$597/month?
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">
-                    <p>Everything: your AI receptionist, GoHighLevel CRM access, AI voice minutes, SMS follow-up automation, appointment booking, lead capture, call analytics, and ongoing support. There are no hidden per-minute charges or surprise fees.</p>
+                    <p>Everything: your AI receptionist, GoHighLevel CRM access, 100 AI voice minutes/credits, SMS follow-up automation, appointment booking, lead capture, call analytics, and ongoing support. There are no hidden per-minute charges or surprise fees.</p>
                 </div>
             </div>
             <div class="faq-item">

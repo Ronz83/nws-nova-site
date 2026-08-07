@@ -15,66 +15,63 @@ export const STRIPE_PRICES = {
 
 export const PRICING_TIERS = [
   {
-    id: 'lite',
-    name: 'Business OS Lite',
-    description: 'Essential tools for solo operators and small teams to capture leads and automate basics.',
+    id: 'lite', // Kept as 'lite' for Stripe backwards compatibility
+    name: 'Business OS Solopreneur',
+    description: 'You run the business. AI runs the front desk. Built for the one-person operation.',
     priceMonthly: 297,
     priceYearly: 2970, // 2 months free
     stripeMonthly: STRIPE_PRICES.lite.monthly,
     stripeYearly: STRIPE_PRICES.lite.yearly,
     features: [
+      'Website Overhaul or New Build',
+      'AI Chat Widget (Answers visitors 24/7)',
+      'Unified Inbox (Email, FB, IG)',
+      'Integrated Booking System',
       'Unlimited CRM & Pipeline Management',
-      'Unified Inbox (Email, FB, IG DMs)',
-      'Chat AI (Website Chatbot)',
-      'Website Overhaul (Existing Site Redesign)',
-      'Appointment Booking Calendar',
-      'Basic Email Campaigns',
+      'CaricomBusiness.com Regional Listing',
       'Monthly Performance Report',
-      'Business Audit & CB Connect Listing',
-      'Standard Support (Business Hours)'
+      'Business Audit & Setup Support'
     ]
   },
   {
     id: 'pro',
     name: 'Business OS Pro',
-    description: 'Powerful AI automation for growing businesses ready to scale their operations.',
+    description: 'Your AI-Powered Growth Engine. Stop missing calls and let AI handle the first conversation.',
     priceMonthly: 597,
     priceYearly: 5970, // 2 months free
     stripeMonthly: STRIPE_PRICES.pro.monthly,
     stripeYearly: STRIPE_PRICES.pro.yearly,
     isPopular: true,
     features: [
-      'Everything in Lite, plus:',
-      'Single Page Website',
-      'Voice AI Receptionist (Handles inbound calls)',
-      'Reputation Management AI (Smart Routing)',
-      'Advanced Workflow Automations (Drip, Nurture)',
-      'Lead Capture Forms & Landing Pages',
+      'Everything in Solopreneur, plus:',
+      'Voice AI Receptionist (Answers calls 24/7)',
+      'Reputation Management AI (Auto-reviews)',
       'WhatsApp Business Integration',
-      'Appointment Reminders & Review Requests',
+      'Advanced Workflow Automations',
+      'Lead Capture Forms & Landing Pages',
+      'AI Copilot (Pipeline Insights)',
+      '100 Monthly AI Credits Included',
       'Priority Support (Extended Hours)'
     ]
   },
   {
     id: 'platinum',
     name: 'Business OS Platinum',
-    description: 'Enterprise-grade power, custom-built workflows, and white-glove setup.',
+    description: 'Your Complete AI Operations Center. Multiple AI agents handle sales, support, and service simultaneously.',
     priceMonthly: 997,
     priceYearly: 9970, // 2 months free
     stripeMonthly: STRIPE_PRICES.platinum.monthly,
     stripeYearly: STRIPE_PRICES.platinum.yearly,
     features: [
       'Everything in Pro, plus:',
-      'Multi-Page Website (Up to 3 Pages)',
+      'Multi-Agent AI (Sales, Support, CS)',
+      'Custom Agent Studio Workflows',
+      'Content AI (Drafts blogs, emails, social)',
+      'Weekly Automated Performance Reports',
       'Multi-Location Support',
-      'Multi-Agent AI (Customer Service, Sales, Support)',
-      'Custom AI Workflow Builder',
-      'Custom API Integrations',
-      'Business App (Text AI, Voice AI, Transfers)',
+      '500 Monthly AI Credits Included',
       'White Glove Onboarding & Setup',
-      'Advanced Analytics & Custom Reporting',
       '24/7 Priority SLA Support'
     ]
   }
 ];
-
