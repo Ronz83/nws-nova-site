@@ -742,84 +742,82 @@ export default function BusinessOS() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto">
               {PRICING_TIERS.map(plan => {
                 const currentPrice = isYearly ? plan.priceYearly : plan.priceMonthly;
-                const formattedPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(currentPrice);
-                const compareAtMap: Record<string, { monthly: number; yearly: number }> = { lite: { monthly: 597, yearly: 5970 }, pro: { monthly: 997, yearly: 9970 }, platinum: { monthly: 1497, yearly: 14970 } };
-                const compareAt = compareAtMap[plan.id];
-                const comparePrice = isYearly ? compareAt.yearly : compareAt.monthly;
-                const savings = comparePrice - currentPrice;
 
                 return (
                   <div
                     key={plan.id}
-                    className={`relative rounded-[24px] p-6 lg:p-8 flex flex-col gap-5 ${plan.isPopular ? "lg:-mt-4 lg:-mb-4" : ""}`}
-                    style={plan.isPopular ? {
-                      background: "linear-gradient(160deg, rgba(14,165,233,0.12) 0%, rgba(3,105,161,0.08) 100%)",
-                      border: "1px solid rgba(56,189,248,0.35)",
-                      boxShadow: "0 0 60px rgba(14,165,233,0.12), 0 24px 48px rgba(0,0,0,0.4)"
-                    } : {
-                      background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)"
-                    }}
+                    className={`relative rounded-[28px] p-7 lg:p-9 flex flex-col justify-between transition-all duration-300 ${
+                      plan.isPopular 
+                        ? "lg:-mt-4 lg:-mb-4 bg-[#0c2238] border-2 border-sky-400 shadow-[0_0_50px_rgba(14,165,233,0.18)]" 
+                        : "bg-white/[0.03] border border-white/10 hover:border-white/20"
+                    }`}
                   >
                     {plan.isPopular && (
-                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                        <span
-                          className="text-xs font-bold uppercase tracking-[0.18em] text-white px-5 py-2 rounded-full flex items-center gap-1.5"
-                          style={{ background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 60%, #38bdf8 100%)" }}
-                        >
+                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap z-10">
+                        <span className="text-xs font-bold uppercase tracking-[0.2em] text-white px-5 py-2 rounded-full flex items-center gap-1.5 shadow-lg bg-sky-500">
                           <Sparkles size={12} /> Most Popular
                         </span>
                       </div>
                     )}
-                    {!plan.isPopular && (
-                      <span className="text-sm uppercase tracking-[0.2em] text-white/50 font-bold">Premium</span>
-                    )}
 
                     <div>
-                      <div className="flex items-center gap-2 mt-3">
-                        <span className="text-2xl font-black text-white">{plan.name}</span>
-                        <span className="text-[10px] uppercase tracking-widest font-bold bg-emerald-400/15 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-400/25">Summer Launch</span>
+                      {/* Title & Description */}
+                      <div className="mb-6">
+                        <h3 className="text-2xl lg:text-3xl font-black text-white font-sans tracking-tight">
+                          {plan.name}
+                        </h3>
+                        <p className="mt-3 text-sm text-white/70 font-medium leading-relaxed min-h-[44px]">
+                          {plan.description}
+                        </p>
                       </div>
-                      <div className="mt-1 flex items-end gap-2">
-                        <span className="text-2xl font-black font-mono line-through" style={{ color: '#ef4444', textDecorationColor: '#ef4444' }}>
-                          ${comparePrice.toLocaleString()} <span className="text-xs font-bold opacity-60">USD</span>
-                        </span>
-                        <span className="text-4xl font-black font-mono text-white">{formattedPrice} <span className="text-sm font-bold opacity-50">USD</span></span>
-                        <span className="text-sm text-white/50 font-medium mb-1">/{isYearly ? 'yr' : 'mo'}</span>
-                        <span className="text-[11px] font-bold bg-emerald-400/15 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-400/25">
-                          Save ${savings.toLocaleString()} <span className="text-xs font-bold opacity-60">USD</span>{isYearly ? '/yr' : '/mo'}
-                        </span>
-                      </div>
-                      
-                      <p className="mt-2 text-sm text-white/60 font-medium pb-4 border-b border-white/10">
-                        {plan.description}
-                      </p>
-                    </div>
 
-                    <div className="flex flex-col gap-3 flex-grow">
-                      {plan.features.map((f) => (
-                        <div key={f} className="flex items-start gap-3 text-sm text-white/80 font-medium">
-                          <div
-                            className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                            style={plan.isPopular 
-                              ? { background: "rgba(14,165,233,0.2)", border: "1px solid rgba(56,189,248,0.3)" }
-                              : { background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}
-                          >
-                            <CheckCircle size={11} className={plan.isPopular ? "text-sky-400" : "text-white/50"} />
-                          </div>
-                          {f}
+                      {/* Clean Price Display */}
+                      <div className="my-6 pb-6 border-b border-white/10">
+                        <div className="flex items-baseline gap-1.5">
+                          <span className="text-5xl lg:text-6xl font-black font-sans text-white tracking-tight">
+                            ${currentPrice.toLocaleString()}
+                          </span>
+                          <span className="text-base text-white/60 font-bold">
+                            /{isYearly ? 'yr' : 'mo'}
+                          </span>
                         </div>
-                      ))}
+                        {isYearly && (
+                          <span className="inline-block mt-2 text-[11px] font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full border border-emerald-400/20">
+                            Includes 2 Months Free
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Feature List */}
+                      <div className="flex flex-col gap-3.5 mb-8">
+                        {plan.features.map((f) => (
+                          <div key={f} className="flex items-start gap-3 text-sm text-white/85 font-medium leading-normal">
+                            <div
+                              className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
+                                plan.isPopular
+                                  ? "bg-sky-500/20 border border-sky-400/40 text-sky-400"
+                                  : "bg-white/10 border border-white/15 text-white/60"
+                              }`}
+                            >
+                              <CheckCircle size={12} />
+                            </div>
+                            <span>{f}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
+                    {/* CTA Button */}
                     <button
                       onClick={() => handleCheckout(plan.id)}
                       disabled={loading === plan.id}
-                      className="mt-2 text-sm uppercase tracking-[0.18em] font-bold text-white px-7 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer border-none hover:scale-[1.02] text-center"
-                      style={plan.isPopular 
-                        ? { background: "linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)" }
-                        : { border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.06)" }}
+                      className={`w-full text-sm uppercase tracking-[0.18em] font-bold py-4 rounded-xl transition-all duration-200 cursor-pointer text-center shadow-lg hover:scale-[1.02] active:scale-[0.98] ${
+                        plan.isPopular
+                          ? "bg-sky-500 hover:bg-sky-400 text-white shadow-sky-500/25"
+                          : "bg-white/10 hover:bg-white/15 text-white border border-white/20"
+                      }`}
                     >
-                      {loading === plan.id ? "Loading..." : "Get Started"}
+                      {loading === plan.id ? "Loading..." : plan.ctaText || "Get Started"}
                     </button>
                   </div>
                 );
