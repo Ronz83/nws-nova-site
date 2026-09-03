@@ -739,16 +739,16 @@ export default function BusinessOS() {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch max-w-7xl mx-auto">
               {PRICING_TIERS.map(plan => {
                 const currentPrice = isYearly ? plan.priceYearly : plan.priceMonthly;
 
                 return (
                   <div
                     key={plan.id}
-                    className={`relative rounded-[28px] p-7 lg:p-9 flex flex-col justify-between transition-all duration-300 ${
+                    className={`relative rounded-[28px] p-6 lg:p-7 flex flex-col justify-between transition-all duration-300 ${
                       plan.isPopular 
-                        ? "lg:-mt-4 lg:-mb-4 bg-[#0c2238] border-2 border-sky-400 shadow-[0_0_50px_rgba(14,165,233,0.18)]" 
+                        ? "lg:-mt-3 lg:-mb-3 bg-[#0c2238] border-2 border-sky-400 shadow-[0_0_50px_rgba(14,165,233,0.18)]" 
                         : "bg-white/[0.03] border border-white/10 hover:border-white/20"
                     }`}
                   >

@@ -1,7 +1,11 @@
 export const STRIPE_PRICES = {
+  frontdesk: {
+    monthly: 'price_1U0NV2KOur9dRgFbVb38VK8G',
+    yearly: 'price_1U0NV2KOur9dRgFbBMOU50c0'
+  },
   lite: {
-    monthly: 'price_1U8UIwKOur9dRgFbsSAXmmSB',
-    yearly: 'price_1U8UIwKOur9dRgFbVYeeVpJ2'
+    monthly: 'price_1Tp915KOur9dRgFb0bH8eP24',
+    yearly: 'price_1Tp915KOur9dRgFbqts8HEZW'
   },
   pro: {
     monthly: 'price_1U8UIxKOur9dRgFbWOCRBcOi',
@@ -15,6 +19,23 @@ export const STRIPE_PRICES = {
 
 export const PRICING_TIERS = [
   {
+    id: 'frontdesk',
+    name: 'Front Desk OS',
+    description: 'Essential front desk engine for solo operators and booking-driven shops.',
+    priceMonthly: 29,
+    priceYearly: 290, // 2 months free
+    stripeMonthly: STRIPE_PRICES.frontdesk.monthly,
+    stripeYearly: STRIPE_PRICES.frontdesk.yearly,
+    ctaText: 'Start Front Desk OS',
+    features: [
+      'Zero-Commission Booking Engine',
+      '24/7 Web & Mobile Scheduling',
+      'Native Push Reminders (OneSignal)',
+      'Unified Customer Inbox',
+      'Pay-As-You-Go AI Micro-Credits'
+    ]
+  },
+  {
     id: 'base',
     name: 'Base OS',
     description: 'The foundation to organize and run your essential daily operations.',
@@ -24,11 +45,11 @@ export const PRICING_TIERS = [
     stripeYearly: STRIPE_PRICES.lite.yearly,
     ctaText: 'Start Base OS',
     features: [
+      'Everything in Front Desk, plus:',
       'Industry-Specific CRM Framework',
-      'Unified Communication Inbox',
+      'Multi-Staff & Resource Scheduling',
       'Basic Workflow Automation',
-      'Native Web Push Notifications',
-      '10 Monthly AI Credits'
+      '50 Monthly AI Credits'
     ]
   },
   {
