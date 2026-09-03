@@ -713,7 +713,7 @@ export default function BusinessOS() {
           className="py-24 px-6 relative overflow-hidden"
           style={{ background: "#0c1a2e", borderTop: "1px solid rgba(255,255,255,0.06)" }}
         >
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1480px] mx-auto w-full px-2 sm:px-4">
             <div className="text-center mb-16">
               <span className="text-sm uppercase tracking-[0.22em] text-sky-400 font-bold">Pricing</span>
               <h2 className="mt-4 text-4xl md:text-5xl tracking-tight leading-tight font-sans font-black text-white">
@@ -739,22 +739,22 @@ export default function BusinessOS() {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 xl:gap-6 items-stretch w-full">
               {PRICING_TIERS.map(plan => {
                 const currentPrice = isYearly ? plan.priceYearly : plan.priceMonthly;
 
                 return (
                   <div
                     key={plan.id}
-                    className={`relative rounded-[28px] p-6 lg:p-7 flex flex-col justify-between transition-all duration-300 ${
+                    className={`relative rounded-[24px] p-5 xl:p-7 flex flex-col justify-between transition-all duration-300 ${
                       plan.isPopular 
-                        ? "lg:-mt-3 lg:-mb-3 bg-[#0c2238] border-2 border-sky-400 shadow-[0_0_50px_rgba(14,165,233,0.18)]" 
+                        ? "md:-mt-2 md:-mb-2 bg-[#0c2238] border-2 border-sky-400 shadow-[0_0_50px_rgba(14,165,233,0.18)]" 
                         : "bg-white/[0.03] border border-white/10 hover:border-white/20"
                     }`}
                   >
                     {plan.isPopular && (
                       <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap z-10">
-                        <span className="text-xs font-bold uppercase tracking-[0.2em] text-white px-5 py-2 rounded-full flex items-center gap-1.5 shadow-lg bg-sky-500">
+                        <span className="text-xs font-bold uppercase tracking-[0.2em] text-white px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg bg-sky-500">
                           <Sparkles size={12} /> Most Popular
                         </span>
                       </div>
@@ -762,44 +762,44 @@ export default function BusinessOS() {
 
                     <div>
                       {/* Title & Description */}
-                      <div className="mb-6">
-                        <h3 className="text-2xl lg:text-3xl font-black text-white font-sans tracking-tight">
+                      <div className="mb-5">
+                        <h3 className="text-xl xl:text-2xl font-black text-white font-sans tracking-tight">
                           {plan.name}
                         </h3>
-                        <p className="mt-3 text-sm text-white/70 font-medium leading-relaxed min-h-[44px]">
+                        <p className="mt-2 text-xs xl:text-sm text-white/70 font-medium leading-relaxed min-h-[44px]">
                           {plan.description}
                         </p>
                       </div>
 
                       {/* Clean Price Display */}
-                      <div className="my-6 pb-6 border-b border-white/10">
-                        <div className="flex items-baseline gap-1.5">
-                          <span className="text-5xl lg:text-6xl font-black font-sans text-white tracking-tight">
+                      <div className="my-5 pb-5 border-b border-white/10">
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-4xl xl:text-5xl font-black font-sans text-white tracking-tight">
                             ${currentPrice.toLocaleString()}
                           </span>
-                          <span className="text-base text-white/60 font-bold">
+                          <span className="text-sm xl:text-base text-white/60 font-bold">
                             /{isYearly ? 'yr' : 'mo'}
                           </span>
                         </div>
                         {isYearly && (
-                          <span className="inline-block mt-2 text-[11px] font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full border border-emerald-400/20">
+                          <span className="inline-block mt-2 text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-400/20">
                             Includes 2 Months Free
                           </span>
                         )}
                       </div>
 
                       {/* Feature List */}
-                      <div className="flex flex-col gap-3.5 mb-8">
+                      <div className="flex flex-col gap-3 mb-6">
                         {plan.features.map((f) => (
-                          <div key={f} className="flex items-start gap-3 text-sm text-white/85 font-medium leading-normal">
+                          <div key={f} className="flex items-start gap-2.5 text-xs xl:text-sm text-white/85 font-medium leading-snug">
                             <div
-                              className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
+                              className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
                                 plan.isPopular
                                   ? "bg-sky-500/20 border border-sky-400/40 text-sky-400"
                                   : "bg-white/10 border border-white/15 text-white/60"
                               }`}
                             >
-                              <CheckCircle size={12} />
+                              <CheckCircle size={10} />
                             </div>
                             <span>{f}</span>
                           </div>
@@ -811,7 +811,7 @@ export default function BusinessOS() {
                     <button
                       onClick={() => handleCheckout(plan.id)}
                       disabled={loading === plan.id}
-                      className={`w-full text-sm uppercase tracking-[0.18em] font-bold py-4 rounded-xl transition-all duration-200 cursor-pointer text-center shadow-lg hover:scale-[1.02] active:scale-[0.98] ${
+                      className={`w-full text-xs xl:text-sm uppercase tracking-[0.16em] font-bold py-3.5 rounded-xl transition-all duration-200 cursor-pointer text-center shadow-lg hover:scale-[1.02] active:scale-[0.98] ${
                         plan.isPopular
                           ? "bg-sky-500 hover:bg-sky-400 text-white shadow-sky-500/25"
                           : "bg-white/10 hover:bg-white/15 text-white border border-white/20"
