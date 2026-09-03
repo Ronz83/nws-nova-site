@@ -350,7 +350,16 @@ export default function WorkbenchWizard() {
       )}
 
       {/* ── Wizard Panel ─────────────────────────────────────────── */}
-      <div className="w-full rounded-[22px] overflow-hidden shadow-2xl" style={{ background: '#0c1a2e' }}>
+      <div 
+        itemScope 
+        itemType="https://schema.org/SoftwareApplication"
+        className="w-full rounded-[22px] overflow-hidden shadow-2xl" 
+        style={{ background: '#0c1a2e' }}
+      >
+        <meta itemProp="applicationCategory" content="BusinessApplication" />
+        <meta itemProp="operatingSystem" content="Web" />
+        <meta itemProp="price" content="0.00" />
+        <meta itemProp="priceCurrency" content="USD" />
         {/* Window bar */}
         <div className="px-6 py-4 border-b flex items-center justify-between"
           style={{ borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.25)' }}>
@@ -359,7 +368,7 @@ export default function WorkbenchWizard() {
             <div className="w-3.5 h-3.5 rounded-full bg-amber-400/70" />
             <div className="w-3.5 h-3.5 rounded-full bg-emerald-400/70" />
           </div>
-          <span className="text-sm font-mono tracking-widest font-bold uppercase text-white/70">
+          <span itemProp="name" className="text-sm font-mono tracking-widest font-bold uppercase text-white/70">
             NWS Business Intelligence Engine
           </span>
           <div className="flex gap-1.5">
@@ -384,7 +393,7 @@ export default function WorkbenchWizard() {
                   <h3 className="text-base font-black uppercase tracking-widest text-amber-400 mb-1">
                     Free Business Intelligence Report
                   </h3>
-                  <p className="text-[14px] text-slate-300 leading-relaxed font-medium">
+                  <p itemProp="description" className="text-[14px] text-slate-300 leading-relaxed font-medium">
                     Enter your domain. We scan, score, build a{' '}
                     <span className="text-sky-400 font-bold">custom AI demo</span>{' '}
                     trained on your business, and deliver a{' '}

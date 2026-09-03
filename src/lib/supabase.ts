@@ -1,8 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 
 const getEnv = (key: string) => {
-  if (typeof process !== 'undefined' && process.env && process.env[key]) {
-    return process.env[key];
+  const gProcess = (globalThis as any).process;
+  if (gProcess && gProcess.env && gProcess.env[key]) {
+    return gProcess.env[key];
   }
   if (typeof import.meta !== 'undefined' && (import.meta as any).env && (import.meta as any).env[key]) {
     return (import.meta as any).env[key];
