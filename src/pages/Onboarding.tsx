@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
 import {
   Upload,
   Send,
@@ -95,21 +94,19 @@ export default function Onboarding() {
         }
       }
 
-      // 2. Save everything to Supabase User Profile
+      // 2. Save everything to the D1 user profile
       toast.loading("Configuring your Business Profile...", { id: "onboarding" });
-      const updates = {
-        business_name: form.businessName,
-        business_logo: logoUrl,
-        primary_color: form.primaryColor,
-        secondary_color: form.secondaryColor,
-        // We can add more fields to user_permissions if needed, or rely on GHL as source of truth
-        onboarded: true, 
-      };
-
-      await supabase
-        .from('user_permissions')
-        .update(updates)
-        .eq('ghl_user_id', user?.id);
+      await fetch('/api/auth/onboarded', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({
+          businessName: form.businessName,
+          businessLogo: logoUrl,
+          primaryColor: form.primaryColor,
+          secondaryColor: form.secondaryColor,
+        }),
+      });
 
       // 3. Optional: Push to GHL Custom Values via API so AI Agents can read it immediately
       if (user?.clientId) {

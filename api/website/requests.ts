@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-import { supabaseAdmin } from '../lib/supabase.ts';
+import { d1Query } from '../lib/d1.ts';
+import { getIdentity, isAdminRole } from '../lib/session.ts';
 
 /**
  * GET /api/website/requests
  * 
- * Fetches all website intake submissions from Supabase.
+ * Fetches all website intake submissions from D1.
  * Intended for Agency Admins.
  */
 export default async function handler(req: Request, res: Response) {
@@ -13,13 +14,12 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405).json({ success: false, message: 'Method not allowed' });
     }
 
-    // Fetch all intake requests, ordered by newest first
-    const { data, error } = await supabaseAdmin
-      .from('website_intake')
-      .select('*')
-      .order('created_at', { ascending: false });
+    const identity = await getIdentity(req);
+    if (!identity) return res.status(401).json({ success: false, message: 'Not authenticated' });
+    if (!isAdminRole(identity.role)) return res.status(403).json({ success: false, message: 'Forbidden' });
 
-    if (error) throw error;
+    // Fetch all intake requests, ordered by newest first
+    const data = await d1Query('SELECT * FROM website_intake ORDER BY created_at DESC');
 
     return res.status(200).json({ success: true, data });
   } catch (err: unknown) {

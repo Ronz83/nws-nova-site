@@ -1,20 +1,15 @@
 // api/results/[id].ts
 // Returns saved workbench results by UUID — used by the /results/:id page
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { createClient } from '@supabase/supabase-js';
+import type { Request, Response } from 'express';
+import { d1First } from '../lib/d1.js';
 
-const supabase = createClient(
-  process.env.SUPABASE_URL || 'https://placeholder.supabase.co',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder'
-);
-
-function setCors(res: VercelResponse) {
+function setCors(res: Response) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   setCors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
@@ -24,13 +19,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'Missing result ID' });
   }
 
-  const { data, error } = await supabase
-    .from('workbench_results')
-    .select('id, created_at, expires_at, first_name, business_name, domain, industry, challenge, team_size, assessment, agent_id, agent_public_key')
-    .eq('id', id)
-    .single();
+  let data: Record<string, any> | null = null;
+  try {
+    data = await d1First(
+      'SELECT id, created_at, expires_at, first_name, business_name, domain, industry, challenge, team_size, assessment, agent_id, agent_public_key FROM workbench_results WHERE id = ?',
+      [id]
+    );
+  } catch (e: any) {
+    console.error('Results lookup failed:', e.message);
+    return res.status(500).json({ error: 'Lookup failed' });
+  }
 
-  if (error || !data) {
+  if (!data) {
     return res.status(404).json({ error: 'Report not found' });
   }
 
@@ -39,9 +39,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(410).json({ error: 'Report expired' });
   }
 
+  let assessment = data.assessment;
+  if (typeof assessment === 'string') {
+    try { assessment = JSON.parse(assessment); } catch { /* keep raw */ }
+  }
+
   return res.status(200).json({
     status: 'success',
-    assessment: data.assessment,
+    assessment,
     agent: {
       assistantId: data.agent_id,
       publicKey:   data.agent_public_key,

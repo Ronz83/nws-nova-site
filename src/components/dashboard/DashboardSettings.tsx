@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
 import { motion } from 'framer-motion';
 import { CheckCircle2, XCircle, AlertCircle, ExternalLink, Download } from 'lucide-react';
 
@@ -75,10 +74,8 @@ export function DashboardSettings() {
 
           if (usersList.length > 0) {
             const userIds = usersList.map((u: any) => u.id);
-            const { data: perms } = await supabase
-              .from('user_permissions')
-              .select('*')
-              .in('ghl_user_id', userIds);
+            const permRes = await fetch(`/api/auth/team-permissions?ids=${encodeURIComponent(userIds.join(','))}`, { credentials: 'same-origin' });
+            const perms: any[] = permRes.ok ? (await permRes.json()).permissions : [];
             
             const permMap: Record<string, any> = {};
             if (perms) {
@@ -112,13 +109,17 @@ export function DashboardSettings() {
 
     const member = teamMembers.find(m => m.id === memberId);
 
-    await supabase.from('user_permissions').upsert({
-      ghl_user_id: memberId,
-      name: member?.name || '',
-      email: member?.email || '',
-      role: member?.roles?.type || 'location_user',
-      [dbCol]: newValue,
-      updated_at: new Date().toISOString()
+    await fetch('/api/auth/permissions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        userId: memberId,
+        name: member?.name || '',
+        email: member?.email || '',
+        role: member?.roles?.type || 'location_user',
+        permissions: { [hub]: newValue },
+      }),
     });
   };
 

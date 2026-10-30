@@ -1,5 +1,5 @@
 import { provisionWorkspace, provisionAIAgent } from '../connect/provisionService';
-import { supabaseAdmin } from '../lib/supabase';
+import { d1Query, d1First, newId } from '../lib/d1';
 
 // Helper to match Gemini's required tool schema format
 export const portalTools = [
@@ -58,44 +58,26 @@ export async function executeTool(name: string, args: any) {
   try {
     switch (name) {
       case 'list_active_clients': {
-        // Query Supabase for active clients (assuming user_permissions represents clients)
-        // Or if we don't have a clients table yet, we can query user_permissions for unique locations
-        const { data, error } = await supabaseAdmin
-          .from('user_permissions')
-          .select('location_id, role')
-          .limit(20);
-        
-        if (error) throw error;
+        const data = await d1Query('SELECT location_id, role FROM user_permissions LIMIT 20');
         return { success: true, clients: data };
       }
 
       case 'create_fulfillment_task': {
         const { title, clientName, priority } = args;
-        const { data, error } = await supabaseAdmin
-          .from('fulfillment_tasks')
-          .insert({
-            title,
-            client_name: clientName,
-            priority,
-            column: 'Backlog'
-          })
-          .select()
-          .single();
-
-        if (error) throw error;
+        const id = newId();
+        await d1Query(
+          'INSERT INTO fulfillment_tasks (id, title, client_name, priority, "column") VALUES (?, ?, ?, ?, ?)',
+          [id, title, clientName, priority, 'Backlog']
+        );
+        const data = await d1First('SELECT * FROM fulfillment_tasks WHERE id = ?', [id]);
         return { success: true, task: data };
       }
 
       case 'update_task_status': {
         const { taskId, newColumn } = args;
-        const { data, error } = await supabaseAdmin
-          .from('fulfillment_tasks')
-          .update({ column: newColumn, updated_at: new Date().toISOString() })
-          .eq('id', taskId)
-          .select()
-          .single();
-
-        if (error) throw error;
+        await d1Query('UPDATE fulfillment_tasks SET "column" = ?, updated_at = ? WHERE id = ?', [newColumn, new Date().toISOString(), taskId]);
+        const data = await d1First('SELECT * FROM fulfillment_tasks WHERE id = ?', [taskId]);
+        if (!data) throw new Error('Task not found');
         return { success: true, task: data };
       }
 

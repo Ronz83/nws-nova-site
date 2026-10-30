@@ -94,7 +94,7 @@ export function DashboardWebsite() {
               designInspirationUrl: data.data.design_inspiration_url || prev.designInspirationUrl,
             }));
             
-            // Note: Since we are not persisting existingWebsiteUrl or designInspirationUrl in the supabase table
+            // Note: Since we are not persisting existingWebsiteUrl or designInspirationUrl in the D1 table
             // currently (because we bypassed the migration), those won't re-hydrate from DB, but the rest will.
             // When user submits, everything will still be passed to the webhook.
           }

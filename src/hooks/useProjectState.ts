@@ -1,5 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../lib/supabase';
+﻿import { useState, useEffect, useCallback } from 'react';
 
 export type TaskStatus = 'todo' | 'inprogress' | 'ready';
 
@@ -123,16 +122,13 @@ export function useProjectState(projectId: string | undefined, email: string | u
         }
       } else {
         try {
-          const { data, error } = await supabase
-            .from('projects')
-            .select('state')
-            .eq('project_id', projectId)
-            .single();
-          if (!error && data?.state) {
-            loadedState = data.state;
+          const res = await fetch(`/api/projects/state?projectId=${encodeURIComponent(projectId as string)}`, { credentials: 'same-origin' });
+          if (res.ok) {
+            const data = await res.json();
+            if (data?.state) loadedState = data.state;
           }
         } catch (err) {
-          console.error("Failed to load project state from Supabase", err);
+          console.error("Failed to load project state from server", err);
         }
       }
 
@@ -168,17 +164,17 @@ export function useProjectState(projectId: string | undefined, email: string | u
     localStorage.setItem(localKey, JSON.stringify(newState));
 
     try {
-      await supabase.from('projects').upsert({
-        project_id: projectId,
-        email: email,
-        state: newState,
-        updated_at: new Date().toISOString()
-      }, { onConflict: 'project_id' });
+      await fetch('/api/projects/state', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ projectId, state: newState }),
+      });
 
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err) {
-      console.error("Failed to save state to Supabase", err);
+      console.error("Failed to save state to server", err);
     } finally {
       setIsSaving(false);
     }

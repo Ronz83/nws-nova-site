@@ -1,8 +1,13 @@
 import { Request, Response } from 'express';
-import { supabaseAdmin } from '../lib/supabase.ts';
+import { d1Query, d1First, newId } from '../lib/d1.ts';
+import { getIdentity, isAdminRole } from '../lib/session.ts';
 
 async function handler(req: Request, res: Response) {
   try {
+    const identity = await getIdentity(req);
+    if (!identity) return res.status(401).json({ success: false, message: 'Not authenticated' });
+    const canAccess = (loc: string) => isAdminRole(identity.role) || identity.locationId === loc;
+
     if (req.method === 'POST') {
       const {
         locationId,
@@ -24,6 +29,7 @@ async function handler(req: Request, res: Response) {
       if (!locationId) {
         return res.status(400).json({ success: false, message: 'locationId is required' });
       }
+      if (!canAccess(locationId)) return res.status(403).json({ success: false, message: 'Forbidden' });
 
       // 1. Construct Vibe Coder Prompt
       let vibeCoderPrompt = `Build a 3-page website for ${businessName || 'the business'}. `;
@@ -66,29 +72,16 @@ async function handler(req: Request, res: Response) {
         console.warn('No Vibe Coder Webhook URL configured. Prompt was generated but not sent.');
       }
 
-      // 3. Save standard fields to Supabase
-      const { error } = await supabaseAdmin
-        .from('website_intake')
-        .upsert(
-          {
-            location_id: locationId,
-            business_name: businessName,
-            tagline,
-            primary_color: primaryColor,
-            secondary_color: secondaryColor,
-            services_list: servicesList,
-            operating_hours: operatingHours,
-            phone,
-            email,
-            address,
-            social_links: socialLinks,
-            special_instructions: specialInstructions,
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: 'location_id' },
-        );
-
-      if (error) throw error;
+      // 3. Save standard fields to D1 (upsert on location_id)
+      const now = new Date().toISOString();
+      await d1Query(
+        INSERT INTO website_intake (id, location_id, business_name, tagline, primary_color, secondary_color, services_list, operating_hours, phone, email, address, social_links, special_instructions, updated_at)
+         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+         ON CONFLICT(location_id) DO UPDATE SET business_name=excluded.business_name, tagline=excluded.tagline, primary_color=excluded.primary_color,
+           secondary_color=excluded.secondary_color, services_list=excluded.services_list, operating_hours=excluded.operating_hours, phone=excluded.phone,
+           email=excluded.email, address=excluded.address, social_links=excluded.social_links, special_instructions=excluded.special_instructions, updated_at=excluded.updated_at,
+        [newId(), locationId, businessName ?? null, tagline ?? null, primaryColor ?? null, secondaryColor ?? null, servicesList ?? null, operatingHours ?? null, phone ?? null, email ?? null, address ?? null, socialLinks ?? null, specialInstructions ?? null, now]
+      );
 
       return res.status(200).json({
         success: true,
@@ -104,13 +97,8 @@ async function handler(req: Request, res: Response) {
         return res.status(400).json({ success: false, message: 'locationId query param is required' });
       }
 
-      const { data, error } = await supabaseAdmin
-        .from('website_intake')
-        .select('*')
-        .eq('location_id', locationId)
-        .maybeSingle();
-
-      if (error) throw error;
+      if (!canAccess(locationId)) return res.status(403).json({ success: false, message: 'Forbidden' });
+      const data = await d1First('SELECT * FROM website_intake WHERE location_id = ?', [locationId]);
 
       return res.status(200).json({ success: true, data });
     }

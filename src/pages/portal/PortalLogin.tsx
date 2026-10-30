@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { supabase } from "../../lib/supabase";
 import { useNavigate } from "react-router-dom";
 import { Lock, Loader2, Eye, EyeOff } from "lucide-react";
 
@@ -11,7 +10,7 @@ export default function PortalLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { user, isStaff } = useAuth();
+  const { user, isStaff, login } = useAuth();
 
   useEffect(() => {
     if (user && isStaff()) {
@@ -25,14 +24,9 @@ export default function PortalLogin() {
     setError(null);
 
     try {
-      const { error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (authError) throw authError;
+      await login(email, password);
       // We don't navigate immediately here. We wait for AuthContext to detect the session
-      // via onAuthStateChange and update the `user` state, which triggers the useEffect above.
+      // via the server session and update the `user` state, which triggers the useEffect above.
     } catch (err: any) {
       setError(err.message || "Failed to authenticate.");
     } finally {

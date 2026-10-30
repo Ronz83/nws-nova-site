@@ -1,6 +1,5 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import { supabase } from '../lib/supabase';
 
 export type UserRole = 'agency_admin' | 'location_admin' | 'location_user' | 'super_admin' | 'portal_admin' | 'portal_user';
 
@@ -32,6 +31,7 @@ interface AuthContextType {
   isLoading: boolean;
   loginAsAdmin: () => Promise<void>;
   loginAsEmployee: () => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   updateUserPermissions: (newPermissions: Permissions) => Promise<void>;
   isStaff: () => boolean;
@@ -40,218 +40,80 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Helper to determine default permissions based on location/plan
-function getDefaultPermissions(locationId: string | null, role: string | null): Permissions {
-  // If they are an agency admin, they get everything
-  if (role === 'agency_admin') {
-    return { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false };
-  }
-  
-  // Example for specific manual clients like Automotive Art
-  // Replace this ID with the actual locationId for Automotive Art once known.
-  const AUTOMOTIVE_ART_LOCATION_ID = 'automotive_art_demo_id';
-  if (locationId === AUTOMOTIVE_ART_LOCATION_ID) {
-    return { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false };
-  }
-
-  // Default for all other new users
-  return { operations: false, growth: false, automations: false, aiStudio: false, settings: false, requireUpgrade: true };
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Securely check for authentication parameters injected by GoHighLevel
-  useEffect(() => {
-    const fetchUserAndPermissions = async () => {
-      setIsLoading(true);
-      try {
-        const hostname = window.location.hostname;
-        const isPortalDomain = hostname === 'portal.noveltywebsolutions.com';
-
-        // 1. PORTAL DOMAIN FLOW (Supabase Auth)
-        if (isPortalDomain) {
-          const { data: { session } } = await supabase.auth.getSession();
-          
-          if (!session?.user) {
-            setUser(null);
-            setIsLoading(false);
-            return;
+  // Identity comes ONLY from the server session (HttpOnly cookie issued by /api/auth/sso or /api/auth/login).
+  // URL params such as userId/role/email are never trusted.
+  const loadSession = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch('/api/auth/session', { credentials: 'same-origin' });
+      const data = res.ok ? await res.json() : { user: null };
+      const u: User | null = data.user || null;
+      if (u && u.clientId) {
+        try {
+          const locRes = await fetch(`/api/ghl/location?locationId=${encodeURIComponent(u.clientId)}`);
+          if (locRes.ok) {
+            const loc = await locRes.json();
+            u.businessName = loc.name || u.businessName;
+            u.businessLogo = loc.logoUrl || u.businessLogo;
           }
-
-          // Map Supabase user metadata to Portal roles
-          // We assume staff accounts are pre-created in Supabase with user_metadata.role set
-          const role = (session.user.user_metadata?.role as UserRole) || 'portal_user';
-          const name = session.user.user_metadata?.full_name || session.user.email || 'Staff Member';
-
-          setUser({
-            id: session.user.id,
-            name,
-            email: session.user.email || '',
-            role,
-            permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
-            businessName: 'NWS Portal',
-            businessLogo: '/business_os_logo.png',
-            onboarded: true
-          });
-
-          // Set up auth state listener for the portal
-          const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-            if (event === 'SIGNED_OUT') {
-              setUser(null);
-            } else if (session?.user) {
-              const updatedRole = (session.user.user_metadata?.role as UserRole) || 'portal_user';
-              setUser({
-                id: session.user.id,
-                name: session.user.user_metadata?.full_name || session.user.email || 'Staff Member',
-                email: session.user.email || '',
-                role: updatedRole,
-                permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
-                businessName: 'NWS Portal',
-                businessLogo: '/business_os_logo.png',
-                onboarded: true
-              });
-            }
-          });
-
-          setIsLoading(false);
-          return () => {
-            authListener.subscription.unsubscribe();
-          };
+        } catch (e) {
+          console.warn('Failed to fetch location data', e);
         }
-
-        // 2. CLIENT DOMAIN FLOW (GHL SSO URL Params)
-        const params = new URLSearchParams(window.location.search);
-        const roleParam = params.get('role') as UserRole || 'location_user';
-        const userId = params.get('userId') || params.get('user_id');
-        const locationId = params.get('locationId') || params.get('location_id');
-        
-        // For local dev fallback if no userId is passed
-        if (!userId) {
-           // No verified session identifier: no fake users, stay signed out
-           setUser(null);
-           setIsLoading(false);
-           return;
-        }
-
-        // Fetch user permissions from Supabase
-        const { data, error } = await supabase
-          .from('user_permissions')
-          .select('*')
-          .eq('ghl_user_id', userId)
-          .single();
-
-        let permissions: Permissions;
-
-        if (error && error.code === 'PGRST116') {
-          // No rows found, create one with defaults
-          permissions = getDefaultPermissions(locationId, roleParam);
-          await supabase.from('user_permissions').insert({
-            ghl_user_id: userId,
-            role: roleParam,
-            location_id: locationId,
-            operations: permissions.operations,
-            growth: permissions.growth,
-            automations: permissions.automations,
-            ai_studio: permissions.aiStudio,
-            settings: permissions.settings,
-            require_upgrade: permissions.requireUpgrade,
-            onboarded: false
-          });
-        } else if (data) {
-          permissions = {
-            operations: data.operations,
-            growth: data.growth,
-            automations: data.automations,
-            aiStudio: data.ai_studio,
-            settings: data.settings,
-            requireUpgrade: data.require_upgrade !== undefined ? data.require_upgrade : true,
-            primaryColor: data.primary_color,
-            secondaryColor: data.secondary_color
-          };
-        } else {
-          // Fallback if there was another DB error
-          permissions = getDefaultPermissions(locationId, roleParam);
-        }
-
-        let businessName = "Business OS";
-        let businessLogo = "/business_os_logo.png";
-
-        if (locationId) {
-          try {
-            const res = await fetch(`/api/ghl/location?locationId=${locationId}`);
-            if (res.ok) {
-              const locData = await res.json();
-              businessName = locData.name || businessName;
-              businessLogo = locData.logoUrl || businessLogo;
-            }
-          } catch (e) {
-            console.warn("Failed to fetch location data", e);
-          }
-        }
-
-        let isUserOnboarded = false;
-        if (data && data.onboarded !== undefined) {
-          isUserOnboarded = data.onboarded;
-        }
-
-        setUser({
-          id: userId,
-          name: params.get('name') || 'GHL User',
-          email: params.get('email') || '',
-          role: roleParam,
-          clientId: locationId || undefined,
-          permissions,
-          businessName,
-          businessLogo,
-          onboarded: isUserOnboarded
-        });
-
-      } catch (err) {
-        console.error('Failed to load user permissions:', err);
-        setUser(null);
-      } finally {
-        setIsLoading(false);
       }
-    };
-
-    fetchUserAndPermissions();
+      setUser(u);
+    } catch (err) {
+      console.error('Failed to load session:', err);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
+  useEffect(() => {
+    loadSession();
+  }, [loadSession]);
+
   const loginAsAdmin = async () => {
-    console.warn("Direct login disabled in production. Authenticate via GHL SSO.");
+    console.warn('Direct login disabled in production. Authenticate via GHL SSO.');
   };
 
   const loginAsEmployee = async () => {
-    console.warn("Direct login disabled in production. Authenticate via GHL SSO.");
+    console.warn('Direct login disabled in production. Authenticate via GHL SSO.');
+  };
+
+  const login = async (email: string, password: string) => {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ email, password }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Failed to authenticate.');
+    }
+    await loadSession();
   };
 
   const logout = async () => {
-    if (window.location.hostname === 'portal.noveltywebsolutions.com') {
-      await supabase.auth.signOut();
-    }
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' }).catch(() => {});
     setUser(null);
   };
 
   const updateUserPermissions = async (newPermissions: Permissions) => {
-    if (user) {
-      // Optimistic update in UI
-      setUser({ ...user, permissions: newPermissions });
-      
-      // Update in Supabase
-      {
-        await supabase.from('user_permissions').update({
-          operations: newPermissions.operations,
-          growth: newPermissions.growth,
-          automations: newPermissions.automations,
-          ai_studio: newPermissions.aiStudio,
-          settings: newPermissions.settings,
-          require_upgrade: newPermissions.requireUpgrade,
-          updated_at: new Date().toISOString()
-        }).eq('ghl_user_id', user.id);
-      }
-    }
+    if (!user) return;
+    const res = await fetch('/api/auth/permissions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ userId: user.id, permissions: newPermissions }),
+    });
+    // Server enforces admin-only; only reflect the change if it was accepted.
+    if (res.ok) setUser({ ...user, permissions: newPermissions });
   };
 
   const isStaff = () => {
@@ -267,7 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, loginAsAdmin, loginAsEmployee, logout, updateUserPermissions, isStaff, hasPortalAccess }}>
+    <AuthContext.Provider value={{ user, isLoading, login, loginAsAdmin, loginAsEmployee, logout, updateUserPermissions, isStaff, hasPortalAccess }}>
       {children}
     </AuthContext.Provider>
   );

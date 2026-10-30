@@ -1,8 +1,9 @@
-// api/workbench/analyze.ts
+﻿// api/workbench/analyze.ts
 // NWS Business Intelligence Engine
 // Scrapes domain → Gemini AI analysis → business score + gap report + custom Vapi agent → lead to GHL
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { d1First, d1Query, newId, toJson } from '../lib/d1.js';
 
 const VAPI_API_KEY    = process.env.VAPI_API_KEY;
 const VAPI_PUBLIC_KEY = process.env.VAPI_PUBLIC_KEY;
@@ -12,8 +13,6 @@ const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
 const GHL_PIPELINE_ID = process.env.GHL_PIPELINE_ID;
 const GHL_STAGE_ID    = process.env.GHL_STAGE_HOT_LEAD_ID;
 const GHL_BASE        = 'https://services.leadconnectorhq.com';
-const SUPABASE_URL    = process.env.SUPABASE_URL;
-const SUPABASE_KEY    = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 function setCors(res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -412,43 +411,25 @@ async function captureLeadInGHL(payload: any, assessment: any): Promise<string |
   }
 }
 
-// ── Save results to Supabase ─────────────────────────────────────────
-async function saveResultToSupabase(payload: any, assessment: any, agentData: any): Promise<string | null> {
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.log('[Supabase] Skipping — SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set');
-    return null;
-  }
+// -- Save results to Cloudflare D1 --
+async function saveResultToD1(payload: any, assessment: any, agentData: any): Promise<string | null> {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/workbench_results`, {
-      method: 'POST',
-      headers: {
-        apikey:          SUPABASE_KEY,
-        Authorization:   `Bearer ${SUPABASE_KEY}`,
-        'Content-Type':  'application/json',
-        Prefer:          'return=representation',
-      },
-      body: JSON.stringify({
-        first_name:       payload.firstName,
-        last_name:        payload.lastName  || null,
-        email:            payload.email,
-        phone:            payload.phone     || null,
-        domain:           payload.domain,
-        business_name:    payload.businessName || payload.domain,
-        title:            payload.title     || null,
-        industry:         payload.industry  || null,
-        challenge:        payload.challenge || null,
-        team_size:        payload.teamSize  || null,
-        assessment:       assessment,
-        agent_id:         agentData.assistantId || null,
-        agent_public_key: agentData.publicKey   || null,
-      }),
-    });
-    const rows = await res.json() as any[];
-    const id = rows?.[0]?.id;
-    if (id) console.log(`[Supabase] Result saved: ${id}`);
-    return id ?? null;
+    const id = newId();
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+    await d1Query(
+      `INSERT INTO workbench_results (id, first_name, last_name, email, phone, domain, business_name, title, industry, challenge, team_size, assessment, agent_id, agent_public_key, expires_at)
+       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      [
+        id, payload.firstName ?? null, payload.lastName || null, payload.email ?? null, payload.phone || null,
+        payload.domain ?? null, payload.businessName || payload.domain || null, payload.title || null,
+        payload.industry || null, payload.challenge || null, payload.teamSize || null,
+        toJson(assessment), agentData.assistantId || null, agentData.publicKey || null, expiresAt,
+      ]
+    );
+    console.log(`[D1] Result saved: ${id}`);
+    return id;
   } catch (e) {
-    console.error('[Supabase] Save failed:', e);
+    console.error('[D1] Save failed:', e);
     return null;
   }
 }
@@ -522,7 +503,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // 4. Save results to Supabase — get shareable UUID
-    const resultId  = await saveResultToSupabase(payload, assessment, agentData);
+    const resultId  = await saveResultToD1(payload, assessment, agentData);
     const resultUrl = resultId
       ? `${req.headers.origin || 'https://nws-nova-site.vercel.app'}/results/${resultId}`
       : null;

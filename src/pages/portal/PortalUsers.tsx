@@ -20,7 +20,7 @@ export default function PortalUsers() {
       </div>
       
       <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-        <p className="text-slate-400 text-sm">User management interface will be connected to Supabase here.</p>
+        <p className="text-slate-400 text-sm">User management interface will be connected to the D1 staff directory here.</p>
       </div>
     </div>
   );

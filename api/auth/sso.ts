@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
-import { supabase } from '../../src/lib/supabase.js';
+import { d1First } from '../lib/d1.js';
+import { createSessionToken, setSessionCookie } from '../lib/session.js';
 import { verifySsoToken } from './ssoToken.js';
 
 /**
  * SSO Bridge for TicketFlows and other external NWS apps.
- * Expects: ?userId=user_id&token=secure_sso_token
+ * Expects: ?userId=user_id&token=secure_sso_token (HMAC, see ssoToken.ts).
+ * On success issues the server session cookie; the token is never echoed into the redirect URL.
  */
 export default async function handler(req: Request, res: Response) {
   if (req.method !== 'GET') {
@@ -25,29 +27,16 @@ export default async function handler(req: Request, res: Response) {
   if (!verifySsoToken(String(token), String(userId), secret)) {
     return res.status(401).json({ error: 'Invalid or expired SSO token' });
   }
-  
-  try {
-    // 1. Fetch user permissions to get the location ID and check existence
-    const { data: userRecord, error } = await supabase
-      .from('user_permissions')
-      .select('*')
-      .eq('ghl_user_id', userId)
-      .single();
 
-    if (error || !userRecord) {
-      return res.status(404).json({ error: 'User not found in Businesses OS' });
+  try {
+    const userRecord = await d1First('SELECT ghl_user_id FROM user_permissions WHERE ghl_user_id = ?', [String(userId)]);
+    if (!userRecord) {
+      return res.status(404).json({ error: 'User not found in Business OS' });
     }
 
-    // 2. Generate a magic link or just redirect with a signed session token.
-    // In a production environment, we would use Supabase Admin API to generate a session link.
-    // For the bridge, we redirect them to the app with an auto-login token in the hash.
-    // The frontend AuthContext would need to handle this token.
-    
-    // Simulating the SSO redirect
-    const redirectUrl = `https://app.businessesos.com/dashboard?ssoToken=${token}&uid=${userId}`;
-    
-    return res.redirect(302, redirectUrl);
-
+    setSessionCookie(res, createSessionToken(String(userId), 'ghl'));
+    const base = (process.env.SSO_REDIRECT_BASE || '').replace(/\/$/, '');
+    return res.redirect(302, `${base}/dashboard`);
   } catch (error) {
     console.error('SSO Error:', error);
     return res.status(500).json({ error: 'Internal server error' });

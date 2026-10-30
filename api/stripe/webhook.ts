@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { provisionWorkspace } from '../connect/provisionService.js';
+import { d1Query } from '../lib/d1.js';
 
 export default async function webhookHandler(req: any, res: any) {
   if (req.method !== 'POST') {
@@ -52,25 +53,15 @@ export default async function webhookHandler(req: any, res: any) {
           console.log('Provisioning successful:', result);
 
           if (result.userId && result.locationId) {
-            const { createClient } = require('@supabase/supabase-js');
-            const supabaseAdmin = createClient(
-              process.env.VITE_SUPABASE_URL || 'https://db4.noveltywebsolutions.com',
-              process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || ''
-            );
-
             const isCorporate = planTier === 'corporate';
-            await supabaseAdmin.from('user_permissions').insert({
-              ghl_user_id: result.userId,
-              role: 'location_admin',
-              location_id: result.locationId,
-              operations: true,
-              growth: isCorporate,
-              automations: isCorporate,
-              ai_studio: true,
-              settings: isCorporate,
-              require_upgrade: !isCorporate
-            });
-            console.log('User permissions saved to Supabase');
+            await d1Query(
+              `INSERT INTO user_permissions (ghl_user_id, role, location_id, operations, growth, automations, ai_studio, settings, require_upgrade)
+               VALUES (?,?,?,?,?,?,?,?,?)
+               ON CONFLICT(ghl_user_id) DO UPDATE SET role=excluded.role, location_id=excluded.location_id, operations=excluded.operations, growth=excluded.growth,
+                 automations=excluded.automations, ai_studio=excluded.ai_studio, settings=excluded.settings, require_upgrade=excluded.require_upgrade`,
+              [result.userId, 'location_admin', result.locationId, 1, isCorporate ? 1 : 0, isCorporate ? 1 : 0, 1, isCorporate ? 1 : 0, isCorporate ? 0 : 1]
+            );
+            console.log('User permissions saved to D1');
           }
         } else {
           console.error('No email found in checkout session to provision workspace.');

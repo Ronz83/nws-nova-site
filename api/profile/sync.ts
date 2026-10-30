@@ -1,26 +1,37 @@
 import { Request, Response } from 'express';
-import { supabase } from '../../src/lib/supabase.js';
-import fetch from 'node-fetch';
+import { d1First, d1Query, buildUpdate } from '../lib/d1.js';
+import { getIdentity, isAdminRole } from '../lib/session.js';
 
 /**
  * Universal Profile Sync Endpoint
- * Allows external apps to fetch or push branding to the shared Businesses OS profile.
+ * Fetch or push branding on the shared Business OS profile.
+ * Identity comes from the server session; a user can only touch their own profile
+ * (admins may pass ?userId= / body.userId to act on another user).
  */
 export default async function handler(req: Request, res: Response) {
+  let identity;
+  try {
+    identity = await getIdentity(req);
+  } catch (e: any) {
+    return res.status(500).json({ error: 'Session check failed' });
+  }
+  if (!identity) return res.status(401).json({ error: 'Not authenticated' });
+
+  const requested = (req.method === 'GET' ? req.query.userId : req.body?.userId) as string | undefined;
+  const targetId = requested && isAdminRole(identity.role) ? requested : identity.kind === 'ghl' ? identity.id : requested;
+  if (!targetId) return res.status(400).json({ error: 'Missing userId' });
+  if (requested && requested !== identity.id && !isAdminRole(identity.role)) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
   // GET: Fetch the user's current branding profile (logo URL, colors)
   if (req.method === 'GET') {
-    const { userId } = req.query;
-    
-    if (!userId) return res.status(400).json({ error: 'Missing userId' });
-
     try {
-      const { data, error } = await supabase
-        .from('user_permissions')
-        .select('business_logo, primary_color, secondary_color')
-        .eq('ghl_user_id', userId)
-        .single();
-
-      if (error || !data) return res.status(404).json({ error: 'Profile not found' });
+      const data = await d1First(
+        'SELECT business_logo, primary_color, secondary_color FROM user_permissions WHERE ghl_user_id = ?',
+        [targetId]
+      );
+      if (!data) return res.status(404).json({ error: 'Profile not found' });
 
       return res.status(200).json({
         businessLogo: data.business_logo,
@@ -31,30 +42,26 @@ export default async function handler(req: Request, res: Response) {
       return res.status(500).json({ error: 'Internal error' });
     }
   }
-  
-  // POST: Update the branding profile. 
+
+  // POST: Update the branding profile.
   // If a file is uploaded, the caller should hit /api/crm/media first to get the URL,
   // then pass the URL here to save it to the global profile.
   if (req.method === 'POST') {
-    const { userId, businessLogo, primaryColor, secondaryColor } = req.body;
-
-    if (!userId) return res.status(400).json({ error: 'Missing userId' });
-
-    const updates: any = { updated_at: new Date().toISOString() };
-    if (businessLogo !== undefined) updates.business_logo = businessLogo;
-    if (primaryColor !== undefined) updates.primary_color = primaryColor;
-    if (secondaryColor !== undefined) updates.secondary_color = secondaryColor;
+    const { businessLogo, primaryColor, secondaryColor } = req.body;
 
     try {
-      const { data, error } = await supabase
-        .from('user_permissions')
-        .update(updates)
-        .eq('ghl_user_id', userId)
-        .select();
+      const q = buildUpdate(
+        'user_permissions',
+        ['business_logo', 'primary_color', 'secondary_color'],
+        { business_logo: businessLogo, primary_color: primaryColor, secondary_color: secondaryColor },
+        'ghl_user_id',
+        targetId
+      );
+      if (q) await d1Query(q.sql, q.params);
+      const data = await d1First('SELECT * FROM user_permissions WHERE ghl_user_id = ?', [targetId]);
+      if (!data) return res.status(404).json({ error: 'Profile not found' });
 
-      if (error) return res.status(500).json({ error: error.message });
-
-      return res.status(200).json({ success: true, profile: data[0] });
+      return res.status(200).json({ success: true, profile: data });
     } catch (e) {
       return res.status(500).json({ error: 'Internal error' });
     }

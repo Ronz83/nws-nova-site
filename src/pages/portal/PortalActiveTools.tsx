@@ -10,7 +10,7 @@ export default function PortalActiveTools() {
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
 
   useEffect(() => {
-    // In production, fetch this from Supabase: supabase.from('workstation_skills').select('*').eq('is_active', true)
+    // In production, fetch this from D1 (workstation_skills where is_active = 1)
     const fetchSkills = async () => {
       setLoading(true);
       // Simulating API load with mock data matching the old workstation setup
