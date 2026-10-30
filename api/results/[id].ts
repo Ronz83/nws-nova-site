@@ -1,7 +1,7 @@
 // api/results/[id].ts
 // Returns saved workbench results by UUID — used by the /results/:id page
 import type { Request, Response } from 'express';
-import { d1First } from '../lib/d1.js';
+import { bos } from '../lib/bos.js';
 
 function setCors(res: Response) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -21,13 +21,10 @@ export default async function handler(req: Request, res: Response) {
 
   let data: Record<string, any> | null = null;
   try {
-    data = await d1First(
-      'SELECT id, created_at, expires_at, first_name, business_name, domain, industry, challenge, team_size, assessment, agent_id, agent_public_key FROM workbench_results WHERE id = ?',
-      [id]
-    );
+    data = await bos.workbenchResults.get(id);
   } catch (e: any) {
     console.error('Results lookup failed:', e.message);
-    return res.status(500).json({ error: 'Lookup failed' });
+    return res.status(502).json({ error: 'Lookup failed' });
   }
 
   if (!data) {

@@ -44,7 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Identity comes ONLY from the server session (HttpOnly cookie issued by /api/auth/sso or /api/auth/login).
+  // Identity comes ONLY from the server session (HttpOnly cookie issued by /api/auth/sso after Business OS verifies the SSO code).
   // URL params such as userId/role/email are never trusted.
   const loadSession = useCallback(async () => {
     setIsLoading(true);
@@ -78,25 +78,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [loadSession]);
 
   const loginAsAdmin = async () => {
-    console.warn('Direct login disabled in production. Authenticate via GHL SSO.');
+    console.warn('Direct login disabled in production. Sign in through Business OS.');
   };
 
   const loginAsEmployee = async () => {
-    console.warn('Direct login disabled in production. Authenticate via GHL SSO.');
+    console.warn('Direct login disabled in production. Sign in through Business OS.');
   };
 
-  const login = async (email: string, password: string) => {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'same-origin',
-      body: JSON.stringify({ email, password }),
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Failed to authenticate.');
-    }
-    await loadSession();
+  // Sign-in happens at Business OS (identity hub); it redirects back to /api/auth/sso with a short-lived code.
+  const login = async (_email?: string, _password?: string) => {
+    window.location.assign('/api/auth/start');
   };
 
   const logout = async () => {

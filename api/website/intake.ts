@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { d1Query, d1First, newId } from '../lib/d1.ts';
+import { bos } from '../lib/bos.ts';
 import { getIdentity, isAdminRole } from '../lib/session.ts';
 
 async function handler(req: Request, res: Response) {
@@ -72,16 +72,12 @@ async function handler(req: Request, res: Response) {
         console.warn('No Vibe Coder Webhook URL configured. Prompt was generated but not sent.');
       }
 
-      // 3. Save standard fields to D1 (upsert on location_id)
-      const now = new Date().toISOString();
-      await d1Query(
-        `INSERT INTO website_intake (id, location_id, business_name, tagline, primary_color, secondary_color, services_list, operating_hours, phone, email, address, social_links, special_instructions, updated_at)
-         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-         ON CONFLICT(location_id) DO UPDATE SET business_name=excluded.business_name, tagline=excluded.tagline, primary_color=excluded.primary_color,
-           secondary_color=excluded.secondary_color, services_list=excluded.services_list, operating_hours=excluded.operating_hours, phone=excluded.phone,
-           email=excluded.email, address=excluded.address, social_links=excluded.social_links, special_instructions=excluded.special_instructions, updated_at=excluded.updated_at`,
-        [newId(), locationId, businessName ?? null, tagline ?? null, primaryColor ?? null, secondaryColor ?? null, servicesList ?? null, operatingHours ?? null, phone ?? null, email ?? null, address ?? null, socialLinks ?? null, specialInstructions ?? null, now]
-      );
+      // 3. Save standard fields to Business OS (upsert on location_id)
+      await bos.websiteIntake.upsert(locationId, {
+        business_name: businessName ?? null, tagline: tagline ?? null, primary_color: primaryColor ?? null, secondary_color: secondaryColor ?? null,
+        services_list: servicesList ?? null, operating_hours: operatingHours ?? null, phone: phone ?? null, email: email ?? null, address: address ?? null,
+        social_links: socialLinks ?? null, special_instructions: specialInstructions ?? null, updated_at: new Date().toISOString(),
+      });
 
       return res.status(200).json({
         success: true,
@@ -98,7 +94,7 @@ async function handler(req: Request, res: Response) {
       }
 
       if (!canAccess(locationId)) return res.status(403).json({ success: false, message: 'Forbidden' });
-      const data = await d1First('SELECT * FROM website_intake WHERE location_id = ?', [locationId]);
+      const data = await bos.websiteIntake.get(locationId);
 
       return res.status(200).json({ success: true, data });
     }

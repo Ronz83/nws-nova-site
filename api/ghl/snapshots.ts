@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
-import { d1Query, d1First, newId, toJson, fromJson, buildUpdate } from '../lib/d1.ts';
+import { bos } from '../lib/bos.ts';
 import { getValidGHLToken } from '../lib/ghl.ts';
 
-const SNAPSHOT_COLS = ['name','plan_tier','industry','ghl_snapshot_id','features','integrations','template_id','promotions','custom_values','notes'] as const;
-const parseSnap = (r: any) => r && ({ ...r, features: fromJson(r.features, {}), integrations: fromJson(r.integrations, {}), promotions: fromJson(r.promotions, {}), custom_values: fromJson(r.custom_values, {}) });
 
 const GHL_API_BASE = 'https://services.leadconnectorhq.com';
 
@@ -13,9 +11,7 @@ export default async function handler(req: Request, res: Response) {
 
     // GET /api/ghl/snapshots — list all snapshot configs
     if (method === 'GET') {
-      const rows = await d1Query('SELECT * FROM snapshot_configs ORDER BY created_at DESC');
-      const data = rows.map(parseSnap);
-
+      const { snapshots: data } = await bos.snapshots.list();
       return res.status(200).json({ snapshots: data || [] });
     }
 
@@ -27,12 +23,7 @@ export default async function handler(req: Request, res: Response) {
         return res.status(400).json({ error: 'name and plan_tier are required' });
       }
 
-      const id = newId();
-      await d1Query(
-        'INSERT INTO snapshot_configs (id, name, plan_tier, industry, ghl_snapshot_id, features, integrations, template_id, promotions, custom_values, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
-        [id, name, plan_tier, industry || null, ghl_snapshot_id || null, toJson(features), toJson(integrations), template_id || null, toJson(promotions), toJson(custom_values), notes || null]
-      );
-      const data = parseSnap(await d1First('SELECT * FROM snapshot_configs WHERE id = ?', [id]));
+      const data = await bos.snapshots.create({ name, plan_tier, industry: industry || null, ghl_snapshot_id: ghl_snapshot_id || null, features, integrations, template_id: template_id || null, promotions, custom_values, notes: notes || null });
 
       return res.status(201).json({ success: true, snapshot: data });
     }
@@ -45,9 +36,7 @@ export default async function handler(req: Request, res: Response) {
         return res.status(400).json({ error: 'id is required' });
       }
 
-      const q = buildUpdate('snapshot_configs', SNAPSHOT_COLS, updates, 'id', id);
-      if (q) await d1Query(q.sql, q.params);
-      const data = parseSnap(await d1First('SELECT * FROM snapshot_configs WHERE id = ?', [id]));
+      const data = await bos.snapshots.update(id, updates);
       if (!data) return res.status(404).json({ error: 'Snapshot config not found' });
 
       return res.status(200).json({ success: true, snapshot: data });
@@ -61,7 +50,7 @@ export default async function handler(req: Request, res: Response) {
         return res.status(400).json({ error: 'id query param is required' });
       }
 
-      await d1Query('DELETE FROM snapshot_configs WHERE id = ?', [id]);
+      await bos.snapshots.remove(id);
 
       return res.status(200).json({ success: true });
     }
@@ -82,8 +71,8 @@ export async function pushToGHL(req: Request, res: Response) {
       return res.status(400).json({ error: 'snapshotId and locationId are required' });
     }
 
-    // 1. Fetch the snapshot config from D1
-    const snapshot = parseSnap(await d1First('SELECT * FROM snapshot_configs WHERE id = ?', [snapshotId]));
+    // 1. Fetch the snapshot config from Business OS
+    const snapshot = await bos.snapshots.get(snapshotId);
 
     if (!snapshot) {
       return res.status(404).json({ error: 'Snapshot config not found' });

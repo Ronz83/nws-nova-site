@@ -1,5 +1,5 @@
 import { provisionWorkspace, provisionAIAgent } from '../connect/provisionService';
-import { d1Query, d1First, newId } from '../lib/d1';
+import { bos } from '../lib/bos';
 
 // Helper to match Gemini's required tool schema format
 export const portalTools = [
@@ -58,25 +58,19 @@ export async function executeTool(name: string, args: any) {
   try {
     switch (name) {
       case 'list_active_clients': {
-        const data = await d1Query('SELECT location_id, role FROM user_permissions LIMIT 20');
+        const { clients: data } = await bos.clients.list(20);
         return { success: true, clients: data };
       }
 
       case 'create_fulfillment_task': {
         const { title, clientName, priority } = args;
-        const id = newId();
-        await d1Query(
-          'INSERT INTO fulfillment_tasks (id, title, client_name, priority, "column") VALUES (?, ?, ?, ?, ?)',
-          [id, title, clientName, priority, 'Backlog']
-        );
-        const data = await d1First('SELECT * FROM fulfillment_tasks WHERE id = ?', [id]);
+        const data = await bos.fulfillmentTasks.create({ title, client_name: clientName, priority, column: 'Backlog' });
         return { success: true, task: data };
       }
 
       case 'update_task_status': {
         const { taskId, newColumn } = args;
-        await d1Query('UPDATE fulfillment_tasks SET "column" = ?, updated_at = ? WHERE id = ?', [newColumn, new Date().toISOString(), taskId]);
-        const data = await d1First('SELECT * FROM fulfillment_tasks WHERE id = ?', [taskId]);
+        const data = await bos.fulfillmentTasks.update(taskId, { column: newColumn });
         if (!data) throw new Error('Task not found');
         return { success: true, task: data };
       }

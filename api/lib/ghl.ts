@@ -1,4 +1,4 @@
-import { d1First, d1Query } from './d1';
+import { bos } from './bos.js';
 
 export interface GHLTokenData {
   access_token: string;
@@ -14,7 +14,7 @@ export interface GHLTokenData {
 export async function getValidGHLToken(): Promise<GHLTokenData> {
   // We assume a single master company ID for the agency for now. 
   // If multi-tenant, you'd pass companyId into this function.
-  const data = await d1First('SELECT * FROM ghl_tokens LIMIT 1');
+  const data = await bos.ghlToken.get();
 
   if (!data) {
     throw new Error('GHL Token not found in database. Please re-authenticate.');
@@ -49,7 +49,7 @@ export async function getValidGHLToken(): Promise<GHLTokenData> {
        const json = await res.json();
        if (json.locations && json.locations.length > 0) {
          tokenData.locationId = json.locations[0].id;
-         await d1Query('UPDATE ghl_tokens SET location_id = ?, updated_at = ? WHERE company_id = ?', [tokenData.locationId, new Date().toISOString(), tokenData.companyId]);
+         await bos.ghlToken.update(tokenData.companyId, { location_id: tokenData.locationId });
        }
     }
     return tokenData;
@@ -89,12 +89,13 @@ export async function refreshGHLToken(refreshToken: string, companyId: string): 
 
   const newTokenData = await response.json();
   
-  await d1Query(
-    'UPDATE ghl_tokens SET access_token = ?, refresh_token = ?, expires_in = ?, updated_at = ? WHERE company_id = ?',
-    [newTokenData.access_token, newTokenData.refresh_token, newTokenData.expires_in, new Date().toISOString(), companyId]
-  );
-    
-  console.log('GHL Token successfully refreshed and saved to D1.');
+  await bos.ghlToken.update(companyId, {
+    access_token: newTokenData.access_token,
+    refresh_token: newTokenData.refresh_token,
+    expires_in: newTokenData.expires_in,
+  });
+
+  console.log('GHL Token successfully refreshed and saved to Business OS.');
   
   return {
     ...newTokenData,

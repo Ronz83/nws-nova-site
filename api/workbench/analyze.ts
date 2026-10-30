@@ -1,9 +1,9 @@
-﻿// api/workbench/analyze.ts
+// api/workbench/analyze.ts
 // NWS Business Intelligence Engine
 // Scrapes domain → Gemini AI analysis → business score + gap report + custom Vapi agent → lead to GHL
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { d1First, d1Query, newId, toJson } from '../lib/d1.js';
+import { bos } from '../lib/bos.js';
 
 const VAPI_API_KEY    = process.env.VAPI_API_KEY;
 const VAPI_PUBLIC_KEY = process.env.VAPI_PUBLIC_KEY;
@@ -411,25 +411,20 @@ async function captureLeadInGHL(payload: any, assessment: any): Promise<string |
   }
 }
 
-// -- Save results to Cloudflare D1 --
-async function saveResultToD1(payload: any, assessment: any, agentData: any): Promise<string | null> {
+// -- Save results to Business OS --
+async function saveResult(payload: any, assessment: any, agentData: any): Promise<string | null> {
   try {
-    const id = newId();
     const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
-    await d1Query(
-      `INSERT INTO workbench_results (id, first_name, last_name, email, phone, domain, business_name, title, industry, challenge, team_size, assessment, agent_id, agent_public_key, expires_at)
-       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
-      [
-        id, payload.firstName ?? null, payload.lastName || null, payload.email ?? null, payload.phone || null,
-        payload.domain ?? null, payload.businessName || payload.domain || null, payload.title || null,
-        payload.industry || null, payload.challenge || null, payload.teamSize || null,
-        toJson(assessment), agentData.assistantId || null, agentData.publicKey || null, expiresAt,
-      ]
-    );
-    console.log(`[D1] Result saved: ${id}`);
+    const { id } = await bos.workbenchResults.save({
+      first_name: payload.firstName ?? null, last_name: payload.lastName || null, email: payload.email ?? null, phone: payload.phone || null,
+      domain: payload.domain ?? null, business_name: payload.businessName || payload.domain || null, title: payload.title || null,
+      industry: payload.industry || null, challenge: payload.challenge || null, team_size: payload.teamSize || null,
+      assessment, agent_id: agentData.assistantId || null, agent_public_key: agentData.publicKey || null, expires_at: expiresAt,
+    });
+    console.log(`[BOS] Result saved: ${id}`);
     return id;
   } catch (e) {
-    console.error('[D1] Save failed:', e);
+    console.error('[BOS] Result save failed:', e);
     return null;
   }
 }
@@ -502,8 +497,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // 4. Save results to Supabase — get shareable UUID
-    const resultId  = await saveResultToD1(payload, assessment, agentData);
+    // 4. Save results (Business OS) - get shareable id
+    const resultId  = await saveResult(payload, assessment, agentData);
     const resultUrl = resultId
       ? `${req.headers.origin || 'https://nws-nova-site.vercel.app'}/results/${resultId}`
       : null;
