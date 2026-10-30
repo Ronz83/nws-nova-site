@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { supabase } from '../../src/lib/supabase.js';
+import { verifySsoToken } from './ssoToken.js';
 
 /**
  * SSO Bridge for TicketFlows and other external NWS apps.
@@ -16,8 +17,14 @@ export default async function handler(req: Request, res: Response) {
     return res.status(400).json({ error: 'Missing userId or token' });
   }
 
-  // TODO: Validate secure SSO token via shared secret
-  // For now, we trust the userId parameter for the bridge prototype
+  const secret = process.env.SSO_SHARED_SECRET;
+  if (!secret) {
+    console.error('SSO_SHARED_SECRET is not configured');
+    return res.status(500).json({ error: 'SSO not configured' });
+  }
+  if (!verifySsoToken(String(token), String(userId), secret)) {
+    return res.status(401).json({ error: 'Invalid or expired SSO token' });
+  }
   
   try {
     // 1. Fetch user permissions to get the location ID and check existence

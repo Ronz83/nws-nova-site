@@ -74,8 +74,8 @@ return (
               <div className="flex items-center gap-3">
                  <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600"><Zap size={18} /></div>
                  <div>
-                    <h4 className="font-bold text-sm">Follow-up with John Doe</h4>
-                    <p className="text-xs text-slate-400">Automated SMS sent</p>
+                    <h4 className="font-bold text-sm">No recent activity</h4>
+                    <p className="text-xs text-slate-400">Automated follow-ups will appear here</p>
                  </div>
               </div>
               <span className="text-emerald-500 font-bold text-xs">Done</span>

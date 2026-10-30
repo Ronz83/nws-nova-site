@@ -129,27 +129,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         
         // For local dev fallback if no userId is passed
         if (!userId) {
-           if (roleParam === 'agency_admin') {
-             setUser({
-               id: 'admin_123', name: 'NWS Admin', email: 'admin@noveltywebsolutions.com', role: 'agency_admin',
-               permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
-               businessName: 'Business OS', businessLogo: '/business_os_logo.png', onboarded: true
-             });
-           } else if (roleParam === 'super_admin') {
-             setUser({
-               id: 'super_admin_123', name: 'Ronald Prescott', email: 'ronald@noveltywebsolutions.com', role: 'super_admin',
-               permissions: { operations: true, growth: true, automations: true, aiStudio: true, settings: true, requireUpgrade: false },
-               businessName: 'NWS Master Portal', businessLogo: '/business_os_logo.png', onboarded: true
-             });
-           } else if (roleParam === 'location_user') {
-             setUser({
-               id: 'emp_456', name: 'John Doe', email: 'john@clientbusiness.com', role: 'location_user', clientId: import.meta.env.VITE_NWS_LOCATION_ID || undefined,
-               permissions: { operations: true, growth: false, automations: false, aiStudio: false, settings: false, requireUpgrade: true },
-               businessName: 'Business OS', businessLogo: '/business_os_logo.png', onboarded: false
-             });
-           } else {
-             setUser(null);
-           }
+           // No verified session identifier: no fake users, stay signed out
+           setUser(null);
            setIsLoading(false);
            return;
         }
@@ -259,7 +240,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser({ ...user, permissions: newPermissions });
       
       // Update in Supabase
-      if (user.id !== 'admin_123' && user.id !== 'emp_456') {
+      {
         await supabase.from('user_permissions').update({
           operations: newPermissions.operations,
           growth: newPermissions.growth,
