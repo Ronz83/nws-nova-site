@@ -75,11 +75,11 @@ async function handler(req: Request, res: Response) {
       // 3. Save standard fields to D1 (upsert on location_id)
       const now = new Date().toISOString();
       await d1Query(
-        INSERT INTO website_intake (id, location_id, business_name, tagline, primary_color, secondary_color, services_list, operating_hours, phone, email, address, social_links, special_instructions, updated_at)
+        `INSERT INTO website_intake (id, location_id, business_name, tagline, primary_color, secondary_color, services_list, operating_hours, phone, email, address, social_links, special_instructions, updated_at)
          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
          ON CONFLICT(location_id) DO UPDATE SET business_name=excluded.business_name, tagline=excluded.tagline, primary_color=excluded.primary_color,
            secondary_color=excluded.secondary_color, services_list=excluded.services_list, operating_hours=excluded.operating_hours, phone=excluded.phone,
-           email=excluded.email, address=excluded.address, social_links=excluded.social_links, special_instructions=excluded.special_instructions, updated_at=excluded.updated_at,
+           email=excluded.email, address=excluded.address, social_links=excluded.social_links, special_instructions=excluded.special_instructions, updated_at=excluded.updated_at`,
         [newId(), locationId, businessName ?? null, tagline ?? null, primaryColor ?? null, secondaryColor ?? null, servicesList ?? null, operatingHours ?? null, phone ?? null, email ?? null, address ?? null, socialLinks ?? null, specialInstructions ?? null, now]
       );
 
