@@ -13,7 +13,7 @@ const faqs: FAQItem[] = [
   },
   {
     q: "What's included in the monthly retainer?",
-    a: "Solo ($299/mo): Voice AI receptionist, unlimited inbound call handling, website hosting, CRM sync, and monthly performance reporting. Business ($599/mo): All of the above plus custom workflow automations, multi-channel outreach (SMS + email drips), reputation management, and priority support.",
+    a: "Small Business Self-Serve plans on businessesos.com start at $0/mo (Stage 0 Micro-Vendor) and $97 / $197 / $297/mo (Tier 1 Small Business, with optional +$50/mo Starter AI or +$97/mo Pro Voice AI). On noveltywebsolutions.com, our Tier 2 MSB & Enterprise Full-Service engagements start at $997/mo (+$1,000 setup) for Commercial Growth Core, $1,497/mo (+$1,500 setup) for the Full Standalone App (TicketFlows or Dispatch OS Pro) + Tier 2 Business Suite Bundle, and $2,997–$5,000+/mo for Enterprise & Regional Transformation.",
   },
   {
     q: "Can the AI handle my industry's specific questions?",
@@ -25,11 +25,11 @@ const faqs: FAQItem[] = [
   },
   {
     q: "What happens if the AI can't answer a question?",
-    a: "We configure custom escalation protocols. The AI can route calls to a human, send an SMS to your mobile, create a support ticket, or offer a callback — depending on what you define.",
+    a: "We configure custom escalation protocols. The AI can route calls to a human, send a WhatsApp or OneSignal push notification to your mobile, create a support ticket, or offer a callback — depending on what you define.",
   },
   {
     q: "Is there a setup fee?",
-    a: "Website design projects are custom-scoped based on the build, integrations, and content requirements. For AI offers, the setup fee is $499 for Solo and $799 for Business — this covers voice tuning, CRM mapping, and a launch testing sprint.",
+    a: "Self-serve Stage 0 ($0/mo) and Tier 1 ($97 / $197 / $297/mo) plans on businessesos.com have $0 setup fee ($297/mo Pro includes our Dedicated Onboarding & Support Team). For Tier 2 MSB & Enterprise engagements on noveltywebsolutions.com, setup starts at $1,000 for Commercial Growth Core ($997/mo) and $1,500 for the Full Standalone App + Tier 2 Suite Bundle ($1,497/mo), scoped during your Discovery Call.",
   },
 ];
 

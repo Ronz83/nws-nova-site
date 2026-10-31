@@ -85,7 +85,7 @@ export default function Features() {
             </div>
             <div className="flex justify-between items-center border-t border-slate-100 pt-3.5 w-full text-sm text-text-muted/60 font-mono font-bold">
               <div className="flex gap-3">
-                <span>CONCURRENT CALLS: INFINITE</span><span>•</span><span>CHANNELS: TELEPHONE / WEB / SMS</span>
+                <span>CONCURRENT CALLS: INFINITE</span><span>•</span><span>CHANNELS: TELEPHONE / WEB / WHATSAPP / PUSH</span>
               </div>
               <span className="text-sky-600 uppercase tracking-widest font-bold group-hover:underline">Schedule Demo →</span>
             </div>
@@ -130,7 +130,7 @@ export default function Features() {
                 <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
               </h3>
               <p className="text-sm sm:text-sm text-text-muted leading-relaxed font-medium">
-                Consolidate your customer interactions. Automatically sync contacts, trigger SMS/email drips, and monitor marketing channels from one live dashboard.
+                Consolidate your customer interactions. Automatically sync contacts, trigger WhatsApp, OneSignal Push &amp; email drips, and monitor marketing channels from one live dashboard.
               </p>
             </div>
             <div className="flex justify-between items-center border-t border-slate-100 pt-3.5 w-full text-sm text-text-muted/60 font-mono font-bold">

@@ -15,7 +15,7 @@ export function PortalSidebar() {
     { name: "Snapshots", path: "/portal/snapshots", icon: Package, show: hasPortalAccess('admin') },
     { name: "Niche Blueprints", path: "/portal/niche-blueprints", icon: Lightbulb, show: hasPortalAccess('admin') },
     { name: "Fulfillment", path: "/portal/fulfillment", icon: ClipboardList, show: hasPortalAccess('admin') },
-    { name: "GHL Control", path: "/portal/ghl-control", icon: Database, show: hasPortalAccess('admin') },
+    { name: "CRM Control", path: "/portal/ghl-control", icon: Database, show: hasPortalAccess('admin') },
     { name: "User Management", path: "/portal/users", icon: Users, show: hasPortalAccess('super_admin') },
     { name: "System Config", path: "/portal/system", icon: Settings, show: hasPortalAccess('super_admin') },
   ];

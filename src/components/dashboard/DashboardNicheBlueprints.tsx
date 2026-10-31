@@ -391,7 +391,7 @@ export function DashboardNicheBlueprints() {
               <p className="text-[11px] font-bold text-violet-600 uppercase tracking-widest">Next Step</p>
             </div>
             <p className="text-sm text-slate-700 font-medium leading-relaxed">
-              After generating a blueprint, take the feature list to <strong>Snapshot Manager</strong> to build the GHL Snapshot and push it to client accounts.
+              After generating a blueprint, take the feature list to <strong>Snapshot Manager</strong> to build the Business OS Snapshot and push it to client accounts.
             </p>
           </div>
         </div>

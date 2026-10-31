@@ -143,7 +143,7 @@ export function DashboardTraining() {
               </button>
               <div className="flex-1">
                 <p className={`font-bold ${checklist.connectCRM ? 'text-slate-900 line-through opacity-70' : 'text-slate-700'}`}>Connect CRM</p>
-                <p className="text-xs text-slate-500 mt-1">Authorize GoHighLevel to sync your leads and pipelines.</p>
+                <p className="text-xs text-slate-500 mt-1">Authorize Business OS CRM to sync your leads and pipelines.</p>
               </div>
             </div>
 

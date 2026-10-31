@@ -15,7 +15,7 @@ import {
   TrendingUp,
   Calendar,
 } from "lucide-react";
-import { PRICING_TIERS } from "../config/pricing";
+import { PRICING_TIERS, TIER2_ENTERPRISE_PLANS } from "../config/pricing";
 import { BOOKING_URL } from "../config/links";
 import { redirectToCheckout } from "../lib/stripe";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -342,7 +342,7 @@ export default function BusinessOS() {
 
               {/* Social proof pills — sky-tinted */}
               <div className="mt-6 flex flex-wrap gap-3">
-                {["24/7 AI Employees", "GHL-Powered CRM", "Caribbean-Based Support"].map((tag) => (
+                {["24/7 AI Employees", "Business OS CRM", "Caribbean-Based Support"].map((tag) => (
                   <span
                     key={tag}
                     className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-bold text-sky-300"
@@ -487,7 +487,7 @@ export default function BusinessOS() {
               </div>
               <p className="text-base sm:text-lg text-white/70 leading-relaxed max-w-sm font-medium">
                 NWS Business OS combines your CRM, AI employees, and automations into one
-                Caribbean-ready platform — all powered by GHL.
+                Caribbean-ready platform — all powered by Business OS.
               </p>
             </div>
 
@@ -639,7 +639,7 @@ export default function BusinessOS() {
                   className="flex justify-between items-center pt-3.5 w-full text-sm font-mono font-bold"
                   style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
                 >
-                  <span className="text-white/40">WEB / SMS / WHATSAPP*</span>
+                  <span className="text-white/40">WEB / WHATSAPP / PUSH / EMAIL*</span>
                   <span className="text-violet-400 uppercase tracking-widest group-hover:underline">See Example →</span>
                 </div>
               </BentoCard>
@@ -700,7 +700,7 @@ export default function BusinessOS() {
             </div>
 
             <p className="mt-6 text-sm text-white/35 font-bold">
-              * WhatsApp available as an add-on at client request (client&apos;s own number or GHL-native).
+              * WhatsApp, OneSignal Push Notifications, Email &amp; In-App Web Chat included across Caribbean channels (client&apos;s own number or Business OS native — Zero SMS).
             </p>
           </div>
         </section>
@@ -721,6 +721,28 @@ export default function BusinessOS() {
               </h2>
               <p className="mt-4 text-lg text-white/70 font-medium max-w-2xl mx-auto">
                 Start with what you need. Scale as you grow.
+              </p>
+              <div className="mt-8 max-w-5xl mx-auto rounded-2xl border border-sky-400/30 bg-sky-500/10 p-6 text-left">
+                <p className="text-sm sm:text-base text-white/90 font-medium leading-relaxed">
+                  <strong className="text-sky-300">Platform vs. Agency Guide:</strong> <strong>noveltywebsolutions.com</strong> is our <strong>MSB (Medium-Sized Business), Enterprise &amp; Custom Campaign Agency</strong> (scoped via Discovery &amp; Custom Quote Builder below), while{" "}
+                  <a href="https://businessesos.com" target="_blank" rel="noopener noreferrer" className="text-sky-300 font-bold underline">
+                    businessesos.com (Business OS)
+                  </a>{" "}
+                  is our <strong>Self-Serve Product &amp; Service Platform</strong> for Micro-Vendors (<strong>$0/mo</strong>) and Small Businesses (<strong>$97 / $197 / $297/mo</strong>).
+                </p>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <a href="https://businessesos.com" target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-lg bg-sky-500 text-white hover:bg-sky-400 transition-colors">
+                    businessesos.com ($0 / $97 / $197 / $297/mo) →
+                  </a>
+                  <a href="https://servicedispatch.app" target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-lg bg-white/10 text-white border border-white/20 hover:bg-white/15 transition-colors">
+                    servicedispatch.app (Dispatch OS $197 / $297 / $497/mo) →
+                  </a>
+                  <a href="https://ticketflows.app" target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-lg bg-white/10 text-white border border-white/20 hover:bg-white/15 transition-colors">
+                    ticketflows.app ($497/mo App &amp; $1,497/mo App + Tier 2 Suite) →
+                  </a>
+                </div>
+              </div>
+              <p className="sr-only">
               </p>
               <div className="flex justify-center items-center mt-8">
                 <div className="flex items-center justify-center gap-3">
@@ -822,6 +844,61 @@ export default function BusinessOS() {
                   </div>
                 );
               })}
+            </div>
+            <div className="mt-20 pt-16 border-t border-white/10">
+              <div className="text-center mb-12">
+                <span className="text-sm uppercase tracking-[0.22em] text-amber-400 font-bold">
+                  Tier 2 · MSB, Enterprise &amp; Custom Campaigns (noveltywebsolutions.com)
+                </span>
+                <h3 className="mt-3 text-3xl md:text-4xl font-black text-white tracking-tight">
+                  Managed Full-Service Setup &amp; Standalone App Bundles
+                </h3>
+                <p className="mt-3 text-base text-white/75 max-w-3xl mx-auto font-medium">
+                  Scoped via Discovery Meeting &amp; Custom Quote Builder. Every Tier 2 engagement includes our Dedicated Onboarding &amp; Support Team Service.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+                {TIER2_ENTERPRISE_PLANS.map((tier2) => (
+                  <div
+                    key={tier2.id}
+                    className={`rounded-[24px] p-6 xl:p-8 flex flex-col justify-between ${
+                      tier2.isFeatured
+                        ? "bg-[#0c2238] border-2 border-amber-400 shadow-[0_0_40px_rgba(251,191,36,0.15)]"
+                        : "bg-white/[0.04] border border-white/10"
+                    }`}
+                  >
+                    <div>
+                      <span className="inline-block text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300 bg-amber-400/10 border border-amber-400/30 px-3 py-1 rounded-full mb-4">
+                        {tier2.badge}
+                      </span>
+                      <h4 className="text-xl xl:text-2xl font-black text-white">{tier2.name}</h4>
+                      <div className="my-4 pb-4 border-b border-white/10">
+                        <div className="text-2xl xl:text-3xl font-black text-white">{tier2.priceLabel}</div>
+                        <p className="text-xs font-bold text-sky-300 mt-1.5">{tier2.setupLabel}</p>
+                      </div>
+                      <p className="text-sm text-white/75 font-medium leading-relaxed mb-5">
+                        {tier2.description}
+                      </p>
+                      <div className="flex flex-col gap-2.5 mb-6">
+                        {tier2.features.map((feat) => (
+                          <div key={feat} className="flex items-start gap-2.5 text-xs xl:text-sm text-white/85 font-medium">
+                            <CheckCircle size={14} className="text-emerald-400 shrink-0 mt-0.5" />
+                            <span>{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <button
+                      onClick={onBookDemo}
+                      className="w-full text-xs xl:text-sm uppercase tracking-[0.16em] font-bold py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white transition-all cursor-pointer shadow-lg"
+                    >
+                      {tier2.ctaText}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
             </div>
           </div>
         </section>

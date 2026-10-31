@@ -29,7 +29,7 @@ const htmlContent = `
             <div class="hero-content reveal">
                 <span class="tag"><span class="ring-icon">📞</span>&ensp;AI-Powered Voice Receptionist</span>
                 <h1>Every Missed Call Is a Customer You'll <span class="highlight gradient-text">Never Get Back</span></h1>
-                <p>Your AI receptionist answers every call, books appointments, captures leads, and follows up by text — 24 hours a day, 7 days a week. No hold music. No voicemail graveyard. No lost revenue.</p>
+                <p>Your AI receptionist answers every call, books appointments, captures leads, and follows up via WhatsApp, Push &amp; Email — 24 hours a day, 7 days a week. No hold music. No voicemail graveyard. No lost revenue.</p>
                 <div class="hero-buttons">
                     <a href="mailto:info@noveltywebsolutions.com?subject=AI%20Receptionist%20Inquiry" class="btn btn-primary btn-glow">
                         Book Free Consultation
@@ -140,8 +140,8 @@ const htmlContent = `
             </div>
             <div class="glass solution-card reveal reveal-delay-3">
                 <div class="solution-icon gold">💬</div>
-                <h3>SMS Follow-Up</h3>
-                <p>If lines are busy, the AI texts customers back automatically with links, confirmations, or follow-up info.</p>
+                <h3>WhatsApp &amp; Push Follow-Up</h3>
+                <p>If lines are busy, the AI messages customers back automatically via WhatsApp, OneSignal Push Notifications, and Email with links, confirmations, or follow-up info.</p>
             </div>
             <div class="glass solution-card reveal reveal-delay-1">
                 <div class="solution-icon coral">🔀</div>
@@ -261,7 +261,7 @@ const htmlContent = `
                     </div>
                 </div>
             </div>
-            <p style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: #6B7589;">Appointment booked. Lead captured. SMS sent. Zero human effort.</p>
+            <p style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: #6B7589;">Appointment booked. Lead captured. WhatsApp &amp; Email confirmation sent. Zero human effort.</p>
         </div>
     </div>
 </section>
@@ -276,31 +276,31 @@ const htmlContent = `
         </div>
         <div class="pricing-grid">
             <div class="glass pricing-card reveal reveal-delay-1">
-                <div class="pricing-label">One-Time Setup</div>
-                <div class="pricing-amount">\$497<span>–\$997</span></div>
-                <div class="pricing-range">Based on complexity & number of AI agents</div>
+                <div class="pricing-label">Tier 1 · Small Business Self-Serve (businessesos.com)</div>
+                <div class="pricing-amount">\$97<span>–\$297/mo</span></div>
+                <div class="pricing-range">+ Optional AI Add-On: +\$50/mo Starter AI or +\$97/mo Pro Voice AI</div>
                 <ul class="pricing-features">
                     <li>Custom AI voice & personality configuration</li>
                     <li>Business-specific call scripts & flows</li>
                     <li>CRM integration & lead pipeline setup</li>
                     <li>Calendar & booking system connection</li>
                     <li>Call routing & department mapping</li>
-                    <li>SMS auto-response templates</li>
+                    <li>WhatsApp, OneSignal Push &amp; Email auto-response templates</li>
                     <li>Testing, QA & launch support</li>
                 </ul>
-                <a href="mailto:info@noveltywebsolutions.com?subject=AI%20Receptionist%20Inquiry" class="btn btn-secondary" style="width:100%;justify-content:center;">Get a Custom Quote</a>
+                <a href="https://businessesos.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="width:100%;justify-content:center;">Launch Self-Serve on Business OS →</a>
             </div>
             <div class="glass pricing-card featured reveal reveal-delay-2">
                 <div class="pricing-badge">Most Popular</div>
-                <div class="pricing-label">Monthly Service (Business OS Pro)</div>
-                <div class="pricing-amount">\$597<span>/mo</span></div>
-                <div class="pricing-range">Everything you need. Nothing you don't.</div>
+                <div class="pricing-label">Tier 2 · MSB &amp; Enterprise Full-Service (noveltywebsolutions.com)</div>
+                <div class="pricing-amount">\$997<span>+/mo</span></div>
+                <div class="pricing-range">+\$1,000 setup · Scoped via Discovery · Dedicated Onboarding &amp; Support Team</div>
                 <ul class="pricing-features">
                     <li>24/7 AI voice receptionist (unlimited calls)</li>
-                    <li>GoHighLevel CRM included</li>
+                    <li>Business OS CRM included</li>
                     <li>AI voice minutes included</li>
                     <li>Appointment booking & confirmations</li>
-                    <li>SMS follow-up & text-back</li>
+                    <li>WhatsApp, OneSignal Push &amp; Email follow-up</li>
                     <li>Lead capture & pipeline automation</li>
                     <li>Call analytics & reporting dashboard</li>
                     <li>Ongoing optimization & support</li>
@@ -373,11 +373,11 @@ const htmlContent = `
             </div>
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">
-                    What's included in the \$597/month?
+                    What's included in our AI Receptionist &amp; Business OS packages?
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">
-                    <p>Everything: your AI receptionist, GoHighLevel CRM access, 100 AI voice minutes/credits, SMS follow-up automation, appointment booking, lead capture, call analytics, and ongoing support. There are no hidden per-minute charges or surprise fees.</p>
+                    <p>Everything: your AI receptionist, Business OS CRM access, included AI voice minutes/credits, WhatsApp, OneSignal Push Notifications, Email &amp; In-App Web Chat follow-up automation, appointment booking, lead capture, call analytics, and ongoing support. There are no hidden per-minute charges or surprise fees.</p>
                 </div>
             </div>
             <div class="faq-item">

@@ -33,7 +33,7 @@ export default function SkillExecutor({ skill, onCancel }: SkillExecutorProps) {
       setOutput({
         meta: { locationId: "LOC_" + Math.random().toString(36).substring(7).toUpperCase() },
         outputText: `==================================================
-COPY & PASTE INTO GOHIGHLEVEL VIBE CODER
+COPY & PASTE INTO BUSINESS OS VIBE CODER
 ==================================================
 You are Aria, an expert Vibe Coder.
 ==================================================
@@ -41,7 +41,7 @@ END WEBSITE BUILDER PROMPT
 ==================================================
 
 ==================================================
-COPY & PASTE INTO GOHIGHLEVEL ASK AI
+COPY & PASTE INTO BUSINESS OS ASK AI
 ==================================================
 You are Aria AI business OS.
 ==================================================
@@ -49,7 +49,7 @@ END AI BUSINESS OPERATING SYSTEM PROMPT
 ==================================================
 
 ==================================================
-COPY & PASTE INTO GOHIGHLEVEL AUTOMATION BUILDER
+COPY & PASTE INTO BUSINESS OS AUTOMATION BUILDER
 ==================================================
 Automation Master Prompt.
 ==================================================
@@ -69,13 +69,13 @@ END MASTER AUTOMATION SYSTEM PROMPT
   };
 
   const rawText = output?.outputText || "";
-  const vibeCoderMatch = rawText.match(/COPY & PASTE INTO GOHIGHLEVEL VIBE CODER\s*=+\s*([\s\S]*?)\s*=+\s*END WEBSITE BUILDER PROMPT/);
+  const vibeCoderMatch = rawText.match(/COPY & PASTE INTO (?:GOHIGHLEVEL|BUSINESS OS) VIBE CODER\s*=+\s*([\s\S]*?)\s*=+\s*END WEBSITE BUILDER PROMPT/);
   const vibeCoderPrompt = vibeCoderMatch ? vibeCoderMatch[1].trim() : "Failed to extract Vibe Coder prompt. Fallback text:\n" + rawText;
 
-  const askAiMatch = rawText.match(/COPY & PASTE INTO GOHIGHLEVEL ASK AI\s*=+\s*([\s\S]*?)\s*=+\s*END AI BUSINESS OPERATING SYSTEM PROMPT/);
+  const askAiMatch = rawText.match(/COPY & PASTE INTO (?:GOHIGHLEVEL|BUSINESS OS) ASK AI\s*=+\s*([\s\S]*?)\s*=+\s*END AI BUSINESS OPERATING SYSTEM PROMPT/);
   const askAiPrompt = askAiMatch ? askAiMatch[1].trim() : "Failed to extract Ask AI prompt.";
 
-  const automationMatch = rawText.match(/COPY & PASTE INTO GOHIGHLEVEL AUTOMATION BUILDER\s*=+\s*([\s\S]*?)\s*=+\s*END MASTER AUTOMATION SYSTEM PROMPT/);
+  const automationMatch = rawText.match(/COPY & PASTE INTO (?:GOHIGHLEVEL|BUSINESS OS) AUTOMATION BUILDER\s*=+\s*([\s\S]*?)\s*=+\s*END MASTER AUTOMATION SYSTEM PROMPT/);
   const automationPrompt = automationMatch ? automationMatch[1].trim() : "Failed to extract Automation prompt.";
 
   if (status === "executing") {
@@ -95,7 +95,7 @@ END MASTER AUTOMATION SYSTEM PROMPT
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
           <div>
             <h3 className="text-xl font-bold text-white tracking-wide">Execution Success</h3>
-            <p className="text-xs text-slate-400 mt-1">GHL Location ID: {output?.meta?.locationId || "N/A"}</p>
+            <p className="text-xs text-slate-400 mt-1">Business OS Location ID: {output?.meta?.locationId || "N/A"}</p>
           </div>
           <button onClick={onCancel} className="text-slate-400 hover:text-white text-sm font-medium">Close Outputs</button>
         </div>

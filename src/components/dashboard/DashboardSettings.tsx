@@ -254,7 +254,7 @@ export function DashboardSettings() {
             >
               <div className="flex justify-between items-center mb-2">
                 <h3 className="font-bold text-slate-900 text-lg tracking-tight">Team Management</h3>
-                <a href="https://app.gohighlevel.com/settings/staff" target="_blank" rel="noopener noreferrer" className="text-[12px] font-bold uppercase tracking-[0.18em] text-white bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] px-5 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg hover:scale-[1.02] inline-flex items-center gap-2">
+                <a href="https://businessesos.com/dashboard/team" target="_blank" rel="noopener noreferrer" className="text-[12px] font-bold uppercase tracking-[0.18em] text-white bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] px-5 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg hover:scale-[1.02] inline-flex items-center gap-2">
                   <span>Invite Member</span>
                   <ExternalLink className="w-4 h-4" />
                 </a>
@@ -265,11 +265,11 @@ export function DashboardSettings() {
 
               {loadingTeam ? (
                 <div className="text-center py-8 text-slate-500 font-medium bg-slate-50 rounded-xl border border-slate-200">
-                  Loading team members from GoHighLevel...
+                  Loading team members from Business OS...
                 </div>
               ) : teamMembers.length === 0 ? (
                 <div className="text-center py-8 text-slate-500 font-medium bg-slate-50 rounded-xl border border-slate-200">
-                  No team members found. Invite them in GoHighLevel first!
+                  No team members found. Invite them in Business OS first!
                 </div>
               ) : (
                 teamMembers.map((member) => (

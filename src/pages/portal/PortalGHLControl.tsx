@@ -14,13 +14,13 @@ export default function PortalGHLControl() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
           <Database className="text-sky-500" />
-          GHL Master Control Hub
+          NWS CRM Master Control Hub
         </h1>
-        <p className="text-slate-400">Manage OAuth provisioning and GHL integrations.</p>
+        <p className="text-slate-400">Manage OAuth provisioning and Business OS CRM integrations.</p>
       </div>
       
       <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-        <p className="text-slate-400 text-sm">GHL App Management interface goes here.</p>
+        <p className="text-slate-400 text-sm">Business OS CRM App Management interface goes here.</p>
       </div>
     </div>
   );

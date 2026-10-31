@@ -99,7 +99,7 @@ export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
               </div>
               <h4 className="text-xl font-black text-text-base mb-2">Workspace Created!</h4>
               <p className="text-sm text-text-muted mb-6 px-4">
-                Your new GoHighLevel sub-account has been successfully provisioned. Check your email for login instructions.
+                Your new Business OS workspace has been successfully provisioned. Check your email for login instructions.
               </p>
               <button
                 onClick={handleClose}

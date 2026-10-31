@@ -35,13 +35,13 @@ export default function PortalSnapshots() {
             <Package className="w-6 h-6 text-sky-400" />
             Master Snapshots
           </h2>
-          <p className="text-sm text-slate-400 mt-1">Manage, sync, and deploy GoHighLevel agency snapshots globally.</p>
+          <p className="text-sm text-slate-400 mt-1">Manage, sync, and deploy Business OS agency snapshots globally.</p>
         </div>
         
         <div className="flex items-center gap-3">
           <button className="flex items-center gap-2 px-4 py-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:text-white hover:border-slate-700 transition-colors text-sm font-bold">
             <RefreshCw className="w-4 h-4" />
-            Sync from GHL
+            Sync from Business OS
           </button>
           <button className="flex items-center gap-2 px-4 py-2 bg-sky-500 hover:bg-sky-400 text-white rounded-lg transition-colors text-sm font-bold shadow-md">
             <Plus className="w-4 h-4" />
@@ -112,7 +112,7 @@ export default function PortalSnapshots() {
                 </button>
                 <button className="flex-1 bg-slate-950 border border-slate-800 hover:bg-slate-800 text-slate-300 rounded-lg py-2 text-xs font-bold transition-colors flex items-center justify-center gap-2">
                   <ExternalLink className="w-4 h-4" />
-                  View in GHL
+                  View in Business OS
                 </button>
               </div>
             </div>

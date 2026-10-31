@@ -19,74 +19,131 @@ export const STRIPE_PRICES = {
 
 export const PRICING_TIERS = [
   {
-    id: 'frontdesk',
-    name: 'Front Desk OS',
-    description: 'Essential front desk engine for solo operators and booking-driven shops.',
-    priceMonthly: 29,
-    priceYearly: 290, // 2 months free
-    stripeMonthly: STRIPE_PRICES.frontdesk.monthly,
-    stripeYearly: STRIPE_PRICES.frontdesk.yearly,
-    ctaText: 'Start Front Desk OS',
+    id: 'free',
+    name: 'Stage 0 · Micro-Vendor',
+    description: 'Free grassroots account for micro-vendors, market stalls, and solo artisans on businessesos.com.',
+    priceMonthly: 0,
+    priceYearly: 0,
+    stripeMonthly: '',
+    stripeYearly: '',
+    ctaText: 'Start Free on Business OS',
+    selfServeUrl: 'https://businessesos.com',
     features: [
-      'Zero-Commission Booking Engine',
-      '24/7 Web & Mobile Scheduling',
-      'Native Push Reminders (OneSignal)',
-      'Unified Customer Inbox',
-      'Pay-As-You-Go AI Micro-Credits'
+      'Native Business OS Account ($0/mo)',
+      '3-Button Mobile Quick-Sale POS (10 Items)',
+      'BiMPay / 1stPay / Cash QR Acceptance',
+      'Instant WhatsApp Digital Receipts',
+      'CariProof Starter Income Ledger'
     ]
   },
   {
-    id: 'base',
-    name: 'Base OS',
-    description: 'The foundation to organize and run your essential daily operations.',
+    id: 'starter',
+    name: 'Tier 1 · Starter',
+    description: 'Essential Business OS CRM & POS foundation for solo operators and small shops.',
+    priceMonthly: 97,
+    priceYearly: 970,
+    stripeMonthly: STRIPE_PRICES.frontdesk.monthly,
+    stripeYearly: STRIPE_PRICES.frontdesk.yearly,
+    ctaText: 'Start $97/mo on Business OS',
+    selfServeUrl: 'https://businessesos.com',
+    features: [
+      'Provisioned Business OS Sub-Account Snapshot',
+      'Full POS + CBPay & Smart Booking Engine',
+      'Unified Inbox (WhatsApp, IG, FB, Web Chat, Email — Zero SMS)',
+      'OneSignal Push Reminders & CariProof Ledger',
+      'Optional AI Add-On: +$50/mo Starter AI or +$97/mo Pro Voice AI'
+    ]
+  },
+  {
+    id: 'growth',
+    name: 'Tier 1 · Growth',
+    description: 'Multi-worker splits, automated pipelines, and reserve settlement for growing shops.',
     priceMonthly: 197,
-    priceYearly: 1970, // 2 months free
+    priceYearly: 1970,
     stripeMonthly: STRIPE_PRICES.lite.monthly,
     stripeYearly: STRIPE_PRICES.lite.yearly,
-    ctaText: 'Start Base OS',
+    isPopular: true,
+    ctaText: 'Start $197/mo on Business OS',
+    selfServeUrl: 'https://businessesos.com',
     features: [
-      'Everything in Front Desk, plus:',
-      'Industry-Specific CRM Framework',
-      'Multi-Staff & Resource Scheduling',
-      'Basic Workflow Automation',
-      '50 Monthly AI Credits'
+      'Everything in Starter ($97/mo), plus:',
+      'CariSplit Multi-Worker & Booth-Renter Auto-Splits',
+      'CariVault 1:1 Local Currency Settlement Reserve',
+      'Multi-Staff & Resource Calendar Scheduling',
+      'Automated WhatsApp, Push & Email Follow-Up Workflows',
+      'Optional AI Add-On: +$50/mo Starter AI or +$97/mo Pro Voice AI'
     ]
   },
   {
     id: 'pro',
-    name: 'Pro OS',
-    description: 'Advanced automations and proactive AI to scale your business.',
-    priceMonthly: 597,
-    priceYearly: 5970, // 2 months free
+    name: 'Tier 1 · Pro',
+    description: 'Complete small-business operating suite with dedicated onboarding & support team.',
+    priceMonthly: 297,
+    priceYearly: 2970,
     stripeMonthly: STRIPE_PRICES.pro.monthly,
     stripeYearly: STRIPE_PRICES.pro.yearly,
-    isPopular: true,
-    ctaText: 'Start Pro OS',
+    ctaText: 'Start $297/mo on Business OS',
+    selfServeUrl: 'https://businessesos.com',
     features: [
-      'Everything in Base, plus:',
-      'Advanced Pipeline Management',
-      'Proactive Customer AI Nudges',
-      'Reputation & Review Engine',
-      'Department-Specific AI Copilots',
-      '250 Monthly AI Credits'
+      'Everything in Growth ($197/mo), plus:',
+      'Dedicated Onboarding & Support Team Included',
+      'Advanced Pipeline, Reputation & Review Engine',
+      'Full CariSplit, CariProof & CariVault Suite',
+      'Featured Regional CARICOM Business Directory Sync',
+      'Optional AI Add-On: +$50/mo Starter AI or +$97/mo Pro Voice AI'
+    ]
+  }
+];
+
+export const TIER2_ENTERPRISE_PLANS = [
+  {
+    id: 'commercial-growth-core',
+    badge: 'MSB Full-Service',
+    name: '1. Commercial Growth Core (MSB)',
+    priceLabel: 'Starting at $997/mo USD',
+    setupLabel: '+$1,000 one-time setup — scoped via Discovery',
+    description: 'Turnkey managed implementation for established medium-sized businesses requiring custom CRM, funnels, and 24/7 Voice & WhatsApp AI.',
+    ctaText: 'Book Discovery & Custom Quote',
+    features: [
+      'Managed Business OS Sub-Account & Custom CRM Implementation',
+      'Custom Website / Conversion Funnel Suite',
+      '24/7 Voice & WhatsApp AI Receptionist Included',
+      'Up to 15 Staff Accounts & Role Permissions',
+      'Dedicated Onboarding & Support Team Service'
     ]
   },
   {
-    id: 'master',
-    name: 'Master OS',
-    description: 'The complete enterprise operating system for full-service dominance.',
-    priceMonthly: 997,
-    priceYearly: 9970, // 2 months free
-    stripeMonthly: STRIPE_PRICES.platinum.monthly,
-    stripeYearly: STRIPE_PRICES.platinum.yearly,
-    ctaText: 'Start Master OS',
+    id: 'standalone-app-tier2-bundle',
+    badge: 'Flagship Fleet & Industry Bundle',
+    name: '2. Full Standalone App + Tier 2 Business Suite Bundle',
+    priceLabel: '$1,497/mo USD',
+    setupLabel: '$497/mo Standalone App (TicketFlows or Dispatch OS Pro) + $997/mo Tier 2 Niche Business Suite (+$1,500 setup)',
+    description: 'Complete vertical operating system combining our flagship fleet/dispatch app with your full custom Business OS enterprise back-office.',
+    isFeatured: true,
+    ctaText: 'Scope App + Tier 2 Bundle',
     features: [
-      'Everything in Pro, plus:',
-      'Emergency / High-Priority Dispatching',
-      'Voice AI Receptionist (24/7 Calls)',
-      'Custom Business Solutions Library',
-      'White Glove Onboarding & Strategy',
-      '1000 Monthly AI Credits'
+      '$497/mo Standalone App (TicketFlows or Dispatch OS Pro) Included',
+      '$997/mo Tier 2 Niche Business Suite Included',
+      'Up to 10 Trucks/Vehicles (or up to 35 Staff)',
+      'Full Industry CRM Snapshot + Contractor/Fleet Portal',
+      'CariSplit + CariProof + 24/7 Voice & WhatsApp AI',
+      'Dedicated Onboarding & Support Team Service'
+    ]
+  },
+  {
+    id: 'enterprise-regional-transformation',
+    badge: 'Enterprise & Custom SOW',
+    name: '3. Enterprise & Regional Transformation',
+    priceLabel: '$2,997/mo to $5,000+/mo USD',
+    setupLabel: 'Custom Proposal & Statement of Work (SOW)',
+    description: 'Multi-branch and multi-island rollouts, custom software engineering, ERP integrations, and dedicated campaign management.',
+    ctaText: 'Request Custom Proposal & SOW',
+    features: [
+      'Multi-Branch & Multi-Island CARICOM Rollouts',
+      'Custom Software, Web & Native Mobile Apps',
+      'Deep ERP, Banking, Payment & API Integrations',
+      'Dedicated Novelty Engineering & Campaign Management',
+      'Executive SLA & White-Glove Team Training'
     ]
   }
 ];

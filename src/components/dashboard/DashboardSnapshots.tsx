@@ -205,13 +205,13 @@ interface IntegrationDef {
 }
 
 const INTEGRATIONS: IntegrationDef[] = [
-  { key: "samantha_chat", label: "AI Web Chat", description: "GHL-connected website chat widget", icon: MessageSquare },
+  { key: "samantha_chat", label: "AI Web Chat", description: "Business OS connected website chat widget", icon: MessageSquare },
   { key: "vapi_voice", label: "Voice Agent", description: "AI phone receptionist", icon: Mic },
   { key: "google_business", label: "Google Business Profile", description: "Review automation", icon: Star },
   { key: "stripe_payments", label: "Stripe Payments", description: "Payment processing", icon: CreditCard },
   { key: "calendar_booking", label: "Calendar & Booking", description: "Appointment scheduling", icon: Calendar },
   { key: "email_engine", label: "Email Campaigns", description: "Automated email sequences", icon: Mail },
-  { key: "sms_marketing", label: "SMS Marketing", description: "Text message campaigns", icon: Smartphone },
+  { key: "sms_marketing", label: "WhatsApp & Push Alerts", description: "WhatsApp & OneSignal push campaigns", icon: Smartphone },
   { key: "social_connector", label: "Social Media", description: "Facebook/Instagram", icon: Share2 },
 ];
 
@@ -627,7 +627,7 @@ export function DashboardSnapshots() {
             {/* GHL Snapshot ID */}
             <div className="space-y-1.5">
               <label className="text-[12px] font-bold text-slate-500 uppercase tracking-widest">
-                GHL Snapshot ID
+                Business OS Snapshot ID
               </label>
               <input
                 type="text"
@@ -750,7 +750,7 @@ export function DashboardSnapshots() {
             className="inline-flex items-center gap-2 bg-gradient-to-br from-[#0369a1] to-[#0ea5e9] hover:from-[#0c2a4a] hover:to-[#0369a1] text-white rounded-xl py-3 px-6 text-[12px] font-bold uppercase tracking-[0.18em] transition-all shadow-sm hover:shadow-md"
           >
             <Upload className="h-4 w-4" />
-            Push to GHL
+            Push to Business OS
           </button>
           <button
             onClick={() => setView("marketing")}

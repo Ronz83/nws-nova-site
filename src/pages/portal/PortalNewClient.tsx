@@ -24,7 +24,7 @@ export default function PortalNewClient() {
           </div>
           <h1 className="text-2xl font-bold text-white">New Client Provisioning</h1>
         </div>
-        <p className="text-slate-400 text-sm ml-13">Fill out the form below to automatically create a GHL sub-account and apply the correct snapshot.</p>
+        <p className="text-slate-400 text-sm ml-13">Fill out the form below to automatically create a Business OS CRM sub-account and apply the correct snapshot.</p>
       </div>
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 mb-6 shadow-xl">
@@ -75,7 +75,7 @@ export default function PortalNewClient() {
             <div className="bg-slate-950/50 border border-purple-500/20 rounded-xl p-5 flex items-center gap-4">
               <LoaderCircle className="w-6 h-6 text-purple-400 animate-spin shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-white">Creating GHL sub-account...</p>
+                <p className="text-sm font-semibold text-white">Creating Business OS sub-account...</p>
                 <p className="text-xs text-slate-400 mt-0.5">This usually takes 5–15 seconds.</p>
               </div>
             </div>
@@ -88,11 +88,11 @@ export default function PortalNewClient() {
                 <p className="text-sm font-semibold text-white">Sub-account created successfully!</p>
               </div>
               <div className="bg-black/20 rounded-xl p-4 space-y-2 text-xs font-mono">
-                <p><span className="text-slate-500">GHL Location ID:</span> <span className="text-purple-400 font-bold ml-2">{locationId}</span></p>
+                <p><span className="text-slate-500">Business OS Location ID:</span> <span className="text-purple-400 font-bold ml-2">{locationId}</span></p>
                 <p><span className="text-slate-500">Job ID:</span> <span className="text-slate-300 ml-2">job_{Math.random().toString(36).substr(2, 9)}</span></p>
               </div>
-              <a href="https://app.gohighlevel.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-4 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors">
-                <ExternalLink className="w-3.5 h-3.5" /> Open in GoHighLevel
+              <a href="https://businessesos.com/dashboard" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-4 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors">
+                <ExternalLink className="w-3.5 h-3.5" /> Open in Business OS
               </a>
             </div>
           )}
@@ -113,7 +113,7 @@ export default function PortalNewClient() {
             className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white py-4 rounded-xl text-sm font-bold tracking-wide flex justify-center items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-500/25"
           >
             <Zap className="w-4 h-4" />
-            {status === "loading" ? "Provisioning..." : "Provision GHL Account"}
+            {status === "loading" ? "Provisioning..." : "Provision Business OS Account"}
           </button>
         </form>
       </div>

@@ -18,9 +18,9 @@ export default function PortalActiveTools() {
         const mockSkills: Skill[] = [
           {
             id: "1",
-            name: "Provision GHL Sub-Account",
-            description: "Creates a new GoHighLevel sub-account and generates base prompts for Aria AI.",
-            trigger_phrase: "GHL PROVISION",
+            name: "Provision Business OS Sub-Account",
+            description: "Creates a new Business OS CRM sub-account and generates base prompts for Aria AI.",
+            trigger_phrase: "CRM PROVISION",
             input_schema: {
               properties: {
                 clientName: { type: "string" },
@@ -62,7 +62,7 @@ export default function PortalActiveTools() {
           Active Operations Tools
         </h1>
         <p className="text-slate-400 max-w-2xl">
-          Run automated CRM provisioning skills. These tools deploy environments and generate specialized prompt packages for GHL Vibe Coder, Ask AI, and Automation Builder.
+          Run automated CRM provisioning skills. These tools deploy environments and generate specialized prompt packages for Business OS Vibe Coder, Ask AI, and Automation Builder.
         </p>
       </div>
 

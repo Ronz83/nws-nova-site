@@ -36,7 +36,7 @@ const ACADEMY_ASSETS = [
 ## Phase 2: The Demonstration (10 mins)
 - **Action:** Have the prospect call the demo number.
 - Let them interact with Aria.
-- Show them the conversation logging in the GHL dashboard in real-time.
+- Show them the conversation logging in the Business OS CRM dashboard in real-time.
 - "Imagine a customer calling at 9 PM on a Sunday. They get this immediate response and book directly into your calendar."
 
 ## Phase 3: The Offer & Close (5 mins)
@@ -51,7 +51,7 @@ const ACADEMY_ASSETS = [
     content: `# Extendly Handover SOP
 
 ## 1. Pre-Handover Requirements
-- Provision GHL sub-account via the New Client Provisioning tool.
+- Provision Business OS sub-account via the New Client Provisioning tool.
 - Apply the correct industry snapshot.
 - Generate and apply custom Vibe Coder and Ask AI prompts.
 

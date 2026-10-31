@@ -52,7 +52,7 @@ export function DashboardAutomations() {
 
   const handleSaveAndActivate = async () => {
     if (!user?.clientId) {
-      alert("No Location ID found. Please ensure you are connected to a GHL sub-account.");
+      alert("No Location ID found. Please ensure you are connected to a Business OS workspace.");
       return;
     }
     

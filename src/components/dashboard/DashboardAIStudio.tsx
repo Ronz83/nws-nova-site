@@ -28,7 +28,7 @@ export function DashboardAIStudio() {
 
   const handleSaveKnowledge = async () => {
     if (!user?.clientId) {
-      alert("No Location ID found. Please ensure you are connected to a GHL sub-account.");
+      alert("No Location ID found. Please ensure you are connected to a Business OS workspace.");
       return;
     }
     setIsSaving(true);
@@ -212,7 +212,7 @@ export function DashboardAIStudio() {
                   </div>
                   <div className="h-4 w-px bg-slate-300"></div>
                   <select className="bg-white border border-slate-200 text-slate-700 text-xs rounded-lg focus:ring-sky-500 focus:border-sky-500 block p-1.5 font-medium cursor-pointer shadow-sm hover:border-sky-300 transition-colors">
-                    <option value="">Import from NWS/GHL...</option>
+                    <option value="">Import from Business OS...</option>
                     <option value="cv_faq">FAQs (Custom Value)</option>
                     <option value="cv_policies">Company Policies (Custom Value)</option>
                     <option value="media_menu">Menu PDF (Media Library)</option>
