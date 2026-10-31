@@ -27,7 +27,7 @@ export default async function handler(req: Request, res: Response) {
       throw new Error(`Failed to fetch pipelines: ${pipelinesRes.statusText}`);
     }
 
-    const pipelinesJson = await pipelinesRes.json();
+    const pipelinesJson: any = await pipelinesRes.json();
     const pipelines = pipelinesJson.pipelines || [];
 
     if (pipelines.length === 0) {
@@ -50,7 +50,7 @@ export default async function handler(req: Request, res: Response) {
       throw new Error(`Failed to fetch opportunities: ${oppsRes.statusText}`);
     }
 
-    const oppsJson = await oppsRes.json();
+    const oppsJson: any = await oppsRes.json();
     return res.json({ 
       pipelineId: pipelines[0].id,
       pipelineName: pipelines[0].name,

@@ -33,7 +33,7 @@ export default async function handler(req: Request, res: Response) {
         throw new Error('Failed to fetch from GHL API');
       }
 
-      const data = await response.json();
+      const data: any = await response.json();
       
       // Find the specific KB custom value
       const kbValue = data.customValues?.find((cv: any) => cv.name === KB_CUSTOM_VALUE_NAME);
@@ -65,7 +65,7 @@ export default async function handler(req: Request, res: Response) {
 
       if (!getRes.ok) throw new Error('Failed to fetch from GHL API');
       
-      const getData = await getRes.json();
+      const getData: any = await getRes.json();
       const kbValue = getData.customValues?.find((cv: any) => cv.name === KB_CUSTOM_VALUE_NAME);
 
       let updateRes;

@@ -3,7 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Import our Vercel handlers
+// Import our Express/API handlers
 import analyzeHandler from './api/workbench/analyze.ts';
 import chatHandler from './api/workbench/chat.ts';
 import contactHandler from './api/crm/contact.ts';
@@ -30,6 +30,7 @@ import brainChatHandler from './api/brain/chat.ts';
 import ssoHandler from './api/auth/sso.ts';
 import profileSyncHandler from './api/profile/sync.ts';
 import projectStateHandler from './api/projects/state.ts';
+import bugReportHandler from './api/bug-report.ts';
 import { sessionHandler, startHandler, logoutHandler, updatePermissionsHandler, teamPermissionsHandler, onboardingHandler } from './api/auth/session.ts';
 import { requireSession } from './api/lib/session.ts';
 
@@ -44,11 +45,17 @@ app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), strip
 
 app.use(express.json());
 
-// Map the API routes
+// Public lead-gen & visitor routes (Rule BQ: frictionless public intake)
 app.post('/api/stripe/checkout', stripeCheckoutHandler);
-app.post('/api/workbench/analyze', requireSession({ scopeLocation: true }), analyzeHandler);
-app.post('/api/workbench/chat', requireSession({ scopeLocation: true }), chatHandler);
-app.post('/api/crm/contact', requireSession({ scopeLocation: true }), contactHandler);
+app.post('/api/workbench/analyze', analyzeHandler);
+app.post('/api/workbench/chat', chatHandler);
+app.post('/api/crm/contact', contactHandler);
+app.get('/api/ghl/feature-flags', featureFlagsHandler);
+app.get('/api/ghl/chat-widget', chatWidgetHandler);
+app.post('/api/ai/niche-blueprint', nicheBlueprintHandler);
+app.post('/api/bug-report', bugReportHandler);
+
+// Protected CRM, GHL & Admin routes
 app.get('/api/crm/contacts', requireSession({ scopeLocation: true }), contactsHandler);
 app.get('/api/crm/opportunities', requireSession({ scopeLocation: true }), opportunitiesHandler);
 app.get('/api/crm/conversations', requireSession({ scopeLocation: true }), conversationsHandler);
@@ -68,9 +75,6 @@ app.post('/api/ghl/snapshots/push', requireSession({ admin: true }), pushSnapsho
 app.get('/api/website/intake', websiteIntakeHandler);
 app.post('/api/website/intake', websiteIntakeHandler);
 app.get('/api/website/requests', websiteRequestsHandler);
-app.get('/api/ghl/feature-flags', requireSession({ scopeLocation: true }), featureFlagsHandler);
-app.post('/api/ai/niche-blueprint', nicheBlueprintHandler);
-app.get('/api/ghl/chat-widget', requireSession({ scopeLocation: true }), chatWidgetHandler);
 app.post('/api/brain/chat', requireSession({ admin: true }), brainChatHandler);
 app.get('/api/auth/sso', ssoHandler);
 app.get('/api/auth/session', sessionHandler);
@@ -92,15 +96,15 @@ app.get('/api/results/:id', (req, res) => {
 });
 
 // Serve static standalone sales pages without .html extension
-app.get('/smart-start', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'smart-start', 'index.html')));
-app.get('/business-audit', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'business-audit', 'index.html')));
-app.get('/ai-receptionist', (req, res) => res.sendFile(path.join(__dirname, 'dist', 'ai-receptionist', 'index.html')));
+app.get('/smart-start', (_req, res) => res.sendFile(path.join(__dirname, 'dist', 'smart-start', 'index.html')));
+app.get('/business-audit', (_req, res) => res.sendFile(path.join(__dirname, 'dist', 'business-audit', 'index.html')));
+app.get('/ai-receptionist', (_req, res) => res.sendFile(path.join(__dirname, 'dist', 'ai-receptionist', 'index.html')));
 
 // Serve static frontend files from Vite's build output
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // SPA fallback - anything else serves index.html
-app.use((req, res) => {
+app.use((_req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 

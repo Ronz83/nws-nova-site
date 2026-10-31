@@ -2,7 +2,7 @@
 // NWS Business Intelligence Engine
 // Scrapes domain → Gemini AI analysis → business score + gap report + custom Vapi agent → lead to GHL
 
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Request, Response } from 'express';
 import { bos } from '../lib/bos.js';
 
 const VAPI_API_KEY    = process.env.VAPI_API_KEY;
@@ -14,7 +14,7 @@ const GHL_PIPELINE_ID = process.env.GHL_PIPELINE_ID;
 const GHL_STAGE_ID    = process.env.GHL_STAGE_HOT_LEAD_ID;
 const GHL_BASE        = 'https://services.leadconnectorhq.com';
 
-function setCors(res: VercelResponse) {
+function setCors(res: Response) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -451,7 +451,7 @@ async function updateGHLResultUrl(contactId: string, resultUrl: string) {
   }
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   setCors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ status: 'error', message: 'Method not allowed' });

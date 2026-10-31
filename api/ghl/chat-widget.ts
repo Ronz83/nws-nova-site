@@ -33,7 +33,7 @@ export default async function handler(req: Request, res: Response) {
       return res.status(502).json({ error: 'Failed to fetch widget IDs from GHL' });
     }
 
-    const ghlData = await ghlRes.json();
+    const ghlData: any = await ghlRes.json();
     const customValues = ghlData.customValues || [];
 
     let chatWidgetId: string | null = null;

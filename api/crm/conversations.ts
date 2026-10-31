@@ -31,7 +31,7 @@ export default async function handler(req: Request, res: Response) {
       throw new Error(`Failed to fetch conversations: ${inboxRes.statusText}`);
     }
 
-    const inboxJson = await inboxRes.json();
+    const inboxJson: any = await inboxRes.json();
     
     // Map GHL conversations to our UI format
     const formattedConversations = (inboxJson.conversations || []).map((c: any) => ({

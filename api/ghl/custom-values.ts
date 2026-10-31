@@ -25,11 +25,15 @@ export default async function handler(req: any, res: any) {
     // 1. Fetch existing custom values
     const getRes = await fetch(`${GHL_API_BASE}/locations/${locationId}/customValues`, {
       method: 'GET',
-      headers: { ...headers, 'Content-Type': undefined } // Remove content-type for GET
+      headers: {
+        'Authorization': `Bearer ${tokenData.access_token}`,
+        'Version': '2021-07-28',
+        'Accept': 'application/json'
+      }
     });
 
     if (!getRes.ok) throw new Error('Failed to fetch from GHL API');
-    const getData = await getRes.json();
+    const getData: any = await getRes.json();
     const existingCVs = getData.customValues || [];
 
     // Define the required custom values

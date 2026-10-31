@@ -1,8 +1,9 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
+import { bos } from '../lib/bos.js';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   const { code } = req.query;
   
   if (!code) {
@@ -45,8 +46,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(502).json({ error: 'Failed to exchange token', details: errorText });
     }
 
-    const tokenData = await tokenRes.json();
+    const tokenData: any = await tokenRes.json();
     
+    // Save to Business OS D1 if companyId is present
+    if (tokenData.companyId) {
+      await bos.ghlToken.update(tokenData.companyId, {
+        access_token: tokenData.access_token,
+        refresh_token: tokenData.refresh_token,
+        expires_in: tokenData.expires_in,
+        location_id: tokenData.locationId,
+        token_type: tokenData.token_type,
+        scope: tokenData.scope,
+        user_type: tokenData.userType,
+      }).catch((e) => console.warn('Could not persist GHL token to BOS:', e.message));
+    }
+
     // Save to local file for development / proof-of-concept
     const tokenPath = path.resolve(process.cwd(), 'ghl_token.json');
     fs.writeFileSync(tokenPath, JSON.stringify(tokenData, null, 2), 'utf-8');

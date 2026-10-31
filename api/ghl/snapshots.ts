@@ -128,7 +128,7 @@ export async function pushToGHL(req: Request, res: Response) {
       });
 
       if (!getRes.ok) return;
-      const getData = await getRes.json();
+      const getData: any = await getRes.json();
       const existingField = getData.customValues?.find((cv: any) => cv.name === ghlFieldName);
 
       if (existingField) {
@@ -169,7 +169,7 @@ export async function pushToGHL(req: Request, res: Response) {
         }
       });
       if (!getRes.ok) continue;
-      const getData = await getRes.json();
+      const getData: any = await getRes.json();
       const existing = getData.customValues?.find((cv: any) => cv.name === name);
 
       if (existing) {

@@ -26,7 +26,7 @@ export default async function handler(req: any, res: any) {
       throw new Error(`Failed to fetch calendars: ${calRes.statusText}`);
     }
 
-    const calJson = await calRes.json();
+    const calJson: any = await calRes.json();
     const calendars = calJson.calendars || [];
     
     if (calendars.length === 0) {
@@ -52,7 +52,7 @@ export default async function handler(req: any, res: any) {
        throw new Error(`Failed to fetch events: ${eventsRes.statusText}`);
     }
 
-    const eventsJson = await eventsRes.json();
+    const eventsJson: any = await eventsRes.json();
 
     return res.json({ events: eventsJson.events || [] });
 

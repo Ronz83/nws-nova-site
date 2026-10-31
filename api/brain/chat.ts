@@ -18,7 +18,7 @@ export default async function handler(req: Request, res: Response) {
   }
 
   // 1. Build initial contents array
-  const contents = conversationHistory.map(m => ({
+  const contents: { role: string; parts: Record<string, unknown>[] }[] = conversationHistory.map(m => ({
     role: m.role === 'user' ? 'user' : 'model',
     parts: [{ text: m.content }],
   }));
@@ -45,7 +45,7 @@ export default async function handler(req: Request, res: Response) {
       body: JSON.stringify(payload),
     });
 
-    const data = await response.json();
+    const data: any = await response.json();
     
     if (!response.ok) {
       console.error('Gemini API Error:', data);
@@ -88,7 +88,7 @@ export default async function handler(req: Request, res: Response) {
         body: JSON.stringify(followUpPayload),
       });
 
-      const followUpData = await followUpResponse.json();
+      const followUpData: any = await followUpResponse.json();
       finalReply = followUpData?.candidates?.[0]?.content?.parts?.[0]?.text || 'Action completed.';
 
     } else {

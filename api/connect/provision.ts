@@ -1,6 +1,6 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Request, Response } from 'express';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
@@ -33,7 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       body: JSON.stringify(payload)
     });
 
-    const data = await backendRes.json();
+    const data: any = await backendRes.json();
 
     if (!backendRes.ok) {
       throw new Error(data.error || data.detail || 'Provisioning engine failed');

@@ -44,7 +44,7 @@ export default async function handler(req: Request, res: Response) {
     }
 
     // Get the valid OAuth token for this location
-    const token = await getValidGHLToken(locationId as string);
+    const token = await getValidGHLToken();
     if (!token) {
       return res.status(401).json({ error: 'No valid token found for location' });
     }
@@ -73,7 +73,7 @@ export default async function handler(req: Request, res: Response) {
       return res.status(ghlRes.status).json({ error: 'Failed to upload to GHL', details: errorText });
     }
 
-    const data = await ghlRes.json();
+    const data: any = await ghlRes.json();
     return res.status(200).json({ success: true, url: data.url || data.fileUrl || data.file?.url });
   } catch (error) {
     console.error('Error in media proxy:', error);

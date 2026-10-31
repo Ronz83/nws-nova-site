@@ -46,7 +46,7 @@ export async function getValidGHLToken(): Promise<GHLTokenData> {
     }
     
     if (res.ok && !tokenData.locationId) {
-       const json = await res.json();
+       const json: any = await res.json();
        if (json.locations && json.locations.length > 0) {
          tokenData.locationId = json.locations[0].id;
          await bos.ghlToken.update(tokenData.companyId, { location_id: tokenData.locationId });
@@ -87,7 +87,7 @@ export async function refreshGHLToken(refreshToken: string, companyId: string): 
     throw new Error('Failed to refresh GHL token');
   }
 
-  const newTokenData = await response.json();
+  const newTokenData: any = await response.json();
   
   await bos.ghlToken.update(companyId, {
     access_token: newTokenData.access_token,

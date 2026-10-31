@@ -35,7 +35,7 @@ export default async function handler(req: Request, res: Response) {
       return res.status(502).json({ error: 'Failed to fetch feature flags from GHL' });
     }
 
-    const ghlData = await ghlRes.json();
+    const ghlData: any = await ghlRes.json();
     const customValues = ghlData.customValues || [];
 
     // Map GHL Custom Value names back to dashboard feature keys

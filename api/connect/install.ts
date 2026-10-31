@@ -1,6 +1,6 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Request, Response } from 'express';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   const clientId = process.env.GHL_APP_CLIENT_ID;
   if (!clientId) {
     return res.status(500).json({ error: 'Missing GHL_APP_CLIENT_ID in .env.local' });

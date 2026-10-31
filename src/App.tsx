@@ -5,6 +5,7 @@ import { FeatureProvider } from "./contexts/FeatureContext";
 import { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import BugReportModal from "./components/BugReportModal";
 
 
 // Dashboard Components (Client-Facing)
@@ -250,6 +251,7 @@ export default function App() {
       <FeatureProvider>
           <Router>
             {domainRoutes}
+            <BugReportModal appSource="nws-nova-site" />
           </Router>
       </FeatureProvider>
     </AuthProvider>

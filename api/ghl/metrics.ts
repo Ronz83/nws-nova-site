@@ -1,7 +1,7 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getValidGHLToken } from '../lib/ghl';
+import type { Request, Response } from 'express';
+import { getValidGHLToken } from '../lib/ghl.js';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
@@ -31,7 +31,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     let totalContacts = 0;
     if (contactsRes.ok) {
-      const contactsData = await contactsRes.json();
+      const contactsData: any = await contactsRes.json();
       totalContacts = contactsData.meta?.total || 0;
     }
 
@@ -39,7 +39,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let appointmentsCount = 0;
     
     if (oppsRes.ok) {
-      const oppsData = await oppsRes.json();
+      const oppsData: any = await oppsRes.json();
       const opportunities = oppsData.opportunities || [];
       
       // Calculate total pipeline value (revenue) and mock appointments from opps

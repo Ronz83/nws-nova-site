@@ -139,7 +139,7 @@ Respond ONLY with a valid JSON object in this exact structure (no markdown, no c
       return res.status(502).json({ error: 'AI service unavailable', details: errText });
     }
 
-    const geminiData = await geminiRes.json();
+    const geminiData: any = await geminiRes.json();
     const rawText = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     // Clean the response — strip any accidental markdown fences

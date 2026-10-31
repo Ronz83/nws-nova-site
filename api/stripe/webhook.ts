@@ -1,14 +1,15 @@
 import Stripe from 'stripe';
+import type { Request, Response } from 'express';
 import { provisionWorkspace } from '../connect/provisionService.js';
 import { bos } from '../lib/bos.js';
 
-export default async function webhookHandler(req: any, res: any) {
+export default async function webhookHandler(req: Request, res: Response) {
   if (req.method !== 'POST') {
     return res.status(405).send('Method not allowed');
   }
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-    apiVersion: '2023-10-16',
+    apiVersion: '2023-10-16' as any,
   });
 
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
@@ -17,8 +18,6 @@ export default async function webhookHandler(req: any, res: any) {
   let event: Stripe.Event;
 
   try {
-    // req.body must be the raw buffer/string for signature verification!
-    // In server.ts, we need to map this route with express.raw() BEFORE express.json()
     event = stripe.webhooks.constructEvent(req.body, signature, webhookSecret);
   } catch (err: any) {
     console.error(`Webhook Error: ${err.message}`);
@@ -30,7 +29,7 @@ export default async function webhookHandler(req: any, res: any) {
       const session = event.data.object as Stripe.Checkout.Session;
       console.log(`Payment successful for checkout: ${session.id}`);
       console.log('Metadata:', session.metadata);
-      
+
       try {
         const nameParts = (session.customer_details?.name || 'New Customer').split(' ');
         const firstName = nameParts[0];
@@ -40,41 +39,53 @@ export default async function webhookHandler(req: any, res: any) {
         const businessName = session.metadata?.businessName || `${firstName}'s Business`;
         const planTier = session.metadata?.planTier || 'hauler';
 
-        if (email) {
-          console.log(`Provisioning workspace for ${email}...`);
-          const result = await provisionWorkspace({
-            firstName,
-            lastName,
-            email,
-            phone: phone || undefined,
-            businessName,
-            planTier
-          });
-          console.log('Provisioning successful:', result);
-
-          if (result.userId && result.locationId) {
-            const isCorporate = planTier === 'corporate';
-            await bos.permissions.provision({
-              userId: result.userId,
-              role: 'location_admin',
-              locationId: result.locationId,
-              planTier,
-              permissions: {
-                operations: true,
-                growth: isCorporate,
-                automations: isCorporate,
-                aiStudio: true,
-                settings: isCorporate,
-                requireUpgrade: !isCorporate,
-              },
-            });
-            console.log('User permissions saved to Business OS');
-          }
-        } else {
+        if (!email) {
           console.error('No email found in checkout session to provision workspace.');
+          return res.status(400).json({ error: 'Missing customer email in checkout session' });
         }
+
+        console.log(`Provisioning workspace for ${email}...`);
+        const result = await provisionWorkspace({
+          firstName,
+          lastName,
+          email,
+          phone: phone || undefined,
+          businessName,
+          planTier,
+        });
+        console.log('Provisioning successful:', result);
+
+        if (!result.userId || !result.locationId) {
+          throw new Error(
+            result.userError || 'Provisioning failed to return userId and locationId'
+          );
+        }
+
+        const isCorporate = planTier === 'corporate';
+        await bos.permissions.provision({
+          userId: result.userId,
+          email,
+          name: `${firstName} ${lastName}`.trim(),
+          businessName,
+          role: 'location_admin',
+          locationId: result.locationId,
+          planTier,
+          permissions: {
+            operations: true,
+            growth: isCorporate,
+            automations: isCorporate,
+            aiStudio: true,
+            settings: isCorporate,
+            requireUpgrade: !isCorporate,
+          },
+        });
+        console.log('User permissions saved to Business OS');
       } catch (e: any) {
         console.error('Error during auto-provisioning:', e.message);
+        return res.status(500).json({
+          error: 'Provisioning failed; Stripe will retry',
+          detail: e.message,
+        });
       }
       break;
     }

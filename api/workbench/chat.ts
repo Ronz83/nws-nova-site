@@ -1,8 +1,8 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Request, Response } from 'express';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { businessName, industry, messages } = req.body as {
@@ -56,7 +56,7 @@ Respond as if you are the receptionist for ${businessName}. Be professional but 
       }
     );
 
-    const data = await response.json();
+    const data: any = await response.json();
     const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text
       || "I'm sorry, I'm having trouble connecting right now. Please try again.";
 
