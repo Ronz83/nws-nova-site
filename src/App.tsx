@@ -46,7 +46,6 @@ const PricingRedirect = lazy(() => import("./pages/PricingRedirect"));
 const ResultsPage = lazy(() => import("./pages/ResultsPage"));
 const BusinessOS  = lazy(() => import("./pages/BusinessOS"));
 const Partners    = lazy(() => import("./pages/Partners"));
-const ProductBlueprint = lazy(() => import("./pages/ProductBlueprint"));
 
 // Giveaway Funnel Pages
 const SmartStart     = lazy(() => import("./pages/SmartStart"));
@@ -190,8 +189,6 @@ export default function App() {
           <Route path="/results/:id" element={<ResultsPage />} />
           <Route path="/partners" element={<Suspense fallback={<PageLoader />}><Partners /></Suspense>} />
         </Route>
-        <Route path="/pricing-blueprint" element={<Suspense fallback={<PageLoader />}><ProductBlueprint /></Suspense>} />
-        <Route path="/product-blueprint" element={<Suspense fallback={<PageLoader />}><ProductBlueprint /></Suspense>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     );
@@ -222,8 +219,8 @@ export default function App() {
           <Route path="/partners" element={<Suspense fallback={<PageLoader />}><Partners /></Suspense>} />
         </Route>
         <Route path="/promo1" element={<Suspense fallback={<PageLoader />}><SummerLaunch /></Suspense>} />
-        <Route path="/pricing-blueprint" element={<Suspense fallback={<PageLoader />}><ProductBlueprint /></Suspense>} />
-        <Route path="/product-blueprint" element={<Suspense fallback={<PageLoader />}><ProductBlueprint /></Suspense>} />
+
+
         <Route path="/solopreneur" element={<Suspense fallback={<PageLoader />}><SolopreneurPage /></Suspense>} />
         <Route path="/ai-messaging" element={<Suspense fallback={<PageLoader />}><AIMessaging /></Suspense>} />
         <Route path="/reputation" element={<Suspense fallback={<PageLoader />}><Reputation /></Suspense>} />
