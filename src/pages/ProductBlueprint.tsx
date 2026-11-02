@@ -32,6 +32,8 @@ import {
   Sliders,
   PlusSquare,
   Cloud,
+  Rocket,
+  ExternalLink,
 } from "lucide-react";
 
 export type BlueprintCategoryKey =
@@ -60,6 +62,38 @@ export interface BlueprintBundleItem {
   finalPrice: number;
 }
 
+export interface SubAccountTargetOption {
+  locationId: string;
+  businessName: string;
+  email: string;
+  industry: string;
+  label: string;
+}
+
+const SUBACCOUNT_TARGETS: SubAccountTargetOption[] = [
+  {
+    locationId: "M8HkVLNCHP9FoheP97uF",
+    businessName: "Automotive Art Wildey",
+    email: "admin@automotiveart.com",
+    industry: "auto-rescue",
+    label: "Automotive Art Wildey (Barbados) — M8HkVLNCHP9FoheP97uF",
+  },
+  {
+    locationId: "nOr1amesNgqe2QU1bKKE",
+    businessName: "Automotive Art Motors",
+    email: "motors@automotiveart.com",
+    industry: "auto-rescue",
+    label: "Automotive Art Motors — nOr1amesNgqe2QU1bKKE",
+  },
+  {
+    locationId: "PiPGhGQUHooNH7p8no1p",
+    businessName: "Novelty Web Solutions HQ",
+    email: "admin@businessesos.com",
+    industry: "agency",
+    label: "Novelty Web Solutions HQ — PiPGhGQUHooNH7p8no1p",
+  },
+];
+
 const INITIAL_BLUEPRINT_PRODUCTS: BlueprintProductItem[] = [
   {
     id: "prod-credits-payg",
@@ -69,6 +103,24 @@ const INITIAL_BLUEPRINT_PRODUCTS: BlueprintProductItem[] = [
     unit: "/mo base",
     description:
       "Flexible metered AI credit consumption for light automation, on-demand agent queries, and variable workloads.",
+  },
+  {
+    id: "prod-credits-starter-ai",
+    name: "Starter AI Pass-Through (+$50)",
+    category: "AI_CREDITS",
+    price: 50,
+    unit: "/mo (0% comm)",
+    description:
+      "Official Tier 1 Starter AI usage upgrade (+$50/mo USD pass-through credit pack; 0% affiliate commission per Rule EM).",
+  },
+  {
+    id: "prod-credits-pro-ai",
+    name: "Pro Voice AI Pass-Through (+$97)",
+    category: "AI_CREDITS",
+    price: 97,
+    unit: "/mo (0% comm)",
+    description:
+      "Official Pro 24/7 Voice & WhatsApp AI usage upgrade (+$97/mo USD pass-through credit pack; 0% affiliate commission per Rule EM).",
   },
   {
     id: "prod-credits-growth",
@@ -197,6 +249,42 @@ const INITIAL_BLUEPRINT_PRODUCTS: BlueprintProductItem[] = [
       "Real-time local SEO business citation sync across 70+ directories including CARICOM Business, Google Business, and Apple Maps.",
   },
   {
+    id: "prod-cbpay-bimpay",
+    name: "CBPay & BiMPay Console",
+    category: "WEB_INFRA",
+    price: 49,
+    unit: "/mo",
+    description:
+      "Cari Biz Pay (CBPay) & BiMPay instant QR checkout, 1:1 CariVault settlement, 60/40 CariSplit, and CariProof income certificates.",
+  },
+  {
+    id: "prod-dispatch-os",
+    name: "Dispatch OS / Roadside Rescue",
+    category: "ENTERPRISE_SW",
+    price: 497,
+    unit: "/mo (Pro Fleet)",
+    description:
+      "Standalone live GPS fleet radar (5KM/10KM/15KM Barbados Esri map), customer SOS tracking, and white-label sub-account rebranding ($197 / $297 / $497 tiers).",
+  },
+  {
+    id: "prod-smartcard-loyalty",
+    name: "SmartCard & Loyalty Pass",
+    category: "ENTERPRISE_SW",
+    price: 49,
+    unit: "/mo",
+    description:
+      "Apple Wallet & Google Wallet digital loyalty pass, cashier QR points register, and automated VIP tier rewards.",
+  },
+  {
+    id: "prod-ticketflows",
+    name: "TicketFlows (Haulage & Field OS)",
+    category: "ENTERPRISE_SW",
+    price: 497,
+    unit: "/mo",
+    description:
+      "Haulage, quarry, aggregate & field ticketing OS with AI OCR scale-ticket scanning, fleet tonnage ledger, and automated invoicing.",
+  },
+  {
     id: "prod-project-mgmt",
     name: "Project Management Software",
     category: "ENTERPRISE_SW",
@@ -218,26 +306,62 @@ const INITIAL_BLUEPRINT_PRODUCTS: BlueprintProductItem[] = [
 
 const INITIAL_BLUEPRINT_BUNDLES: BlueprintBundleItem[] = [
   {
-    id: "bundle-growth-blueprint",
-    name: "Growth Bundle (Blueprint Standard)",
+    id: "bundle-tier1-starter-97",
+    name: "Tier 1 Starter ($97/mo Official)",
     description:
-      "Core growth stack combining Growth AI Credits, Marketing & Social essentials, Unified Inbox, and Smart Website.",
+      "Official Tier 1 Starter package for sole traders, barbers, and small shops: Smart Website, Unified Inbox, WhatsApp, and Listings.",
+    productIds: [
+      "prod-smart-website",
+      "prod-unified-inbox",
+      "prod-whatsapp",
+      "prod-listings",
+    ],
+    discountPercent: 51,
+    finalPrice: 97,
+  },
+  {
+    id: "bundle-tier1-growth-197",
+    name: "Tier 1 Growth ($197/mo Official)",
+    description:
+      "Official Tier 1 Growth package adding Social Suite, Reputation Management, SmartCard Loyalty, and CBPay & BiMPay.",
+    productIds: [
+      "prod-smart-website",
+      "prod-unified-inbox",
+      "prod-whatsapp",
+      "prod-social-suite",
+      "prod-reputation-mgmt",
+      "prod-smartcard-loyalty",
+      "prod-cbpay-bimpay",
+    ],
+    discountPercent: 44,
+    finalPrice: 197,
+  },
+  {
+    id: "bundle-tier1-pro-297",
+    name: "Tier 1 Pro ($297/mo Official + Onboarding Team)",
+    description:
+      "Full Tier 1 Pro stack with Ask AI, Industry Snapshots, Ad Manager, SmartCard, CBPay & Dedicated Human Onboarding Team.",
     productIds: [
       "prod-credits-growth",
       "prod-ask-ai",
+      "prod-industry-snapshots",
       "prod-social-suite",
+      "prod-ad-manager",
       "prod-reputation-mgmt",
       "prod-unified-inbox",
+      "prod-whatsapp",
       "prod-smart-website",
+      "prod-smartcard-loyalty",
+      "prod-cbpay-bimpay",
     ],
-    discountPercent: 20,
-    finalPrice: 299,
+    discountPercent: 60,
+    finalPrice: 297,
   },
   {
-    id: "bundle-pro-blueprint",
-    name: "Pro Bundle (Autonomous AI + Omnichannel)",
+    id: "bundle-tier2-pro-997",
+    name: "Tier 2 Niche Business Suite ($997/mo Official)",
     description:
-      "High-velocity automation package with Pro Credits, Managed Agents, Ad Manager, WhatsApp, and Listings.",
+      "Full-service high-earning business suite with Managed 24/7 AI Agents, Custom Website, SmartCard Loyalty, Omnichannel Inbox & Dedicated Onboarding Team.",
     productIds: [
       "prod-credits-pro",
       "prod-managed-agents",
@@ -245,32 +369,70 @@ const INITIAL_BLUEPRINT_BUNDLES: BlueprintBundleItem[] = [
       "prod-industry-snapshots",
       "prod-social-suite",
       "prod-ad-manager",
+      "prod-reputation-mgmt",
       "prod-unified-inbox",
       "prod-whatsapp",
       "prod-smart-website",
+      "prod-smartcard-loyalty",
+      "prod-cbpay-bimpay",
       "prod-listings",
     ],
-    discountPercent: 25,
-    finalPrice: 668,
+    discountPercent: 14,
+    finalPrice: 997,
   },
   {
-    id: "bundle-enterprise-suite",
-    name: "Enterprise Full Ecosystem Suite",
+    id: "bundle-tier2-scale-1497",
+    name: "Tier 2 Pro Full-Service Scale ($1,497 = $497 App + $997 Suite)",
     description:
-      "Complete turn-key deployment including Custom Apps, Project Management, and Events Management Software.",
+      "Flagship Automotive Art / Enterprise package combining Pro Dispatch OS / AA Roadside Rescue ($497/mo) + Tier 2 Niche Business Suite ($997/mo).",
     productIds: [
+      "prod-dispatch-os",
+      "prod-smartcard-loyalty",
+      "prod-cbpay-bimpay",
       "prod-credits-pro",
       "prod-managed-agents",
+      "prod-ask-ai",
       "prod-industry-snapshots",
+      "prod-social-suite",
       "prod-ad-manager",
+      "prod-reputation-mgmt",
       "prod-unified-inbox",
-      "prod-meeting-rooms",
+      "prod-whatsapp",
+      "prod-smart-website",
       "prod-custom-apps",
+      "prod-listings",
+    ],
+    discountPercent: 19,
+    finalPrice: 1497,
+  },
+  {
+    id: "bundle-tier2-enterprise-2997",
+    name: "Tier 2 Multi-Location Enterprise ($2,997/mo Official)",
+    description:
+      "Complete multi-branch enterprise deployment including Dispatch OS, TicketFlows, Custom Apps, Project & Events Management, and Pro AI.",
+    productIds: [
+      "prod-dispatch-os",
+      "prod-ticketflows",
+      "prod-smartcard-loyalty",
+      "prod-cbpay-bimpay",
+      "prod-credits-pro",
+      "prod-managed-agents",
+      "prod-ask-ai",
+      "prod-industry-snapshots",
+      "prod-social-suite",
+      "prod-ad-manager",
+      "prod-reputation-mgmt",
+      "prod-unified-inbox",
+      "prod-whatsapp",
+      "prod-meeting-rooms",
+      "prod-smart-website",
+      "prod-custom-apps",
+      "prod-listings",
       "prod-project-mgmt",
       "prod-events-mgmt",
     ],
-    discountPercent: 28,
-    finalPrice: 785,
+    discountPercent: 0,
+    finalPrice: 2997,
   },
 ];
 
@@ -327,6 +489,17 @@ const CATEGORY_META: Record<BlueprintCategoryKey, CategoryMeta> = {
   },
 };
 
+export type PresetKey =
+  | "payg"
+  | "growth"
+  | "pro"
+  | "tier1_97"
+  | "tier1_197"
+  | "tier1_297"
+  | "tier2_997"
+  | "tier2_1497"
+  | "tier2_2997";
+
 const BLUEPRINT_API_URL = "https://businessesos.com/api/v1/product-blueprint";
 
 export default function ProductBlueprint() {
@@ -345,19 +518,42 @@ export default function ProductBlueprint() {
   const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
 
   const [editingBundleId, setEditingBundleId] = useState<string | null>(null);
-  const [bundleName, setBundleName] = useState<string>("Custom Growth Bundle");
+  const [bundleName, setBundleName] = useState<string>(
+    "Tier 2 Pro Full-Service Scale ($1,497 = $497 App + $997 Suite)"
+  );
   const [bundleDesc, setBundleDesc] = useState<string>(
-    "Curated combination of AI, marketing, and communication tools."
+    "Flagship Automotive Art / Enterprise package combining Pro Dispatch OS / AA Roadside Rescue ($497/mo) + Tier 2 Niche Business Suite ($997/mo)."
   );
   const [draftProductIds, setDraftProductIds] = useState<string[]>([
-    "prod-credits-growth",
+    "prod-dispatch-os",
+    "prod-smartcard-loyalty",
+    "prod-cbpay-bimpay",
+    "prod-credits-pro",
     "prod-managed-agents",
+    "prod-ask-ai",
+    "prod-industry-snapshots",
     "prod-social-suite",
+    "prod-ad-manager",
+    "prod-reputation-mgmt",
     "prod-unified-inbox",
+    "prod-whatsapp",
     "prod-smart-website",
+    "prod-custom-apps",
+    "prod-listings",
   ]);
-  const [discountPercent, setDiscountPercent] = useState<number>(20);
-  const [customPrice, setCustomPrice] = useState<number | null>(null);
+  const [discountPercent, setDiscountPercent] = useState<number>(19);
+  const [customPrice, setCustomPrice] = useState<number | null>(1497);
+
+  const [targetLocationId, setTargetLocationId] = useState<string>(
+    "M8HkVLNCHP9FoheP97uF"
+  );
+  const [switchMode, setSwitchMode] = useState<
+    "owner_approved" | "manager_recommended"
+  >("owner_approved");
+  const [pushingToSubAccount, setPushingToSubAccount] = useState<boolean>(false);
+  const [lastPushedPortalUrl, setLastPushedPortalUrl] = useState<string | null>(
+    null
+  );
 
   const [draggedProductId, setDraggedProductId] = useState<string | null>(null);
   const [isDropzoneActive, setIsDropzoneActive] = useState<boolean>(false);
@@ -373,32 +569,36 @@ export default function ProductBlueprint() {
 
   const [isManualModalOpen, setIsManualModalOpen] = useState<boolean>(false);
 
-  const [syncStatus, setSyncStatus] = useState<"synced" | "saving" | "local">("synced");
-  const [toasts, setToasts] = useState<Array<{ id: number; message: string }>>([]);
+  const [syncStatus, setSyncStatus] = useState<"synced" | "saving" | "local">(
+    "synced"
+  );
+  const [toasts, setToasts] = useState<Array<{ id: number; message: string }>>(
+    []
+  );
 
   const showToast = (message: string) => {
     const id = Date.now() + Math.random();
     setToasts((prev) => [...prev, { id, message }]);
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 3200);
+    }, 3600);
   };
 
   useEffect(() => {
     let mounted = true;
     async function hydrateBlueprint() {
       try {
-        const storedProds = localStorage.getItem("ecosystem_products_v2");
-        const storedBundles = localStorage.getItem("ecosystem_bundles_v2");
+        const storedProds = localStorage.getItem("ecosystem_products_v2_5");
+        const storedBundles = localStorage.getItem("ecosystem_bundles_v2_5");
         if (storedProds && mounted) {
           const parsedProds = JSON.parse(storedProds);
-          if (Array.isArray(parsedProds) && parsedProds.length > 0) {
+          if (Array.isArray(parsedProds) && parsedProds.length >= 20) {
             setProducts(parsedProds);
           }
         }
         if (storedBundles && mounted) {
           const parsedBundles = JSON.parse(storedBundles);
-          if (Array.isArray(parsedBundles) && parsedBundles.length > 0) {
+          if (Array.isArray(parsedBundles) && parsedBundles.length >= 6) {
             setSavedBundles(parsedBundles);
           }
         }
@@ -411,18 +611,20 @@ export default function ProductBlueprint() {
         if (res.ok) {
           const data = await res.json();
           if (data?.ok && mounted) {
-            if (data.source === "d1") {
-              if (Array.isArray(data.products) && data.products.length > 0) {
-                setProducts(data.products);
-                localStorage.setItem(
-                  "ecosystem_products_v2",
-                  JSON.stringify(data.products)
-                );
-              }
+            if (
+              data.source === "d1" &&
+              Array.isArray(data.products) &&
+              data.products.length >= 20
+            ) {
+              setProducts(data.products);
+              localStorage.setItem(
+                "ecosystem_products_v2_5",
+                JSON.stringify(data.products)
+              );
               if (Array.isArray(data.savedBundles)) {
                 setSavedBundles(data.savedBundles);
                 localStorage.setItem(
-                  "ecosystem_bundles_v2",
+                  "ecosystem_bundles_v2_5",
                   JSON.stringify(data.savedBundles)
                 );
               }
@@ -447,8 +649,14 @@ export default function ProductBlueprint() {
     setProducts(nextProducts);
     setSavedBundles(nextBundles);
     try {
-      localStorage.setItem("ecosystem_products_v2", JSON.stringify(nextProducts));
-      localStorage.setItem("ecosystem_bundles_v2", JSON.stringify(nextBundles));
+      localStorage.setItem(
+        "ecosystem_products_v2_5",
+        JSON.stringify(nextProducts)
+      );
+      localStorage.setItem(
+        "ecosystem_bundles_v2_5",
+        JSON.stringify(nextBundles)
+      );
     } catch {
       // Ignore
     }
@@ -477,21 +685,39 @@ export default function ProductBlueprint() {
 
   const resetToBlueprintDefaults = async () => {
     const defaultProds = JSON.parse(JSON.stringify(INITIAL_BLUEPRINT_PRODUCTS));
-    const defaultBundles = JSON.parse(JSON.stringify(INITIAL_BLUEPRINT_BUNDLES));
+    const defaultBundles = JSON.parse(
+      JSON.stringify(INITIAL_BLUEPRINT_BUNDLES)
+    );
     setEditingBundleId(null);
     setDraftProductIds([
-      "prod-credits-growth",
+      "prod-dispatch-os",
+      "prod-smartcard-loyalty",
+      "prod-cbpay-bimpay",
+      "prod-credits-pro",
       "prod-managed-agents",
+      "prod-ask-ai",
+      "prod-industry-snapshots",
       "prod-social-suite",
+      "prod-ad-manager",
+      "prod-reputation-mgmt",
       "prod-unified-inbox",
+      "prod-whatsapp",
       "prod-smart-website",
+      "prod-custom-apps",
+      "prod-listings",
     ]);
-    setDiscountPercent(20);
-    setCustomPrice(null);
-    setBundleName("Custom Growth Bundle");
-    setBundleDesc("Curated combination of AI, marketing, and communication tools.");
+    setDiscountPercent(19);
+    setCustomPrice(1497);
+    setBundleName(
+      "Tier 2 Pro Full-Service Scale ($1,497 = $497 App + $997 Suite)"
+    );
+    setBundleDesc(
+      "Flagship Automotive Art / Enterprise package combining Pro Dispatch OS / AA Roadside Rescue ($497/mo) + Tier 2 Niche Business Suite ($997/mo)."
+    );
     await persistCatalogAndBundles(defaultProds, defaultBundles);
-    showToast("Restored original Product Ecosystem Blueprint defaults");
+    showToast(
+      "Restored 22 Ecosystem Modules + Official Tier 1 & Tier 2 Bundles"
+    );
   };
 
   const validDraftProductIds = draftProductIds.filter((id) =>
@@ -502,7 +728,10 @@ export default function ProductBlueprint() {
     .filter((p): p is BlueprintProductItem => Boolean(p));
 
   const calculateDraftRetailTotal = () => {
-    return selectedDraftProducts.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
+    return selectedDraftProducts.reduce(
+      (sum, p) => sum + (Number(p.price) || 0),
+      0
+    );
   };
 
   const calculateDraftFinalPrice = () => {
@@ -527,7 +756,8 @@ export default function ProductBlueprint() {
     draftRetail > 0 ? Math.round((draftSavings / draftRetail) * 100) : 0;
 
   const filteredProducts = products.filter((p) => {
-    const matchesCat = categoryFilter === "ALL" || p.category === categoryFilter;
+    const matchesCat =
+      categoryFilter === "ALL" || p.category === categoryFilter;
     const q = searchQuery.trim().toLowerCase();
     const matchesQuery =
       !q ||
@@ -563,9 +793,8 @@ export default function ProductBlueprint() {
     showToast("Cleared bundle studio draft");
   };
 
-  const loadBlueprintPreset = (type: "payg" | "growth" | "pro") => {
+  const loadBlueprintPreset = (type: PresetKey) => {
     setEditingBundleId(null);
-    setCustomPrice(null);
     if (type === "payg") {
       setBundleName("Pay-as-you-go Starter Package");
       setBundleDesc(
@@ -578,6 +807,7 @@ export default function ProductBlueprint() {
         "prod-smart-website",
       ]);
       setDiscountPercent(15);
+      setCustomPrice(null);
       showToast('Loaded "Pay-as-you-go Starter Package" preset');
     } else if (type === "growth") {
       setBundleName("Growth Bundle Package");
@@ -593,6 +823,7 @@ export default function ProductBlueprint() {
         "prod-smart-website",
       ]);
       setDiscountPercent(20);
+      setCustomPrice(null);
       showToast('Loaded "Growth Bundle Package" preset');
     } else if (type === "pro") {
       setBundleName("Pro Bundle Autonomous Suite");
@@ -612,7 +843,141 @@ export default function ProductBlueprint() {
         "prod-listings",
       ]);
       setDiscountPercent(25);
+      setCustomPrice(null);
       showToast('Loaded "Pro Bundle Autonomous Suite" preset');
+    } else if (type === "tier1_97") {
+      setBundleName("Tier 1 Starter ($97/mo Official)");
+      setBundleDesc(
+        "Official Tier 1 Starter package for sole traders, barbers, and small shops: Smart Website, Unified Inbox, WhatsApp, and Listings."
+      );
+      setDraftProductIds([
+        "prod-smart-website",
+        "prod-unified-inbox",
+        "prod-whatsapp",
+        "prod-listings",
+      ]);
+      setDiscountPercent(51);
+      setCustomPrice(97);
+      showToast("Loaded Official Tier 1 Starter ($97/mo USD)");
+    } else if (type === "tier1_197") {
+      setBundleName("Tier 1 Growth ($197/mo Official)");
+      setBundleDesc(
+        "Official Tier 1 Growth package adding Social Suite, Reputation Management, SmartCard Loyalty, and CBPay & BiMPay."
+      );
+      setDraftProductIds([
+        "prod-smart-website",
+        "prod-unified-inbox",
+        "prod-whatsapp",
+        "prod-social-suite",
+        "prod-reputation-mgmt",
+        "prod-smartcard-loyalty",
+        "prod-cbpay-bimpay",
+      ]);
+      setDiscountPercent(44);
+      setCustomPrice(197);
+      showToast("Loaded Official Tier 1 Growth ($197/mo USD)");
+    } else if (type === "tier1_297") {
+      setBundleName("Tier 1 Pro ($297/mo Official + Onboarding Team)");
+      setBundleDesc(
+        "Full Tier 1 Pro stack with Ask AI, Industry Snapshots, Ad Manager, SmartCard, CBPay & Dedicated Human Onboarding Team."
+      );
+      setDraftProductIds([
+        "prod-credits-growth",
+        "prod-ask-ai",
+        "prod-industry-snapshots",
+        "prod-social-suite",
+        "prod-ad-manager",
+        "prod-reputation-mgmt",
+        "prod-unified-inbox",
+        "prod-whatsapp",
+        "prod-smart-website",
+        "prod-smartcard-loyalty",
+        "prod-cbpay-bimpay",
+      ]);
+      setDiscountPercent(60);
+      setCustomPrice(297);
+      showToast("Loaded Official Tier 1 Pro ($297/mo USD)");
+    } else if (type === "tier2_997") {
+      setBundleName("Tier 2 Niche Business Suite ($997/mo Official)");
+      setBundleDesc(
+        "Full-service high-earning business suite with Managed 24/7 AI Agents, Custom Website, SmartCard Loyalty, Omnichannel Inbox & Dedicated Onboarding Team."
+      );
+      setDraftProductIds([
+        "prod-credits-pro",
+        "prod-managed-agents",
+        "prod-ask-ai",
+        "prod-industry-snapshots",
+        "prod-social-suite",
+        "prod-ad-manager",
+        "prod-reputation-mgmt",
+        "prod-unified-inbox",
+        "prod-whatsapp",
+        "prod-smart-website",
+        "prod-smartcard-loyalty",
+        "prod-cbpay-bimpay",
+        "prod-listings",
+      ]);
+      setDiscountPercent(14);
+      setCustomPrice(997);
+      showToast("Loaded Official Tier 2 Niche Business Suite ($997/mo USD)");
+    } else if (type === "tier2_1497") {
+      setBundleName(
+        "Tier 2 Pro Full-Service Scale ($1,497 = $497 App + $997 Suite)"
+      );
+      setBundleDesc(
+        "Flagship Automotive Art / Enterprise package combining Pro Dispatch OS / AA Roadside Rescue ($497/mo) + Tier 2 Niche Business Suite ($997/mo)."
+      );
+      setDraftProductIds([
+        "prod-dispatch-os",
+        "prod-smartcard-loyalty",
+        "prod-cbpay-bimpay",
+        "prod-credits-pro",
+        "prod-managed-agents",
+        "prod-ask-ai",
+        "prod-industry-snapshots",
+        "prod-social-suite",
+        "prod-ad-manager",
+        "prod-reputation-mgmt",
+        "prod-unified-inbox",
+        "prod-whatsapp",
+        "prod-smart-website",
+        "prod-custom-apps",
+        "prod-listings",
+      ]);
+      setDiscountPercent(19);
+      setCustomPrice(1497);
+      showToast(
+        "Loaded Official Tier 2 Scale ($1,497/mo = $497 App + $997 Suite)"
+      );
+    } else if (type === "tier2_2997") {
+      setBundleName("Tier 2 Multi-Location Enterprise ($2,997/mo Official)");
+      setBundleDesc(
+        "Complete multi-branch enterprise deployment including Dispatch OS, TicketFlows, Custom Apps, Project & Events Management, and Pro AI."
+      );
+      setDraftProductIds([
+        "prod-dispatch-os",
+        "prod-ticketflows",
+        "prod-smartcard-loyalty",
+        "prod-cbpay-bimpay",
+        "prod-credits-pro",
+        "prod-managed-agents",
+        "prod-ask-ai",
+        "prod-industry-snapshots",
+        "prod-social-suite",
+        "prod-ad-manager",
+        "prod-reputation-mgmt",
+        "prod-unified-inbox",
+        "prod-whatsapp",
+        "prod-meeting-rooms",
+        "prod-smart-website",
+        "prod-custom-apps",
+        "prod-listings",
+        "prod-project-mgmt",
+        "prod-events-mgmt",
+      ]);
+      setDiscountPercent(0);
+      setCustomPrice(2997);
+      showToast("Loaded Official Tier 2 Multi-Location Enterprise ($2,997/mo)");
     }
   };
 
@@ -627,7 +992,9 @@ export default function ProductBlueprint() {
       bundleDesc.trim() || "Custom product ecosystem bundle.";
 
     if (editingBundleId) {
-      const existingIdx = savedBundles.findIndex((b) => b.id === editingBundleId);
+      const existingIdx = savedBundles.findIndex(
+        (b) => b.id === editingBundleId
+      );
       if (existingIdx !== -1) {
         const nextBundles = [...savedBundles];
         nextBundles[existingIdx] = {
@@ -657,6 +1024,68 @@ export default function ProductBlueprint() {
     const nextBundles = [newBundle, ...savedBundles];
     await persistCatalogAndBundles(products, nextBundles);
     showToast(`Saved new bundle "${cleanName}" ($${draftFinal}/mo)`);
+  };
+
+  const handlePushBundleToSubAccount = async (
+    overrideBundle?: BlueprintBundleItem
+  ) => {
+    const productIdsToPush = overrideBundle
+      ? overrideBundle.productIds
+      : validDraftProductIds;
+    const bundleNameToPush = overrideBundle
+      ? overrideBundle.name
+      : bundleName.trim() || "Custom Growth Bundle";
+    const finalPriceToPush = overrideBundle
+      ? overrideBundle.finalPrice
+      : draftFinal;
+
+    if (productIdsToPush.length === 0) {
+      showToast("Select at least 1 product before pushing to a sub-account");
+      return;
+    }
+
+    const targetMeta = SUBACCOUNT_TARGETS.find(
+      (t) => t.locationId === targetLocationId
+    );
+    setPushingToSubAccount(true);
+    try {
+      const res = await fetch(BLUEPRINT_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "push_to_subaccount",
+          locationId: targetLocationId,
+          businessName: targetMeta?.businessName || "Client Sub-Account",
+          email: targetMeta?.email || "admin@businessesos.com",
+          bundleName: bundleNameToPush,
+          finalPrice: finalPriceToPush,
+          productIds: productIdsToPush,
+          switchMode,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data?.ok) {
+        setLastPushedPortalUrl(
+          `https://businessesos.com${
+            data.portalUrl ||
+            `/dashboard/portal?locationId=${encodeURIComponent(
+              targetLocationId
+            )}&section=switchboard`
+          }`
+        );
+        showToast(
+          `Pushed "${bundleNameToPush}" ($${finalPriceToPush}/mo) to ${
+            targetMeta?.businessName || targetLocationId
+          } Switchboard!`
+        );
+      } else {
+        showToast(data?.error || "Failed to push bundle to sub-account");
+      }
+    } catch {
+      showToast("Network error while pushing bundle to sub-account");
+    } finally {
+      setPushingToSubAccount(false);
+    }
   };
 
   const loadSavedBundleIntoStudio = (bundleId: string) => {
@@ -1017,8 +1446,8 @@ export default function ProductBlueprint() {
                 </span>
               </div>
               <p className="text-xs text-black">
-                Interactive Product Catalog, Pricing Editor &amp; Drag-and-Drop
-                Bundle Studio
+                Interactive Product Catalog, Official Tier 1/2 Presets, Pricing
+                Editor &amp; Sub-Account Switchboard Sync
               </p>
             </div>
           </div>
@@ -1085,7 +1514,7 @@ export default function ProductBlueprint() {
             <button
               type="button"
               onClick={resetToBlueprintDefaults}
-              title="Reset to original diagram defaults"
+              title="Reset to original diagram defaults + Official Tier 1/2 Bundles"
               className="inline-flex items-center gap-1 px-2.5 py-2 rounded-xl text-xs font-semibold text-black hover:bg-indigo-50/50 border border-black/[0.08] transition-all cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5 text-black" />
@@ -1162,7 +1591,7 @@ export default function ProductBlueprint() {
                 {savedBundles.length}
               </p>
               <p className="text-[11px] text-black font-medium mt-0.5">
-                Ready for quoting &amp; export
+                Ready for quoting &amp; sub-account push
               </p>
             </div>
             <div className="w-10 h-10 rounded-xl bg-amber-50/70 text-amber-600 flex items-center justify-center">
@@ -1240,7 +1669,7 @@ export default function ProductBlueprint() {
                         AI Credits Engine
                       </h2>
                       <span className="text-[11px] bg-indigo-50/70 text-black px-2 py-0.5 rounded-md font-mono font-semibold">
-                        Core Usage Layer
+                        Core Usage Layer (0% Affiliate Comm on +$50 / +$97)
                       </span>
                     </div>
                     <button
@@ -1381,7 +1810,7 @@ export default function ProductBlueprint() {
                             Web &amp; Custom Infrastructure
                           </h3>
                           <p className="text-[11px] text-black">
-                            Hosting, Custom Apps &amp; Directories
+                            Hosting, CBPay/BiMPay, Custom Apps &amp; Directories
                           </p>
                         </div>
                       </div>
@@ -1408,10 +1837,10 @@ export default function ProductBlueprint() {
                     <div className="flex items-center gap-2.5">
                       <Building2 className="w-4 h-4 text-cyan-600" />
                       <h2 className="text-xs sm:text-sm font-bold tracking-wider uppercase font-mono text-black">
-                        Enterprise Management Software
+                        Enterprise Management Software &amp; Standalone Apps
                       </h2>
                       <span className="text-[11px] bg-cyan-50/70 text-black px-2 py-0.5 rounded-md font-mono font-semibold">
-                        Operations Foundation
+                        Operations Foundation (Dispatch OS, SmartCard, TicketFlows)
                       </span>
                     </div>
                     <button
@@ -1484,10 +1913,10 @@ export default function ProductBlueprint() {
                     />
                   </div>
 
-                  <div className="pt-1">
-                    <div className="flex items-center justify-between mb-1.5">
+                  <div className="pt-1 space-y-2">
+                    <div className="flex items-center justify-between">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-black">
-                        Blueprint Presets:
+                        Official Tier 1 &amp; Tier 2 Presets (Rule EJ):
                       </span>
                       <button
                         type="button"
@@ -1498,7 +1927,52 @@ export default function ProductBlueprint() {
                         <span>Checklist Picker</span>
                       </button>
                     </div>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="grid grid-cols-3 gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => loadBlueprintPreset("tier1_97")}
+                        className="text-[11px] px-2 py-1 rounded-lg border border-black/[0.1] bg-white hover:bg-indigo-50/60 text-black font-bold transition-all cursor-pointer"
+                      >
+                        Tier 1: $97/mo
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => loadBlueprintPreset("tier1_197")}
+                        className="text-[11px] px-2 py-1 rounded-lg border border-black/[0.1] bg-white hover:bg-indigo-50/60 text-black font-bold transition-all cursor-pointer"
+                      >
+                        Tier 1: $197/mo
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => loadBlueprintPreset("tier1_297")}
+                        className="text-[11px] px-2 py-1 rounded-lg border border-black/[0.1] bg-white hover:bg-indigo-50/60 text-black font-bold transition-all cursor-pointer"
+                      >
+                        Tier 1: $297/mo
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => loadBlueprintPreset("tier2_997")}
+                        className="text-[11px] px-2 py-1 rounded-lg border border-indigo-600/30 bg-indigo-50/40 hover:bg-indigo-50/90 text-black font-bold transition-all cursor-pointer"
+                      >
+                        Tier 2: $997/mo
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => loadBlueprintPreset("tier2_1497")}
+                        className="text-[11px] px-2 py-1 rounded-lg border border-indigo-600/30 bg-indigo-50/40 hover:bg-indigo-50/90 text-black font-bold transition-all cursor-pointer"
+                      >
+                        Scale: $1,497/mo
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => loadBlueprintPreset("tier2_2997")}
+                        className="text-[11px] px-2 py-1 rounded-lg border border-indigo-600/30 bg-indigo-50/40 hover:bg-indigo-50/90 text-black font-bold transition-all cursor-pointer"
+                      >
+                        Ent: $2,997/mo
+                      </button>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5 pt-1">
                       <button
                         type="button"
                         onClick={() => loadBlueprintPreset("payg")}
@@ -1528,7 +2002,7 @@ export default function ProductBlueprint() {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
-                  className={`p-3.5 min-h-[220px] max-h-[340px] overflow-y-auto transition-all border border-dashed border-indigo-300 m-3.5 rounded-xl bg-white flex flex-col ${
+                  className={`p-3.5 min-h-[200px] max-h-[300px] overflow-y-auto transition-all border border-dashed border-indigo-300 m-3.5 rounded-xl bg-white flex flex-col ${
                     isDropzoneActive ? "dropzone-active" : ""
                   }`}
                 >
@@ -1690,6 +2164,79 @@ export default function ProductBlueprint() {
                         : "Save Bundled Package"}
                     </span>
                   </button>
+
+                  {/* 1-CLICK PUSH BUNDLE TO CLIENT SUB-ACCOUNT SWITCHBOARD */}
+                  <div className="pt-3 border-t border-black/[0.08] space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-black flex items-center gap-1.5">
+                        <Rocket className="w-3.5 h-3.5 text-indigo-600" />
+                        <span>Push to Sub-Account Switchboard</span>
+                      </span>
+                    </div>
+
+                    <select
+                      value={targetLocationId}
+                      onChange={(e) => setTargetLocationId(e.target.value)}
+                      className="surface-input w-full px-3 py-1.5 text-xs font-semibold text-black rounded-xl bg-white focus:outline-none"
+                    >
+                      {SUBACCOUNT_TARGETS.map((target) => (
+                        <option key={target.locationId} value={target.locationId}>
+                          {target.label}
+                        </option>
+                      ))}
+                    </select>
+
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => setSwitchMode("owner_approved")}
+                        className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold border transition-all cursor-pointer ${
+                          switchMode === "owner_approved"
+                            ? "bg-emerald-50 border-emerald-600/40 text-black"
+                            : "bg-white border-black/[0.1] text-black"
+                        }`}
+                      >
+                        Flip Switches ON (Active)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSwitchMode("manager_recommended")}
+                        className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold border transition-all cursor-pointer ${
+                          switchMode === "manager_recommended"
+                            ? "bg-amber-50 border-amber-600/40 text-black"
+                            : "bg-white border-black/[0.1] text-black"
+                        }`}
+                      >
+                        Queue as Recommended
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      disabled={pushingToSubAccount}
+                      onClick={() => handlePushBundleToSubAccount()}
+                      className="w-full py-2.5 px-4 rounded-xl bg-black hover:bg-black/85 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+                    >
+                      <Rocket className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>
+                        {pushingToSubAccount
+                          ? "Syncing Sub-Account Switchboard..."
+                          : "Push Bundle to Sub-Account Switchboard"}
+                      </span>
+                    </button>
+
+                    {lastPushedPortalUrl && (
+                      <a
+                        href={lastPushedPortalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full py-2 px-3 rounded-xl bg-emerald-50/90 border border-emerald-600/30 text-black font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-emerald-100/80 transition-all"
+                      >
+                        <span>Open Synced Client Switchboard</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-emerald-700" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -1708,7 +2255,7 @@ export default function ProductBlueprint() {
                   </button>
                 </div>
                 <div className="space-y-2">
-                  {savedBundles.slice(0, 4).map((bundle) => {
+                  {savedBundles.slice(0, 6).map((bundle) => {
                     const validProds = bundle.productIds
                       .map((id) => products.find((p) => p.id === id))
                       .filter(Boolean);
@@ -1919,11 +2466,12 @@ export default function ProductBlueprint() {
             <div className="surface-panel rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h2 className="text-lg font-bold text-black">
-                  Bundled Ecosystem Packages
+                  Bundled Ecosystem Packages (Official Tier 1 &amp; Tier 2 + Custom)
                 </h2>
                 <p className="text-xs text-black">
                   Manage your pre-packaged offerings, load them back into the
-                  studio to edit, or add a new bundle manually.
+                  studio to edit, or push any bundle directly to a client
+                  sub-account switchboard.
                 </p>
               </div>
               <div className="flex items-center gap-2.5">
@@ -1969,7 +2517,9 @@ export default function ProductBlueprint() {
                             {validProds.length} Ecosystem Products
                           </span>
                           <span className="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-emerald-50/80 text-black ring-1 ring-inset ring-emerald-600/20">
-                            Save ${savings}/mo ({bundle.discountPercent}%)
+                            {savings > 0
+                              ? `Save $${savings}/mo (${bundle.discountPercent}%)`
+                              : "Enterprise Package"}
                           </span>
                         </div>
                         <h3 className="text-base font-bold mt-2.5 text-black">
@@ -2017,31 +2567,41 @@ export default function ProductBlueprint() {
                       </div>
                     </div>
 
-                    <div className="p-4 bg-white border-t border-black/[0.06] flex items-center justify-between gap-2">
+                    <div className="p-4 bg-white border-t border-black/[0.06] space-y-2.5">
                       <button
                         type="button"
-                        onClick={() => deleteSavedBundle(bundle.id)}
-                        className="px-3 py-1.5 rounded-xl text-xs font-semibold text-black border border-black/[0.09] hover:bg-rose-50 transition-colors cursor-pointer flex items-center gap-1"
+                        onClick={() => handlePushBundleToSubAccount(bundle)}
+                        className="w-full py-2 px-3 rounded-xl bg-black hover:bg-black/85 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                       >
-                        <Trash2 className="w-3.5 h-3.5 text-black" />
-                        <span>Delete</span>
+                        <Rocket className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Push to Active Sub-Account Switchboard</span>
                       </button>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-between gap-2">
                         <button
                           type="button"
-                          onClick={() => duplicateSavedBundle(bundle.id)}
-                          className="px-3 py-1.5 rounded-xl text-xs font-semibold text-black bg-white border border-black/[0.09] hover:bg-indigo-50/50 transition-colors cursor-pointer"
+                          onClick={() => deleteSavedBundle(bundle.id)}
+                          className="px-3 py-1.5 rounded-xl text-xs font-semibold text-black border border-black/[0.09] hover:bg-rose-50 transition-colors cursor-pointer flex items-center gap-1"
                         >
-                          Clone
+                          <Trash2 className="w-3.5 h-3.5 text-black" />
+                          <span>Delete</span>
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => loadSavedBundleIntoStudio(bundle.id)}
-                          className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors cursor-pointer flex items-center gap-1"
-                        >
-                          <Sliders className="w-3.5 h-3.5" />
-                          <span>Edit in Studio</span>
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => duplicateSavedBundle(bundle.id)}
+                            className="px-3 py-1.5 rounded-xl text-xs font-semibold text-black bg-white border border-black/[0.09] hover:bg-indigo-50/50 transition-colors cursor-pointer"
+                          >
+                            Clone
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => loadSavedBundleIntoStudio(bundle.id)}
+                            className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors cursor-pointer flex items-center gap-1"
+                          >
+                            <Sliders className="w-3.5 h-3.5" />
+                            <span>Edit in Studio</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
